@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử mua - ShopGame</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="logo" style="display:flex;align-items:center;gap:10px;">
+                <div class="logo-icon" style="width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">🎮</div>
+                <div class="logo-text" style="font-size:24px;font-weight:800;color:#fff;">Shop<span style="color:#6366f1;">Game</span></div>
+            </a>
+        </div>
+        <nav class="header-nav">
+            <a href="index.html">Trang chủ</a>
+            <a href="orders.html" class="active">Lịch sử Mua</a>
+            <a href="deposit.html">Nạp tiền</a>
+            <a href="transactions.html">Dòng Tiền</a>
+            <a href="faq.html">FAQ</a>
+        </nav>
+        <div class="header-right">
+            <div class="user-dropdown">
+                <button class="user-btn" id="userBtn">
+                    <span class="logo-text" style="font-size: 16px;">🎮 ShopGame</span>
+                    <span class="user-balance" id="userBalance">0 ₫</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                    <a href="change-password.html"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+                    <a href="deposit.html"><i class="fas fa-wallet"></i> Nạp tiền</a>
+                    <a href="contact.html"><i class="fas fa-headset"></i> Liên hệ</a>
+                    <a href="login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+                    <a href="#" id="logoutBtn" style="display:none; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <div class="page-header">
+            <h1><i class="fas fa-history"></i> Lịch sử Mua Nick</h1>
+        </div>
+        <div id="ordersContent">
+            <div class="coming-soon">
+                <i class="fas fa-sign-in-alt"></i>
+                <h2>Vui lòng đăng nhập</h2>
+                <p>Đăng nhập để xem Lịch sử mua nick của bạn</p>
+                <a href="login.html" class="btn-primary">Đăng nhập ngay</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const API_BASE = 'http://localhost:3000/api';
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            const ordersContent = document.getElementById('ordersContent');
+            
+            if (user) {
+                document.getElementById('userBalance').textContent = new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND', maximumFractionDigits: 0}).format(user.balance || 0);
+                document.getElementById('loginLink').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'block';
+            }
+            
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                location.reload();
+            });
+            
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount);
+            }
+            
+            function formatDate(dateStr) {
+                if (!dateStr) return 'N/A';
+                return new Date(dateStr).toLocaleString('vi-VN');
+            }
+            
+            if (user) {
+                try {
+                    const res = await fetch(`${API_BASE}/orders?user_id=${user.id}`);
+                    const data = await res.json();
+                    
+                    if (data.success && data.data.length > 0) {
+                        ordersContent.innerHTML = `
+                            <div class="orders-container">
+                                <table class="orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã đơn</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Tài khoản</th>
+                                            <th>mật khẩu</th>
+                                            <th>Trạng thái</th>
+                                            <th>Ngày</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${data.data.map(order => `
+                                            <tr>
+                                                <td>#${order.id}</td>
+                                                <td>${order.product_name || 'N/A'}</td>
+                                                <td>${formatCurrency(order.total_price)}</td>
+                                                <td><code>${order.account_username || order.account_info?.username || 'N/A'}</code></td>
+                                                <td><code>${order.account_password || order.account_info?.password || 'N/A'}</code></td>
+                                                <td><span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'đang xử lý' : 'Đã hủy'}</span></td>
+                                                <td>${formatDate(order.created_at)}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+                    } else {
+                        ordersContent.innerHTML = `
+                            <div style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);">
+                                <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-history"></i> Lịch sử mua nick</h2>
+                                <div style="text-align: center; padding: 40px; color: #a0aec0;">
+                                    <i class="fas fa-box-open" style="font-size: 50px; color: var(--primary); margin-bottom: 20px;"></i>
+                                    <p>bạn chưa có đơn hàng nào</p>
+                                    <a href="index.html" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; display: inline-block; margin-top: 20px; text-decoration: none;">Mua nick ngay</a>
+                                </div>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error loading orders:', error);
+                }
+            }
+        });
+    </script>
+    <style>
+        .orders-container {
+            background: rgba(30, 41, 59, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .orders-table th {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--primary);
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+        }
+        
+        .orders-table td {
+            padding: 15px;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .orders-table code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #00f0ff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .status-completed {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .status-pending {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .status-cancelled {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .orders-table tbody tr:hover {
+            background: rgba(0, 240, 255, 0.05);
+        }
+    </style>
+</body>
+</html>
