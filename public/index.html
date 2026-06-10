@@ -396,7 +396,17 @@
                     const res = await fetch(`${API_BASE}/seo/public`);
                     const data = await res.json();
                     if (data.success && data.data) {
-                        seoData = data.data;
+                        seoData = {
+                            title: data.data.site_title || data.data.title,
+                            description: data.data.site_description || data.data.description,
+                            keywords: data.data.site_keywords || data.data.keywords,
+                            og_title: data.data.og_title,
+                            og_description: data.data.og_description,
+                            og_image: data.data.og_image,
+                            google_analytics_id: data.data.google_analytics_id,
+                            noindex: data.data.noindex,
+                            nofollow: data.data.nofollow
+                        };
                     }
                 }
                 
