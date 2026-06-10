@@ -15,54 +15,103 @@ async function importFullSchema() {
     console.log('Connecting to database...');
     const pool = await sql.connect(config);
     
-    console.log('Reading schema file...');
+    console.log('Preparing database...\n');
+    
+    // Drop foreign key constraints first
+    const fkResult = await pool.query(`
+      SELECT OBJECT_NAME(parent_object_id) as table_name, name as constraint_name
+      FROM sys.foreign_keys
+    `);
+    
+    for (const fk of fkResult.recordset) {
+      try {
+        await pool.query(`ALTER TABLE ${fk.table_name} DROP CONSTRAINT ${fk.constraint_name}`);
+        console.log(`✓ Dropped FK: ${fk.constraint_name}`);
+      } catch (e) {}
+    }
+    
+    // Drop all tables
+    const tables = ['Orders', 'Transactions', 'Images', 'Products', 'Categories', 'Banners', 'PaymentSettings', 'Sessions', 'Users'];
+    
+    for (const table of tables) {
+      try {
+        await pool.query(`DROP TABLE IF EXISTS ${table}`);
+        console.log(`✓ Dropped table: ${table}`);
+      } catch (e) {}
+    }
+    
+    console.log('\nReading schema file...');
     const schema = fs.readFileSync('database/full-schema-export.sql', 'utf8');
     
-    console.log('Importing schema and data...\n');
+    console.log('Creating tables and importing data...\n');
     
-    // Split by GO
+    // Split by GO and filter only CREATE TABLE statements first
     const batches = schema.split('GO').filter(b => b.trim());
     
-    let success = 0;
-    let errors = 0;
+    let tableCount = 0;
+    let dataCount = 0;
     
-    for (let i = 0; i < batches.length; i++) {
-      const batch = batches[i].trim();
-      if (!batch || batch.startsWith('--')) continue;
-      
-      try {
-        await pool.query(batch);
-        success++;
-        
-        // Log progress for data inserts
-        if (batch.includes('INSERT INTO')) {
-          const tableMatch = batch.match(/INSERT INTO (\w+)/);
+    for (const batch of batches) {
+      if (batch.includes('CREATE TABLE')) {
+        try {
+          await pool.query(batch);
+          const tableMatch = batch.match(/CREATE TABLE (\w+)/);
           if (tableMatch) {
-            console.log(`✓ Inserted into ${tableMatch[1]}`);
+            console.log(`✓ Created table: ${tableMatch[1]}`);
+            tableCount++;
           }
-        }
-      } catch (err) {
-        errors++;
-        if (!err.message.includes('already exists')) {
-          console.log(`Error batch ${i}: ${err.message.substring(0, 100)}`);
+        } catch (err) {
+          console.log(`Error creating table: ${err.message.substring(0, 100)}`);
         }
       }
+    }
+    
+    // Now insert data in correct order (Users first, then dependent tables)
+    const insertOrder = ['Users', 'Categories', 'Products', 'Orders', 'Transactions', 'Banners', 'PaymentSettings', 'Images'];
+    
+    for (const table of insertOrder) {
+      const inserts = batches.filter(b => b.includes(`INSERT INTO ${table}`));
+      
+      for (const insert of inserts) {
+        try {
+          // Enable IDENTITY_INSERT for tables with identity columns
+          if (['Users', 'Categories', 'Products', 'Orders', 'Transactions', 'Banners', 'PaymentSettings', 'Images'].includes(table)) {
+            await pool.query(`SET IDENTITY_INSERT ${table} ON`);
+          }
+          
+          await pool.query(insert);
+          dataCount++;
+          console.log(`✓ Inserted data into ${table}`);
+          
+          if (['Users', 'Categories', 'Products', 'Orders', 'Transactions', 'Banners', 'PaymentSettings', 'Images'].includes(table)) {
+            await pool.query(`SET IDENTITY_INSERT ${table} OFF`);
+          }
+        } catch (err) {
+          console.log(`  Error inserting into ${table}: ${err.message.substring(0, 150)}`);
+        }
+      }
+    }
+    
+    // Recreate foreign key constraints
+    console.log('\nRecreating foreign keys...');
+    try {
+      await pool.query(`ALTER TABLE Orders ADD CONSTRAINT FK_Orders_User FOREIGN KEY (user_id) REFERENCES Users(id)`);
+      await pool.query(`ALTER TABLE Orders ADD CONSTRAINT FK_Orders_Product FOREIGN KEY (product_id) REFERENCES Products(id)`);
+      await pool.query(`ALTER TABLE Transactions ADD CONSTRAINT FK_Transactions_User FOREIGN KEY (user_id) REFERENCES Users(id)`);
+      await pool.query(`ALTER TABLE Products ADD CONSTRAINT FK_Products_Category FOREIGN KEY (category_id) REFERENCES Categories(id)`);
+      console.log('✓ Foreign keys recreated');
+    } catch (err) {
+      console.log('FK recreation skipped');
     }
     
     // Verify
     console.log('\n=== Verification ===');
-    const tables = ['Users', 'Products', 'Categories', 'Orders', 'Transactions', 'Banners', 'PaymentSettings', 'Images'];
-    
-    for (const table of tables) {
-      try {
-        const result = await pool.query(`SELECT COUNT(*) as count FROM ${table}`);
-        console.log(`${table}: ${result.recordset[0].count} records`);
-      } catch (err) {
-        console.log(`${table}: Table not found`);
-      }
+    for (const table of insertOrder) {
+      const result = await pool.query(`SELECT COUNT(*) as count FROM ${table}`);
+      console.log(`${table}: ${result.recordset[0].count} records`);
     }
     
-    console.log(`\n✓ Import completed! Success: ${success}, Errors: ${errors}`);
+    console.log(`\n✓ Import completed! Tables: ${tableCount}, Data inserts: ${dataCount}`);
     process.exit(0);
   } catch (err) {
     console.error('Import failed:', err.message);
