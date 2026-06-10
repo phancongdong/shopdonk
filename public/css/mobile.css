@@ -1,4 +1,287 @@
 /* ========================================
+   MOBILE CSS FOR INDEX PAGE HEADER
+   ======================================== */
+
+@media (max-width: 768px) {
+    header .header-content {
+        flex-wrap: wrap;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+    
+    header .nav-menu {
+        display: none !important;
+        order: 3;
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 0;
+        background: rgba(26, 26, 46, 0.95);
+    }
+    
+    header .nav-menu.show {
+        display: flex !important;
+    }
+    
+    header .nav-menu a {
+        padding: 12px 15px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.05);
+    }
+    
+    header .mobile-menu-btn {
+        display: flex !important;
+        order: 2;
+    }
+    
+    header .lang-selector {
+        display: none !important;
+    }
+    
+    header .header-right {
+        gap: 10px;
+    }
+    
+    header .user-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    header .user-btn .user-balance {
+        display: none;
+    }
+    
+    header .logo .logo-text {
+        font-size: 18px !important;
+    }
+    
+    header .logo .logo-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 16px !important;
+    }
+    
+    .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding: 10px 0;
+        z-index: 1000;
+        justify-content: space-around;
+    }
+    
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 12px;
+        color: #94a3b8;
+        font-size: 12px;
+        transition: color 0.3s;
+    }
+    
+    .mobile-nav-item i {
+        font-size: 18px;
+    }
+    
+    .mobile-nav-item.active {
+        color: #6366f1;
+    }
+    
+    body {
+        padding-bottom: 70px;
+    }
+    
+    .chat-bubble {
+        bottom: 80px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .banner-section {
+        padding: 15px 0;
+    }
+    
+    .banner-img {
+        max-height: 200px;
+        border-radius: 12px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 20px 0;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .stat-value {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+    
+    .section-title h2 {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+    
+    .section-title p {
+        font-size: 13px;
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .category-card {
+        border-radius: 12px;
+    }
+    
+    .category-img {
+        height: 120px;
+    }
+    
+    .category-info {
+        padding: 12px;
+    }
+    
+    .category-name {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    .category-btn {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
+    
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .game-card {
+        border-radius: 12px;
+    }
+    
+    .game-img {
+        height: 140px;
+    }
+    
+    .game-content {
+        padding: 15px;
+    }
+    
+    .game-title {
+        font-size: 14px;
+    }
+    
+    .game-stat-value {
+        font-size: 16px;
+    }
+    
+    .game-btn {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .filter-section {
+        margin: 20px 0;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-group {
+        min-width: 100%;
+    }
+    
+    .filter-input, .filter-select {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .partners-grid {
+        gap: 15px;
+    }
+    
+    .partner-item {
+        padding: 12px 20px;
+        font-size: 12px;
+    }
+    
+    footer {
+        padding: 30px 15px 80px;
+        margin-top: 40px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .footer-section h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-section p {
+        font-size: 13px;
+    }
+    
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .footer-bottom {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    header .logo .logo-text {
+        font-size: 16px !important;
+    }
+    
+    header .user-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
    MOBILE CSS FOR AUTH PAGES
    ======================================== */
 
