@@ -168,9 +168,7 @@ Sitemap: https://shopdonk.com/sitemap.xml</textarea>
         
         async function loadSettings() {
             try {
-                const res = await fetch(`${API_BASE}/seo`, {
-                    headers: { 'x-user': JSON.stringify(currentUser) }
-                });
+                const res = await fetch(`${API_BASE}/seo/public`);
                 const data = await res.json();
                 
                 if (data.success && data.data) {
