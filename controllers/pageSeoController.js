@@ -114,15 +114,30 @@ async function getCategorySeo(req, res) {
 
 async function getAllCategorySeo(req, res) {
     try {
-        const result = await query(`
-            SELECT cs.*, c.name as category_name, c.slug as category_slug
-            FROM CategorySEO cs
-            RIGHT JOIN Categories c ON cs.category_id = c.id
-            ORDER BY c.name
-        `);
+        const categories = await query('SELECT id, name, slug FROM Categories ORDER BY name');
+        const categorySeo = await query('SELECT * FROM CategorySEO');
+        
+        const result = categories.recordset.map(cat => {
+            const seo = categorySeo.recordset.find(s => s.category_id === cat.id);
+            return {
+                category_id: cat.id,
+                category_name: cat.name,
+                category_slug: cat.slug,
+                title: seo ? seo.title : null,
+                description: seo ? seo.description : null,
+                keywords: seo ? seo.keywords : null,
+                og_title: seo ? seo.og_title : null,
+                og_description: seo ? seo.og_description : null,
+                og_image: seo ? seo.og_image : null,
+                canonical_url: seo ? seo.canonical_url : null,
+                noindex: seo ? seo.noindex : false,
+                nofollow: seo ? seo.nofollow : false
+            };
+        });
+        
         res.json({
             success: true,
-            data: result.recordset
+            data: result
         });
     } catch (error) {
         console.error('Get all category SEO error:', error);
