@@ -136,7 +136,7 @@
             { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram', placeholder: 'https://instagram.com/yourprofile' }
         ];
         
-        const API_BASE = 'http://localhost:3000/api';
+        const API_BASE = window.location.origin + '/api';
         let socialLinks = JSON.parse(localStorage.getItem('socialLinks')) || {};
         let chatBubbleSettings = { url: 'contact.html', active: true };
         
