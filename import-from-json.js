@@ -4,7 +4,7 @@ const fs = require('fs');
 const config = {
   user: 'sa',
   password: 'ShopDonk@2024',
-  server: 'localhost', // Run this on VPS
+  server: 'localhost',
   port: 1433,
   database: 'ShopDonkDB',
   options: {encrypt: false, trustServerCertificate: true}
@@ -31,42 +31,50 @@ async function importFromJson() {
       // Delete existing records
       await sql.query(`DELETE FROM ${table}`);
       
-      // Insert records
-      for (const record of records) {
-        const columns = Object.keys(record);
-        const request = new sql.Request();
-        
-        // Add parameters
-        columns.forEach((col, i) => {
-          const value = record[col];
-          if (value === null) {
-            request.input(col, null);
-          } else if (typeof value === 'string') {
-            request.input(col, sql.NVarChar, value);
-          } else if (typeof value === 'number') {
-            if (Number.isInteger(value)) {
-              request.input(col, sql.Int, value);
-            } else {
-              request.input(col, sql.Decimal, value);
-            }
-          } else if (value instanceof Date) {
-            request.input(col, sql.DateTime, value);
-          } else if (typeof value === 'boolean') {
-            request.input(col, sql.Bit, value);
-          } else {
-            request.input(col, sql.NVarChar, String(value));
-          }
-        });
-        
-        // Build query with parameter names
-        const colNames = columns.join(', ');
-        const paramNames = columns.map(c => '@' + c).join(', ');
-        const query = `INSERT INTO ${table} (${colNames}) VALUES (${paramNames})`;
-        
-        await request.query(query);
-      }
+      // Enable IDENTITY_INSERT
+      await sql.query(`SET IDENTITY_INSERT ${table} ON`);
       
-      console.log(`  ✓ Imported ${records.length} records`);
+      try {
+        // Insert records
+        for (const record of records) {
+          const columns = Object.keys(record);
+          const request = new sql.Request();
+          
+          // Add parameters
+          columns.forEach(col => {
+            const value = record[col];
+            if (value === null) {
+              request.input(col, null);
+            } else if (typeof value === 'string') {
+              request.input(col, sql.NVarChar(sql.MAX), value);
+            } else if (typeof value === 'number') {
+              if (Number.isInteger(value)) {
+                request.input(col, sql.Int, value);
+              } else {
+                request.input(col, sql.Decimal(18, 2), value);
+              }
+            } else if (value instanceof Date) {
+              request.input(col, sql.DateTime, value);
+            } else if (typeof value === 'boolean') {
+              request.input(col, sql.Bit, value);
+            } else {
+              request.input(col, sql.NVarChar(sql.MAX), String(value));
+            }
+          });
+          
+          // Build query with parameter names
+          const colNames = columns.join(', ');
+          const paramNames = columns.map(c => '@' + c).join(', ');
+          const query = `INSERT INTO ${table} (${colNames}) VALUES (${paramNames})`;
+          
+          await request.query(query);
+        }
+        
+        console.log(`  ✓ Imported ${records.length} records`);
+      } finally {
+        // Disable IDENTITY_INSERT
+        await sql.query(`SET IDENTITY_INSERT ${table} OFF`);
+      }
     }
     
     // Verify
@@ -80,7 +88,6 @@ async function importFromJson() {
     process.exit(0);
   } catch (err) {
     console.error('\n✗ Import failed:', err.message);
-    console.error('Stack:', err.stack);
     process.exit(1);
   }
 }
