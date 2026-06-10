@@ -127,7 +127,7 @@
         </div>
     </div>
     <script>
-        const API_BASE = 'window.location.origin + '/api'';
+        const API_BASE = window.location.origin + '/api';
         let currentField = '';
         document.addEventListener('DOMContentLoaded', function() {
             const user = JSON.parse(localStorage.getItem('user') || 'null');

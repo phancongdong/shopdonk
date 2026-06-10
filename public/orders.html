@@ -63,7 +63,7 @@
     <script src="js/particles.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            const API_BASE = 'window.location.origin + '/api'';
+            const API_BASE = window.location.origin + '/api';
             const user = JSON.parse(localStorage.getItem('user') || 'null');
             const ordersContent = document.getElementById('ordersContent');
             
