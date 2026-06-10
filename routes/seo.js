@@ -10,6 +10,10 @@ function requireAdmin(req, res, next) {
     next();
 }
 
+// Public endpoint - no auth required
+router.get('/seo/public', seoController.getSeoSettings);
+
+// Admin endpoints
 router.get('/seo', requireAdmin, seoController.getSeoSettings);
 router.post('/seo', requireAdmin, seoController.saveSeoSettings);
 router.post('/seo/sitemap', requireAdmin, seoController.generateSitemap);

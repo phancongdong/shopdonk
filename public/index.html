@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ShopDonk - Shop bán acc game uy tín hàng đầu Việt Nam">
     <title>ShopDonk - Shop bán acc game uy tín</title>
+    
+    <!-- SEO Meta Tags - Will be updated by JavaScript -->
+    <meta name="keywords" content="">
+    <meta name="google-site-verification" content="">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="ShopDonk - Shop bán acc game uy tín">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    
+    <!-- Google Analytics -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/mobile.css">
@@ -328,6 +342,78 @@
     <script>
         const API_BASE = window.location.origin + '/api';
         let allProducts = [];
+        
+        // Load SEO Settings
+        async function loadSeoSettings() {
+            try {
+                const res = await fetch(`${API_BASE}/seo/public`);
+                const data = await res.json();
+                
+                if (data.success && data.data) {
+                    const seo = data.data;
+                    
+                    // Update title
+                    if (seo.site_title) {
+                        document.title = seo.site_title;
+                    }
+                    
+                    // Update meta description
+                    const metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc && seo.site_description) {
+                        metaDesc.setAttribute('content', seo.site_description);
+                    }
+                    
+                    // Update meta keywords
+                    const metaKeywords = document.querySelector('meta[name="keywords"]');
+                    if (metaKeywords && seo.site_keywords) {
+                        metaKeywords.setAttribute('content', seo.site_keywords);
+                    }
+                    
+                    // Update Google verification
+                    if (seo.google_verification) {
+                        const metaVerify = document.querySelector('meta[name="google-site-verification"]');
+                        if (metaVerify) {
+                            metaVerify.setAttribute('content', seo.google_verification);
+                        }
+                    }
+                    
+                    // Update Open Graph
+                    if (seo.og_title) {
+                        const ogTitle = document.querySelector('meta[property="og:title"]');
+                        if (ogTitle) ogTitle.setAttribute('content', seo.og_title);
+                    }
+                    if (seo.og_description) {
+                        const ogDesc = document.querySelector('meta[property="og:description"]');
+                        if (ogDesc) ogDesc.setAttribute('content', seo.og_description);
+                    }
+                    if (seo.og_image) {
+                        const ogImage = document.querySelector('meta[property="og:image"]');
+                        if (ogImage) ogImage.setAttribute('content', seo.og_image);
+                    }
+                    
+                    // Add Google Analytics
+                    if (seo.google_analytics_id) {
+                        const script1 = document.createElement('script');
+                        script1.async = true;
+                        script1.src = `https://www.googletagmanager.com/gtag/js?id=${seo.google_analytics_id}`;
+                        document.head.appendChild(script1);
+                        
+                        const script2 = document.createElement('script');
+                        script2.innerHTML = `
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', '${seo.google_analytics_id}');
+                        `;
+                        document.head.appendChild(script2);
+                    }
+                }
+            } catch (error) {
+                console.error('Load SEO settings error:', error);
+            }
+        }
+        
+        loadSeoSettings();
         
         document.addEventListener('DOMContentLoaded', async function() {
             const loading = document.getElementById('loadingOverlay');

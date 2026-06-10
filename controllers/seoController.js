@@ -1,5 +1,41 @@
 const { query } = require('../config/database');
 
+async function getPublicSeoSettings(req, res) {
+    try {
+        const result = await query('SELECT TOP 1 * FROM SEOSettings ORDER BY updated_at DESC');
+        
+        if (result.recordset.length > 0) {
+            const settings = result.recordset[0];
+            res.json({
+                success: true,
+                data: {
+                    site_title: settings.site_title,
+                    site_description: settings.site_description,
+                    site_keywords: settings.site_keywords,
+                    google_verification: settings.google_verification,
+                    google_analytics_id: settings.google_analytics_id,
+                    og_title: settings.og_title,
+                    og_description: settings.og_description,
+                    og_image: settings.og_image,
+                    robots_txt: settings.robots_txt,
+                    allow_google: settings.allow_google
+                }
+            });
+        } else {
+            res.json({
+                success: true,
+                data: null
+            });
+        }
+    } catch (error) {
+        console.error('Get public SEO settings error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
 async function getSeoSettings(req, res) {
     try {
         const result = await query('SELECT TOP 1 * FROM SEOSettings ORDER BY updated_at DESC');
@@ -179,6 +215,7 @@ async function generateSitemap(req, res) {
 }
 
 module.exports = {
+    getPublicSeoSettings,
     getSeoSettings,
     saveSeoSettings,
     generateSitemap
