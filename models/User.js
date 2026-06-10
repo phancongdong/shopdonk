@@ -4,6 +4,13 @@ const { query, sql } = require('../config/database');
 async function createUser(name, email, password) {
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    const checkNameQuery = `SELECT * FROM Users WHERE name = @param0`;
+    const existingName = await query(checkNameQuery, [name]);
+    
+    if (existingName.recordset.length > 0) {
+        throw new Error('Username already exists');
+    }
+    
     if (email) {
         const checkQuery = `SELECT * FROM Users WHERE email = @param0`;
         const existingUser = await query(checkQuery, [email]);

@@ -31,6 +31,13 @@ async function register(req, res) {
     } catch (error) {
         console.error('Register error:', error);
         
+        if (error.message === 'Username already exists') {
+            return res.status(409).json({
+                success: false,
+                message: 'Tên đăng nhập đã tồn tại!'
+            });
+        }
+        
         if (error.message === 'Email already exists') {
             return res.status(409).json({
                 success: false,
