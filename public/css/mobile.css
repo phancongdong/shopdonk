@@ -2,6 +2,11 @@
    MOBILE CSS FOR AUTH PAGES
    ======================================== */
 
+/* Hide mobile bottom nav on desktop */
+.mobile-bottom-nav {
+    display: none;
+}
+
 /* Auth Container Mobile */
 @media (max-width: 768px) {
     .auth-container {
