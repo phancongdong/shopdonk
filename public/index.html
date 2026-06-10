@@ -346,56 +346,74 @@
         // Load SEO Settings
         async function loadSeoSettings() {
             try {
-                const res = await fetch(`${API_BASE}/seo/public`);
-                const data = await res.json();
+                // Check if viewing a category
+                const params = new URLSearchParams(window.location.search);
+                const slug = params.get('slug');
                 
-                if (data.success && data.data) {
-                    const seo = data.data;
-                    
+                let seoData = null;
+                
+                if (slug) {
+                    // Load category SEO
+                    const catRes = await fetch(`${API_BASE}/categories`);
+                    const catData = await catRes.json();
+                    if (catData.success) {
+                        const cat = catData.data.find(c => c.slug === slug);
+                        if (cat) {
+                            const seoRes = await fetch(`${API_BASE}/seo/category/${cat.id}`);
+                            const seoResult = await seoRes.json();
+                            if (seoResult.success && seoResult.data) {
+                                seoData = seoResult.data;
+                            }
+                        }
+                    }
+                }
+                
+                // Load global SEO if no category SEO
+                if (!seoData) {
+                    const res = await fetch(`${API_BASE}/seo/public`);
+                    const data = await res.json();
+                    if (data.success && data.data) {
+                        seoData = data.data;
+                    }
+                }
+                
+                if (seoData) {
                     // Update title
-                    if (seo.site_title) {
-                        document.title = seo.site_title;
+                    if (seoData.title) {
+                        document.title = seoData.title;
                     }
                     
                     // Update meta description
                     const metaDesc = document.querySelector('meta[name="description"]');
-                    if (metaDesc && seo.site_description) {
-                        metaDesc.setAttribute('content', seo.site_description);
+                    if (metaDesc && seoData.description) {
+                        metaDesc.setAttribute('content', seoData.description);
                     }
                     
                     // Update meta keywords
                     const metaKeywords = document.querySelector('meta[name="keywords"]');
-                    if (metaKeywords && seo.site_keywords) {
-                        metaKeywords.setAttribute('content', seo.site_keywords);
-                    }
-                    
-                    // Update Google verification
-                    if (seo.google_verification) {
-                        const metaVerify = document.querySelector('meta[name="google-site-verification"]');
-                        if (metaVerify) {
-                            metaVerify.setAttribute('content', seo.google_verification);
-                        }
+                    if (metaKeywords && seoData.keywords) {
+                        metaKeywords.setAttribute('content', seoData.keywords);
                     }
                     
                     // Update Open Graph
-                    if (seo.og_title) {
+                    if (seoData.og_title) {
                         const ogTitle = document.querySelector('meta[property="og:title"]');
-                        if (ogTitle) ogTitle.setAttribute('content', seo.og_title);
+                        if (ogTitle) ogTitle.setAttribute('content', seoData.og_title);
                     }
-                    if (seo.og_description) {
+                    if (seoData.og_description) {
                         const ogDesc = document.querySelector('meta[property="og:description"]');
-                        if (ogDesc) ogDesc.setAttribute('content', seo.og_description);
+                        if (ogDesc) ogDesc.setAttribute('content', seoData.og_description);
                     }
-                    if (seo.og_image) {
+                    if (seoData.og_image) {
                         const ogImage = document.querySelector('meta[property="og:image"]');
-                        if (ogImage) ogImage.setAttribute('content', seo.og_image);
+                        if (ogImage) ogImage.setAttribute('content', seoData.og_image);
                     }
                     
                     // Add Google Analytics
-                    if (seo.google_analytics_id) {
+                    if (seoData.google_analytics_id) {
                         const script1 = document.createElement('script');
                         script1.async = true;
-                        script1.src = `https://www.googletagmanager.com/gtag/js?id=${seo.google_analytics_id}`;
+                        script1.src = `https://www.googletagmanager.com/gtag/js?id=${seoData.google_analytics_id}`;
                         document.head.appendChild(script1);
                         
                         const script2 = document.createElement('script');
@@ -403,9 +421,21 @@
                             window.dataLayer = window.dataLayer || [];
                             function gtag(){dataLayer.push(arguments);}
                             gtag('js', new Date());
-                            gtag('config', '${seo.google_analytics_id}');
+                            gtag('config', '${seoData.google_analytics_id}');
                         `;
                         document.head.appendChild(script2);
+                    }
+                    
+                    // Add noindex/nofollow if needed
+                    if (seoData.noindex || seoData.nofollow) {
+                        const robotsContent = [];
+                        if (seoData.noindex) robotsContent.push('noindex');
+                        if (seoData.nofollow) robotsContent.push('nofollow');
+                        
+                        const metaRobots = document.createElement('meta');
+                        metaRobots.name = 'robots';
+                        metaRobots.content = robotsContent.join(', ');
+                        document.head.appendChild(metaRobots);
                     }
                 }
             } catch (error) {
