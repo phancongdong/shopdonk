@@ -335,18 +335,21 @@
             // Check login
             const user = JSON.parse(localStorage.getItem('user') || 'null');
             if (user) {
-                document.getElementById('userName').textContent = user.name || 'User';
-                document.getElementById('userBalance').textContent = formatPrice(user.balance || 0);
+                const userNameEl = document.getElementById('userName');
+                const userBalanceEl = document.getElementById('userBalance');
+                if (userNameEl) userNameEl.textContent = user.name || 'User';
+                if (userBalanceEl) userBalanceEl.textContent = formatPrice(user.balance || 0);
             }
             
             // User dropdown
             const userBtn = document.getElementById('userBtn');
             const userDropdown = document.getElementById('userDropdown');
             
-            userBtn.addEventListener('click', (e) => {
-                if (user) {
-                    userDropdown.classList.toggle('show');
-                    e.stopPropagation();
+            if (userBtn) {
+                userBtn.addEventListener('click', (e) => {
+                    if (user && userDropdown) {
+                        userDropdown.classList.toggle('show');
+                        e.stopPropagation();
                 } else {
                     location.href = 'login.html';
                 }

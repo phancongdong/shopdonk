@@ -38,9 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const data = await response.json();
                 
-                if (response.ok) {
-                    localStorage.setItem('token', data.token);
+                if (response.ok && data.user) {
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
                     localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    console.log('Login successful, user saved:', data.user);
                     
                     showModal('Đăng nhập thành công!', 'success', () => {
                         window.location.href = 'index.html';
