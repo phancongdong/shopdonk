@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N?p ti?n - ShopGame</title>
+    <title>Nạp tiền - ShopGame</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -15,32 +15,32 @@
     <header class="header">
         <div class="header-left">
             <a href="index.html" class="logo" style="display:flex;align-items:center;gap:10px;">
-                <div class="logo-icon" style="width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">??</div>
+                <div class="logo-icon" style="width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">🎮</div>
                 <div class="logo-text" style="font-size:24px;font-weight:800;color:#fff;">Shop<span style="color:#6366f1;">Game</span></div>
             </a>
         </div>
         <nav class="header-nav">
-            <a href="index.html">Trang Ch?</a>
-            <a href="orders.html">L?ch S? Mua</a>
-            <a href="deposit.html" class="active">N?p Ti?n</a>
-            <a href="transactions.html">D�ng Ti?n</a>
+            <a href="index.html">Trang Chủ</a>
+            <a href="orders.html">Lịch Sử Mua</a>
+            <a href="deposit.html" class="active">Nạp Tiền</a>
+            <a href="transactions.html">Dòng Tiền</a>
             <a href="faq.html">FAQ</a>
         </nav>
         <div class="header-right">
             <div class="user-dropdown">
                 <button class="user-btn" id="userBtn">
-                    <span class="logo-text" style="font-size: 16px;">?? ShopGame</span>
-                    <span class="user-balance" id="userBalance">0 ?</span>
+                    <span class="logo-text" style="font-size: 16px;">🎮 ShopGame</span>
+                    <span class="user-balance" id="userBalance">0 ₫</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="profile.html"><i class="fas fa-user"></i> Th�ng tin t�i kho?n</a>
-                    <a href="change-password.html"><i class="fas fa-key"></i> ??i m?t kh?u</a>
-                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> ??n h�ng</a>
-                    <a href="deposit.html"><i class="fas fa-wallet"></i> N?p ti?n</a>
-                    <a href="contact.html"><i class="fas fa-headset"></i> Li�n h?</a>
-                    <a href="login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> ??ng Nh?p</a>
-                    <a href="#" id="logoutBtn" style="display:none; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> ??ng xu?t</a>
+                    <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                    <a href="change-password.html"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+                    <a href="deposit.html"><i class="fas fa-wallet"></i> Nạp tiền</a>
+                    <a href="contact.html"><i class="fas fa-headset"></i> Liên hệ</a>
+                    <a href="login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</a>
+                    <a href="#" id="logoutBtn" style="display:none; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -48,15 +48,15 @@
 
     <section class="content-section">
         <div class="page-header">
-            <h1><i class="fas fa-wallet"></i> N?p Ti?n T�i Kho?n</h1>
+            <h1><i class="fas fa-wallet"></i> Nạp Tiền Tài Khoản</h1>
         </div>
         
         <div class="deposit-container" id="depositContent">
             <div class="coming-soon" style="padding: 60px 40px;">
                 <i class="fas fa-sign-in-alt"></i>
-                <h2>Vui l�ng ??ng nh?p</h2>
-                <p>??ng nh?p ?? n?p ti?n v� s? d?ng d?ch v?</p>
-                <a href="login.html" class="btn-primary">??ng nh?p ngay</a>
+                <h2>Vui lòng đăng nhập</h2>
+                <p>Đăng nhập để nạp tiền và sử dụng dịch vụ</p>
+                <a href="login.html" class="btn-primary">Đăng nhập ngay</a>
             </div>
         </div>
     </section>
@@ -95,7 +95,7 @@
                 
                 async function loadPaymentSettings() {
                     try {
-                        const res = await fetch(`${API_BASE}/payment-settings`);
+                        const res = await fetch(${API_BASE}/payment-settings);
                         const data = await res.json();
                         if (data.success) {
                             paymentSettings = data.data;
@@ -109,46 +109,40 @@
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
                     modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
-                    modal.innerHTML = `
+                    modal.innerHTML = 
                         <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
                             <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
                                 <i class="fas fa-times"></i>
                             </button>
                             <h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
                                 <i class="fas fa-university" style="color:#6366f1;"></i>
-                                Chuy?n kho?n ng�n h�ng
+                                Chuyển khoản ngân hàng
                             </h3>
-                            <div style="space-y:15px;">
+                            <div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ng�n h�ng</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_name || 'Ch?a c?u h�nh'}</div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ngân hàng</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (paymentSettings.bank_name || 'Chưa cấu hình') + </div>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">S? t�i kho?n</div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số tài khoản</div>
                                     <div style="color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;gap:10px;">
-                                        <span style="font-family:monospace;">${paymentSettings.bank_account || 'Ch?a c?u h�nh'}</span>
-                                        <button onclick="copyText('${paymentSettings.bank_account}')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
+                                        <span style="font-family:monospace;"> + (paymentSettings.bank_account || 'Chưa cấu hình') + </span>
+                                        <button onclick="copyText(' + paymentSettings.bank_account + ')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
                                             <i class="fas fa-copy"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ch? t�i kho?n</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_owner || 'Ch?a c?u h�nh'}</div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Chủ tài khoản</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (paymentSettings.bank_owner || 'Chưa cấu hình') + </div>
                                 </div>
-                                ${paymentSettings.qr_code_url ? `
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:10px;">M� QR thanh to�n</div>
-                                    <img src="${paymentSettings.qr_code_url}" alt="QR Code" style="max-width:100%;border-radius:10px;">
-                                </div>
-                                ` : ''}
+                                <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
+                                    <i class="fas fa-info-circle"></i>
+                                    Vui lòng chuyển khoản và liên hệ admin để được cộng tiền
+                                </p>
                             </div>
-                            <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
-                                <i class="fas fa-info-circle"></i>
-                                Vui l�ng chuy?n kho?n v� li�n h? admin ?? ???c c?ng ti?n
-                            </p>
                         </div>
-                    `;
+                    ;
                     document.body.appendChild(modal);
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) closePaymentModal();
@@ -157,51 +151,40 @@
                 
                 window.showEWallet = function(type) {
                     const config = {
-                        momo: { name: 'MoMo', phone: paymentSettings.momo_phone, owner: paymentSettings.momo_name, icon: 'fa-wallet', color: '#e74c3c' },
-                        zalopay: { name: 'ZaloPay', phone: paymentSettings.zalopay_phone, owner: paymentSettings.zalopay_name, icon: 'fa-mobile-alt', color: '#3498db' },
-                        vnpay: { name: 'VNPay', phone: paymentSettings.vnpay_phone, owner: paymentSettings.vnpay_name, icon: 'fa-qrcode', color: '#2ecc71' }
+                        momo: { name: 'MoMo', phone: paymentSettings.momo_phone || '', owner: paymentSettings.momo_name || '', icon: 'fa-wallet', color: '#e74c3c' },
+                        zalopay: { name: 'ZaloPay', phone: paymentSettings.zalopay_phone || '', owner: paymentSettings.zalopay_name || '', icon: 'fa-mobile-alt', color: '#3498db' },
+                        vnpay: { name: 'VNPay', phone: paymentSettings.vnpay_phone || '', owner: paymentSettings.vnpay_name || '', icon: 'fa-qrcode', color: '#2ecc71' }
                     };
                     
                     const c = config[type];
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
                     modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
-                    modal.innerHTML = `
+                    modal.innerHTML = 
                         <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
                             <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
                                 <i class="fas fa-times"></i>
                             </button>
                             <h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                                <i class="fas ${c.icon}" style="color:${c.color};"></i>
-                                ${c.name}
+                                <i class="fas  + c.icon + " style="color: + c.color + ;"></i>
+                                 + c.name + 
                             </h3>
                             <div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">S? ?i?n tho?i</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;gap:10px;">
-                                        <span style="font-family:monospace;">${c.phone || 'Ch?a c?u h�nh'}</span>
-                                        <button onclick="copyText('${c.phone}')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số điện thoại</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:18px;"> + (c.phone || 'Chưa cấu hình') + </div>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">T�n ch? t�i kho?n</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${c.owner || 'Ch?a c?u h�nh'}</div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Tên chủ tài khoản</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (c.owner || 'Chưa cấu hình') + </div>
                                 </div>
-                                ${paymentSettings.qr_code_url ? `
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:10px;">M� QR thanh to�n</div>
-                                    <img src="${paymentSettings.qr_code_url}" alt="QR Code" style="max-width:100%;border-radius:10px;">
-                                </div>
-                                ` : ''}
+                                <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
+                                    <i class="fas fa-info-circle"></i>
+                                    Vui lòng chuyển khoản và liên hệ admin để được cộng tiền
+                                </p>
                             </div>
-                            <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
-                                <i class="fas fa-info-circle"></i>
-                                Vui l�ng chuy?n kho?n v� li�n h? admin ?? ???c c?ng ti?n
-                            </p>
                         </div>
-                    `;
+                    ;
                     document.body.appendChild(modal);
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) closePaymentModal();
@@ -215,57 +198,50 @@
                 
                 window.copyText = function(text) {
                     navigator.clipboard.writeText(text).then(() => {
-                        alert('?� sao ch�p: ' + text);
+                        alert('Đã sao chép: ' + text);
                     });
                 };
                 
                 loadPaymentSettings().then(() => {
-                    depositContent.innerHTML = `
+                    depositContent.innerHTML = 
                         <div class="deposit-card" style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);">
-                            <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-wallet"></i> N?p ti?n v�o t�i kho?n</h2>
+                            <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-wallet"></i> Nạp tiền vào tài khoản</h2>
                             <div style="color: #a0aec0; margin-bottom: 30px;">
-                                S? d? hi?n t?i: <span style="color: var(--primary); font-weight: bold; font-size: 24px;">${formatCurrency(user.balance || 0)}</span>
+                                Số dư hiện tại: <span style="color: var(--primary); font-weight: bold; font-size: 24px;"> + formatCurrency(user.balance || 0) + </span>
                             </div>
                             <div class="payment-methods" style="display: grid; gap: 15px;">
                                 <button onclick="showBankTransfer()" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
                                     <i class="fas fa-university" style="color: var(--primary); font-size: 30px;"></i>
                                     <div style="flex: 1;">
-                                        <h4 style="color: #fff;">Chuy?n kho?n ng�n h�ng</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Xem th�ng tin t�i kho?n & QR</p>
+                                        <h4 style="color: #fff;">Chuyển khoản ngân hàng</h4>
+                                        <p style="color: #a0aec0; font-size: 12px;">Xem thông tin tài khoản & QR</p>
                                     </div>
-                                    <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;">Khuy�n d�ng</span>
+                                    <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;">Khuyên dùng</span>
                                 </button>
                                 <button onclick="showEWallet('momo')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
                                     <i class="fas fa-wallet" style="color: #e74c3c; font-size: 30px;"></i>
                                     <div style="flex: 1;">
                                         <h4 style="color: #fff;">MoMo</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">V� ?i?n t? MoMo</p>
+                                        <p style="color: #a0aec0; font-size: 12px;">Ví điện tử MoMo</p>
                                     </div>
                                 </button>
                                 <button onclick="showEWallet('zalopay')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
                                     <i class="fas fa-mobile-alt" style="color: #3498db; font-size: 30px;"></i>
                                     <div style="flex: 1;">
                                         <h4 style="color: #fff;">ZaloPay</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">V� ?i?n t? ZaloPay</p>
-                                    </div>
-                                </button>
-                                <button onclick="showEWallet('vnpay')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
-                                    <i class="fas fa-qrcode" style="color: #2ecc71; font-size: 30px;"></i>
-                                    <div style="flex: 1;">
-                                        <h4 style="color: #fff;">VNPay</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Qu�t m� QR thanh to�n</p>
+                                        <p style="color: #a0aec0; font-size: 12px;">Ví điện tử ZaloPay</p>
                                     </div>
                                 </button>
                             </div>
                             <p style="color: #a0aec0; margin-top: 20px; text-align: center;">
                                 <i class="fas fa-info-circle"></i> 
-                                Sau khi chuy?n kho?n, li�n h? admin ?? ???c c?ng ti?n v�o t�i kho?n
+                                Sau khi chuyển khoản, liên hệ admin để được cộng tiền vào tài khoản
                             </p>
                         </div>
                         <style>
                             .payment-btn:hover { background: rgba(255,255,255,0.15) !important; transform: translateY(-2px); }
                         </style>
-                    `;
+                    ;
                 });
             }
         });
