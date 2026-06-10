@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +60,7 @@
     </section>
 
     <script>
-        const API_BASE = 'http://localhost:3000/api';
+        const API_BASE = 'window.location.origin + '/api'';
         
         document.addEventListener('DOMContentLoaded', async function() {
             const userStr = localStorage.getItem('user');
