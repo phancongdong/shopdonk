@@ -6,7 +6,8 @@
     <title>N?p ti?n - ShopGame</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">`n    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
     <div class="particles" id="particles"></div>
@@ -34,12 +35,12 @@
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
                     <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài kho?n</a>
-                    <a href="change-password.html"><i class="fas fa-key"></i> Ð?i m?t kh?u</a>
-                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> Ðon hàng</a>
+                    <a href="change-password.html"><i class="fas fa-key"></i> ??i m?t kh?u</a>
+                    <a href="orders.html"><i class="fas fa-shopping-cart"></i> ??n hàng</a>
                     <a href="deposit.html"><i class="fas fa-wallet"></i> N?p ti?n</a>
                     <a href="contact.html"><i class="fas fa-headset"></i> Liên h?</a>
-                    <a href="login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> Ðang Nh?p</a>
-                    <a href="#" id="logoutBtn" style="display:none; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Ðang xu?t</a>
+                    <a href="login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> ??ng Nh?p</a>
+                    <a href="#" id="logoutBtn" style="display:none; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> ??ng xu?t</a>
                 </div>
             </div>
         </div>
@@ -53,9 +54,9 @@
         <div class="deposit-container" id="depositContent">
             <div class="coming-soon" style="padding: 60px 40px;">
                 <i class="fas fa-sign-in-alt"></i>
-                <h2>Vui lòng dang nh?p</h2>
-                <p>Ðang nh?p d? n?p ti?n và s? d?ng d?ch v?</p>
-                <a href="login.html" class="btn-primary">Ðang nh?p ngay</a>
+                <h2>Vui lòng ??ng nh?p</h2>
+                <p>??ng nh?p ?? n?p ti?n và s? d?ng d?ch v?</p>
+                <a href="login.html" class="btn-primary">??ng nh?p ngay</a>
             </div>
         </div>
     </section>
@@ -63,7 +64,7 @@
     <script src="js/main.js"></script>
     <script src="js/particles.js"></script>
     <script>
-        const API_BASE = 'http://localhost:3000/api';
+        const API_BASE = window.location.origin + '/api';
         
         document.addEventListener('DOMContentLoaded', function() {
             const user = JSON.parse(localStorage.getItem('user') || 'null');
@@ -107,9 +108,9 @@
                 window.showBankTransfer = function() {
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
-                    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);';
+                    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
                     modal.innerHTML = `
-                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:90%;border:1px solid rgba(99,102,241,0.3);position:relative;">
+                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
                             <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -120,12 +121,12 @@
                             <div style="space-y:15px;">
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
                                     <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ngân hàng</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_name || 'Chua c?u hình'}</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_name || 'Ch?a c?u hình'}</div>
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
                                     <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">S? tài kho?n</div>
                                     <div style="color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;gap:10px;">
-                                        <span style="font-family:monospace;">${paymentSettings.bank_account || 'Chua c?u hình'}</span>
+                                        <span style="font-family:monospace;">${paymentSettings.bank_account || 'Ch?a c?u hình'}</span>
                                         <button onclick="copyText('${paymentSettings.bank_account}')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
                                             <i class="fas fa-copy"></i>
                                         </button>
@@ -133,7 +134,7 @@
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
                                     <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ch? tài kho?n</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_owner || 'Chua c?u hình'}</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${paymentSettings.bank_owner || 'Ch?a c?u hình'}</div>
                                 </div>
                                 ${paymentSettings.qr_code_url ? `
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px;">
@@ -144,7 +145,7 @@
                             </div>
                             <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
                                 <i class="fas fa-info-circle"></i>
-                                Vui lòng chuy?n kho?n và liên h? admin d? du?c c?ng ti?n
+                                Vui lòng chuy?n kho?n và liên h? admin ?? ???c c?ng ti?n
                             </p>
                         </div>
                     `;
@@ -164,9 +165,9 @@
                     const c = config[type];
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
-                    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);';
+                    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
                     modal.innerHTML = `
-                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:90%;border:1px solid rgba(99,102,241,0.3);position:relative;">
+                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
                             <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -176,9 +177,9 @@
                             </h3>
                             <div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">S? di?n tho?i</div>
+                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">S? ?i?n tho?i</div>
                                     <div style="color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;gap:10px;">
-                                        <span style="font-family:monospace;">${c.phone || 'Chua c?u hình'}</span>
+                                        <span style="font-family:monospace;">${c.phone || 'Ch?a c?u hình'}</span>
                                         <button onclick="copyText('${c.phone}')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
                                             <i class="fas fa-copy"></i>
                                         </button>
@@ -186,7 +187,7 @@
                                 </div>
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
                                     <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Tên ch? tài kho?n</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${c.owner || 'Chua c?u hình'}</div>
+                                    <div style="color:#fff;font-weight:bold;font-size:16px;">${c.owner || 'Ch?a c?u hình'}</div>
                                 </div>
                                 ${paymentSettings.qr_code_url ? `
                                 <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px;">
@@ -197,7 +198,7 @@
                             </div>
                             <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
                                 <i class="fas fa-info-circle"></i>
-                                Vui lòng chuy?n kho?n và liên h? admin d? du?c c?ng ti?n
+                                Vui lòng chuy?n kho?n và liên h? admin ?? ???c c?ng ti?n
                             </p>
                         </div>
                     `;
@@ -214,7 +215,7 @@
                 
                 window.copyText = function(text) {
                     navigator.clipboard.writeText(text).then(() => {
-                        alert('Ðã sao chép: ' + text);
+                        alert('?ã sao chép: ' + text);
                     });
                 };
                 
@@ -223,7 +224,7 @@
                         <div class="deposit-card" style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);">
                             <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-wallet"></i> N?p ti?n vào tài kho?n</h2>
                             <div style="color: #a0aec0; margin-bottom: 30px;">
-                                S? du hi?n t?i: <span style="color: var(--primary); font-weight: bold; font-size: 24px;">${formatCurrency(user.balance || 0)}</span>
+                                S? d? hi?n t?i: <span style="color: var(--primary); font-weight: bold; font-size: 24px;">${formatCurrency(user.balance || 0)}</span>
                             </div>
                             <div class="payment-methods" style="display: grid; gap: 15px;">
                                 <button onclick="showBankTransfer()" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
@@ -238,14 +239,14 @@
                                     <i class="fas fa-wallet" style="color: #e74c3c; font-size: 30px;"></i>
                                     <div style="flex: 1;">
                                         <h4 style="color: #fff;">MoMo</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Ví di?n t? MoMo</p>
+                                        <p style="color: #a0aec0; font-size: 12px;">Ví ?i?n t? MoMo</p>
                                     </div>
                                 </button>
                                 <button onclick="showEWallet('zalopay')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
                                     <i class="fas fa-mobile-alt" style="color: #3498db; font-size: 30px;"></i>
                                     <div style="flex: 1;">
                                         <h4 style="color: #fff;">ZaloPay</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Ví di?n t? ZaloPay</p>
+                                        <p style="color: #a0aec0; font-size: 12px;">Ví ?i?n t? ZaloPay</p>
                                     </div>
                                 </button>
                                 <button onclick="showEWallet('vnpay')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
@@ -258,7 +259,7 @@
                             </div>
                             <p style="color: #a0aec0; margin-top: 20px; text-align: center;">
                                 <i class="fas fa-info-circle"></i> 
-                                Sau khi chuy?n kho?n, liên h? admin d? du?c c?ng ti?n vào tài kho?n
+                                Sau khi chuy?n kho?n, liên h? admin ?? ???c c?ng ti?n vào tài kho?n
                             </p>
                         </div>
                         <style>
