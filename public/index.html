@@ -7,6 +7,7 @@
     <title>ShopGame - Shop bán acc game uy tín</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/mobile.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f0f1a; color: #fff; }
@@ -213,6 +214,7 @@
                 <a href="faq.html">FAQ</a>
             </nav>
             <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+                <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                 <div class="lang-selector">
                     <img src="https://flagcdn.com/w40/vn.png" alt="VN">
                     <span>VI | VND</span>
@@ -235,6 +237,15 @@
             </div>
         </div>
     </header>
+    
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-nav-item active"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+        <a href="orders.html" class="mobile-nav-item"><i class="fas fa-shopping-cart"></i><span>Đơn hàng</span></a>
+        <a href="deposit.html" class="mobile-nav-item"><i class="fas fa-wallet"></i><span>Nạp tiền</span></a>
+        <a href="faq.html" class="mobile-nav-item"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="profile.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Tài khoản</span></a>
+    </nav>
     
     <!-- Banner -->
     <section class="banner-section container">
