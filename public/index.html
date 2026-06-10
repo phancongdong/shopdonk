@@ -350,10 +350,11 @@
                     if (user && userDropdown) {
                         userDropdown.classList.toggle('show');
                         e.stopPropagation();
-                } else {
-                    location.href = 'login.html';
-                }
-            });
+                    } else {
+                        location.href = 'login.html';
+                    }
+                });
+            }
             
             document.addEventListener('click', () => {
                 userDropdown.classList.remove('show');
