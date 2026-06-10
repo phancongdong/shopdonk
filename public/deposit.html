@@ -30,7 +30,7 @@
             <div class="user-dropdown">
                 <button class="user-btn" id="userBtn">
                     <span class="logo-text" style="font-size: 16px;">🎮 ShopGame</span>
-                    <span class="user-balance" id="userBalance">0 ₫</span>
+                    <span class="user-balance" id="userBalance">0 đ</span>
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
@@ -95,7 +95,7 @@
                 
                 async function loadPaymentSettings() {
                     try {
-                        const res = await fetch(${API_BASE}/payment-settings);
+                        const res = await fetch(`${API_BASE}/payment-settings`);
                         const data = await res.json();
                         if (data.success) {
                             paymentSettings = data.data;
@@ -109,40 +109,7 @@
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
                     modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
-                    modal.innerHTML = 
-                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
-                            <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                                <i class="fas fa-university" style="color:#6366f1;"></i>
-                                Chuyển khoản ngân hàng
-                            </h3>
-                            <div>
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ngân hàng</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (paymentSettings.bank_name || 'Chưa cấu hình') + </div>
-                                </div>
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số tài khoản</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;gap:10px;">
-                                        <span style="font-family:monospace;"> + (paymentSettings.bank_account || 'Chưa cấu hình') + </span>
-                                        <button onclick="copyText(' + paymentSettings.bank_account + ')" style="background:none;border:none;color:#6366f1;cursor:pointer;font-size:16px;">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Chủ tài khoản</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (paymentSettings.bank_owner || 'Chưa cấu hình') + </div>
-                                </div>
-                                <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
-                                    <i class="fas fa-info-circle"></i>
-                                    Vui lòng chuyển khoản và liên hệ admin để được cộng tiền
-                                </p>
-                            </div>
-                        </div>
-                    ;
+                    modal.innerHTML = '<div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;"><button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;"><i class="fas fa-times"></i></button><h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;"><i class="fas fa-university" style="color:#6366f1;"></i>Chuyển khoản ngân hàng</h3><div><div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;"><div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Ngân hàng</div><div style="color:#fff;font-weight:bold;font-size:16px;">' + (paymentSettings.bank_name || 'Chưa cấu hình') + '</div></div><div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;"><div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số tài khoản</div><div style="color:#fff;font-weight:bold;font-size:18px;font-family:monospace;">' + (paymentSettings.bank_account || 'Chưa cấu hình') + '</div></div><div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;"><div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Chủ tài khoản</div><div style="color:#fff;font-weight:bold;font-size:16px;">' + (paymentSettings.bank_owner || 'Chưa cấu hình') + '</div></div></div><p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;"><i class="fas fa-info-circle"></i>Vui lòng chuyển khoản và liên hệ admin để được cộng tiền</p></div>';
                     document.body.appendChild(modal);
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) closePaymentModal();
@@ -160,31 +127,7 @@
                     const modal = document.createElement('div');
                     modal.id = 'paymentModal';
                     modal.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);padding:20px;';
-                    modal.innerHTML = 
-                        <div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;">
-                            <button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                                <i class="fas  + c.icon + " style="color: + c.color + ;"></i>
-                                 + c.name + 
-                            </h3>
-                            <div>
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số điện thoại</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:18px;"> + (c.phone || 'Chưa cấu hình') + </div>
-                                </div>
-                                <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;">
-                                    <div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Tên chủ tài khoản</div>
-                                    <div style="color:#fff;font-weight:bold;font-size:16px;"> + (c.owner || 'Chưa cấu hình') + </div>
-                                </div>
-                                <p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;">
-                                    <i class="fas fa-info-circle"></i>
-                                    Vui lòng chuyển khoản và liên hệ admin để được cộng tiền
-                                </p>
-                            </div>
-                        </div>
-                    ;
+                    modal.innerHTML = '<div style="background:linear-gradient(135deg, #1a1a2e, #16213e);border-radius:20px;padding:30px;max-width:450px;width:100%;border:1px solid rgba(99,102,241,0.3);position:relative;"><button onclick="closePaymentModal()" style="position:absolute;top:15px;right:15px;background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;"><i class="fas fa-times"></i></button><h3 style="font-size:22px;font-weight:bold;color:#fff;margin-bottom:20px;display:flex;align-items:center;gap:10px;"><i class="fas ' + c.icon + '" style="color:' + c.color + ';"></i>' + c.name + '</h3><div><div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;"><div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Số điện thoại</div><div style="color:#fff;font-weight:bold;font-size:18px;">' + (c.phone || 'Chưa cấu hình') + '</div></div><div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;margin-bottom:15px;"><div style="color:#94a3b8;font-size:13px;margin-bottom:5px;">Tên chủ tài khoản</div><div style="color:#fff;font-weight:bold;font-size:16px;">' + (c.owner || 'Chưa cấu hình') + '</div></div></div><p style="color:#94a3b8;font-size:13px;text-align:center;margin-top:20px;"><i class="fas fa-info-circle"></i>Vui lòng chuyển khoản và liên hệ admin để được cộng tiền</p></div>';
                     document.body.appendChild(modal);
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) closePaymentModal();
@@ -203,45 +146,7 @@
                 };
                 
                 loadPaymentSettings().then(() => {
-                    depositContent.innerHTML = 
-                        <div class="deposit-card" style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);">
-                            <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-wallet"></i> Nạp tiền vào tài khoản</h2>
-                            <div style="color: #a0aec0; margin-bottom: 30px;">
-                                Số dư hiện tại: <span style="color: var(--primary); font-weight: bold; font-size: 24px;"> + formatCurrency(user.balance || 0) + </span>
-                            </div>
-                            <div class="payment-methods" style="display: grid; gap: 15px;">
-                                <button onclick="showBankTransfer()" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
-                                    <i class="fas fa-university" style="color: var(--primary); font-size: 30px;"></i>
-                                    <div style="flex: 1;">
-                                        <h4 style="color: #fff;">Chuyển khoản ngân hàng</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Xem thông tin tài khoản & QR</p>
-                                    </div>
-                                    <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;">Khuyên dùng</span>
-                                </button>
-                                <button onclick="showEWallet('momo')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
-                                    <i class="fas fa-wallet" style="color: #e74c3c; font-size: 30px;"></i>
-                                    <div style="flex: 1;">
-                                        <h4 style="color: #fff;">MoMo</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Ví điện tử MoMo</p>
-                                    </div>
-                                </button>
-                                <button onclick="showEWallet('zalopay')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;">
-                                    <i class="fas fa-mobile-alt" style="color: #3498db; font-size: 30px;"></i>
-                                    <div style="flex: 1;">
-                                        <h4 style="color: #fff;">ZaloPay</h4>
-                                        <p style="color: #a0aec0; font-size: 12px;">Ví điện tử ZaloPay</p>
-                                    </div>
-                                </button>
-                            </div>
-                            <p style="color: #a0aec0; margin-top: 20px; text-align: center;">
-                                <i class="fas fa-info-circle"></i> 
-                                Sau khi chuyển khoản, liên hệ admin để được cộng tiền vào tài khoản
-                            </p>
-                        </div>
-                        <style>
-                            .payment-btn:hover { background: rgba(255,255,255,0.15) !important; transform: translateY(-2px); }
-                        </style>
-                    ;
+                    depositContent.innerHTML = '<div class="deposit-card" style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);"><h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-wallet"></i> Nạp tiền vào tài khoản</h2><div style="color: #a0aec0; margin-bottom: 30px;">Số dư hiện tại: <span style="color: var(--primary); font-weight: bold; font-size: 24px;">' + formatCurrency(user.balance || 0) + '</span></div><div class="payment-methods" style="display: grid; gap: 15px;"><button onclick="showBankTransfer()" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;"><i class="fas fa-university" style="color: var(--primary); font-size: 30px;"></i><div style="flex: 1;"><h4 style="color: #fff;">Chuyển khoản ngân hàng</h4><p style="color: #a0aec0; font-size: 12px;">Xem thông tin tài khoản & QR</p></div><span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;">Khuyên dùng</span></button><button onclick="showEWallet(\'momo\')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;"><i class="fas fa-wallet" style="color: #e74c3c; font-size: 30px;"></i><div style="flex: 1;"><h4 style="color: #fff;">MoMo</h4><p style="color: #a0aec0; font-size: 12px;">Ví điện tử MoMo</p></div></button><button onclick="showEWallet(\'zalopay\')" class="payment-btn" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; text-align: left; width: 100%;"><i class="fas fa-mobile-alt" style="color: #3498db; font-size: 30px;"></i><div style="flex: 1;"><h4 style="color: #fff;">ZaloPay</h4><p style="color: #a0aec0; font-size: 12px;">Ví điện tử ZaloPay</p></div></button></div><p style="color: #a0aec0; margin-top: 20px; text-align: center;"><i class="fas fa-info-circle"></i> Sau khi chuyển khoản, liên hệ admin để được cộng tiền vào tài khoản</p></div><style>.payment-btn:hover { background: rgba(255,255,255,0.15) !important; transform: translateY(-2px); }</style>';
                 });
             }
         });
