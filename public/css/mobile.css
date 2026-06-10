@@ -1,616 +1,497 @@
 /* ========================================
-   MOBILE RESPONSIVE ENHANCEMENTS
+   MOBILE CSS FOR AUTH PAGES
    ======================================== */
 
-/* Mobile Menu Button */
-.mobile-menu-btn {
-    display: none;
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.1);
-    border: none;
-    border-radius: 10px;
-    color: #94a3b8;
-    cursor: pointer;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.mobile-menu-btn:hover {
-    background: rgba(99,102,241,0.2);
-    color: #6366f1;
-}
-
-/* Mobile Bottom Navigation */
-.mobile-bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-    border-top: 1px solid rgba(99,102,241,0.3);
-    padding: 8px 0;
-    z-index: 9999;
-    backdrop-filter: blur(20px);
-}
-
-.mobile-nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px;
-    color: #94a3b8;
-    text-decoration: none;
-    transition: all 0.3s;
-    font-size: 11px;
-}
-
-.mobile-nav-item i {
-    font-size: 20px;
-}
-
-.mobile-nav-item.active {
-    color: #6366f1;
-}
-
-.mobile-nav-item:hover {
-    color: #6366f1;
-    transform: translateY(-2px);
-}
-
-/* Large Mobile & Tablet (max-width: 1024px) */
-@media (max-width: 1024px) {
-    .container {
-        padding: 0 15px;
-    }
-    
-    .header-content {
-        padding: 12px 15px;
-    }
-    
-    .nav-menu {
-        gap: 15px;
-        font-size: 14px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-    .categories-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-    
-    .games-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-    }
-}
-
-/* Mobile (max-width: 768px) */
+/* Auth Container Mobile */
 @media (max-width: 768px) {
-    /* Header Mobile */
-    .mobile-menu-btn {
-        display: flex !important;
+    .auth-container {
+        padding: 20px 15px;
+        min-height: 100vh;
     }
     
-    .nav-menu {
-        display: none;
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-        padding: 20px;
-        flex-direction: column;
-        gap: 0;
-        border-bottom: 1px solid rgba(99,102,241,0.3);
-        z-index: 9998;
-        max-height: calc(100vh - 70px);
-        overflow-y: auto;
+    .auth-card {
+        max-width: 100%;
+        padding: 30px 20px;
+        border-radius: 20px;
     }
     
-    .nav-menu.show {
-        display: flex;
+    .auth-header h1 {
+        font-size: 24px;
     }
     
-    .nav-menu a {
-        padding: 15px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+    .auth-header p {
+        font-size: 14px;
+    }
+    
+    .auth-logo .logo-text {
+        font-size: 22px;
+    }
+    
+    /* Form Mobile */
+    .form-group label {
+        font-size: 14px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 14px 15px;
         font-size: 16px;
     }
     
-    .nav-menu a:last-child {
-        border-bottom: none;
-    }
-    
-    .lang-selector {
-        display: none;
-    }
-    
-    .user-btn {
-        padding: 8px 15px;
-        font-size: 14px;
-    }
-    
-    .user-dropdown {
-        position: fixed;
-        top: 70px;
-        left: 10px;
-        right: 10px;
-        width: auto;
-    }
-    
-    /* Mobile Bottom Navigation */
-    .mobile-bottom-nav {
-        display: flex;
-        justify-content: space-around;
-    }
-    
-    /* Add padding to body to prevent content being hidden */
-    body {
-        padding-bottom: 70px;
-    }
-    
-    /* Banner Mobile */
-    .banner-section {
-        padding: 15px 0;
-    }
-    
-    .banner-img {
-        max-height: 250px;
-        border-radius: 15px;
-    }
-    
-    /* Section Titles Mobile */
-    .section-title {
-        margin: 30px 0 20px;
-    }
-    
-    .section-title h2 {
-        font-size: 20px;
-        letter-spacing: 1px;
-    }
-    
-    .section-title p {
-        font-size: 14px;
-    }
-    
-    /* Categories Mobile */
-    .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .category-card {
-        border-radius: 12px;
-    }
-    
-    .category-img {
-        height: 140px;
-    }
-    
-    .category-info {
-        padding: 15px;
-    }
-    
-    .category-name {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-    
-    .category-btn {
-        padding: 10px 25px;
-        font-size: 14px;
-    }
-    
-    /* Games/Products Mobile */
-    .games-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .game-card {
-        border-radius: 12px;
-    }
-    
-    .game-img {
-        height: 160px;
-    }
-    
-    .game-content {
-        padding: 15px;
-    }
-    
-    .game-title {
+    .auth-btn {
+        padding: 14px;
         font-size: 15px;
     }
     
-    .game-stats {
-        gap: 15px;
-        margin-bottom: 12px;
-    }
-    
-    .game-stat-value {
-        font-size: 16px;
-    }
-    
-    .game-btn {
-        padding: 12px;
+    .auth-footer {
+        margin-top: 25px;
         font-size: 14px;
     }
     
-    /* Filter Section Mobile */
-    .filter-section {
-        margin: 20px 0;
+    /* Social Login */
+    .social-login {
+        gap: 10px;
+        margin-top: 25px;
     }
     
-    .filter-row {
+    .social-btn {
+        padding: 12px;
+        font-size: 18px;
+    }
+    
+    /* Divider */
+    .divider {
+        margin: 25px 0;
+    }
+    
+    .divider span {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 25px 15px;
+    }
+    
+    .auth-header h1 {
+        font-size: 22px;
+    }
+    
+    .auth-logo .logo-text {
+        font-size: 20px;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 12px 14px;
+    }
+    
+    .auth-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR ORDERS PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .orders-container {
+        padding: 20px 15px;
+    }
+    
+    .orders-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .orders-title {
+        font-size: 22px;
+    }
+    
+    .orders-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .stat-item {
+        padding: 15px;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+    }
+    
+    /* Orders Table */
+    .orders-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .orders-table {
+        min-width: 600px;
+    }
+    
+    .orders-table th,
+    .orders-table td {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+    
+    /* Order Cards Mobile */
+    .order-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .order-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .order-info {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .order-btn {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR DEPOSIT PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .deposit-container {
+        padding: 20px 15px;
+    }
+    
+    .deposit-title {
+        font-size: 22px;
+    }
+    
+    .deposit-info {
+        padding: 20px 15px;
+    }
+    
+    .deposit-form {
+        padding: 20px 15px;
+    }
+    
+    .amount-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .amount-option {
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    .custom-amount input {
+        padding: 14px;
+        font-size: 16px;
+    }
+    
+    .bank-info {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .bank-info-row {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+    
+    .copy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .deposit-note {
+        padding: 15px;
+        font-size: 13px;
+    }
+    
+    .deposit-btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .amount-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR PROFILE PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 20px 15px;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+    }
+    
+    .profile-info {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .info-card {
+        padding: 20px 15px;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        gap: 5px;
+        padding: 12px 0;
+    }
+    
+    .info-label {
+        font-size: 13px;
+    }
+    
+    .info-value {
+        font-size: 15px;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .profile-btn {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR TRANSACTIONS PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .transactions-container {
+        padding: 20px 15px;
+    }
+    
+    .transactions-title {
+        font-size: 22px;
+    }
+    
+    .filter-bar {
         flex-direction: column;
         gap: 10px;
     }
     
     .filter-group {
-        min-width: 100%;
-    }
-    
-    .filter-input, .filter-select {
-        padding: 14px 15px;
-        font-size: 16px;
-    }
-    
-    /* Stats Mobile */
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin: 20px 0;
-    }
-    
-    .stat-card {
-        padding: 15px;
-        border-radius: 12px;
-        gap: 12px;
-    }
-    
-    .stat-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-    }
-    
-    .stat-value {
-        font-size: 18px;
-    }
-    
-    .stat-label {
-        font-size: 11px;
-    }
-    
-    /* Features Mobile */
-    .features-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        margin-top: 20px;
-    }
-    
-    .feature-card {
-        padding: 20px;
-        border-radius: 12px;
-    }
-    
-    .feature-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 22px;
-        margin-bottom: 15px;
-    }
-    
-    .feature-card h3 {
-        font-size: 16px;
-    }
-    
-    .feature-card p {
-        font-size: 13px;
-    }
-    
-    /* Partners Mobile */
-    .partners-grid {
-        gap: 12px;
-        margin-top: 20px;
-    }
-    
-    .partner-item {
-        padding: 12px 18px;
-        font-size: 13px;
-        border-radius: 10px;
-    }
-    
-    .partner-item i {
-        font-size: 20px;
-    }
-    
-    /* Footer Mobile */
-    footer {
-        padding: 30px 15px 100px;
-        margin-top: 40px;
-    }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    
-    .footer-section h3 {
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
-    
-    .footer-section p {
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-    
-    .social-links {
-        gap: 10px;
-    }
-    
-    .social-links a {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-    
-    .footer-bottom {
-        font-size: 13px;
-        padding-top: 20px;
-        margin-top: 20px;
-    }
-    
-    /* Modal Mobile */
-    .modal-overlay {
-        padding: 10px;
-        align-items: flex-end;
-    }
-    
-    .modal-content {
-        max-width: 100%;
-        border-radius: 20px 20px 0 0;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-    
-    .modal-header {
-        padding: 20px 15px;
-    }
-    
-    .modal-header i {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
-    
-    .modal-header h3 {
-        font-size: 18px;
-    }
-    
-    .modal-body {
-        padding: 20px 15px;
-    }
-    
-    .info-box {
-        padding: 15px;
-    }
-    
-    .info-row {
-        padding: 10px 0;
-        font-size: 14px;
-    }
-    
-    .account-box {
-        padding: 15px;
-    }
-    
-    .credential-row {
-        padding: 10px;
-        font-size: 13px;
-    }
-    
-    .modal-footer {
-        padding: 15px;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .modal-btn {
         width: 100%;
-        padding: 14px;
     }
     
-    /* Toast Mobile */
-    .toast {
-        left: 10px;
-        right: 10px;
-        bottom: 80px;
-        transform: none;
-        text-align: center;
-        font-size: 14px;
-        padding: 12px 20px;
+    .transactions-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    @keyframes toastIn {
-        from { transform: translateY(20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
+    .transactions-table {
+        min-width: 600px;
     }
     
-    /* Chat Bubble Mobile */
-    .chat-bubble {
-        bottom: 90px;
-        right: 20px;
-        width: 55px;
-        height: 55px;
+    .transactions-table th,
+    .transactions-table td {
+        padding: 12px 10px;
+        font-size: 13px;
     }
     
-    .chat-bubble i {
+    /* Transaction Cards */
+    .transaction-card {
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .transaction-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR FAQ PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .faq-container {
+        padding: 20px 15px;
+    }
+    
+    .faq-title {
         font-size: 22px;
     }
     
-    .chat-bubble::before {
-        width: 65px;
-        height: 65px;
+    .faq-item {
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .faq-question {
+        font-size: 15px;
+        padding-right: 30px;
+    }
+    
+    .faq-answer {
+        padding-top: 12px;
+        font-size: 14px;
+    }
+    
+    .faq-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
     }
 }
 
-/* Small Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-    .container {
-        padding: 0 10px;
+/* ========================================
+   MOBILE CSS FOR CONTACT PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .contact-container {
+        padding: 20px 15px;
     }
     
-    .header-content {
-        padding: 10px;
+    .contact-title {
+        font-size: 22px;
     }
     
-    .logo-text {
-        font-size: 20px;
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
-    .logo-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+    .contact-info-card,
+    .contact-form-card {
+        padding: 20px 15px;
     }
     
-    .user-btn {
-        padding: 8px 12px;
-        font-size: 13px;
+    .contact-method {
+        padding: 12px;
     }
     
-    .section-title h2 {
-        font-size: 18px;
-        gap: 10px;
+    .contact-form {
+        gap: 15px;
     }
     
-    .section-title h2 i {
+    .contact-input,
+    .contact-textarea {
+        padding: 12px 14px;
         font-size: 16px;
     }
     
-    /* Single column for very small screens */
-    .stats-grid {
-        grid-template-columns: 1fr;
+    .contact-btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+}
+
+/* ========================================
+   MOBILE CSS FOR CHANGE PASSWORD PAGE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .change-password-container {
+        padding: 20px 15px;
     }
     
-    .stat-card {
-        justify-content: center;
+    .change-password-title {
+        font-size: 22px;
     }
     
-    /* Smaller cards */
-    .game-img {
-        height: 140px;
+    .change-password-form {
+        padding: 20px 15px;
     }
     
-    .category-img {
-        height: 120px;
+    .password-strength {
+        margin-top: 10px;
     }
     
-    /* Smaller buttons */
-    .game-btn, .category-btn, .modal-btn {
-        padding: 12px 15px;
+    .strength-bar {
+        height: 4px;
+    }
+    
+    .password-requirements {
+        padding: 15px;
         font-size: 13px;
     }
 }
 
-/* Touch-friendly improvements */
-@media (hover: none) and (pointer: coarse) {
-    /* Larger touch targets */
-    .game-btn, .category-btn, .modal-btn {
-        min-height: 48px;
-    }
-    
-    .filter-input, .filter-select {
-        min-height: 48px;
-    }
-    
-    .nav-menu a, .mobile-nav-item {
-        min-height: 48px;
-    }
-    
-    /* Remove hover effects on touch devices */
-    .game-card:hover, .category-card:hover, .stat-card:hover, .feature-card:hover {
-        transform: none;
-    }
-    
-    /* Add active state for touch */
-    .game-btn:active, .category-btn:active, .modal-btn:active {
-        transform: scale(0.98);
-    }
-}
+/* ========================================
+   COMMON MOBILE UTILITIES
+   ======================================== */
 
-/* Landscape mode adjustments */
-@media (max-width: 768px) and (orientation: landscape) {
-    .banner-img {
-        max-height: 180px;
-    }
-    
-    .modal-overlay {
-        align-items: center;
-    }
-    
-    .modal-content {
-        max-width: 90%;
-        border-radius: 20px;
-    }
-}
-
-/* Dark mode support for mobile */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: #0f0f1a;
-    }
-}
-
-/* Reduce animations for better performance on mobile */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Hide scrollbar on mobile for cleaner look */
+/* Hide on mobile */
 @media (max-width: 768px) {
-    *::-webkit-scrollbar {
-        display: none;
+    .hide-mobile {
+        display: none !important;
     }
     
-    * {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+    .show-mobile {
+        display: block !important;
     }
 }
 
-/* Safe area support for notched devices */
+/* Hide on desktop */
+@media (min-width: 769px) {
+    .show-mobile {
+        display: none !important;
+    }
+}
+
+/* Safe area for notched devices */
 @supports (padding: max(0px)) {
-    .mobile-bottom-nav {
-        padding-bottom: max(8px, env(safe-area-inset-bottom));
+    @media (max-width: 768px) {
+        .auth-container,
+        .orders-container,
+        .deposit-container,
+        .profile-container,
+        .transactions-container,
+        .faq-container,
+        .contact-container {
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+        }
     }
-    
-    body {
-        padding-bottom: max(70px, calc(70px + env(safe-area-inset-bottom)));
-    }
-    
-    .chat-bubble {
-        bottom: max(90px, calc(90px + env(safe-area-inset-bottom)));
+}
+
+/* Reduce animations on mobile */
+@media (prefers-reduced-motion: reduce) {
+    @media (max-width: 768px) {
+        * {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }
     }
 }
