@@ -880,13 +880,38 @@
                 <div class="info-box">
                     <div class="info-row"><span>San pham:</span><strong>${productName}</strong></div>
                     <div class="info-row"><span>Gia:</span><strong>${formatPrice(price)}</strong></div>
+                    <div class="info-row"><span>So luong:</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button onclick="changeQty(-1)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; font-size: 16px;"><i class="fas fa-minus"></i></button>
+                            <input type="number" id="buyQuantity" value="1" min="1" max="10" style="width: 60px; text-align: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 8px; padding: 6px; font-size: 16px; font-weight: bold;" onchange="updateTotalPrice(${price}, ${user.balance})">
+                            <button onclick="changeQty(1)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; font-size: 16px;"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="info-row"><span>Tong tien:</span><strong id="totalPrice">${formatPrice(price)}</strong></div>
                     <div class="info-row"><span>So du hien tai:</span><strong>${formatPrice(user.balance)}</strong></div>
-                    <div class="info-row"><span>So du sau mua:</span><strong style="color:#22c55e">${formatPrice(user.balance - price)}</strong></div>
+                    <div class="info-row"><span>So du sau mua:</span><strong id="remainingBalance" style="color:#22c55e">${formatPrice(user.balance - price)}</strong></div>
                 </div>
             `, [
                 { text: 'Huy', class: 'secondary', action: closeModal },
                 { text: 'Xac nhan', class: 'primary', action: () => processPurchase(productId, price, productName) }
             ]);
+            
+            window.changeQty = function(delta) {
+                const input = document.getElementById('buyQuantity');
+                let qty = parseInt(input.value) + delta;
+                if (qty < 1) qty = 1;
+                if (qty > 10) qty = 10;
+                input.value = qty;
+                updateTotalPrice(price, user.balance);
+            };
+            
+            window.updateTotalPrice = function(price, balance) {
+                const qty = parseInt(document.getElementById('buyQuantity').value) || 1;
+                const total = price * qty;
+                document.getElementById('totalPrice').textContent = formatPrice(total);
+                document.getElementById('remainingBalance').textContent = formatPrice(balance - total);
+                document.getElementById('remainingBalance').style.color = balance - total >= 0 ? '#22c55e' : '#ef4444';
+            };
         }
         
         async function processPurchase(productId, price, productName) {
@@ -894,19 +919,21 @@
             document.getElementById('loadingOverlay').style.display = 'flex';
             
             const user = JSON.parse(localStorage.getItem('user') || 'null');
+            const quantity = parseInt(document.getElementById('buyQuantity')?.value) || 1;
+            const totalPrice = price * quantity;
             
             try {
                 const res = await fetch(`${API_BASE}/orders`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: user.id, product_id: productId, quantity: 1 })
+                    body: JSON.stringify({ user_id: user.id, product_id: productId, quantity })
                 });
                 const data = await res.json();
                 
                 document.getElementById('loadingOverlay').style.display = 'none';
                 
                 if (data.success) {
-                    user.balance -= price;
+                    user.balance -= totalPrice;
                     localStorage.setItem('user', JSON.stringify(user));
                     document.getElementById('userBalance').textContent = formatPrice(user.balance);
                     
