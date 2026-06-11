@@ -1,10 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-    <title>C?u h�nh thanh to�n | ShopDonk Admin</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>??</text></svg>">
+    <title>Cấu hình thanh toán | ShopDonk Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 500: '#0ea5e9', 600: '#0284c7' } } } } }</script>
@@ -15,29 +14,29 @@
     <div class="flex h-screen overflow-hidden">
         <aside class="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
             <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-800">
-                <a href="../index.html" class="flex items-center gap-2"><span class="text-2xl">??</span><span class="text-xl font-bold text-gray-900 dark:text-white">ShopDonk</span></a>
+                <a href="../index.html" class="flex items-center gap-2"><span class="text-2xl">🎮</span><span class="text-xl font-bold text-gray-900 dark:text-white">ShopDonk</span></a>
             </div>
             <nav class="flex-1 overflow-y-auto px-4 py-4">
                 <ul class="space-y-1">
                     <li><a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-chart-line"></i>Dashboard</a></li>
-                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ngu?i d�ng</a></li>
-                    <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>S?n ph?m</a></li>
-                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>�on h�ng</a></li>
-                    <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>N?p ti?n</a></li>
-                    <li class="admin-only"><a href="categories.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-folder"></i>Danh m?c</a></li>
+                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Người dùng</a></li>
+                    <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                    <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>Nạp tiền</a></li>
+                    <li class="admin-only"><a href="categories.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-folder"></i>Danh mục</a></li>
                     <li class="admin-only"><a href="banners.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-images"></i>Banner</a></li>
-                    <li class="admin-only"><a href="social-links.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-share-alt"></i>M?ng x� h?i</a></li>
-                    <li><a href="payment-settings.html" class="flex items-center gap-3 rounded-lg bg-brand-50 px-4 py-3 text-brand-600"><i class="fas fa-credit-card"></i>Thanh to�n</a></li>
+                    <li class="admin-only"><a href="social-links.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-share-alt"></i>Mạng xã hội</a></li>
+                    <li><a href="payment-settings.html" class="flex items-center gap-3 rounded-lg bg-brand-50 px-4 py-3 text-brand-600"><i class="fas fa-credit-card"></i>Thanh toán</a></li>
                 </ul>
                 <ul class="space-y-1 mt-6">
                     <li><a href="../index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-globe"></i>Xem trang web</a></li>
-                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>�ang xu?t</a></li>
+                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                 </ul>
             </nav>
         </aside>
         <div class="flex flex-1 flex-col overflow-hidden ml-72">
             <header class="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
-                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">C?u h�nh thanh to�n</h1>
+                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Cấu hình thanh toán</h1>
                 <button @click="darkMode = !darkMode" class="rounded-lg p-2 text-gray-500 hover:bg-gray-100"><i class="fas fa-moon" x-show="!darkMode"></i><i class="fas fa-sun" x-show="darkMode"></i></button>
             </header>
             <main class="flex-1 overflow-y-auto bg-gray-50 p-6 dark:bg-gray-900">
@@ -46,19 +45,19 @@
                         <!-- Bank Transfer -->
                         <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <i class="fas fa-university text-blue-600"></i> Chuy?n kho?n ng�n h�ng
+                                <i class="fas fa-university text-blue-600"></i> Chuyển khoản ngân hàng
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">T�n ng�n h�ng</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tên ngân hàng</label>
                                     <input type="text" id="bank_name" placeholder="VD: Vietcombank" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">S? t�i kho?n</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số tài khoản</label>
                                     <input type="text" id="bank_account" placeholder="1234567890" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">T�n ch? t�i kho?n</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tên chủ tài khoản</label>
                                     <input type="text" id="bank_owner" placeholder="NGUYEN VAN A" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                             </div>
@@ -71,11 +70,11 @@
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">S? di?n tho?i</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
                                     <input type="text" id="momo_phone" placeholder="0123456789" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">T�n ch? t�i kho?n</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tên chủ tài khoản</label>
                                     <input type="text" id="momo_name" placeholder="Nguyen Van A" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                             </div>
@@ -88,11 +87,11 @@
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">S? di?n tho?i</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
                                     <input type="text" id="zalopay_phone" placeholder="0123456789" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">T�n ch? t�i kho?n</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tên chủ tài khoản</label>
                                     <input type="text" id="zalopay_name" placeholder="Nguyen Van A" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                             </div>
@@ -105,11 +104,11 @@
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">S? di?n tho?i</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
                                     <input type="text" id="vnpay_phone" placeholder="0123456789" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">T�n ch? t�i kho?n</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tên chủ tài khoản</label>
                                     <input type="text" id="vnpay_name" placeholder="Nguyen Van A" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                 </div>
                             </div>
@@ -118,12 +117,12 @@
                         <!-- QR Code -->
                         <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                <i class="fas fa-qrcode text-purple-600"></i> M� QR thanh to�n
+                                <i class="fas fa-qrcode text-purple-600"></i> Mã QR thanh toán
                             </h3>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">URL h�nh ?nh QR Code</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">URL hình ảnh QR Code</label>
                                 <input type="text" id="qr_code_url" placeholder="https://example.com/qr.png" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">T?i QR l�n Google Drive ho?c Imgur v� d�n link v�o d�y</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tải QR lên Google Drive hoặc Imgur và dán link vào đây</p>
                             </div>
                             <div id="qrPreview" class="mt-4 hidden">
                                 <img id="qrImage" src="" alt="QR Code" class="max-w-xs rounded-lg border border-gray-300 dark:border-gray-700">
@@ -132,10 +131,10 @@
                         
                         <div class="flex justify-end gap-3">
                             <button type="button" onclick="loadSettings()" class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                                <i class="fas fa-redo mr-2"></i>�?t l?i
+                                <i class="fas fa-redo mr-2"></i>Đặt lại
                             </button>
                             <button type="submit" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">
-                                <i class="fas fa-save mr-2"></i>Luu c?u h�nh
+                                <i class="fas fa-save mr-2"></i>Lưu cấu hình
                             </button>
                         </div>
                     </form>
@@ -220,13 +219,13 @@
                 const result = await res.json();
                 
                 if (result.success) {
-                    alert('Luu c?u h�nh th�nh c�ng!');
+                    alert('Lưu cấu hình thành công!');
                 } else {
-                    alert('L?i: ' + (result.message || 'Kh�ng th? luu'));
+                    alert('Lỗi: ' + (result.message || 'Không thể lưu'));
                 }
             } catch (error) {
                 console.error('Error saving settings:', error);
-                alert('C� l?i x?y ra!');
+                alert('Có lỗi xảy ra!');
             }
         });
         

@@ -1,10 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-    <title>Qu?n l� h�nh ?nh | ShopDonk Admin</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>??</text></svg>">
+    <title>Quản lý hình ảnh | ShopDonk Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 500: '#0ea5e9', 600: '#0284c7' } } } } }</script>
@@ -15,30 +14,30 @@
     <div class="flex h-screen overflow-hidden">
         <aside class="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
             <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-800">
-                <a href="../index.html" class="flex items-center gap-2"><span class="text-2xl">??</span><span class="text-xl font-bold text-gray-900 dark:text-white">ShopDonk</span></a>
+                <a href="../index.html" class="flex items-center gap-2"><span class="text-2xl">🎮</span><span class="text-xl font-bold text-gray-900 dark:text-white">ShopDonk</span></a>
             </div>
             <nav class="flex-1 overflow-y-auto px-4 py-4">
                 <ul class="space-y-1">
                     <li><a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-chart-line"></i>Dashboard</a></li>
-                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ngu?i d�ng</a></li>
-                    <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>S?n ph?m</a></li>
-                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>�on h�ng</a></li>
-                    <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>N?p ti?n</a></li>
-                    <li class="admin-only"><a href="categories.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-folder"></i>Danh m?c</a></li>
+                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Người dùng</a></li>
+                    <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>Sản phẩm</a></li>
+                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>Đơn hàng</a></li>
+                    <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>Nạp tiền</a></li>
+                    <li class="admin-only"><a href="categories.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-folder"></i>Danh mục</a></li>
                     <li class="admin-only"><a href="banners.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-images"></i>Banner</a></li>
-                    <li class="admin-only"><a href="uploads.html" class="flex items-center gap-3 rounded-lg bg-brand-50 px-4 py-3 text-brand-600"><i class="fas fa-cloud-upload-alt"></i>H�nh ?nh</a></li>
-                    <li class="admin-only"><a href="social-links.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-share-alt"></i>M?ng x� h?i</a></li>
-                    <li class="admin-only"><a href="payment-settings.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-credit-card"></i>Thanh to�n</a></li>
+                    <li class="admin-only"><a href="uploads.html" class="flex items-center gap-3 rounded-lg bg-brand-50 px-4 py-3 text-brand-600"><i class="fas fa-cloud-upload-alt"></i>Hình ảnh</a></li>
+                    <li class="admin-only"><a href="social-links.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-share-alt"></i>Mạng xã hội</a></li>
+                    <li class="admin-only"><a href="payment-settings.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-credit-card"></i>Thanh toán</a></li>
                 </ul>
                 <ul class="space-y-1 mt-6">
                     <li><a href="../index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-globe"></i>Xem trang web</a></li>
-                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>�ang xu?t</a></li>
+                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                 </ul>
             </nav>
         </aside>
         <div class="flex flex-1 flex-col overflow-hidden ml-72">
             <header class="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
-                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Qu?n l� h�nh ?nh</h1>
+                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Quản lý hình ảnh</h1>
                 <button @click="darkMode = !darkMode" class="rounded-lg p-2 text-gray-500 hover:bg-gray-100"><i class="fas fa-moon" x-show="!darkMode"></i><i class="fas fa-sun" x-show="darkMode"></i></button>
             </header>
             <main class="flex-1 overflow-y-auto bg-gray-50 p-6 dark:bg-gray-900">
@@ -46,17 +45,17 @@
                     
                     <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                            <i class="fas fa-cloud-upload-alt text-brand-600"></i> Upload h�nh ?nh
+                            <i class="fas fa-cloud-upload-alt text-brand-600"></i> Upload hình ảnh
                         </h3>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload t? file</h4>
+                                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload từ file</h4>
                                 <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 text-center hover:border-brand-500 transition-colors cursor-pointer" id="dropZone">
                                     <input type="file" id="fileInput" accept="image/*" class="hidden">
                                     <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">K�o th? ho?c click d? ch?n file</p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG, GIF t?i da 10MB</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Kéo thả hoặc click để chọn file</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG, GIF tối đa 10MB</p>
                                 </div>
                                 <div id="previewContainer" class="mt-4 hidden">
                                     <img id="previewImage" src="" alt="Preview" class="max-w-full h-32 rounded-lg border border-gray-300 dark:border-gray-700">
@@ -64,18 +63,18 @@
                             </div>
                             
                             <div>
-                                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload t? URL</h4>
+                                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload từ URL</h4>
                                 <div class="space-y-3">
                                     <input type="text" id="imageUrlInput" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                                     <button onclick="uploadFromUrl()" class="w-full px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">
-                                        <i class="fas fa-link mr-2"></i>Upload t? URL
+                                        <i class="fas fa-link mr-2"></i>Upload từ URL
                                     </button>
                                 </div>
                                 
                                 <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                                    <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">K?t qu? upload</h4>
+                                    <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kết quả upload</h4>
                                     <div id="uploadResult" class="text-sm text-gray-500 dark:text-gray-400">
-                                        Chua c� k?t qu?
+                                        Chưa có kết quả
                                     </div>
                                 </div>
                             </div>
@@ -85,15 +84,15 @@
                     <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                <i class="fas fa-images text-brand-600"></i> H�nh ?nh d� upload
+                                <i class="fas fa-images text-brand-600"></i> Hình ảnh đã upload
                             </h3>
                             <button onclick="loadImages()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
-                                <i class="fas fa-sync-alt mr-2"></i>L�m m?i
+                                <i class="fas fa-sync-alt mr-2"></i>Làm mới
                             </button>
                         </div>
                         
                         <div id="imagesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                            <p class="col-span-full text-center text-gray-500 py-8">�ang t?i...</p>
+                            <p class="col-span-full text-center text-gray-500 py-8">Đang tải...</p>
                         </div>
                     </div>
                     
@@ -119,8 +118,8 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-4">
-                    <button onclick="closeImageModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">��ng</button>
-                    <button onclick="deleteCurrentImage()" class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg"><i class="fas fa-trash mr-1"></i>X�a</button>
+                    <button onclick="closeImageModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Đóng</button>
+                    <button onclick="deleteCurrentImage()" class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg"><i class="fas fa-trash mr-1"></i>Xóa</button>
                 </div>
             </div>
         </div>
@@ -192,21 +191,21 @@
                 
                 if (data.success) {
                     showResult(data.data.url, data.data.public_id);
-                    showToast('Upload th�nh c�ng!');
+                    showToast('Upload thành công!');
                     loadImages();
                 } else {
-                    showToast('L?i: ' + data.message, 'error');
+                    showToast('Lỗi: ' + data.message, 'error');
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                showToast('L?i upload!', 'error');
+                showToast('Lỗi upload!', 'error');
             }
         }
         
         async function uploadFromUrl() {
             const url = document.getElementById('imageUrlInput').value.trim();
             if (!url) {
-                showToast('Vui l�ng nh?p URL!', 'error');
+                showToast('Vui lòng nhập URL!', 'error');
                 return;
             }
             
@@ -221,15 +220,15 @@
                 
                 if (data.success) {
                     showResult(data.data.url, data.data.public_id);
-                    showToast('Upload th�nh c�ng!');
+                    showToast('Upload thành công!');
                     document.getElementById('imageUrlInput').value = '';
                     loadImages();
                 } else {
-                    showToast('L?i: ' + data.message, 'error');
+                    showToast('Lỗi: ' + data.message, 'error');
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                showToast('L?i upload!', 'error');
+                showToast('Lỗi upload!', 'error');
             }
         }
         
@@ -246,7 +245,7 @@
         
         async function loadImages() {
             const grid = document.getElementById('imagesGrid');
-            grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">�ang t?i...</p>';
+            grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Đang tải...</p>';
             
             try {
                 const res = await fetch(`${API_BASE}/images?limit=100`);
@@ -256,11 +255,11 @@
                     uploadedImages = data.data;
                     renderImages(data.data);
                 } else {
-                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Chua c� h�nh ?nh n�o</p>';
+                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Chưa có hình ảnh nào</p>';
                 }
             } catch (error) {
                 console.error('Load images error:', error);
-                grid.innerHTML = '<p class="col-span-full text-center text-red-500 py-8">L?i t?i h�nh ?nh</p>';
+                grid.innerHTML = '<p class="col-span-full text-center text-red-500 py-8">Lỗi tải hình ảnh</p>';
             }
         }
         
@@ -298,14 +297,14 @@
         
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                showToast('�� sao ch�p!');
+                showToast('Đã sao chép!');
             });
         }
         
         async function deleteCurrentImage() {
             const publicId = document.getElementById('modalPublicId').value;
             
-            if (!confirm('B?n c� ch?c mu?n x�a h�nh ?nh n�y?')) return;
+            if (!confirm('Bạn có chắc muốn xóa hình ảnh này?')) return;
             
             try {
                 const res = await fetch(`${API_BASE}/delete/${encodeURIComponent(publicId)}`, {
@@ -315,15 +314,15 @@
                 const data = await res.json();
                 
                 if (data.success) {
-                    showToast('�� x�a h�nh ?nh!');
+                    showToast('Đã xóa hình ảnh!');
                     closeImageModal();
                     loadImages();
                 } else {
-                    showToast('L?i: ' + data.message, 'error');
+                    showToast('Lỗi: ' + data.message, 'error');
                 }
             } catch (error) {
                 console.error('Delete error:', error);
-                showToast('L?i x�a!', 'error');
+                showToast('Lỗi xóa!', 'error');
             }
         }
         
