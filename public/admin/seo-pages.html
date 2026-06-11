@@ -175,9 +175,10 @@
                 });
                 const data = await res.json();
                 
-                if (data.success && data.data && data.data.length > 0) {
+                if (res.ok && data.success && data.data && data.data.length > 0) {
                     pagesData = data.data;
                 } else {
+                    // Use default pages
                     pagesData = defaultPages.map(p => ({
                         page_name: p.page_name,
                         page_url: p.page_url,
@@ -189,6 +190,7 @@
                 renderPages();
             } catch (error) {
                 console.error('Load pages error:', error);
+                // Use default pages on error
                 pagesData = defaultPages.map(p => ({
                     page_name: p.page_name,
                     page_url: p.page_url,
@@ -202,15 +204,41 @@
         
         async function loadCategories() {
             try {
-                const res = await fetch(`${API_BASE}/seo/categories`, {
-                    headers: { 'x-user': JSON.stringify(currentUser) }
-                });
-                const data = await res.json();
-                if (data.success && data.data) {
-                    categoriesData = data.data;
-                    renderCategories();
-                } else {
-                    categoriesData = [];
+                // Get categories from public API
+                const catRes = await fetch(`${API_BASE}/categories`);
+                const catData = await catRes.json();
+                
+                if (catData.success && catData.data) {
+                    // Get SEO data if available
+                    let seoData = [];
+                    try {
+                        const seoRes = await fetch(`${API_BASE}/seo/categories`, {
+                            headers: { 'x-user': JSON.stringify(currentUser) }
+                        });
+                        if (seoRes.ok) {
+                            const seo = await seoRes.json();
+                            seoData = seo.data || [];
+                        }
+                    } catch (e) {}
+                    
+                    // Merge categories with SEO data
+                    categoriesData = catData.data.map(cat => {
+                        const seo = seoData.find(s => s.category_id === cat.id) || {};
+                        return {
+                            category_id: cat.id,
+                            category_name: cat.name,
+                            category_slug: cat.slug,
+                            title: seo.title || null,
+                            description: seo.description || null,
+                            keywords: seo.keywords || null,
+                            og_title: seo.og_title || null,
+                            og_description: seo.og_description || null,
+                            og_image: seo.og_image || null,
+                            canonical_url: seo.canonical_url || null,
+                            noindex: seo.noindex || false,
+                            nofollow: seo.nofollow || false
+                        };
+                    });
                     renderCategories();
                 }
             } catch (error) {

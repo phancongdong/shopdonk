@@ -30,12 +30,5 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <url>
-    <loc>https://shopdonk.com/terms.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>cd /var/www/shopdonk && git pull
-  /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Shopdonk@2024 -d CayTheDB -i database/sync-seo.sql
-  pm2 restart shopdonk
-</urlset>
+
 `
