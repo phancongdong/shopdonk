@@ -37,6 +37,17 @@ async function getPageSeo(req, res) {
 
 async function getAllPageSeo(req, res) {
     try {
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PageSEO'
+        `);
+        
+        if (tableCheck.recordset.length === 0) {
+            return res.json({
+                success: true,
+                data: []
+            });
+        }
+        
         const result = await query('SELECT * FROM PageSEO ORDER BY page_name');
         res.json({
             success: true,
@@ -44,9 +55,9 @@ async function getAllPageSeo(req, res) {
         });
     } catch (error) {
         console.error('Get all page SEO error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
+        res.json({
+            success: true,
+            data: []
         });
     }
 }

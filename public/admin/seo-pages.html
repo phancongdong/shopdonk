@@ -169,28 +169,38 @@
         }
         
         async function loadPages() {
+            const container = document.getElementById('pagesList');
+            container.innerHTML = '<p class="text-center text-gray-500 py-8"><i class="fas fa-spinner fa-spin"></i> Đang tải...</p>';
+            
             try {
-                const res = await fetch(`${API_BASE}/seo/pages`, {
+                // First get SEO data from database
+                const seoRes = await fetch(`${API_BASE}/seo/pages`, {
                     headers: { 'x-user': JSON.stringify(currentUser) }
                 });
-                const data = await res.json();
+                const seoData = await seoRes.json();
+                const savedPages = (seoRes.ok && seoData.success && seoData.data) ? seoData.data : [];
                 
-                if (res.ok && data.success && data.data && data.data.length > 0) {
-                    pagesData = data.data;
-                } else {
-                    // Use default pages
-                    pagesData = defaultPages.map(p => ({
+                // Merge with default pages
+                pagesData = defaultPages.map(p => {
+                    const saved = savedPages.find(s => s.page_name === p.page_name) || {};
+                    return {
                         page_name: p.page_name,
                         page_url: p.page_url,
-                        title: null,
-                        description: null,
-                        keywords: null
-                    }));
-                }
+                        title: saved.title || null,
+                        description: saved.description || null,
+                        keywords: saved.keywords || null,
+                        og_title: saved.og_title || null,
+                        og_description: saved.og_description || null,
+                        og_image: saved.og_image || null,
+                        canonical_url: saved.canonical_url || null,
+                        noindex: saved.noindex || false,
+                        nofollow: saved.nofollow || false
+                    };
+                });
+                
                 renderPages();
             } catch (error) {
                 console.error('Load pages error:', error);
-                // Use default pages on error
                 pagesData = defaultPages.map(p => ({
                     page_name: p.page_name,
                     page_url: p.page_url,
@@ -203,44 +213,53 @@
         }
         
         async function loadCategories() {
+            const container = document.getElementById('categoriesList');
+            container.innerHTML = '<p class="text-center text-gray-500 py-8"><i class="fas fa-spinner fa-spin"></i> Đang tải...</p>';
+            
             try {
                 // Get categories from public API
                 const catRes = await fetch(`${API_BASE}/categories`);
                 const catData = await catRes.json();
                 
-                if (catData.success && catData.data) {
-                    // Get SEO data if available
-                    let seoData = [];
-                    try {
-                        const seoRes = await fetch(`${API_BASE}/seo/categories`, {
-                            headers: { 'x-user': JSON.stringify(currentUser) }
-                        });
-                        if (seoRes.ok) {
-                            const seo = await seoRes.json();
-                            seoData = seo.data || [];
-                        }
-                    } catch (e) {}
-                    
-                    // Merge categories with SEO data
-                    categoriesData = catData.data.map(cat => {
-                        const seo = seoData.find(s => s.category_id === cat.id) || {};
-                        return {
-                            category_id: cat.id,
-                            category_name: cat.name,
-                            category_slug: cat.slug,
-                            title: seo.title || null,
-                            description: seo.description || null,
-                            keywords: seo.keywords || null,
-                            og_title: seo.og_title || null,
-                            og_description: seo.og_description || null,
-                            og_image: seo.og_image || null,
-                            canonical_url: seo.canonical_url || null,
-                            noindex: seo.noindex || false,
-                            nofollow: seo.nofollow || false
-                        };
-                    });
-                    renderCategories();
+                if (!catData.success || !catData.data) {
+                    container.innerHTML = '<p class="text-center text-gray-500 py-8">Không tải được danh mục</p>';
+                    return;
                 }
+                
+                // Get SEO data
+                let seoData = [];
+                try {
+                    const seoRes = await fetch(`${API_BASE}/seo/categories`, {
+                        headers: { 'x-user': JSON.stringify(currentUser) }
+                    });
+                    if (seoRes.ok) {
+                        const seo = await seoRes.json();
+                        seoData = seo.data || [];
+                    }
+                } catch (e) {
+                    console.log('No SEO data yet');
+                }
+                
+                // Merge categories with SEO data
+                categoriesData = catData.data.map(cat => {
+                    const seo = seoData.find(s => s.category_id === cat.id) || {};
+                    return {
+                        category_id: cat.id,
+                        category_name: cat.name,
+                        category_slug: cat.slug,
+                        title: seo.title || null,
+                        description: seo.description || null,
+                        keywords: seo.keywords || null,
+                        og_title: seo.og_title || null,
+                        og_description: seo.og_description || null,
+                        og_image: seo.og_image || null,
+                        canonical_url: seo.canonical_url || null,
+                        noindex: seo.noindex || false,
+                        nofollow: seo.nofollow || false
+                    };
+                });
+                
+                renderCategories();
             } catch (error) {
                 console.error('Load categories error:', error);
                 categoriesData = [];
