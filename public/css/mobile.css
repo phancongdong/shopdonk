@@ -12,6 +12,17 @@ body {
 
 * {
     box-sizing: border-box;
+}
+
+.container,
+.footer-grid,
+.categories-grid,
+.games-grid,
+.filter-section,
+.filter-row,
+.banner-section,
+.products-section,
+.content-section {
     max-width: 100%;
 }
 
