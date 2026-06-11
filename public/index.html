@@ -136,6 +136,7 @@
         .game-img { width: 100%; height: 180px; object-fit: cover; }
         .game-content { padding: 20px; }
         .game-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; text-align: center; }
+        .game-desc { font-size: 13px; color: #94a3b8; margin-bottom: 12px; line-height: 1.4; text-align: center; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .game-stats { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }
         .game-stat { text-align: center; }
         .game-stat-value { font-size: 18px; font-weight: 700; color: #6366f1; }
@@ -162,7 +163,7 @@
         
         /* Modal */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
-        .modal-content { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; max-width: 500px; width: 100%; border: 1px solid rgba(99,102,241,0.3); animation: modalIn 0.3s ease; }
+        .modal-content { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 20px; max-width: 600px; width: 100%; border: 1px solid rgba(99,102,241,0.3); animation: modalIn 0.3s ease; }
         @keyframes modalIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-header { padding: 25px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .modal-header i { font-size: 50px; color: #6366f1; margin-bottom: 15px; }
@@ -713,14 +714,16 @@
                 
                 let stockDisplay = p.stock || 0;
                 let stockLabel = 'Sẵn có';
-                let btnText = stockDisplay > 0 ? 'MUA NGAY' : 'HẾT HÀNG';
+                let btnText = stockDisplay > 0 ? 'MUA NGAY' : 'HET HANG';
                 let btnDisabled = stockDisplay <= 0 ? 'disabled' : '';
+                let description = p.description || '';
                 
                 return `
                 <div class="game-card" data-product-id="${p.id}">
                     <img class="game-img" src="${imageUrl}" alt="${p.name}" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
                     <div class="game-content">
                         <div class="game-title">${p.name}</div>
+                        ${description ? `<div class="game-desc">${description}</div>` : ''}
                         <div class="game-stats">
                             <div class="game-stat">
                                 <div class="game-stat-value stock-count" data-stock="${stockDisplay}">${stockDisplay}</div>
@@ -728,10 +731,10 @@
                             </div>
                             <div class="game-stat">
                                 <div class="game-stat-value">${formatPrice(p.price)}</div>
-                                <div class="game-stat-label">Giá</div>
+                                <div class="game-stat-label">Gia</div>
                             </div>
                         </div>
-                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${p.name.replace(/'/g, "\\'")}" onclick="buyProduct(${p.id}, ${p.price}, '${p.name.replace(/'/g, "\\'")}')">
+                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${p.name.replace(/'/g, "\\'")}" data-desc="${description.replace(/'/g, "\\'")}" onclick="buyProduct(${p.id}, ${p.price}, '${p.name.replace(/'/g, "\\'")}', '${description.replace(/'/g, "\\'")}')">
                             <i class="fas fa-shopping-cart"></i>
                             <span>${btnText}</span>
                         </button>
@@ -815,17 +818,16 @@
             }
         }
         
-        window.buyProduct = async function(productId, price, productName) {
+        window.buyProduct = async function(productId, price, productName, productDesc) {
             const user = JSON.parse(localStorage.getItem('user') || 'null');
             if (!user) {
-                showModal('warning', 'Yêu cầu đăng nhập', 'Bạn cần đăng nhập để mua hàng!', [
-                    { text: 'Hủy', class: 'secondary', action: closeModal },
-                    { text: 'Đăng nhập', class: 'primary', action: () => location.href = 'login.html' }
+                showModal('warning', 'Yeu cau dang nhap', 'Ban can dang nhap de mua hang!', [
+                    { text: 'Huy', class: 'secondary', action: closeModal },
+                    { text: 'Dang nhap', class: 'primary', action: () => location.href = 'login.html' }
                 ]);
                 return;
             }
             
-            // Fetch latest balance
             try {
                 const res = await fetch(`${API_BASE}/auth/users`);
                 const data = await res.json();
@@ -839,29 +841,33 @@
             } catch (e) {}
             
             if (user.balance < price) {
-                showModal('warning', 'Số dư không đủ', `
+                showModal('warning', 'So du khong du', `
                     <div class="info-box">
-                        <div class="info-row"><span>Giá sản phẩm:</span><strong>${formatPrice(price)}</strong></div>
-                        <div class="info-row"><span>Số dư hiện tại:</span><strong>${formatPrice(user.balance)}</strong></div>
-                        <div class="info-row"><span>Cần thêm:</span><strong style="color:#ef4444">${formatPrice(price - user.balance)}</strong></div>
+                        <div class="info-row"><span>Gia san pham:</span><strong>${formatPrice(price)}</strong></div>
+                        <div class="info-row"><span>So du hien tai:</span><strong>${formatPrice(user.balance)}</strong></div>
+                        <div class="info-row"><span>Can them:</span><strong style="color:#ef4444">${formatPrice(price - user.balance)}</strong></div>
                     </div>
                 `, [
-                    { text: 'Hủy', class: 'secondary', action: closeModal },
+                    { text: 'Huy', class: 'secondary', action: closeModal },
                     { text: 'Nạp tiền', class: 'primary', action: () => location.href = 'deposit.html' }
                 ]);
                 return;
             }
             
-            showModal('', 'Xác nhận mua hàng', `
+            showModal('', 'Xac nhan mua hang', `
+                ${productDesc ? `<div style="background: rgba(99,102,241,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid rgba(99,102,241,0.2);">
+                    <div style="color: #6366f1; font-size: 12px; margin-bottom: 8px; font-weight: 600;"><i class="fas fa-info-circle"></i> Mo ta san pham</div>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.5;">${productDesc}</div>
+                </div>` : ''}
                 <div class="info-box">
-                    <div class="info-row"><span>Sản phẩm:</span><strong>${productName}</strong></div>
-                    <div class="info-row"><span>Giá:</span><strong>${formatPrice(price)}</strong></div>
-                    <div class="info-row"><span>Số dư hiện tại:</span><strong>${formatPrice(user.balance)}</strong></div>
-                    <div class="info-row"><span>Số dư sau mua:</span><strong style="color:#22c55e">${formatPrice(user.balance - price)}</strong></div>
+                    <div class="info-row"><span>San pham:</span><strong>${productName}</strong></div>
+                    <div class="info-row"><span>Gia:</span><strong>${formatPrice(price)}</strong></div>
+                    <div class="info-row"><span>So du hien tai:</span><strong>${formatPrice(user.balance)}</strong></div>
+                    <div class="info-row"><span>So du sau mua:</span><strong style="color:#22c55e">${formatPrice(user.balance - price)}</strong></div>
                 </div>
             `, [
-                { text: 'Hủy', class: 'secondary', action: closeModal },
-                { text: 'Xác nhận', class: 'primary', action: () => processPurchase(productId, price, productName) }
+                { text: 'Huy', class: 'secondary', action: closeModal },
+                { text: 'Xac nhan', class: 'primary', action: () => processPurchase(productId, price, productName) }
             ]);
         }
         
