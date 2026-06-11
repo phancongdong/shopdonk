@@ -152,6 +152,17 @@
         let pagesData = [];
         let categoriesData = [];
         
+        const defaultPages = [
+            { page_name: 'home', page_url: '/', title: 'Trang chủ' },
+            { page_name: 'login', page_url: '/login.html', title: 'Đăng nhập' },
+            { page_name: 'register', page_url: '/register.html', title: 'Đăng ký' },
+            { page_name: 'deposit', page_url: '/deposit.html', title: 'Nạp tiền' },
+            { page_name: 'orders', page_url: '/orders.html', title: 'Lịch sử đơn hàng' },
+            { page_name: 'faq', page_url: '/faq.html', title: 'FAQ' },
+            { page_name: 'contact', page_url: '/contact.html', title: 'Liên hệ' },
+            { page_name: 'terms', page_url: '/terms.html', title: 'Điều khoản' }
+        ];
+        
         if (!currentUser || currentUser.role !== 'admin') {
             alert('Bạn không có quyền truy cập!');
             window.location.href = '../index.html';
@@ -163,12 +174,29 @@
                     headers: { 'x-user': JSON.stringify(currentUser) }
                 });
                 const data = await res.json();
-                if (data.success) {
-                    pagesData = data.data || [];
-                    renderPages();
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    pagesData = data.data;
+                } else {
+                    pagesData = defaultPages.map(p => ({
+                        page_name: p.page_name,
+                        page_url: p.page_url,
+                        title: null,
+                        description: null,
+                        keywords: null
+                    }));
                 }
+                renderPages();
             } catch (error) {
                 console.error('Load pages error:', error);
+                pagesData = defaultPages.map(p => ({
+                    page_name: p.page_name,
+                    page_url: p.page_url,
+                    title: null,
+                    description: null,
+                    keywords: null
+                }));
+                renderPages();
             }
         }
         
@@ -195,11 +223,22 @@
                 return;
             }
             
+            const pageNames = {
+                home: 'Trang chủ',
+                login: 'Đăng nhập',
+                register: 'Đăng ký',
+                deposit: 'Nạp tiền',
+                orders: 'Lịch sử đơn hàng',
+                faq: 'FAQ',
+                contact: 'Liên hệ',
+                terms: 'Điều khoản'
+            };
+            
             container.innerHTML = pagesData.map(page => `
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex items-center justify-between">
                     <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">${page.page_name}</h3>
-                        <p class="text-sm text-gray-500">${page.title || 'Chưa có tiêu đề'}</p>
+                        <h3 class="font-semibold text-gray-900 dark:text-white">${pageNames[page.page_name] || page.page_name}</h3>
+                        <p class="text-sm text-gray-500">${page.title || 'Chưa có tiêu đề SEO'}</p>
                         <div class="flex gap-2 mt-2">
                             ${page.noindex ? '<span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Noindex</span>' : ''}
                             ${page.title ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Đã thiết lập</span>' : '<span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Chưa thiết lập</span>'}
@@ -238,12 +277,33 @@
         }
         
         function editPage(pageName) {
-            const page = pagesData.find(p => p.page_name === pageName);
-            if (!page) return;
+            const pageNames = {
+                home: 'Trang chủ',
+                login: 'Đăng nhập',
+                register: 'Đăng ký',
+                deposit: 'Nạp tiền',
+                orders: 'Lịch sử đơn hàng',
+                faq: 'FAQ',
+                contact: 'Liên hệ',
+                terms: 'Điều khoản'
+            };
+            
+            const page = pagesData.find(p => p.page_name === pageName) || {
+                page_name: pageName,
+                title: null,
+                description: null,
+                keywords: null,
+                og_title: null,
+                og_description: null,
+                og_image: null,
+                canonical_url: null,
+                noindex: false,
+                nofollow: false
+            };
             
             document.getElementById('editId').value = pageName;
             document.getElementById('editType').value = 'page';
-            document.getElementById('modalTitle').textContent = `Chỉnh sửa SEO: ${pageName}`;
+            document.getElementById('modalTitle').textContent = `Chỉnh sửa SEO: ${pageNames[pageName] || pageName}`;
             document.getElementById('editTitle').value = page.title || '';
             document.getElementById('editDescription').value = page.description || '';
             document.getElementById('editKeywords').value = page.keywords || '';
