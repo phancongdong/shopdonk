@@ -206,13 +206,52 @@
                     headers: { 'x-user': JSON.stringify(currentUser) }
                 });
                 const data = await res.json();
-                if (data.success) {
-                    categoriesData = data.data || [];
+                if (data.success && data.data) {
+                    categoriesData = data.data;
+                    renderCategories();
+                } else {
+                    categoriesData = [];
                     renderCategories();
                 }
             } catch (error) {
                 console.error('Load categories error:', error);
+                categoriesData = [];
+                renderCategories();
             }
+        }
+        
+        function renderCategories() {
+            const container = document.getElementById('categoriesList');
+            
+            if (!categoriesData || categoriesData.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-8 text-center">
+                        <i class="fas fa-folder-open text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-gray-500">Chưa có danh mục nào</p>
+                        <p class="text-sm text-gray-400 mt-2">Vui lòng tạo danh mục sản phẩm trước</p>
+                        <a href="categories.html" class="inline-block mt-4 px-4 py-2 bg-brand-500 text-white rounded-lg">
+                            <i class="fas fa-plus mr-2"></i>Thêm danh mục
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = categoriesData.map(cat => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex items-center justify-between">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900 dark:text-white">${cat.category_name || cat.name}</h3>
+                        <p class="text-sm text-gray-500">${cat.title || 'Chưa có tiêu đề SEO'}</p>
+                        <div class="flex gap-2 mt-2">
+                            ${cat.noindex ? '<span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Noindex</span>' : ''}
+                            ${cat.title ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Đã thiết lập</span>' : '<span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Chưa thiết lập</span>'}
+                        </div>
+                    </div>
+                    <button onclick="editCategory(${cat.category_id || cat.id})" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+            `).join('');
         }
         
         function renderPages() {
@@ -250,30 +289,7 @@
                 </div>
             `).join('');
         }
-        
-        function renderCategories() {
-            const container = document.getElementById('categoriesList');
-            
-            if (categoriesData.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 py-8">Không có danh mục</p>';
-                return;
-            }
-            
-            container.innerHTML = categoriesData.map(cat => `
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex items-center justify-between">
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">${cat.category_name}</h3>
-                        <p class="text-sm text-gray-500">${cat.title || 'Chưa có tiêu đề SEO'}</p>
-                        <div class="flex gap-2 mt-2">
-                            ${cat.noindex ? '<span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Noindex</span>' : ''}
-                            ${cat.title ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Đã thiết lập</span>' : '<span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Chưa thiết lập</span>'}
-                        </div>
-                    </div>
-                    <button onclick="editCategory(${cat.category_id})" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                </div>
-            `).join('');
+        }
         }
         
         function editPage(pageName) {
@@ -318,12 +334,23 @@
         }
         
         function editCategory(categoryId) {
-            const cat = categoriesData.find(c => c.category_id === categoryId);
-            if (!cat) return;
+            const cat = categoriesData.find(c => (c.category_id || c.id) === categoryId) || {
+                category_id: categoryId,
+                category_name: 'Danh mục',
+                title: null,
+                description: null,
+                keywords: null,
+                og_title: null,
+                og_description: null,
+                og_image: null,
+                canonical_url: null,
+                noindex: false,
+                nofollow: false
+            };
             
             document.getElementById('editId').value = categoryId;
             document.getElementById('editType').value = 'category';
-            document.getElementById('modalTitle').textContent = `Chỉnh sửa SEO: ${cat.category_name}`;
+            document.getElementById('modalTitle').textContent = `Chỉnh sửa SEO: ${cat.category_name || cat.name}`;
             document.getElementById('editTitle').value = cat.title || '';
             document.getElementById('editDescription').value = cat.description || '';
             document.getElementById('editKeywords').value = cat.keywords || '';
