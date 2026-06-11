@@ -1,5 +1,8 @@
 .news-section {
     padding: 30px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .news-header {
@@ -25,8 +28,10 @@
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: 25px;
+    width: 100%;
+    max-width: 100%;
 }
 
 .news-card {

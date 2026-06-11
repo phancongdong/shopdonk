@@ -2,6 +2,24 @@
    MOBILE CSS FOR INDEX PAGE HEADER
    ======================================== */
 
+/* Global overflow fix */
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 @media (max-width: 768px) {
     header .header-content {
         flex-wrap: wrap;
@@ -235,42 +253,66 @@
     footer {
         padding: 40px 15px 100px;
         margin-top: 40px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .footer-grid {
+        display: grid;
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 35px;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 5px;
+        box-sizing: border-box;
     }
     
     .footer-section {
         text-align: center;
-        padding: 0 10px;
+        padding: 20px 10px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .footer-section h3 {
-        font-size: 17px;
-        margin-bottom: 18px;
-        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: #6366f1;
     }
     
     .footer-section p {
         font-size: 14px;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
         justify-content: center;
+        gap: 10px;
+        line-height: 1.6;
+        word-wrap: break-word;
+    }
+    
+    .footer-section p i {
+        flex-shrink: 0;
     }
     
     .footer-section p a {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
+        word-wrap: break-word;
     }
     
     .social-links {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 15px;
         margin-top: 20px;
+        flex-wrap: wrap;
     }
     
     .social-links a {
@@ -278,12 +320,17 @@
         height: 50px;
         font-size: 20px;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .footer-bottom {
         font-size: 13px;
-        margin-top: 25px;
-        padding-top: 25px;
+        margin-top: 30px;
+        padding-top: 30px;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -303,6 +350,183 @@
     
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+    
+    footer {
+        padding: 30px 10px 90px;
+    }
+    
+    .footer-grid {
+        padding: 0;
+        gap: 25px;
+    }
+    
+    .footer-section {
+        padding: 15px 5px;
+    }
+    
+    .footer-section h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-section p {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    
+    .social-links {
+        gap: 12px;
+    }
+    
+    .social-links a {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .footer-bottom {
+        font-size: 12px;
+        padding-top: 20px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 8px;
+    }
+    
+    header .header-content {
+        padding: 8px 10px;
+    }
+    
+    header .logo .logo-text {
+        font-size: 14px !important;
+    }
+    
+    header .logo .logo-icon {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 14px !important;
+    }
+    
+    header .user-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+    
+    header .search-icon-btn,
+    header .mobile-menu-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 15px 0;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .stat-value {
+        font-size: 16px;
+    }
+    
+    .stat-label {
+        font-size: 11px;
+    }
+    
+    .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .category-card {
+        border-radius: 10px;
+    }
+    
+    .category-img {
+        height: 100px;
+    }
+    
+    .category-info {
+        padding: 10px;
+    }
+    
+    .category-name {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    
+    .category-btn {
+        padding: 6px 16px;
+        font-size: 11px;
+    }
+    
+    footer {
+        padding: 25px 8px 85px;
+    }
+    
+    .footer-grid {
+        gap: 20px;
+        padding: 0;
+    }
+    
+    .footer-section {
+        padding: 10px 5px;
+    }
+    
+    .footer-section h3 {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .footer-section p {
+        font-size: 12px;
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+    
+    .social-links {
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .footer-bottom {
+        font-size: 11px;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+    
+    .mobile-bottom-nav {
+        padding: 8px 0;
+    }
+    
+    .mobile-nav-item {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+    
+    .mobile-nav-item i {
+        font-size: 14px;
     }
 }
 

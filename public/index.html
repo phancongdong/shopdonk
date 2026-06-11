@@ -45,10 +45,11 @@
     <link rel="stylesheet" href="css/mobile.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
         body { font-family: 'Inter', sans-serif; background: #0f0f1a; color: #fff; }
         a { text-decoration: none; color: inherit; }
         
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
         
         /* Header */
         header { background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
@@ -104,9 +105,9 @@
         .partner-item i { font-size: 24px; color: #6366f1; }
         
         /* Filter Section */
-        .filter-section { margin: 30px 0; }
-        .filter-row { display: flex; gap: 15px; flex-wrap: wrap; }
-        .filter-group { flex: 1; min-width: 200px; }
+        .filter-section { margin: 30px 0; width: 100%; max-width: 100%; box-sizing: border-box; }
+        .filter-row { display: flex; gap: 15px; flex-wrap: wrap; width: 100%; max-width: 100%; }
+        .filter-group { flex: 1; min-width: 0; }
         .filter-input, .filter-select { width: 100%; padding: 12px 15px; background: linear-gradient(135deg, #1a1a2e, #16213e); border: 1px solid rgba(99,102,241,0.3); border-radius: 10px; color: #fff; font-size: 14px; transition: all 0.3s; }
         .filter-input:focus, .filter-select:focus { outline: none; border-color: #6366f1; }
         .filter-input::placeholder { color: #64748b; }
@@ -119,7 +120,7 @@
         .section-title h2 i { color: #6366f1; }
         .section-title p { color: #94a3b8; margin-top: 10px; }
         
-        .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 25px; }
         .category-card { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; cursor: pointer; }
         .category-card:hover { transform: translateY(-5px); border-color: #6366f1; box-shadow: 0 20px 40px rgba(99,102,241,0.2); }
         .category-img { width: 100%; height: 160px; object-fit: cover; }
@@ -129,7 +130,7 @@
         .category-btn:hover { transform: scale(1.05); }
         
         /* Games Grid */
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-top: 30px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 25px; margin-top: 30px; }
         .game-card { background: #0B1220; border-radius: 16px; overflow: hidden; border: 1px solid rgba(99,102,241,0.2); transition: all 0.3s; }
         .game-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(99,102,241,0.3); }
         .game-img { width: 100%; height: 180px; object-fit: cover; }
@@ -144,8 +145,8 @@
         .game-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         /* Footer */
-        footer { background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%); border-top: 1px solid rgba(255,255,255,0.1); padding: 50px 20px 30px; margin-top: 60px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        footer { background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%); border-top: 1px solid rgba(255,255,255,0.1); padding: 50px 20px 30px; margin-top: 60px; width: 100%; max-width: 100%; box-sizing: border-box; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box; }
         .footer-section h3 { color: #6366f1; margin-bottom: 20px; font-size: 18px; }
         .footer-section p { color: #94a3b8; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .footer-section i { color: #6366f1; }
