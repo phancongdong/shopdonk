@@ -482,6 +482,11 @@
         document.addEventListener('DOMContentLoaded', async function() {
             const loading = document.getElementById('loadingOverlay');
             
+            // Fallback: hide loading after 5 seconds max
+            const loadingTimeout = setTimeout(() => {
+                if (loading) loading.style.display = 'none';
+            }, 5000);
+            
             // Check login
             const user = JSON.parse(localStorage.getItem('user') || 'null');
             if (user) {
@@ -554,6 +559,11 @@
             loadChatBubbleSettings();
             
             loading.style.display = 'none';
+            
+            // Fallback: hide loading after 3 seconds
+            setTimeout(() => {
+                if (loading) loading.style.display = 'none';
+            }, 3000);
             
             // Check slug param
             const params = new URLSearchParams(location.search);
