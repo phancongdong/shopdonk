@@ -1,215 +1,123 @@
-// SEO Loader - Automatically loads SEO settings for each page
-(function() {
+// SEO Loader - Load SEO data from API and update meta tags
+(async function() {
     const API_BASE = window.location.origin + '/api';
+    const path = window.location.pathname;
     
-    // Get page name from URL
-    function getPageName() {
-        const path = window.location.pathname;
-        const filename = path.split('/').pop().replace('.html', '') || 'index';
-        
-        // Map filenames to page names
-        const pageMap = {
-            'index': 'home',
-            '': 'home',
-            'login': 'login',
-            'register': 'register',
-            'deposit': 'deposit',
-            'orders': 'orders',
-            'transactions': 'transactions',
-            'profile': 'profile',
-            'change-password': 'terms',
-            'faq': 'faq',
-            'contact': 'contact',
-            'terms': 'terms'
-        };
-        
-        return pageMap[filename] || filename;
-    }
+    // Determine page name from URL
+    let pageName = 'home';
+    if (path.includes('login.html')) pageName = 'login';
+    else if (path.includes('register.html')) pageName = 'register';
+    else if (path.includes('deposit.html')) pageName = 'deposit';
+    else if (path.includes('orders.html')) pageName = 'orders';
+    else if (path.includes('faq.html')) pageName = 'faq';
+    else if (path.includes('contact.html')) pageName = 'contact';
+    else if (path.includes('terms.html')) pageName = 'terms';
+    else if (path.includes('profile.html')) pageName = 'profile';
+    else if (path.includes('transactions.html')) pageName = 'transactions';
     
-    // Load SEO settings
-    async function loadSeo() {
-        try {
-            const pageName = getPageName();
-            
-            // Check if viewing a category (index.html with slug param)
-            const params = new URLSearchParams(window.location.search);
-            const slug = params.get('slug');
-            
-            let seoData = null;
-            
-            // Try to load category SEO first if on index with slug
-            if (slug && pageName === 'home') {
-                try {
-                    const catRes = await fetch(`${API_BASE}/categories`);
-                    const catData = await catRes.json();
-                    if (catData.success) {
-                        const cat = catData.data.find(c => c.slug === slug);
-                        if (cat) {
-                            const seoRes = await fetch(`${API_BASE}/seo/category/${cat.id}`);
-                            const seoResult = await seoRes.json();
-                            if (seoResult.success && seoResult.data) {
-                                seoData = seoResult.data;
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.log('Category SEO not found, using page SEO');
-                }
-            }
-            
-            // Load page-specific SEO
-            if (!seoData && pageName !== 'home') {
-                try {
-                    const seoRes = await fetch(`${API_BASE}/seo/page/${pageName}`);
+    // Check for category page
+    const urlParams = new URLSearchParams(window.location.search);
+    const categorySlug = urlParams.get('slug');
+    
+    try {
+        let seoData = null;
+        
+        // Load category SEO if slug exists
+        if (categorySlug) {
+            const catRes = await fetch(`${API_BASE}/categories`);
+            const catData = await catRes.json();
+            if (catData.success && catData.data) {
+                const category = catData.data.find(c => c.slug === categorySlug);
+                if (category) {
+                    const seoRes = await fetch(`${API_BASE}/seo/category/${category.id}`);
                     const seoResult = await seoRes.json();
                     if (seoResult.success && seoResult.data) {
                         seoData = seoResult.data;
                     }
-                } catch (e) {
-                    console.log('Page SEO not found');
                 }
             }
+        }
+        
+        // Load page SEO if no category SEO
+        if (!seoData && pageName) {
+            const res = await fetch(`${API_BASE}/seo/page/${pageName}`);
+            const data = await res.json();
+            if (data.success && data.data) {
+                seoData = data.data;
+            }
+        }
+        
+        // Apply SEO data
+        if (seoData) {
+            // Update title
+            if (seoData.title) {
+                document.title = seoData.title;
+            }
             
-            // Load global SEO as fallback
-            if (!seoData) {
-                try {
-                    const res = await fetch(`${API_BASE}/seo/public`);
-                    const data = await res.json();
-                    if (data.success && data.data) {
-                        seoData = {
-                            title: data.data.site_title,
-                            description: data.data.site_description,
-                            keywords: data.data.site_keywords,
-                            og_title: data.data.og_title,
-                            og_description: data.data.og_description,
-                            og_image: data.data.og_image
-                        };
-                        
-                        // Add Google verification
-                        if (data.data.google_verification) {
-                            addMetaTag('google-site-verification', data.data.google_verification);
-                        }
-                        
-                        // Add Google Analytics
-                        if (data.data.google_analytics_id) {
-                            addGoogleAnalytics(data.data.google_analytics_id);
-                        }
-                    }
-                } catch (e) {
-                    console.log('Global SEO not found');
+            // Update meta description
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && seoData.description) {
+                metaDesc.setAttribute('content', seoData.description);
+            }
+            
+            // Update meta keywords
+            const metaKeywords = document.querySelector('meta[name="keywords"]');
+            if (metaKeywords && seoData.keywords) {
+                metaKeywords.setAttribute('content', seoData.keywords);
+            }
+            
+            // Update canonical URL
+            if (seoData.canonical_url) {
+                let canonical = document.querySelector('link[rel="canonical"]');
+                if (!canonical) {
+                    canonical = document.createElement('link');
+                    canonical.setAttribute('rel', 'canonical');
+                    document.head.appendChild(canonical);
                 }
+                canonical.setAttribute('href', seoData.canonical_url);
             }
             
-            // Apply SEO settings
-            if (seoData) {
-                applySeo(seoData);
+            // Update robots
+            if (seoData.noindex || seoData.nofollow) {
+                const robots = document.querySelector('meta[name="robots"]') || document.createElement('meta');
+                robots.setAttribute('name', 'robots');
+                const content = [];
+                if (seoData.noindex) content.push('noindex');
+                else content.push('index');
+                if (seoData.nofollow) content.push('nofollow');
+                else content.push('follow');
+                robots.setAttribute('content', content.join(', '));
             }
             
-        } catch (error) {
-            console.error('SEO Loader error:', error);
-        }
-    }
-    
-    function applySeo(seo) {
-        // Update title
-        if (seo.title) {
-            document.title = seo.title;
-        }
-        
-        // Update or create meta description
-        updateMetaTag('description', seo.description);
-        
-        // Update or create meta keywords
-        updateMetaTag('keywords', seo.keywords);
-        
-        // Update Open Graph tags
-        updateOgTag('og:title', seo.og_title || seo.title);
-        updateOgTag('og:description', seo.og_description || seo.description);
-        updateOgTag('og:image', seo.og_image);
-        updateOgTag('og:type', 'website');
-        updateOgTag('og:url', window.location.href);
-        
-        // Add canonical URL
-        if (seo.canonical_url) {
-            let canonical = document.querySelector('link[rel="canonical"]');
-            if (!canonical) {
-                canonical = document.createElement('link');
-                canonical.rel = 'canonical';
-                document.head.appendChild(canonical);
+            // Update Open Graph
+            if (seoData.og_title) {
+                const ogTitle = document.querySelector('meta[property="og:title"]');
+                if (ogTitle) ogTitle.setAttribute('content', seoData.og_title);
             }
-            canonical.href = seo.canonical_url;
+            if (seoData.og_description) {
+                const ogDesc = document.querySelector('meta[property="og:description"]');
+                if (ogDesc) ogDesc.setAttribute('content', seoData.og_description);
+            }
+            if (seoData.og_image) {
+                const ogImage = document.querySelector('meta[property="og:image"]');
+                if (ogImage) ogImage.setAttribute('content', seoData.og_image);
+            }
+            
+            // Update Twitter Card
+            if (seoData.og_title) {
+                const twTitle = document.querySelector('meta[name="twitter:title"]');
+                if (twTitle) twTitle.setAttribute('content', seoData.og_title);
+            }
+            if (seoData.og_description) {
+                const twDesc = document.querySelector('meta[name="twitter:description"]');
+                if (twDesc) twDesc.setAttribute('content', seoData.og_description);
+            }
+            if (seoData.og_image) {
+                const twImage = document.querySelector('meta[name="twitter:image"]');
+                if (twImage) twImage.setAttribute('content', seoData.og_image);
+            }
         }
-        
-        // Add robots meta tag if noindex or nofollow
-        if (seo.noindex || seo.nofollow) {
-            const robots = [];
-            if (seo.noindex) robots.push('noindex');
-            if (seo.nofollow) robots.push('nofollow');
-            updateMetaTag('robots', robots.join(', '));
-        }
-    }
-    
-    function updateMetaTag(name, content) {
-        if (!content) return;
-        
-        let meta = document.querySelector(`meta[name="${name}"]`);
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.name = name;
-            document.head.appendChild(meta);
-        }
-        meta.content = content;
-    }
-    
-    function addMetaTag(name, content) {
-        if (!content) return;
-        
-        let meta = document.querySelector(`meta[name="${name}"]`);
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.name = name;
-            document.head.appendChild(meta);
-        }
-        meta.content = content;
-    }
-    
-    function updateOgTag(property, content) {
-        if (!content) return;
-        
-        let meta = document.querySelector(`meta[property="${property}"]`);
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.setAttribute('property', property);
-            document.head.appendChild(meta);
-        }
-        meta.content = content;
-    }
-    
-    function addGoogleAnalytics(id) {
-        if (!id) return;
-        
-        // Check if already added
-        if (document.querySelector(`script[src*="${id}"]`)) return;
-        
-        const script1 = document.createElement('script');
-        script1.async = true;
-        script1.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-        document.head.appendChild(script1);
-        
-        const script2 = document.createElement('script');
-        script2.innerHTML = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${id}');
-        `;
-        document.head.appendChild(script2);
-    }
-    
-    // Load SEO when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadSeo);
-    } else {
-        loadSeo();
+    } catch (error) {
+        console.log('SEO load error:', error);
     }
 })();
