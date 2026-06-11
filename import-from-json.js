@@ -33,6 +33,8 @@ async function importFromJson() {
       
       // Insert records one by one with IDENTITY_INSERT
       let imported = 0;
+      const tablesWithIdentity = ['Users', 'Categories', 'Products', 'Orders', 'Transactions', 'Banners', 'Images'];
+      
       for (const record of records) {
         try {
           const columns = Object.keys(record);
@@ -46,11 +48,16 @@ async function importFromJson() {
             return `'${String(val).replace(/'/g, "''")}'`;
           });
           
-          const query = `
-            SET IDENTITY_INSERT ${table} ON;
-            INSERT INTO ${table} (${columns.join(', ')}) VALUES (${values.join(', ')});
-            SET IDENTITY_INSERT ${table} OFF;
-          `;
+          let query;
+          if (tablesWithIdentity.includes(table)) {
+            query = `
+              SET IDENTITY_INSERT ${table} ON;
+              INSERT INTO ${table} (${columns.join(', ')}) VALUES (${values.join(', ')});
+              SET IDENTITY_INSERT ${table} OFF;
+            `;
+          } else {
+            query = `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${values.join(', ')});`;
+          }
           
           await pool.query(query);
           imported++;
