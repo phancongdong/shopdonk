@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Mạng xã hội - Admin ShopDonk</title>
+    <title>Qu?n l� M?ng x� h?i - Admin ShopDonk</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>??</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -72,22 +73,22 @@
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
-        <div class="logo">🎮 Shop<span>Donk</span></div>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay l?i</a>
+        <div class="logo">?? Shop<span>Donk</span></div>
         <div></div>
     </header>
     
     <div class="content container">
         <div class="page-header">
-            <h1><i class="fas fa-share-alt"></i> Quản lý Mạng xã hội</h1>
-            <p>Cấu hình các liên kết mạng xã hội hiển thị trên website</p>
+            <h1><i class="fas fa-share-alt"></i> Qu?n l� M?ng x� h?i</h1>
+            <p>C?u h�nh c�c li�n k?t m?ng x� h?i hi?n th? tr�n website</p>
         </div>
         
         <div class="social-grid" id="socialGrid"></div>
         
         <div class="page-header" style="margin-top: 50px;">
-            <h1><i class="fas fa-comments"></i> Bong bóng chat hỗ trợ</h1>
-            <p>Cấu hình nút chat hiển thị góc dưới bên phải trang web</p>
+            <h1><i class="fas fa-comments"></i> Bong b�ng chat h? tr?</h1>
+            <p>C?u h�nh n�t chat hi?n th? g�c du?i b�n ph?i trang web</p>
         </div>
         
         <div class="social-grid" style="grid-template-columns: 1fr;">
@@ -97,23 +98,23 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <div class="social-info">
-                        <h3>Chat hỗ trợ</h3>
-                        <p id="chatBubbleUrlPreview">Chưa cấu hình</p>
+                        <h3>Chat h? tr?</h3>
+                        <p id="chatBubbleUrlPreview">Chua c?u h�nh</p>
                     </div>
                 </div>
                 <div class="social-body">
                     <div class="form-group">
-                        <label>URL liên hệ</label>
-                        <input type="text" id="chatBubbleUrl" placeholder="contact.html hoặc https://t.me/username">
-                        <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Nhập link trang liên hệ hoặc Telegram/Zalo/Messenger</p>
+                        <label>URL li�n h?</label>
+                        <input type="text" id="chatBubbleUrl" placeholder="contact.html ho?c https://t.me/username">
+                        <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Nh?p link trang li�n h? ho?c Telegram/Zalo/Messenger</p>
                     </div>
                     <div class="toggle-wrapper">
-                        <span class="toggle-label">Hiển thị trên website</span>
+                        <span class="toggle-label">Hi?n th? tr�n website</span>
                         <div class="toggle" id="chatBubbleToggle" onclick="toggleChatBubble()"></div>
                     </div>
                     <div style="margin-top: 15px; display: flex; gap: 10px;">
                         <button class="btn btn-primary" onclick="saveChatBubble()">
-                            <i class="fas fa-save"></i> Lưu
+                            <i class="fas fa-save"></i> Luu
                         </button>
                         <button class="btn btn-secondary" onclick="testChatBubble()">
                             <i class="fas fa-external-link-alt"></i> Test
@@ -130,7 +131,7 @@
             { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube', placeholder: 'https://youtube.com/@yourchannel' },
             { id: 'telegram', name: 'Telegram', icon: 'fab fa-telegram-plane', placeholder: 'https://t.me/yourchannel' },
             { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok', placeholder: 'https://tiktok.com/@youraccount' },
-            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account hoặc số điện thoại' },
+            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account ho?c s? di?n tho?i' },
             { id: 'discord', name: 'Discord', icon: 'fab fa-discord', placeholder: 'https://discord.gg/yourinvite' },
             { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter', placeholder: 'https://twitter.com/yourhandle' },
             { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram', placeholder: 'https://instagram.com/yourprofile' }
@@ -175,21 +176,21 @@
                             </div>
                             <div class="social-info">
                                 <h3>${platform.name}</h3>
-                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'Chưa cấu hình'}</p>
+                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'Chua c?u h�nh'}</p>
                             </div>
                         </div>
                         <div class="social-body">
                             <div class="form-group">
-                                <label>URL liên kết</label>
+                                <label>URL li�n k?t</label>
                                 <input type="url" id="url-${platform.id}" value="${link.url || ''}" placeholder="${platform.placeholder}">
                             </div>
                             <div class="toggle-wrapper">
-                                <span class="toggle-label">Hiển thị trên website</span>
+                                <span class="toggle-label">Hi?n th? tr�n website</span>
                                 <div class="toggle ${link.active ? 'active' : ''}" id="toggle-${platform.id}" onclick="toggleActive('${platform.id}')"></div>
                             </div>
                             <div style="margin-top: 15px; display: flex; gap: 10px;">
                                 <button class="btn btn-primary" onclick="saveLink('${platform.id}')">
-                                    <i class="fas fa-save"></i> Lưu
+                                    <i class="fas fa-save"></i> Luu
                                 </button>
                                 ${link.url ? `<button class="btn btn-secondary" onclick="testLink('${platform.id}')"><i class="fas fa-external-link-alt"></i> Test</button>` : ''}
                             </div>
@@ -226,7 +227,7 @@
             }
             
             localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
-            showToast('Đã lưu thành công!');
+            showToast('�� luu th�nh c�ng!');
             renderSocialCards();
         }
         
@@ -247,7 +248,7 @@
         
         function renderChatBubbleCard() {
             document.getElementById('chatBubbleUrl').value = chatBubbleSettings.url;
-            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'Chưa cấu hình';
+            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'Chua c?u h�nh';
             
             const toggle = document.getElementById('chatBubbleToggle');
             if (chatBubbleSettings.active) {
@@ -291,14 +292,14 @@
                 const updateData = await updateRes.json();
                 
                 if (updateData.success) {
-                    showToast('Đã lưu cấu hình chat bubble!');
+                    showToast('�� luu c?u h�nh chat bubble!');
                     document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url;
                 } else {
-                    showToast('Lỗi: ' + (updateData.message || 'Không thể lưu'));
+                    showToast('L?i: ' + (updateData.message || 'Kh�ng th? luu'));
                 }
             } catch (e) {
                 console.error('Error saving chat bubble:', e);
-                showToast('Có lỗi xảy ra!');
+                showToast('C� l?i x?y ra!');
             }
         }
         
@@ -311,7 +312,7 @@
                     window.open(url, '_blank');
                 }
             } else {
-                showToast('Vui lòng nhập URL!');
+                showToast('Vui l�ng nh?p URL!');
             }
         }
     </script>
