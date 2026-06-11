@@ -98,32 +98,66 @@
                     if (data.success && data.data.length > 0) {
                         ordersContent.innerHTML = `
                             <div class="orders-container">
-                                <table class="orders-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Mã đơn</th>
-                                            <th>Sản phẩm</th>
-                                            <th>Giá</th>
-                                            <th>Tài khoản</th>
-                                            <th>mật khẩu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Ngày</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${data.data.map(order => `
+                                <div class="orders-table-wrapper">
+                                    <table class="orders-table">
+                                        <thead>
                                             <tr>
-                                                <td>#${order.id}</td>
-                                                <td>${order.product_name || 'N/A'}</td>
-                                                <td>${formatCurrency(order.total_price)}</td>
-                                                <td><code>${order.account_username || order.account_info?.username || 'N/A'}</code></td>
-                                                <td><code>${order.account_password || order.account_info?.password || 'N/A'}</code></td>
-                                                <td><span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'đang xử lý' : 'Đã hủy'}</span></td>
-                                                <td>${formatDate(order.created_at)}</td>
+                                                <th>Mã đơn</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Tài khoản</th>
+                                                <th>Mật khẩu</th>
+                                                <th>Trạng thái</th>
+                                                <th>Ngày</th>
                                             </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            ${data.data.map(order => `
+                                                <tr>
+                                                    <td>#${order.id}</td>
+                                                    <td>${order.product_name || 'N/A'}</td>
+                                                    <td>${formatCurrency(order.total_price)}</td>
+                                                    <td><code>${order.account_username || order.account_info?.username || 'N/A'}</code></td>
+                                                    <td><code>${order.account_password || order.account_info?.password || 'N/A'}</code></td>
+                                                    <td><span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'Đang xử lý' : 'Đã hủy'}</span></td>
+                                                    <td>${formatDate(order.created_at)}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="orders-cards">
+                                    ${data.data.map(order => `
+                                        <div class="order-card">
+                                            <div class="order-card-header">
+                                                <span class="order-id">#${order.id}</span>
+                                                <span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'Đang xử lý' : 'Đã hủy'}</span>
+                                            </div>
+                                            <div class="order-card-body">
+                                                <div class="order-row">
+                                                    <span class="order-label">Sản phẩm:</span>
+                                                    <span class="order-value">${order.product_name || 'N/A'}</span>
+                                                </div>
+                                                <div class="order-row">
+                                                    <span class="order-label">Giá:</span>
+                                                    <span class="order-value price">${formatCurrency(order.total_price)}</span>
+                                                </div>
+                                                <div class="order-row">
+                                                    <span class="order-label">Tài khoản:</span>
+                                                    <code class="order-code">${order.account_username || order.account_info?.username || 'N/A'}</code>
+                                                </div>
+                                                <div class="order-row">
+                                                    <span class="order-label">Mật khẩu:</span>
+                                                    <code class="order-code">${order.account_password || order.account_info?.password || 'N/A'}</code>
+                                                </div>
+                                                <div class="order-row">
+                                                    <span class="order-label">Ngày mua:</span>
+                                                    <span class="order-value">${formatDate(order.created_at)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
                             </div>
                         `;
                     } else {
@@ -203,6 +237,115 @@
         
         .orders-table tbody tr:hover {
             background: rgba(0, 240, 255, 0.05);
+        }
+        
+        .orders-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .orders-cards {
+            display: none;
+        }
+        
+        .order-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #00f0ff;
+            font-size: 16px;
+        }
+        
+        .order-card-body .order-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .order-label {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        
+        .order-value {
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .order-value.price {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .order-code {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #00f0ff;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 768px) {
+            .orders-container {
+                padding: 15px 10px;
+            }
+            
+            .orders-table-wrapper {
+                display: none;
+            }
+            
+            .orders-cards {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .order-card {
+                padding: 12px;
+            }
+            
+            .order-card-header {
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+            }
+            
+            .order-id {
+                font-size: 15px;
+            }
+            
+            .order-label {
+                font-size: 12px;
+            }
+            
+            .order-value {
+                font-size: 13px;
+            }
+            
+            .order-code {
+                font-size: 12px;
+                padding: 3px 6px;
+            }
         }
     </style>
 </body>
