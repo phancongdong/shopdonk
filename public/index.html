@@ -204,6 +204,15 @@
         .chat-bubble i { color: #fff; font-size: 24px; }
         .chat-bubble::before { content: ''; position: absolute; width: 70px; height: 70px; border-radius: 50%; background: rgba(99,102,241,0.3); animation: chatPulse 2s infinite; }
         @keyframes chatPulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+        
+        /* Image Lightbox */
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 99999; display: none; align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; transition: all 0.3s; }
+        .lightbox-close:hover { transform: scale(1.2); color: #6366f1; }
+        .game-img { cursor: pointer; transition: transform 0.3s; }
+        .game-img:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -364,6 +373,12 @@
     
     <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay"></div>
+    
+    <!-- Image Lightbox -->
+    <div class="lightbox" id="imageLightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImage" src="" alt="Product Image">
+    </div>
     
     <script>
         const API_BASE = window.location.origin + '/api';
@@ -723,7 +738,7 @@
                 
                 return `
                 <div class="game-card" data-product-id="${p.id}">
-                    <img class="game-img" src="${imageUrl}" alt="${p.name}" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
+                    <img class="game-img" src="${imageUrl}" alt="${p.name}" onclick="openLightbox('${imageUrl.replace(/'/g, "\\'")}')" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
                     <div class="game-content">
                         <div class="game-title">${p.name}</div>
                         ${description ? `<div class="game-desc">${description}</div>` : ''}
@@ -1018,6 +1033,17 @@
             } catch (e) {
                 console.error('Error loading chat bubble settings:', e);
             }
+        }
+        
+        function openLightbox(imageUrl) {
+            document.getElementById('lightboxImage').src = imageUrl;
+            document.getElementById('imageLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('imageLightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         
         loadChatBubbleSettings();
