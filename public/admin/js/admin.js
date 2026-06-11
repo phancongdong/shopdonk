@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = window.location.origin + '/api';
     
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {

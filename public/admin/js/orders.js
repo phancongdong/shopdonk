@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = window.location.origin + '/api';
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const isAdmin = user && user.role === 'admin';
     
