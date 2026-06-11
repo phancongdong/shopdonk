@@ -697,12 +697,14 @@
             const grid = document.getElementById('gamesGrid');
             const timestamp = Date.now();
             
-            if (products.length === 0) {
-                grid.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:50px;">Không có sản phẩm</p>';
+            const inStockProducts = products.filter(p => (p.stock || 0) > 0);
+            
+            if (inStockProducts.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:50px;">Khong co san pham</p>';
                 return;
             }
             
-            grid.innerHTML = products.map(p => {
+            grid.innerHTML = inStockProducts.map(p => {
                 let imageUrl = 'https://placehold.co/400x200/6366f1/fff?text=' + encodeURIComponent(p.name || 'N/A');
                 if (p.image && p.image.trim()) {
                     if (p.image.startsWith('data:')) {
