@@ -3,6 +3,16 @@ const { query } = require('../config/database');
 async function getPageSeo(req, res) {
     try {
         const pageName = req.params.page || 'home';
+        
+        // Check if table exists
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PageSEO'
+        `);
+        
+        if (tableCheck.recordset.length === 0) {
+            return res.json({ success: true, data: null });
+        }
+        
         const result = await query('SELECT * FROM PageSEO WHERE page_name = @param0', [pageName]);
         
         if (result.recordset.length > 0) {
@@ -18,9 +28,9 @@ async function getPageSeo(req, res) {
         }
     } catch (error) {
         console.error('Get page SEO error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
+        res.json({
+            success: true,
+            data: null
         });
     }
 }
@@ -49,6 +59,32 @@ async function savePageSeo(req, res) {
             og_title, og_description, og_image,
             canonical_url, noindex, nofollow
         } = req.body;
+        
+        // Check if table exists, create if not
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PageSEO'
+        `);
+        
+        if (tableCheck.recordset.length === 0) {
+            await query(`
+                CREATE TABLE PageSEO (
+                    id INT PRIMARY KEY IDENTITY(1,1),
+                    page_name NVARCHAR(100) NOT NULL UNIQUE,
+                    page_url NVARCHAR(255) NOT NULL,
+                    title NVARCHAR(255),
+                    description NVARCHAR(MAX),
+                    keywords NVARCHAR(MAX),
+                    og_title NVARCHAR(255),
+                    og_description NVARCHAR(MAX),
+                    og_image NVARCHAR(255),
+                    canonical_url NVARCHAR(255),
+                    noindex BIT DEFAULT 0,
+                    nofollow BIT DEFAULT 0,
+                    created_at DATETIME DEFAULT GETDATE(),
+                    updated_at DATETIME DEFAULT GETDATE()
+                )
+            `);
+        }
         
         const existing = await query('SELECT id FROM PageSEO WHERE page_name = @param0', [pageName]);
         
@@ -82,7 +118,7 @@ async function savePageSeo(req, res) {
         console.error('Save page SEO error:', error);
         res.status(500).json({
             success: false,
-            message: 'Lỗi server'
+            message: 'Lỗi server: ' + error.message
         });
     }
 }
@@ -90,6 +126,15 @@ async function savePageSeo(req, res) {
 async function getCategorySeo(req, res) {
     try {
         const categoryId = req.params.id;
+        
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CategorySEO'
+        `);
+        
+        if (tableCheck.recordset.length === 0) {
+            return res.json({ success: true, data: null });
+        }
+        
         const result = await query('SELECT * FROM CategorySEO WHERE category_id = @param0', [categoryId]);
         
         if (result.recordset.length > 0) {
@@ -105,9 +150,9 @@ async function getCategorySeo(req, res) {
         }
     } catch (error) {
         console.error('Get category SEO error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Lỗi server'
+        res.json({
+            success: true,
+            data: null
         });
     }
 }
@@ -115,7 +160,15 @@ async function getCategorySeo(req, res) {
 async function getAllCategorySeo(req, res) {
     try {
         const categories = await query('SELECT id, name, slug FROM Categories ORDER BY name');
-        const categorySeo = await query('SELECT * FROM CategorySEO');
+        
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CategorySEO'
+        `);
+        
+        let categorySeo = { recordset: [] };
+        if (tableCheck.recordset.length > 0) {
+            categorySeo = await query('SELECT * FROM CategorySEO');
+        }
         
         const result = categories.recordset.map(cat => {
             const seo = categorySeo.recordset.find(s => s.category_id === cat.id);
@@ -156,6 +209,31 @@ async function saveCategorySeo(req, res) {
             og_title, og_description, og_image,
             canonical_url, noindex, nofollow
         } = req.body;
+        
+        // Check if table exists, create if not
+        const tableCheck = await query(`
+            SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CategorySEO'
+        `);
+        
+        if (tableCheck.recordset.length === 0) {
+            await query(`
+                CREATE TABLE CategorySEO (
+                    id INT PRIMARY KEY IDENTITY(1,1),
+                    category_id INT NOT NULL,
+                    title NVARCHAR(255),
+                    description NVARCHAR(MAX),
+                    keywords NVARCHAR(MAX),
+                    og_title NVARCHAR(255),
+                    og_description NVARCHAR(MAX),
+                    og_image NVARCHAR(255),
+                    canonical_url NVARCHAR(255),
+                    noindex BIT DEFAULT 0,
+                    nofollow BIT DEFAULT 0,
+                    created_at DATETIME DEFAULT GETDATE(),
+                    updated_at DATETIME DEFAULT GETDATE()
+                )
+            `);
+        }
         
         const existing = await query('SELECT id FROM CategorySEO WHERE category_id = @param0', [categoryId]);
         
