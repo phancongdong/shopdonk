@@ -3,6 +3,32 @@
     const API_BASE = window.location.origin + '/api';
     const path = window.location.pathname;
     
+    // Hardcoded SEO for categories (fallback when API fails)
+    const hardcodedCategorySEO = {
+        'acc-random-lien-quan-mobile': {
+            title: 'Acc Random Liên Quân Mobile Giá Rẻ',
+            description: 'Danh mục Acc Random Liên Quân Mobile với nhiều phân khúc giá khác nhau. Người chơi có thể nhận tài khoản ngẫu nhiên với tỷ lệ ra skin vip cực cao.',
+            keywords: 'acc random liên quân, acc ngẫu nhiên liên quân, random acc lien quan mobile, acc lien quan gia re, skin ss liên quân, acc random giá rẻ, acc random sss',
+            og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
+            og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
+            og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
+            canonical_url: 'https://shopdonk.com/index.html?slug=acc-random-lien-quan-mobile',
+            noindex: false,
+            nofollow: false
+        },
+        'random-acc-lien-quan-mobile': {
+            title: 'Acc Random Liên Quân Mobile Giá Rẻ',
+            description: 'Danh mục Acc Random Liên Quân Mobile với nhiều phân khúc giá khác nhau. Người chơi có thể nhận tài khoản ngẫu nhiên với tỷ lệ ra skin vip cực cao.',
+            keywords: 'acc random liên quân, acc ngẫu nhiên liên quân, random acc lien quan mobile, acc lien quan gia re, skin ss liên quân, acc random giá rẻ, acc random sss',
+            og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
+            og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
+            og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
+            canonical_url: 'https://shopdonk.com/index.html?slug=random-acc-lien-quan-mobile',
+            noindex: false,
+            nofollow: false
+        }
+    };
+    
     // Determine page name from URL
     let pageName = 'home';
     if (path.includes('login.html')) pageName = 'login';
@@ -22,8 +48,13 @@
     try {
         let seoData = null;
         
-        // Load category SEO if slug exists
-        if (categorySlug) {
+        // Check hardcoded SEO first for categories
+        if (categorySlug && hardcodedCategorySEO[categorySlug]) {
+            seoData = hardcodedCategorySEO[categorySlug];
+        }
+        
+        // Load category SEO from API if no hardcoded
+        if (!seoData && categorySlug) {
             const catRes = await fetch(`${API_BASE}/categories`);
             const catData = await catRes.json();
             if (catData.success && catData.data) {
