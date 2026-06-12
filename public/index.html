@@ -856,7 +856,9 @@
                         localStorage.setItem('user', JSON.stringify(user));
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.error('[ERROR] Failed to fetch user balance:', e);
+            }
             
             if (user.balance < price) {
                 showModal('warning', 'So du khong du', `
@@ -922,28 +924,53 @@
         }
         
         async function processPurchase(productId, price, productName) {
+            const btn = document.querySelector(`[data-product-id="${productId}"] .buy-btn`);
+            if (btn) btn.disabled = true;
+            
             closeModal();
-            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            const loading = document.getElementById('loadingOverlay');
+            if (!loading) {
+                console.error('[ERROR] loadingOverlay element not found');
+                if (btn) btn.disabled = false;
+                return;
+            }
+            loading.style.display = 'flex';
             
             const user = JSON.parse(localStorage.getItem('user') || 'null');
+            if (!user || !user.id) {
+                loading.style.display = 'none';
+                if (btn) btn.disabled = false;
+                showModal('error', 'Lỗi', 'Không tìm thấy thông tin người dùng', [{ text: 'Đóng', class: 'primary', action: closeModal }]);
+                return;
+            }
+            
             const quantityInput = document.getElementById('buyQuantity');
             const quantity = quantityInput ? (parseInt(quantityInput.value) || 1) : 1;
             const totalPrice = price * quantity;
             
             try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+                
                 const res = await fetch(`${API_BASE}/orders`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: user.id, product_id: productId, quantity })
+                    body: JSON.stringify({ user_id: user.id, product_id: productId, quantity }),
+                    signal: controller.signal
                 });
+                clearTimeout(timeoutId);
+                
                 const data = await res.json();
                 
-                document.getElementById('loadingOverlay').style.display = 'none';
+                loading.style.display = 'none';
+                if (btn) btn.disabled = false;
                 
                 if (data.success) {
                     user.balance -= totalPrice;
                     localStorage.setItem('user', JSON.stringify(user));
-                    document.getElementById('userBalance').textContent = formatPrice(user.balance);
+                    const userBalanceEl = document.getElementById('userBalance');
+                    if (userBalanceEl) userBalanceEl.textContent = formatPrice(user.balance);
                     
                     const card = document.querySelector(`[data-product-id="${productId}"]`);
                     if (card) {
@@ -986,13 +1013,18 @@
                         { text: 'Đóng', class: 'primary', action: closeModal }
                     ]);
                 } else {
+                    console.error('[ERROR] Order creation failed:', data.message);
                     showModal('error', 'Lỗi', data.message || 'Có lỗi xảy ra', [
                         { text: 'Đóng', class: 'primary', action: closeModal }
                     ]);
                 }
             } catch (e) {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                showModal('error', 'Lỗi', 'Có lỗi xảy ra khi mua hàng', [
+                console.error('[ERROR] Purchase failed:', e);
+                loading.style.display = 'none';
+                if (btn) btn.disabled = false;
+                
+                const errorMsg = e.name === 'AbortError' ? 'Yêu cầu bị timeout, vui lòng thử lại' : e.message || 'Có lỗi xảy ra khi mua hàng';
+                showModal('error', 'Lỗi', errorMsg, [
                     { text: 'Đóng', class: 'primary', action: closeModal }
                 ]);
             }

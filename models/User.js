@@ -52,14 +52,30 @@ async function getUserById(id) {
     return result.recordset[0];
 }
 
-async function updateBalance(userId, amount) {
+async function updateBalance(userId, amount, transaction = null) {
     const queryStr = `
         UPDATE Users 
         SET balance = balance + @param0,
             updated_at = GETDATE()
         WHERE id = @param1
     `;
-    await query(queryStr, [amount, userId]);
+    await query(queryStr, [amount, userId], transaction);
+    
+    return getUserById(userId);
+}
+
+async function updateBalanceWithCheck(userId, amount, transaction = null) {
+    const queryStr = `
+        UPDATE Users 
+        SET balance = balance + @param0,
+            updated_at = GETDATE()
+        WHERE id = @param1 AND balance + @param0 >= 0
+    `;
+    const result = await query(queryStr, [amount, userId], transaction);
+    
+    if (result.rowsAffected[0] === 0) {
+        throw new Error('Insufficient balance or user not found');
+    }
     
     return getUserById(userId);
 }
@@ -199,6 +215,7 @@ module.exports = {
     validatePassword,
     getUserById,
     updateBalance,
+    updateBalanceWithCheck,
     getBalance,
     setBalance,
     getAllUsers,

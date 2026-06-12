@@ -103,7 +103,7 @@ async function createProduct(data) {
     return { ...data };
 }
 
-async function updateProduct(id, data) {
+async function updateProduct(id, data, transaction = null) {
     const fields = [];
     const params = [];
     
@@ -126,7 +126,7 @@ async function updateProduct(id, data) {
     params.push(id);
     
     const queryStr = `UPDATE Products SET ${fields.join(', ')} WHERE id = @param${params.length - 1}`;
-    await query(queryStr, params);
+    await query(queryStr, params, transaction);
     
     return getProductById(id);
 }
@@ -136,14 +136,30 @@ async function deleteProduct(id) {
     await query(queryStr, [id]);
 }
 
-async function updateStock(id, quantity) {
+async function updateStock(id, quantity, transaction = null) {
+    const queryStr = `
+        UPDATE Products 
+        SET stock = stock - @param0,
+            updated_at = GETDATE()
+        WHERE id = @param1 AND stock >= @param0
+    `;
+    const result = await query(queryStr, [quantity, id], transaction);
+    
+    if (result.rowsAffected[0] === 0) {
+        throw new Error('Insufficient stock or product not found');
+    }
+    
+    return getProductById(id);
+}
+
+async function updateStockUnchecked(id, quantity, transaction = null) {
     const queryStr = `
         UPDATE Products 
         SET stock = stock - @param0,
             updated_at = GETDATE()
         WHERE id = @param1
     `;
-    await query(queryStr, [quantity, id]);
+    await query(queryStr, [quantity, id], transaction);
     
     return getProductById(id);
 }
@@ -180,6 +196,7 @@ module.exports = {
     updateProduct,
     deleteProduct,
     updateStock,
+    updateStockUnchecked,
     getProductsByCategory,
     getFeaturedProducts
 };

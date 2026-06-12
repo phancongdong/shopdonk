@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const User = require('../models/User');
+const { beginTransaction, commitTransaction, rollbackTransaction, query } = require('../config/database');
 
 async function getOrders(req, res) {
     try {
@@ -67,9 +68,13 @@ async function getOrderById(req, res) {
 }
 
 async function createOrder(req, res) {
+    let transaction = null;
+    
     try {
         const userId = req.user?.id || req.body.user_id;
         const { product_id, quantity = 1 } = req.body;
+        
+        console.log('[DEBUG] createOrder called:', { userId, product_id, quantity });
         
         if (!userId) {
             return res.status(401).json({
@@ -85,9 +90,27 @@ async function createOrder(req, res) {
             });
         }
         
-        const product = await Product.getProductById(product_id);
+        if (quantity < 1 || quantity > 10) {
+            return res.status(400).json({
+                success: false,
+                message: 'Số lượng không hợp lệ (1-10)'
+            });
+        }
+        
+        transaction = await beginTransaction();
+        
+        const productResult = await query(
+            `SELECT p.*, c.name as category_name, c.slug as category_slug
+             FROM Products p WITH (UPDLOCK, HOLDLOCK)
+             LEFT JOIN Categories c ON p.category_id = c.id
+             WHERE p.id = @param0`,
+            [product_id],
+            transaction
+        );
+        const product = productResult.recordset[0];
         
         if (!product) {
+            await rollbackTransaction(transaction);
             return res.status(404).json({
                 success: false,
                 message: 'Không tìm thấy sản phẩm'
@@ -95,23 +118,43 @@ async function createOrder(req, res) {
         }
         
         if (product.stock < quantity) {
+            await rollbackTransaction(transaction);
             return res.status(400).json({
                 success: false,
                 message: 'Sản phẩm không đủ số lượng'
             });
         }
         
-        const user = await User.getUserById(userId);
+        const userResult = await query(
+            `SELECT * FROM Users WITH (UPDLOCK, HOLDLOCK) WHERE id = @param0`,
+            [userId],
+            transaction
+        );
+        const user = userResult.recordset[0];
+        
+        if (!user) {
+            await rollbackTransaction(transaction);
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy người dùng'
+            });
+        }
+        
         const totalPrice = product.price * quantity;
         
         if (user.balance < totalPrice) {
+            await rollbackTransaction(transaction);
             return res.status(400).json({
                 success: false,
                 message: 'Số dư không đủ'
             });
         }
         
-        await User.updateBalance(userId, -totalPrice);
+        await query(
+            `UPDATE Users SET balance = balance - @param0, updated_at = GETDATE() WHERE id = @param1`,
+            [totalPrice, userId],
+            transaction
+        );
         
         let accountUsername, accountPassword;
         
@@ -119,7 +162,7 @@ async function createOrder(req, res) {
             const accounts = product.accounts_list.split('\n').filter(line => line.trim().includes('-'));
             
             if (accounts.length === 0) {
-                await User.updateBalance(userId, totalPrice);
+                await rollbackTransaction(transaction);
                 return res.status(400).json({
                     success: false,
                     message: 'Sản phẩm đã hết tài khoản'
@@ -132,19 +175,22 @@ async function createOrder(req, res) {
             accountPassword = password?.trim() || '';
             
             const remainingAccounts = accounts.slice(1).join('\n');
-            await Product.updateProduct(product_id, {
-                accounts_list: remainingAccounts,
-                stock: accounts.length - 1,
-                is_hidden: accounts.length - 1 === 0 ? 1 : 0
-            });
+            const newStock = accounts.length - 1;
+            
+            await query(
+                `UPDATE Products SET accounts_list = @param0, stock = @param1, is_hidden = @param2, updated_at = GETDATE() WHERE id = @param3`,
+                [remainingAccounts, newStock, newStock === 0 ? 1 : 0, product_id],
+                transaction
+            );
         } else {
             accountUsername = product.account_username || generateRandomUsername();
             accountPassword = product.account_password || generateRandomPassword();
-            await Product.updateStock(product_id, quantity);
             
-            if (product.stock - quantity <= 0) {
-                await Product.updateProduct(product_id, { is_hidden: 1 });
-            }
+            await query(
+                `UPDATE Products SET stock = stock - @param0, is_hidden = CASE WHEN stock - @param0 <= 0 THEN 1 ELSE is_hidden END, updated_at = GETDATE() WHERE id = @param1`,
+                [quantity, product_id],
+                transaction
+            );
         }
         
         const accountInfo = {
@@ -153,14 +199,23 @@ async function createOrder(req, res) {
             notes: `Đơn hàng #${Date.now()} - ${product.name}`
         };
         
-        await Order.createOrder(userId, product_id, quantity, totalPrice, accountInfo, accountUsername, accountPassword);
-        
-        await User.createTransaction(
-            userId,
-            'purchase',
-            -totalPrice,
-            `Mua ${product.name} (${quantity} nick)`
+        await query(
+            `INSERT INTO Orders (user_id, product_id, quantity, total_price, account_info, account_username, account_password, status, created_at)
+             VALUES (@param0, @param1, @param2, @param3, @param4, @param5, @param6, 'completed', GETDATE())`,
+            [userId, product_id, quantity, totalPrice, JSON.stringify(accountInfo), accountUsername, accountPassword],
+            transaction
         );
+        
+        await query(
+            `INSERT INTO Transactions (user_id, type, amount, description, created_at)
+             VALUES (@param0, @param1, @param2, @param3, GETDATE())`,
+            [userId, 'purchase', -totalPrice, `Mua ${product.name} (${quantity} nick)`],
+            transaction
+        );
+        
+        await commitTransaction(transaction);
+        
+        console.log('[DEBUG] Order created successfully:', { userId, product_id, quantity, totalPrice });
         
         res.status(201).json({
             success: true,
@@ -175,10 +230,15 @@ async function createOrder(req, res) {
             }
         });
     } catch (error) {
-        console.error('Create order error:', error);
+        console.error('[ERROR] Create order failed:', error);
+        
+        if (transaction) {
+            await rollbackTransaction(transaction);
+        }
+        
         res.status(500).json({
             success: false,
-            message: 'Lỗi server'
+            message: error.message || 'Lỗi server, vui lòng thử lại sau'
         });
     }
 }

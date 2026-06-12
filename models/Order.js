@@ -1,6 +1,6 @@
 const { query } = require('../config/database');
 
-async function createOrder(userId, productId, quantity, totalPrice, accountInfo, accountUsername, accountPassword) {
+async function createOrder(userId, productId, quantity, totalPrice, accountInfo, accountUsername, accountPassword, transaction = null) {
     const queryStr = `
         INSERT INTO Orders (
             user_id, product_id, quantity, total_price, 
@@ -12,7 +12,7 @@ async function createOrder(userId, productId, quantity, totalPrice, accountInfo,
         )
     `;
     
-    await query(queryStr, [userId, productId, quantity, totalPrice, JSON.stringify(accountInfo), accountUsername, accountPassword]);
+    await query(queryStr, [userId, productId, quantity, totalPrice, JSON.stringify(accountInfo), accountUsername, accountPassword], transaction);
     
     return { userId, productId, quantity, totalPrice, accountInfo, accountUsername, accountPassword };
 }

@@ -65,9 +65,15 @@ function getPool() {
     return pool;
 }
 
-async function query(queryString, params = []) {
+async function query(queryString, params = [], transaction = null) {
     const pool = getPool();
-    const request = pool.request();
+    let request;
+    
+    if (transaction) {
+        request = transaction.request();
+    } else {
+        request = pool.request();
+    }
     
     params.forEach((param, index) => {
         request.input(`param${index}`, param);
@@ -75,6 +81,25 @@ async function query(queryString, params = []) {
     
     const result = await request.query(queryString);
     return result;
+}
+
+async function beginTransaction() {
+    const pool = getPool();
+    const transaction = pool.transaction();
+    await transaction.begin();
+    return transaction;
+}
+
+async function commitTransaction(transaction) {
+    await transaction.commit();
+}
+
+async function rollbackTransaction(transaction) {
+    try {
+        await transaction.rollback();
+    } catch (e) {
+        console.error('Rollback error:', e);
+    }
 }
 
 async function executeProcedure(procedureName, params = {}) {
@@ -94,5 +119,8 @@ module.exports = {
     getPool,
     query,
     executeProcedure,
+    beginTransaction,
+    commitTransaction,
+    rollbackTransaction,
     sql
 };
