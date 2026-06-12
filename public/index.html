@@ -752,7 +752,7 @@
                                 <div class="game-stat-label">Gia</div>
                             </div>
                         </div>
-                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${p.name.replace(/'/g, "\\'")}" data-desc="${description.replace(/'/g, "\\'")}" onclick="buyProduct(${p.id}, ${p.price}, '${p.name.replace(/'/g, "\\'")}', '${description.replace(/'/g, "\\'")}')">
+                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${p.name.replace(/'/g, "\\'")}" data-desc="${description.replace(/'/g, "\\'")}" data-stock="${stockDisplay}" onclick="buyProduct(${p.id}, ${p.price}, '${p.name.replace(/'/g, "\\'")}', '${description.replace(/'/g, "\\'")}', ${stockDisplay})">
                             <i class="fas fa-shopping-cart"></i>
                             <span>${btnText}</span>
                         </button>
@@ -836,7 +836,7 @@
             }
         }
         
-        window.buyProduct = async function(productId, price, productName, productDesc) {
+        window.buyProduct = async function(productId, price, productName, productDesc, stock = 1) {
             const user = JSON.parse(localStorage.getItem('user') || 'null');
             if (!user) {
                 showModal('warning', 'Yeu cau dang nhap', 'Ban can dang nhap de mua hang!', [
@@ -872,6 +872,9 @@
                 return;
             }
             
+            const showQuantitySelector = stock > 1;
+            const maxQty = Math.min(stock, 10);
+            
             showModal('', 'Xac nhan mua hang', `
                 ${productDesc ? `<div style="background: rgba(99,102,241,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid rgba(99,102,241,0.2);">
                     <div style="color: #6366f1; font-size: 12px; margin-bottom: 8px; font-weight: 600;"><i class="fas fa-info-circle"></i> Mo ta san pham</div>
@@ -881,11 +884,13 @@
                     <div class="info-row"><span>San pham:</span><strong>${productName}</strong></div>
                     <div class="info-row"><span>Gia:</span><strong>${formatPrice(price)}</strong></div>
                     <div class="info-row"><span>So luong:</span>
+                        ${showQuantitySelector ? `
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <button onclick="changeQty(-1)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; font-size: 16px;"><i class="fas fa-minus"></i></button>
-                            <input type="number" id="buyQuantity" value="1" min="1" max="10" style="width: 60px; text-align: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 8px; padding: 6px; font-size: 16px; font-weight: bold;" onchange="updateTotalPrice(${price}, ${user.balance})">
+                            <input type="number" id="buyQuantity" value="1" min="1" max="${maxQty}" style="width: 60px; text-align: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 8px; padding: 6px; font-size: 16px; font-weight: bold;" onchange="updateTotalPrice(${price}, ${user.balance})">
                             <button onclick="changeQty(1)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; font-size: 16px;"><i class="fas fa-plus"></i></button>
                         </div>
+                        ` : `<strong>1</strong>`}
                     </div>
                     <div class="info-row"><span>Tong tien:</span><strong id="totalPrice">${formatPrice(price)}</strong></div>
                     <div class="info-row"><span>So du hien tai:</span><strong>${formatPrice(user.balance)}</strong></div>
@@ -896,22 +901,24 @@
                 { text: 'Xac nhan', class: 'primary', action: () => processPurchase(productId, price, productName) }
             ]);
             
-            window.changeQty = function(delta) {
-                const input = document.getElementById('buyQuantity');
-                let qty = parseInt(input.value) + delta;
-                if (qty < 1) qty = 1;
-                if (qty > 10) qty = 10;
-                input.value = qty;
-                updateTotalPrice(price, user.balance);
-            };
-            
-            window.updateTotalPrice = function(price, balance) {
-                const qty = parseInt(document.getElementById('buyQuantity').value) || 1;
-                const total = price * qty;
-                document.getElementById('totalPrice').textContent = formatPrice(total);
-                document.getElementById('remainingBalance').textContent = formatPrice(balance - total);
-                document.getElementById('remainingBalance').style.color = balance - total >= 0 ? '#22c55e' : '#ef4444';
-            };
+            if (showQuantitySelector) {
+                window.changeQty = function(delta) {
+                    const input = document.getElementById('buyQuantity');
+                    let qty = parseInt(input.value) + delta;
+                    if (qty < 1) qty = 1;
+                    if (qty > maxQty) qty = maxQty;
+                    input.value = qty;
+                    updateTotalPrice(price, user.balance);
+                };
+                
+                window.updateTotalPrice = function(price, balance) {
+                    const qty = parseInt(document.getElementById('buyQuantity').value) || 1;
+                    const total = price * qty;
+                    document.getElementById('totalPrice').textContent = formatPrice(total);
+                    document.getElementById('remainingBalance').textContent = formatPrice(balance - total);
+                    document.getElementById('remainingBalance').style.color = balance - total >= 0 ? '#22c55e' : '#ef4444';
+                };
+            }
         }
         
         async function processPurchase(productId, price, productName) {
@@ -919,7 +926,8 @@
             document.getElementById('loadingOverlay').style.display = 'flex';
             
             const user = JSON.parse(localStorage.getItem('user') || 'null');
-            const quantity = parseInt(document.getElementById('buyQuantity')?.value) || 1;
+            const quantityInput = document.getElementById('buyQuantity');
+            const quantity = quantityInput ? (parseInt(quantityInput.value) || 1) : 1;
             const totalPrice = price * quantity;
             
             try {
