@@ -226,4 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     loadUsers();
+    
+    setInterval(loadUsers, 30000);
 });
