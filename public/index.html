@@ -560,7 +560,10 @@
                 const data = await res.json();
                 if (data.success) {
                     renderCategories(data.data);
-                    document.getElementById('statProducts').textContent = data.data.length + '+';
+                    const statProductsEl = document.getElementById('statProducts');
+                    if (statProductsEl) {
+                        statProductsEl.textContent = data.data.length + '+';
+                    }
                 }
             } catch (e) {
                 console.error(e);
@@ -720,6 +723,18 @@
                 return;
             }
             
+            function escapeJs(str) {
+                if (!str) return '';
+                return str.toString()
+                    .replace(/\\/g, '\\\\')
+                    .replace(/'/g, "\\'")
+                    .replace(/"/g, '\\"')
+                    .replace(/\n/g, '\\n')
+                    .replace(/\r/g, '\\r')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+            
             grid.innerHTML = inStockProducts.map(p => {
                 let imageUrl = 'https://placehold.co/400x200/6366f1/fff?text=' + encodeURIComponent(p.name || 'N/A');
                 if (p.image && p.image.trim()) {
@@ -735,13 +750,16 @@
                 let btnText = stockDisplay > 0 ? 'MUA NGAY' : 'HET HANG';
                 let btnDisabled = stockDisplay <= 0 ? 'disabled' : '';
                 let description = p.description || '';
+                let safeName = escapeJs(p.name);
+                let safeDesc = escapeJs(description);
+                let safeImageUrl = escapeJs(imageUrl);
                 
                 return `
                 <div class="game-card" data-product-id="${p.id}">
-                    <img class="game-img" src="${imageUrl}" alt="${p.name}" onclick="openLightbox('${imageUrl.replace(/'/g, "\\'")}')" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
+                    <img class="game-img" src="${imageUrl}" alt="${escapeJs(p.name)}" onclick="openLightbox('${safeImageUrl}')" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
                     <div class="game-content">
-                        <div class="game-title">${p.name}</div>
-                        ${description ? `<div class="game-desc">${description}</div>` : ''}
+                        <div class="game-title">${escapeJs(p.name)}</div>
+                        ${description ? `<div class="game-desc">${safeDesc}</div>` : ''}
                         <div class="game-stats">
                             <div class="game-stat">
                                 <div class="game-stat-value stock-count" data-stock="${stockDisplay}">${stockDisplay}</div>
@@ -752,7 +770,7 @@
                                 <div class="game-stat-label">Gia</div>
                             </div>
                         </div>
-                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${p.name.replace(/'/g, "\\'")}" data-desc="${description.replace(/'/g, "\\'")}" data-stock="${stockDisplay}" onclick="buyProduct(${p.id}, ${p.price}, '${p.name.replace(/'/g, "\\'")}', '${description.replace(/'/g, "\\'")}', ${stockDisplay})">
+                        <button class="game-btn buy-btn" data-id="${p.id}" data-price="${p.price}" data-name="${safeName}" data-desc="${safeDesc}" data-stock="${stockDisplay}" onclick="buyProduct(${p.id}, ${p.price}, '${safeName}', '${safeDesc}', ${stockDisplay})">
                             <i class="fas fa-shopping-cart"></i>
                             <span>${btnText}</span>
                         </button>
