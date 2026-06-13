@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.showAddProductModal = function() {
         document.getElementById('modalTitle').textContent = 'Thêm sản phẩm mới';
         document.getElementById('productId').value = '';
-        document.getElementById('productForm').reset();
         document.getElementById('accountType').value = 'single';
+        document.getElementById('productForm').reset();
         toggleAccountFields();
         document.getElementById('productModal').classList.remove('hidden');
     };
@@ -149,15 +149,24 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     window.editProduct = async function(id) {
-        const product = allProducts.find(p => p.id === id);
-        if (product) {
+        try {
+            const res = await fetch(`${API_BASE}/products/${id}`);
+            const data = await res.json();
+            
+            if (!data.success || !data.data) {
+                alert('Không tìm thấy sản phẩm');
+                return;
+            }
+            
+            const product = data.data;
+            
             document.getElementById('modalTitle').textContent = 'Sửa sản phẩm';
             document.getElementById('productId').value = product.id;
-            document.getElementById('productName').value = product.name;
+            document.getElementById('productName').value = product.name || '';
             document.getElementById('productCategory').value = product.category_id || '';
             document.getElementById('productCostPrice').value = product.cost_price || 0;
-            document.getElementById('productPrice').value = product.price;
-            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productPrice').value = product.price || 0;
+            document.getElementById('productStock').value = product.stock || 0;
             document.getElementById('productImage').value = product.image || '';
             document.getElementById('productDescription').value = product.description || '';
             
@@ -173,6 +182,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             document.getElementById('productModal').classList.remove('hidden');
+        } catch (error) {
+            console.error('Error loading product:', error);
+            alert('Có lỗi xảy ra khi tải thông tin sản phẩm');
         }
     };
     
@@ -277,7 +289,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 closeProductModal();
-                loadProducts();
+                allProducts = [];
+                await loadProducts();
             } else {
                 alert('Lỗi: ' + (result.message || 'Không thể lưu sản phẩm'));
             }

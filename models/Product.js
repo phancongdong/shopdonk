@@ -35,7 +35,7 @@ async function getAllProducts(filters = {}) {
         params.push(filters.max_price);
     }
     
-    queryStr += ` ORDER BY p.created_at DESC`;
+    queryStr += ` ORDER BY p.id DESC`;
     
     if (filters.limit) {
         queryStr += ` OFFSET 0 ROWS FETCH NEXT @param${params.length} ROWS ONLY`;
@@ -170,7 +170,7 @@ async function getProductsByCategory(categoryId, limit = 20) {
         FROM Products p
         LEFT JOIN Categories c ON p.category_id = c.id
         WHERE p.category_id = @param0
-        ORDER BY p.created_at DESC
+        ORDER BY p.id DESC
     `;
     const result = await query(queryStr, [categoryId]);
     return result.recordset;
@@ -182,7 +182,7 @@ async function getFeaturedProducts(limit = 10) {
         FROM Products p
         LEFT JOIN Categories c ON p.category_id = c.id
         WHERE p.stock > 0
-        ORDER BY p.created_at DESC
+        ORDER BY p.id DESC
     `;
     const result = await query(queryStr);
     return result.recordset;
