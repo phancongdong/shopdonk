@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const { query } = require('../config/database');
 
 async function getProducts(req, res) {
     try {
@@ -89,7 +90,7 @@ async function createProduct(req, res) {
             });
         }
         
-        data.slug = generateSlug(data.name);
+        data.slug = await generateUniqueSlug(data.name);
         
         const product = await Product.createProduct(data);
         
@@ -120,8 +121,8 @@ async function updateProduct(req, res) {
             });
         }
         
-        if (data.name) {
-            data.slug = generateSlug(data.name);
+        if (data.name && data.name !== existingProduct.name) {
+            data.slug = await generateUniqueSlug(data.name, id);
         }
         
         const product = await Product.updateProduct(id, data);
@@ -230,6 +231,8 @@ async function createCategory(req, res) {
             });
         }
         
+        data.slug = await generateUniqueCategorySlug(data.name);
+        
         const category = await Category.createCategory(data);
         
         res.status(201).json({
@@ -257,6 +260,10 @@ async function updateCategory(req, res) {
                 success: false,
                 message: 'Không tìm thấy danh mục'
             });
+        }
+        
+        if (data.name && data.name !== existingCategory.name) {
+            data.slug = await generateUniqueCategorySlug(data.name, id);
         }
         
         const category = await Category.updateCategory(id, data);
@@ -308,6 +315,56 @@ function generateSlug(name) {
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-')
         .trim();
+}
+
+async function generateUniqueSlug(name, excludeId = null) {
+    const baseSlug = generateSlug(name);
+    let slug = baseSlug;
+    let counter = 1;
+    
+    while (true) {
+        let checkQuery = `SELECT id FROM Products WHERE slug = @param0`;
+        const params = [slug];
+        
+        if (excludeId) {
+            checkQuery += ` AND id != @param1`;
+            params.push(excludeId);
+        }
+        
+        const result = await query(checkQuery, params);
+        
+        if (result.recordset.length === 0) break;
+        
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+    }
+    
+    return slug;
+}
+
+async function generateUniqueCategorySlug(name, excludeId = null) {
+    const baseSlug = generateSlug(name);
+    let slug = baseSlug;
+    let counter = 1;
+    
+    while (true) {
+        let checkQuery = `SELECT id FROM Categories WHERE slug = @param0`;
+        const params = [slug];
+        
+        if (excludeId) {
+            checkQuery += ` AND id != @param1`;
+            params.push(excludeId);
+        }
+        
+        const result = await query(checkQuery, params);
+        
+        if (result.recordset.length === 0) break;
+        
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+    }
+    
+    return slug;
 }
 
 module.exports = {

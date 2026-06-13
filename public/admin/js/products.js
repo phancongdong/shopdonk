@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const isAdmin = user && user.role === 'admin';
     let allProducts = [];
+    let isLoading = false;
+    let loadingProductIds = new Set();
     
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount);
@@ -89,6 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function loadProducts() {
+        if (isLoading) return;
+        isLoading = true;
+        
         try {
             const res = await fetch(`${API_BASE}/products`);
             const data = await res.json();
@@ -102,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error loading products:', error);
+        } finally {
+            isLoading = false;
         }
     }
     
@@ -189,15 +196,27 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     window.toggleProductVisibility = async function(id, isHidden) {
+        if (loadingProductIds.has(id)) return;
+        loadingProductIds.add(id);
+        
         try {
-            await fetch(`${API_BASE}/products/${id}`, {
+            const res = await fetch(`${API_BASE}/products/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ is_hidden: isHidden })
             });
-            loadProducts();
+            
+            if (res.ok) {
+                const product = allProducts.find(p => p.id === id);
+                if (product) {
+                    product.is_hidden = isHidden;
+                    renderProducts(allProducts);
+                }
+            }
         } catch (error) {
             console.error('Error toggling visibility:', error);
+        } finally {
+            loadingProductIds.delete(id);
         }
     };
     
@@ -289,8 +308,20 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (result.success) {
                 closeProductModal();
-                allProducts = [];
-                await loadProducts();
+                const updatedId = parseInt(id) || (result.data && result.data.id);
+                if (updatedId) {
+                    const freshRes = await fetch(`${API_BASE}/products/${updatedId}`);
+                    const freshData = await freshRes.json();
+                    if (freshData.success && freshData.data) {
+                        const idx = allProducts.findIndex(p => p.id === updatedId);
+                        if (idx !== -1) {
+                            allProducts[idx] = freshData.data;
+                        } else {
+                            allProducts.unshift(freshData.data);
+                        }
+                        renderProducts(allProducts);
+                    }
+                }
             } else {
                 alert('Lỗi: ' + (result.message || 'Không thể lưu sản phẩm'));
             }
