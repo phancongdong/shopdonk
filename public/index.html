@@ -1020,19 +1020,25 @@
                             <div class="info-row"><i class="fas fa-box"></i><span>Sản phẩm:</span><strong>${productName}</strong></div>
                             <div class="info-row"><i class="fas fa-money-bill"></i><span>Giá:</span><strong>${formatPrice(price)}</strong></div>
                             <div class="info-row"><i class="fas fa-receipt"></i><span>Mã đơn:</span><strong>#${data.data?.id || 'N/A'}</strong></div>
+                            <div class="info-row"><i class="fas fa-shopping-cart"></i><span>Số lượng:</span><strong>${data.data?.quantity || 1} nick</strong></div>
                         </div>
                         <div class="account-box">
-                            <h4><i class="fas fa-gamepad"></i> Thông tin tài khoản</h4>
-                            <div class="credential-row">
-                                <label>Tài khoản:</label>
-                                <code>${data.data?.account_username || 'N/A'}</code>
-                                <button class="copy-btn" onclick="copyText('${data.data?.account_username || ''}')"><i class="fas fa-copy"></i></button>
-                            </div>
-                            <div class="credential-row">
-                                <label>Mật khẩu:</label>
-                                <code>${data.data?.account_password || 'N/A'}</code>
-                                <button class="copy-btn" onclick="copyText('${data.data?.account_password || ''}')"><i class="fas fa-copy"></i></button>
-                            </div>
+                            <h4><i class="fas fa-gamepad"></i> Thông tin tài khoản (${data.data?.accounts?.length || 1} nick)</h4>
+                            ${(data.data?.accounts || []).map((acc, idx) => `
+                                <div class="account-item" style="margin-bottom: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                    <div style="color: #6366f1; font-size: 12px; margin-bottom: 8px;">Nick #${idx + 1}</div>
+                                    <div class="credential-row">
+                                        <label>Tài khoản:</label>
+                                        <code>${acc.username || 'N/A'}</code>
+                                        <button class="copy-btn" onclick="copyText('${acc.username || ''}')"><i class="fas fa-copy"></i></button>
+                                    </div>
+                                    <div class="credential-row">
+                                        <label>Mật khẩu:</label>
+                                        <code>${acc.password || 'N/A'}</code>
+                                        <button class="copy-btn" onclick="copyText('${acc.password || ''}')"><i class="fas fa-copy"></i></button>
+                                    </div>
+                                </div>
+                            `).join('')}
                             <div class="warning-text"><i class="fas fa-exclamation-triangle"></i> Vui lòng đổi mật khẩu ngay sau khi đăng nhập!</div>
                         </div>
                     `, [

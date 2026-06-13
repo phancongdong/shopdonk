@@ -135,30 +135,48 @@
                                         <tr>
                                             <th>Mã đơn</th>
                                             <th>Sản phẩm</th>
+                                            <th>SL</th>
                                             <th>Giá</th>
                                             <th>Tài khoản</th>
-                                            <th>Mật khẩu</th>
                                             <th>Trạng thái</th>
                                             <th>Ngày</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        ${data.data.map(order => `
+                                        ${data.data.map(order => {
+                                            const accounts = order.account_info?.accounts || [{username: order.account_username, password: order.account_password}] || [];
+                                            const accountsDisplay = accounts.map((a, i) => `<div style="font-size:11px;">#${i+1}: ${a.username}</div>`).join('');
+                                            return `
                                             <tr>
                                                 <td>#${order.id}</td>
                                                 <td>${order.product_name || 'N/A'}</td>
+                                                <td>${order.quantity || 1}</td>
                                                 <td>${formatCurrency(order.total_price)}</td>
-                                                <td><code>${order.account_username || order.account_info?.username || 'N/A'}</code></td>
-                                                <td><code>${order.account_password || order.account_info?.password || 'N/A'}</code></td>
+                                                <td><code style="display:block;">${accountsDisplay || 'N/A'}</code></td>
                                                 <td><span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'Đang xử lý' : 'Đã hủy'}</span></td>
                                                 <td>${formatDate(order.created_at)}</td>
                                             </tr>
-                                        `).join('')}
+                                        `}).join('')}
                                     </tbody>
                                 </table>
                             </div>
                             <div class="orders-cards">
-                                ${data.data.map(order => `
+                                ${data.data.map(order => {
+                                    const accounts = order.account_info?.accounts || [{username: order.account_username, password: order.account_password}] || [];
+                                    const accountsHtml = accounts.map((a, i) => `
+                                        <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;">
+                                            <div style="color:#6366f1;font-size:11px;margin-bottom:4px;">Nick #${i+1}</div>
+                                            <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                                                <span style="color:#94a3b8;font-size:12px;">TK:</span>
+                                                <code style="font-size:11px;">${a.username || 'N/A'}</code>
+                                            </div>
+                                            <div style="display:flex;justify-content:space-between;">
+                                                <span style="color:#94a3b8;font-size:12px;">MK:</span>
+                                                <code style="font-size:11px;">${a.password || 'N/A'}</code>
+                                            </div>
+                                        </div>
+                                    `).join('');
+                                    return `
                                     <div class="order-card">
                                         <div class="order-card-header">
                                             <span class="order-id">#${order.id}</span>
@@ -170,16 +188,16 @@
                                                 <span class="order-value">${order.product_name || 'N/A'}</span>
                                             </div>
                                             <div class="order-row">
+                                                <span class="order-label">Số lượng:</span>
+                                                <span class="order-value">${order.quantity || 1} nick</span>
+                                            </div>
+                                            <div class="order-row">
                                                 <span class="order-label">Giá:</span>
                                                 <span class="order-value price">${formatCurrency(order.total_price)}</span>
                                             </div>
-                                            <div class="order-row">
-                                                <span class="order-label">Tài khoản:</span>
-                                                <code class="order-code">${order.account_username || order.account_info?.username || 'N/A'}</code>
-                                            </div>
-                                            <div class="order-row">
-                                                <span class="order-label">Mật khẩu:</span>
-                                                <code class="order-code">${order.account_password || order.account_info?.password || 'N/A'}</code>
+                                            <div class="order-row" style="flex-direction:column;align-items:flex-start;">
+                                                <span class="order-label" style="margin-bottom:6px;">Tài khoản:</span>
+                                                ${accountsHtml}
                                             </div>
                                             <div class="order-row">
                                                 <span class="order-label">Ngày mua:</span>
@@ -187,7 +205,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                `).join('')}
+                                `}).join('')}
                             </div>
                         </div>
                     `;

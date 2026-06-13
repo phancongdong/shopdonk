@@ -154,35 +154,50 @@ async function createOrder(req, res) {
             transaction
         );
         
+        let accounts = [];
         let accountUsername, accountPassword;
         
         if (product.account_type === 'multiple' && product.accounts_list) {
-            const accounts = product.accounts_list.split('\n').filter(line => line.trim().includes('-'));
+            const allAccounts = product.accounts_list.split('\n').filter(line => line.trim().includes('-'));
             
-            if (accounts.length === 0) {
+            if (allAccounts.length < quantity) {
                 await rollbackTransaction(transaction);
                 return res.status(400).json({
                     success: false,
-                    message: 'Sản phẩm đã hết tài khoản'
+                    message: `Sản phẩm chỉ còn ${allAccounts.length} tài khoản, không đủ ${quantity}`
                 });
             }
             
-            const firstAccount = accounts[0].trim();
-            const [username, password] = firstAccount.split('-');
-            accountUsername = username?.trim() || '';
-            accountPassword = password?.trim() || '';
+            for (let i = 0; i < quantity; i++) {
+                const accountLine = allAccounts[i].trim();
+                const [username, password] = accountLine.split('-');
+                accounts.push({
+                    username: username?.trim() || '',
+                    password: password?.trim() || ''
+                });
+            }
             
-            const remainingAccounts = accounts.slice(1).join('\n');
-            const newStock = accounts.length - 1;
+            const remainingAccounts = allAccounts.slice(quantity).join('\n');
+            const newStock = allAccounts.length - quantity;
             
             await query(
                 `UPDATE Products SET accounts_list = @param0, stock = @param1, is_hidden = @param2, updated_at = GETDATE() WHERE id = @param3`,
                 [remainingAccounts, newStock, newStock === 0 ? 1 : 0, product_id],
                 transaction
             );
+            
+            accountUsername = accounts[0].username;
+            accountPassword = accounts[0].password;
         } else {
-            accountUsername = product.account_username || generateRandomUsername();
-            accountPassword = product.account_password || generateRandomPassword();
+            for (let i = 0; i < quantity; i++) {
+                accounts.push({
+                    username: product.account_username || generateRandomUsername(),
+                    password: product.account_password || generateRandomPassword()
+                });
+            }
+            
+            accountUsername = accounts[0].username;
+            accountPassword = accounts[0].password;
             
             await query(
                 `UPDATE Products SET stock = stock - @param0, is_hidden = CASE WHEN stock - @param0 <= 0 THEN 1 ELSE is_hidden END, updated_at = GETDATE() WHERE id = @param1`,
@@ -192,8 +207,8 @@ async function createOrder(req, res) {
         }
         
         const accountInfo = {
-            username: accountUsername,
-            password: accountPassword,
+            accounts: accounts,
+            count: accounts.length,
             notes: `Đơn hàng #${Date.now()} - ${product.name}`
         };
         
@@ -223,8 +238,9 @@ async function createOrder(req, res) {
                 product: product.name,
                 quantity,
                 total_price: totalPrice,
-                account_username: accountInfo.username,
-                account_password: accountInfo.password
+                accounts: accounts,
+                account_username: accounts[0].username,
+                account_password: accounts[0].password
             }
         });
     } catch (error) {
