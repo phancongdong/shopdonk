@@ -15,19 +15,12 @@ router.post('/login', [
     body('password').notEmpty().withMessage('Mật khẩu không được để trống')
 ], authController.login);
 
+router.post('/validate', authController.validateSession);
+router.post('/logout', authController.logout);
+router.get('/transactions', authController.getMyTransactions);
+
 router.get('/profile/:id', authController.getProfile);
 router.get('/balance/:id', authController.getBalance);
-router.get('/transactions/:id', async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const limit = parseInt(req.query.limit) || 50;
-        const transactions = await User.getTransactions(userId, limit);
-        res.json({ success: true, data: transactions });
-    } catch (error) {
-        console.error('Get transactions error:', error);
-        res.status(500).json({ success: false, message: 'Lỗi server' });
-    }
-});
 
 router.put('/name/:id', authController.updateName);
 router.post('/email/request/:id', authController.requestEmailVerification);

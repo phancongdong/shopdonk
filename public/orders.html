@@ -77,6 +77,7 @@
             document.getElementById('logoutBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 localStorage.removeItem('user');
+                localStorage.removeItem('token');
                 location.reload();
             });
             
@@ -102,7 +103,27 @@
             }
             
             try {
-                const res = await fetch(`${API_BASE}/orders?user_id=${user.id}`);
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}/orders`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (res.status === 401) {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    ordersContent.innerHTML = `
+                        <div class="coming-soon">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <h2>Phiên đăng nhập đã hết hạn</h2>
+                            <p>Vui lòng đăng nhập lại</p>
+                            <a href="login.html" class="btn-primary">Đăng nhập ngay</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 const data = await res.json();
                 
                 if (data.success && data.data.length > 0) {

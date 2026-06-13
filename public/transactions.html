@@ -139,7 +139,29 @@
             const transactionsContent = document.getElementById('transactionsContent');
             
             try {
-                const res = await fetch(`${API_BASE}/auth/transactions/${user.id}?limit=50`);
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}/auth/transactions?limit=50`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (res.status === 401) {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    transactionsContent.innerHTML = `
+                        <div style="background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);">
+                            <h2 style="color: #fff; margin-bottom: 20px;"><i class="fas fa-exchange-alt"></i> Lịch sử giao dịch</h2>
+                            <div style="text-align: center; padding: 40px; color: #ef4444;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 50px; margin-bottom: 20px;"></i>
+                                <p>Phiên đăng nhập đã hết hạn</p>
+                                <a href="login.html" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; display: inline-block; margin-top: 20px; text-decoration: none;">Đăng nhập lại</a>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 const data = await res.json();
                 
                 if (data.success && data.data && data.data.length > 0) {

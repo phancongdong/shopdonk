@@ -1,10 +1,41 @@
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
+const crypto = require('crypto');
 
 const verificationCodes = new Map();
+const sessions = new Map();
 
 function generateCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function generateToken() {
+    return crypto.randomBytes(32).toString('hex');
+}
+
+function createSession(userId) {
+    const token = generateToken();
+    sessions.set(token, {
+        userId: userId,
+        createdAt: Date.now(),
+        expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
+    });
+    return token;
+}
+
+function validateToken(token) {
+    if (!token) return null;
+    const session = sessions.get(token);
+    if (!session) return null;
+    if (Date.now() > session.expiresAt) {
+        sessions.delete(token);
+        return null;
+    }
+    return session.userId;
+}
+
+function destroySession(token) {
+    sessions.delete(token);
 }
 
 async function register(req, res) {
@@ -83,9 +114,12 @@ async function login(req, res) {
             });
         }
         
+        const token = createSession(user.id);
+        
         res.json({
             success: true,
             message: 'Đăng nhập thành công!',
+            token: token,
             user: {
                 id: user.id,
                 name: user.name,
@@ -454,6 +488,86 @@ async function getAllUsers(req, res) {
     }
 }
 
+async function validateSession(req, res) {
+    try {
+        const token = req.headers['authorization']?.replace('Bearer ', '');
+        const userId = validateToken(token);
+        
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
+            });
+        }
+        
+        const user = await User.getUserById(userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Người dùng không tồn tại'
+            });
+        }
+        
+        res.json({
+            success: true,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                balance: user.balance || 0,
+                role: user.role || 'user',
+                created_at: user.created_at
+            }
+        });
+    } catch (error) {
+        console.error('Validate session error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
+async function logout(req, res) {
+    try {
+        const token = req.headers['authorization']?.replace('Bearer ', '');
+        if (token) {
+            destroySession(token);
+        }
+        res.json({
+            success: true,
+            message: 'Đăng xuất thành công'
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
+async function getMyTransactions(req, res) {
+    try {
+        const token = req.headers['authorization']?.replace('Bearer ', '');
+        const userId = validateToken(token);
+        
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
+            });
+        }
+        
+        const limit = parseInt(req.query.limit) || 50;
+        const transactions = await User.getTransactions(userId, limit);
+        res.json({ success: true, data: transactions });
+    } catch (error) {
+        console.error('Get transactions error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+}
+
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -470,5 +584,10 @@ module.exports = {
     requestPasswordVerification,
     confirmPasswordChange,
     updateProfile,
-    getAllUsers
+    getAllUsers,
+    validateSession,
+    logout,
+    getMyTransactions,
+    validateToken,
+    createSession
 };

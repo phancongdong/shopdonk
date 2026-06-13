@@ -226,6 +226,7 @@
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.removeItem('user');
+                localStorage.removeItem('token');
                 location.reload();
             });
             

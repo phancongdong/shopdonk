@@ -6,18 +6,16 @@ const { beginTransaction, commitTransaction, rollbackTransaction, query } = requ
 async function getOrders(req, res) {
     try {
         const userId = req.user?.id;
-        const filters = {
-            user_id: userId,
-            status: req.query.status,
-            limit: req.query.limit || 50
-        };
         
-        let orders;
-        if (userId) {
-            orders = await Order.getOrdersByUser(userId, filters.limit);
-        } else {
-            orders = await Order.getAllOrders(filters);
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Vui lòng đăng nhập để xem đơn hàng'
+            });
         }
+        
+        const limit = parseInt(req.query.limit) || 50;
+        const orders = await Order.getOrdersByUser(userId, limit);
         
         res.json({
             success: true,
@@ -71,7 +69,7 @@ async function createOrder(req, res) {
     let transaction = null;
     
     try {
-        const userId = req.user?.id || req.body.user_id;
+        const userId = req.user?.id;
         const { product_id, quantity = 1 } = req.body;
         
         console.log('[DEBUG] createOrder called:', { userId, product_id, quantity });
@@ -79,7 +77,7 @@ async function createOrder(req, res) {
         if (!userId) {
             return res.status(401).json({
                 success: false,
-                message: 'Vui lòng đăng nhập để mua hàng'
+                message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
             });
         }
         

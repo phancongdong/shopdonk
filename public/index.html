@@ -555,6 +555,7 @@
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.removeItem('user');
+                localStorage.removeItem('token');
                 location.reload();
             });
             
@@ -975,10 +976,14 @@
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 15000);
                 
+                const token = localStorage.getItem('token');
                 const res = await fetch(`${API_BASE}/orders`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: user.id, product_id: productId, quantity }),
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ product_id: productId, quantity }),
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId);

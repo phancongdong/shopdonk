@@ -1,10 +1,21 @@
+const { validateToken } = require('../controllers/authController');
+
 function authMiddleware(req, res, next) {
-    const userId = req.headers['x-user-id'] || req.body.user_id || req.query.user_id;
+    const token = req.headers['authorization']?.replace('Bearer ', '');
+    
+    if (!token) {
+        return res.status(401).json({
+            success: false,
+            message: 'Vui lòng đăng nhập để tiếp tục'
+        });
+    }
+    
+    const userId = validateToken(token);
     
     if (!userId) {
         return res.status(401).json({
             success: false,
-            message: 'Vui lòng đăng nhập để tiếp tục'
+            message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
         });
     }
     
@@ -39,10 +50,13 @@ function ctvMiddleware(req, res, next) {
 }
 
 function optionalAuth(req, res, next) {
-    const userId = req.headers['x-user-id'] || req.body.user_id || req.query.user_id;
+    const token = req.headers['authorization']?.replace('Bearer ', '');
     
-    if (userId) {
-        req.user = { id: userId };
+    if (token) {
+        const userId = validateToken(token);
+        if (userId) {
+            req.user = { id: userId };
+        }
     }
     
     next();
