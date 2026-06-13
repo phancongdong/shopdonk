@@ -738,9 +738,15 @@
                     .replace(/'/g, "\\'")
                     .replace(/"/g, '\\"')
                     .replace(/\n/g, '\\n')
-                    .replace(/\r/g, '\\r')
+                    .replace(/\r/g, '\\r');
+            }
+            
+            function formatDesc(str) {
+                if (!str) return '';
+                return str.toString()
                     .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
+                    .replace(/>/g, '&gt;')
+                    .replace(/\n/g, '<br>');
             }
             
             grid.innerHTML = inStockProducts.map(p => {
@@ -760,6 +766,7 @@
                 let description = p.description || '';
                 let safeName = escapeJs(p.name);
                 let safeDesc = escapeJs(description);
+                let htmlDesc = formatDesc(description);
                 let safeImageUrl = escapeJs(imageUrl);
                 
                 return `
@@ -767,7 +774,7 @@
                     <img class="game-img" src="${imageUrl}" alt="${escapeJs(p.name)}" onclick="openLightbox('${safeImageUrl}')" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(p.name || 'N/A')}'">
                     <div class="game-content">
                         <div class="game-title">${escapeJs(p.name)}</div>
-                        ${description ? `<div class="game-desc">${safeDesc}</div>` : ''}
+                        ${description ? `<div class="game-desc">${htmlDesc}</div>` : ''}
                         <div class="game-stats">
                             <div class="game-stat">
                                 <div class="game-stat-value stock-count" data-stock="${stockDisplay}">${stockDisplay}</div>
@@ -906,7 +913,7 @@
             showModal('', 'Xac nhan mua hang', `
                 ${productDesc ? `<div style="background: rgba(99,102,241,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid rgba(99,102,241,0.2);">
                     <div style="color: #6366f1; font-size: 12px; margin-bottom: 8px; font-weight: 600;"><i class="fas fa-info-circle"></i> Mo ta san pham</div>
-                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.5;">${productDesc}</div>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.5;">${productDesc.replace(/\n/g, '<br>')}</div>
                 </div>` : ''}
                 <div class="info-box">
                     <div class="info-row"><span>San pham:</span><strong>${productName}</strong></div>
