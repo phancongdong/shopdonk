@@ -1,0 +1,45 @@
+{
+  "base_url": "http://localhost:8080/login",
+  "test_cases": [
+    {
+      "description": "Valid login - admin user",
+      "username": "admin",
+      "password": "admin123",
+      "expected": "success",
+      "success_selector": ".dashboard, .welcome-message, [data-testid='login-success']"
+    },
+    {
+      "description": "Invalid login - wrong password",
+      "username": "admin",
+      "password": "wrongpassword",
+      "expected": "failure",
+      "error_selector": ".error-message, .alert-danger, [data-testid='login-error']"
+    },
+    {
+      "description": "Invalid login - empty username",
+      "username": "",
+      "password": "somepassword",
+      "expected": "failure",
+      "error_selector": ".error-message, .validation-error"
+    },
+    {
+      "description": "Invalid login - empty password",
+      "username": "testuser",
+      "password": "",
+      "expected": "failure",
+      "error_selector": ".error-message, .validation-error"
+    },
+    {
+      "description": "Invalid login - non-existent user",
+      "username": "nonexistent",
+      "password": "anypassword",
+      "expected": "failure",
+      "error_selector": ".error-message, .alert-danger"
+    }
+  ],
+  "selectors": {
+    "username": "#username",
+    "password": "#password",
+    "submit": "button[type='submit']"
+  }
+}

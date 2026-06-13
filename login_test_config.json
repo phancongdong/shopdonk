@@ -1,0 +1,12 @@
+{
+    "url": "https://sso.garena.com/universal/login",
+    "username_selector": "input[placeholder='Tài khoản Garena, Email hoặc số điện thoại']",
+    "password_selector": "input[placeholder='Mật khẩu']",
+    "submit_selector": "button[type='submit'], .login-btn, button.login",
+    "success_selector": ".dashboard, .user-avatar, .account-menu, .welcome-message",
+    "error_selector": ".error-message, .alert-danger, .login-error",
+    "locked_selector": ".account-locked, .locked-message, .user-locked",
+    "captcha_selector": ".captcha, #captcha, .recaptcha",
+    "two_fa_selector": ".two-factor, .otp-input, .verification-code",
+    "timeout": 30000
+}

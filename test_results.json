@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 0,
+    "errors": 1
+  },
+  "target_url": "https://account.garena.com/?locale_name=VN",
+  "results": [
+    {
+      "test_case": "Test: dong77671",
+      "username": "dong77671",
+      "status": "error",
+      "message": "Page.wait_for_selector: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator(\"#username\") to be visible\n",
+      "timestamp": "2026-06-12T21:27:40.871027"
+    }
+  ]
+}
