@@ -69,6 +69,11 @@ async function getProductBySlug(slug) {
 }
 
 async function createProduct(data) {
+    if (data.account_type === 'multiple' && data.accounts_list) {
+        const lines = data.accounts_list.split('\n').filter(line => line.trim().includes('-'));
+        data.stock = lines.length;
+    }
+    
     const queryStr = `
         INSERT INTO Products (
             category_id, name, slug, description, price, cost_price,
@@ -106,6 +111,17 @@ async function createProduct(data) {
 async function updateProduct(id, data, transaction = null) {
     const fields = [];
     const params = [];
+    
+    if (data.account_type === 'multiple') {
+        if (data.accounts_list !== undefined) {
+            if (data.accounts_list && data.accounts_list.trim()) {
+                const lines = data.accounts_list.split('\n').filter(line => line.trim().includes('-'));
+                data.stock = lines.length;
+            } else {
+                data.stock = 0;
+            }
+        }
+    }
     
     const allowedFields = ['category_id', 'name', 'slug', 'description', 'price', 'cost_price',
                           'original_price', 'image', 'stock', 'features', 'status',

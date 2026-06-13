@@ -278,13 +278,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const user = JSON.parse(localStorage.getItem('user') || 'null');
+        let stockValue = parseInt(document.getElementById('productStock').value);
+        
+        if (accountType === 'multiple') {
+            const lines = accountsList.split('\n').filter(line => line.trim().includes('-'));
+            stockValue = lines.length;
+        }
+        
         const productData = {
             name: document.getElementById('productName').value,
             category_id: parseInt(categoryId),
             category_slug: categorySlug,
             cost_price: parseInt(document.getElementById('productCostPrice').value) || 0,
             price: parseInt(document.getElementById('productPrice').value),
-            stock: parseInt(document.getElementById('productStock').value),
+            stock: stockValue,
             image: document.getElementById('productImage').value,
             description: document.getElementById('productDescription').value,
             account_type: accountType,
