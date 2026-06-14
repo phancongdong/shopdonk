@@ -2,10 +2,16 @@ const { query } = require('../config/database');
 
 async function getAllCategories() {
     const queryStr = `
-        SELECT c.*, p.name as parent_name
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at,
+               p.name as parent_name
         FROM Categories c
         LEFT JOIN Categories p ON c.parent_id = p.id
-        ORDER BY c.depth, c.display_order, c.name
+        ORDER BY ISNULL(c.depth, 0), ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
     return result.recordset;
@@ -13,7 +19,13 @@ async function getAllCategories() {
 
 async function getCategoryById(id) {
     const queryStr = `
-        SELECT c.*, p.name as parent_name
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at,
+               p.name as parent_name
         FROM Categories c
         LEFT JOIN Categories p ON c.parent_id = p.id
         WHERE c.id = @param0
@@ -24,11 +36,17 @@ async function getCategoryById(id) {
 
 async function getCategoryTree() {
     const queryStr = `
-        SELECT c.*, p.name as parent_name,
-            (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at,
+               p.name as parent_name,
+               (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
         LEFT JOIN Categories p ON c.parent_id = p.id
-        ORDER BY c.depth, c.display_order, c.name
+        ORDER BY ISNULL(c.depth, 0), ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
     return buildTree(result.recordset);
@@ -55,11 +73,15 @@ function buildTree(categories) {
 
 async function getCategoryWithDescendants(id) {
     const queryStr = `
-        SELECT c.* 
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at
         FROM Categories c
         INNER JOIN CategoryClosure cc ON c.id = cc.descendant_id
         WHERE cc.ancestor_id = @param0
-        ORDER BY c.depth, c.name
+        ORDER BY ISNULL(c.depth, 0), c.name
     `;
     const result = await query(queryStr, [id]);
     return result.recordset;
@@ -67,7 +89,11 @@ async function getCategoryWithDescendants(id) {
 
 async function getCategoryWithAncestors(id) {
     const queryStr = `
-        SELECT c.* 
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at
         FROM Categories c
         INNER JOIN CategoryClosure cc ON c.id = cc.ancestor_id
         WHERE cc.descendant_id = @param0 AND cc.depth > 0
@@ -85,14 +111,14 @@ async function createCategory(data) {
     if (parentId) {
         const parent = await getCategoryById(parentId);
         if (parent) {
-            depth = parent.depth + 1;
-            path = parent.path + '/';
+            depth = (parent.depth || 0) + 1;
+            path = (parent.path || '') + '/';
         }
     }
     
     const insertStr = `
         INSERT INTO Categories (name, slug, icon, color, image, description, parent_id, depth, display_order, status, created_at)
-        OUTPUT INSERTED.id, INSERTED.path
+        OUTPUT INSERTED.id
         VALUES (@param0, @param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, 1, GETDATE())
     `;
     
@@ -110,22 +136,27 @@ async function createCategory(data) {
     
     const newId = result.recordset[0].id;
     
+    const newPath = path + newId;
     await query(`
         UPDATE Categories SET path = @param0 WHERE id = @param1
-    `, [path + newId, newId]);
+    `, [newPath, newId]);
     
-    await query(`
-        INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
-        VALUES (@param0, @param0, 0)
-    `, [newId]);
-    
-    if (parentId) {
+    try {
         await query(`
             INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
-            SELECT ancestor_id, @param0, depth + 1
-            FROM CategoryClosure
-            WHERE descendant_id = @param1
-        `, [newId, parentId]);
+            VALUES (@param0, @param0, 0)
+        `, [newId]);
+        
+        if (parentId) {
+            await query(`
+                INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
+                SELECT ancestor_id, @param0, depth + 1
+                FROM CategoryClosure
+                WHERE descendant_id = @param1
+            `, [newId, parentId]);
+        }
+    } catch (closureError) {
+        console.log('Warning: Could not update CategoryClosure:', closureError.message);
     }
     
     return getCategoryById(newId);
@@ -278,12 +309,16 @@ async function getCategoryProducts(categoryId, includeDescendants = false) {
 
 async function getRootCategories() {
     const queryStr = `
-        SELECT c.*, 
-            (SELECT COUNT(*) FROM Categories cc WHERE cc.parent_id = c.id) as children_count,
-            (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at,
+               (SELECT COUNT(*) FROM Categories cc WHERE cc.parent_id = c.id) as children_count,
+               (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
         WHERE c.parent_id IS NULL
-        ORDER BY c.display_order, c.name
+        ORDER BY ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
     return result.recordset;
@@ -291,12 +326,16 @@ async function getRootCategories() {
 
 async function getChildCategories(parentId) {
     const queryStr = `
-        SELECT c.*, 
-            (SELECT COUNT(*) FROM Categories cc WHERE cc.parent_id = c.id) as children_count,
-            (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at,
+               (SELECT COUNT(*) FROM Categories cc WHERE cc.parent_id = c.id) as children_count,
+               (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
         WHERE c.parent_id = @param0
-        ORDER BY c.display_order, c.name
+        ORDER BY ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr, [parentId]);
     return result.recordset;
@@ -304,7 +343,11 @@ async function getChildCategories(parentId) {
 
 async function getCategoryPath(id) {
     const queryStr = `
-        SELECT c.* 
+        SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               ISNULL(c.display_order, c.id) as display_order,
+               c.status, c.created_at, c.updated_at
         FROM Categories c
         INNER JOIN CategoryClosure cc ON c.id = cc.ancestor_id
         WHERE cc.descendant_id = @param0
@@ -316,11 +359,13 @@ async function getCategoryPath(id) {
 
 async function getCategoriesForSelect() {
     const queryStr = `
-        SELECT c.id, c.name, c.parent_id, c.depth,
-            (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
+        SELECT c.id, c.name, 
+               ISNULL(c.parent_id, NULL) as parent_id,
+               ISNULL(c.depth, 0) as depth,
+               (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
         WHERE c.status = 1
-        ORDER BY c.path, c.display_order, c.name
+        ORDER BY ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))), ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
     return result.recordset;
