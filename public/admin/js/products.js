@@ -79,11 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function loadCategories() {
         try {
-            const res = await fetch(`${API_BASE}/categories`);
+            const res = await fetch(`${API_BASE}/categories?select=true`);
             const data = await res.json();
             if (data.success) {
                 const select = document.getElementById('productCategory');
-                select.innerHTML = data.data.map(c => `<option value="${c.id}" data-slug="${c.slug}">${c.name}</option>`).join('');
+                select.innerHTML = data.data.map(c => {
+                    const prefix = '—'.repeat(c.depth || 0);
+                    return `<option value="${c.id}" data-slug="${c.slug}">${prefix} ${c.name}</option>`;
+                }).join('');
             }
         } catch (error) {
             console.error('Error loading categories:', error);

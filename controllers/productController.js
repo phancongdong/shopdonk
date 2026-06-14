@@ -180,7 +180,17 @@ async function getFeaturedProducts(req, res) {
 
 async function getCategories(req, res) {
     try {
-        const categories = await Category.getAllCategories();
+        const asTree = req.query.tree === 'true';
+        const forSelect = req.query.select === 'true';
+        
+        let categories;
+        if (asTree) {
+            categories = await Category.getCategoryTree();
+        } else if (forSelect) {
+            categories = await Category.getCategoriesForSelect();
+        } else {
+            categories = await Category.getAllCategories();
+        }
         
         res.json({
             success: true,
@@ -294,10 +304,57 @@ async function deleteCategory(req, res) {
         });
     } catch (error) {
         console.error('Delete category error:', error);
-        res.status(500).json({
+        const message = error.message || 'Lỗi server';
+        res.status(400).json({
             success: false,
-            message: 'Lỗi server'
+            message: message
         });
+    }
+}
+
+async function getCategoryTree(req, res) {
+    try {
+        const tree = await Category.getCategoryTree();
+        res.json({ success: true, data: tree });
+    } catch (error) {
+        console.error('Get category tree error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+}
+
+async function getCategoryPath(req, res) {
+    try {
+        const id = req.params.id;
+        const path = await Category.getCategoryPath(id);
+        res.json({ success: true, data: path });
+    } catch (error) {
+        console.error('Get category path error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+}
+
+async function getCategoryProducts(req, res) {
+    try {
+        const id = req.params.id;
+        const includeDescendants = req.query.include_descendants === 'true';
+        const products = await Category.getCategoryProducts(id, includeDescendants);
+        res.json({ success: true, data: products });
+    } catch (error) {
+        console.error('Get category products error:', error);
+        res.status(500).json({ success: false, message: 'Lỗi server' });
+    }
+}
+
+async function moveCategory(req, res) {
+    try {
+        const id = req.params.id;
+        const { parent_id } = req.body;
+        
+        const category = await Category.updateCategory(id, { parent_id: parent_id || null });
+        res.json({ success: true, message: 'Di chuyển danh mục thành công', data: category });
+    } catch (error) {
+        console.error('Move category error:', error);
+        res.status(400).json({ success: false, message: error.message || 'Lỗi server' });
     }
 }
 
@@ -379,5 +436,9 @@ module.exports = {
     getCategoryById,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getCategoryTree,
+    getCategoryPath,
+    getCategoryProducts,
+    moveCategory
 };

@@ -11,9 +11,14 @@ router.put('/products/:id', productController.updateProduct);
 router.delete('/products/:id', productController.deleteProduct);
 
 router.get('/categories', productController.getCategories);
+router.get('/categories/tree', productController.getCategoryTree);
+router.get('/categories/select', productController.getCategories);
 router.get('/categories/:id', productController.getCategoryById);
+router.get('/categories/:id/path', productController.getCategoryPath);
+router.get('/categories/:id/products', productController.getCategoryProducts);
 router.post('/categories', productController.createCategory);
 router.put('/categories/:id', productController.updateCategory);
+router.put('/categories/:id/move', productController.moveCategory);
 router.delete('/categories/:id', productController.deleteCategory);
 
 module.exports = router;
