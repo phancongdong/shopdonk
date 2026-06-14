@@ -14,6 +14,7 @@ const bannerRoutes = require('./routes/banner');
 const uploadRoutes = require('./routes/upload');
 const seoRoutes = require('./routes/seo');
 const pageSeoRoutes = require('./routes/pageSeo');
+const migrationRoutes = require('./routes/migration');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api', bannerRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', seoRoutes);
 app.use('/api', pageSeoRoutes);
+app.use('/api/admin', migrationRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
