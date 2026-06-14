@@ -244,6 +244,7 @@ async function deleteCategory(id) {
     }
     
     await query(`DELETE FROM CategoryClosure WHERE descendant_id = @param0`, [id]);
+    await query(`DELETE FROM CategoryClosure WHERE ancestor_id = @param0 AND descendant_id != @param0`, [id]);
     await query(`DELETE FROM Categories WHERE id = @param0`, [id]);
 }
 

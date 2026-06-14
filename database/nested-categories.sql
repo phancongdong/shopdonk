@@ -35,9 +35,7 @@ BEGIN
         ancestor_id INT NOT NULL,
         descendant_id INT NOT NULL,
         depth INT NOT NULL DEFAULT 0,
-        PRIMARY KEY (ancestor_id, descendant_id),
-        FOREIGN KEY (ancestor_id) REFERENCES Categories(id) ON DELETE CASCADE,
-        FOREIGN KEY (descendant_id) REFERENCES Categories(id) ON DELETE CASCADE
+        PRIMARY KEY (ancestor_id, descendant_id)
     );
     
     CREATE INDEX IX_CategoryClosure_Descendant ON CategoryClosure(descendant_id);

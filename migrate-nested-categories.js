@@ -1,9 +1,11 @@
-const { query } = require('./config/database');
+const { query, connectDB } = require('./config/database');
 
 async function migrateNestedCategories() {
     console.log('🚀 Starting Nested Categories Migration...\n');
     
     try {
+        await connectDB();
+        console.log('✅ Database connected\n');
         console.log('Step 1: Checking if columns exist...');
         const columnsCheck = await query(`
             SELECT COLUMN_NAME 
@@ -44,9 +46,7 @@ async function migrateNestedCategories() {
                     ancestor_id INT NOT NULL,
                     descendant_id INT NOT NULL,
                     depth INT NOT NULL DEFAULT 0,
-                    PRIMARY KEY (ancestor_id, descendant_id),
-                    FOREIGN KEY (ancestor_id) REFERENCES Categories(id) ON DELETE CASCADE,
-                    FOREIGN KEY (descendant_id) REFERENCES Categories(id) ON DELETE CASCADE
+                    PRIMARY KEY (ancestor_id, descendant_id)
                 )
             `);
             await query(`CREATE INDEX IX_CategoryClosure_Descendant ON CategoryClosure(descendant_id)`);
