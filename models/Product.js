@@ -16,8 +16,36 @@ async function getAllProducts(filters = {}) {
     }
     
     if (filters.category_slug) {
-        queryStr += ` AND c.slug = @param${params.length}`;
-        params.push(filters.category_slug);
+        const catCheck = await query(`
+            SELECT c.id, c.parent_id FROM Categories c WHERE c.slug = @param0
+        `, [filters.category_slug]);
+        
+        if (catCheck.recordset.length > 0) {
+            const cat = catCheck.recordset[0];
+            const childrenCheck = await query(`
+                SELECT COUNT(*) as count FROM Categories WHERE parent_id = @param0
+            `, [cat.id]);
+            
+            if (childrenCheck.recordset[0].count > 0) {
+                const descendantsResult = await query(`
+                    SELECT descendant_id FROM CategoryClosure WHERE ancestor_id = @param0
+                `, [cat.id]);
+                const descendantIds = descendantsResult.recordset.map(d => d.descendant_id);
+                
+                if (descendantIds.length > 0) {
+                    queryStr += ` AND p.category_id IN (${descendantIds.join(',')})`;
+                } else {
+                    queryStr += ` AND c.slug = @param${params.length}`;
+                    params.push(filters.category_slug);
+                }
+            } else {
+                queryStr += ` AND c.slug = @param${params.length}`;
+                params.push(filters.category_slug);
+            }
+        } else {
+            queryStr += ` AND c.slug = @param${params.length}`;
+            params.push(filters.category_slug);
+        }
     }
     
     if (filters.search) {
