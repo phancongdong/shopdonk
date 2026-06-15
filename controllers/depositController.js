@@ -4,17 +4,22 @@ const User = require('../models/User');
 async function getDeposits(req, res) {
     try {
         const userId = req.user?.id;
+        const userRole = req.headers['x-user-role'];
+        const isAdmin = userRole === 'admin';
+        
         const filters = {
-            user_id: userId,
             status: req.query.status,
-            limit: req.query.limit || 50
+            limit: req.query.limit || 100
         };
         
         let deposits;
-        if (userId) {
+        
+        if (isAdmin) {
+            deposits = await Deposit.getAllDeposits(filters);
+        } else if (userId) {
             deposits = await Deposit.getDepositsByUser(userId, filters.limit);
         } else {
-            deposits = await Deposit.getAllDeposits(filters);
+            deposits = [];
         }
         
         res.json({
@@ -118,6 +123,49 @@ async function rejectDeposit(req, res) {
     }
 }
 
+async function adminAddDeposit(req, res) {
+    try {
+        const { user_id, amount, method, note } = req.body;
+        
+        if (!user_id || !amount) {
+            return res.status(400).json({
+                success: false,
+                message: 'Thiếu thông tin user_id hoặc amount'
+            });
+        }
+        
+        if (amount < 10000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Số tiền tối thiểu 10,000 VNĐ'
+            });
+        }
+        
+        const transactionCode = 'ADM' + Date.now() + Math.floor(Math.random() * 1000);
+        
+        const deposit = await Deposit.createDeposit(
+            user_id,
+            amount,
+            method || 'admin_add',
+            transactionCode
+        );
+        
+        await Deposit.approveDepositById(deposit.id || (await Deposit.getLatestDepositByUser(user_id)).id);
+        
+        res.status(201).json({
+            success: true,
+            message: 'Thêm tiền thành công cho user',
+            data: deposit
+        });
+    } catch (error) {
+        console.error('Admin add deposit error:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Lỗi server'
+        });
+    }
+}
+
 async function bankTransferDeposit(req, res) {
     try {
         const userId = req.user?.id;
@@ -160,5 +208,6 @@ module.exports = {
     createDeposit,
     approveDeposit,
     rejectDeposit,
-    bankTransferDeposit
+    bankTransferDeposit,
+    adminAddDeposit
 };

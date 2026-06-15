@@ -1,0 +1,176 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE = window.location.origin + '/api';
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const isAdmin = user && user.role === 'admin';
+    
+    let allDeposits = [];
+    
+    async function loadDeposits() {
+        try {
+            const res = await fetch(`${API_BASE}/deposits`);
+            const data = await res.json();
+            
+            if (data.success) {
+                allDeposits = data.data || [];
+                renderDeposits(allDeposits);
+                updateStats(allDeposits);
+            }
+        } catch (error) {
+            console.error('Error loading deposits:', error);
+        }
+    }
+    
+    function updateStats(deposits) {
+        const pending = deposits.filter(d => d.status === 'pending');
+        const completed = deposits.filter(d => d.status === 'completed');
+        const totalAmount = completed.reduce((sum, d) => sum + (d.amount || 0), 0);
+        
+        const pendingEl = document.getElementById('pendingCount');
+        const completedEl = document.getElementById('completedCount');
+        const totalEl = document.getElementById('totalAmount');
+        
+        if (pendingEl) pendingEl.textContent = pending.length;
+        if (completedEl) completedEl.textContent = completed.length;
+        if (totalEl) totalEl.textContent = formatCurrency(totalAmount);
+    }
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount);
+    }
+    
+    function formatTime(dateStr) {
+        if (!dateStr) return 'N/A';
+        const date = new Date(dateStr);
+        return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + date.toLocaleDateString('vi-VN');
+    }
+    
+    function getStatusBadge(status) {
+        const statusMap = {
+            'pending': { text: 'Chờ xử lý', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
+            'completed': { text: 'Hoàn thành', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
+            'rejected': { text: 'Đã hủy', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
+        };
+        const s = statusMap[status] || statusMap['pending'];
+        return `<span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${s.class}">${s.text}</span>`;
+    }
+    
+    function filterDeposits() {
+        const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+        const status = document.getElementById('statusFilter')?.value || '';
+        
+        let filtered = allDeposits;
+        
+        if (search) {
+            filtered = filtered.filter(d => 
+                d.id?.toString().includes(search) ||
+                d.user_name?.toLowerCase().includes(search) ||
+                d.transaction_code?.toLowerCase().includes(search)
+            );
+        }
+        
+        if (status) {
+            filtered = filtered.filter(d => d.status === status);
+        }
+        
+        renderDeposits(filtered);
+    }
+    
+    function renderDeposits(deposits) {
+        const container = document.getElementById('depositsContainer');
+        if (!container) return;
+        
+        if (deposits.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">Chưa có giao dịch nạp tiền nào</p>';
+            return;
+        }
+        
+        container.innerHTML = `
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-900">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Người dùng</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Số tiền</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Phương thức</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Mã GD</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Trạng thái</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thời gian</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                        ${deposits.map(d => `
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-900">
+                                <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">#${d.id}</td>
+                                <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${d.user_name || 'N/A'}<br><span class="text-xs text-gray-500">${d.user_email || ''}</span></td>
+                                <td class="px-4 py-3 text-sm text-gray-900 dark:text-white font-semibold">${formatCurrency(d.amount)}</td>
+                                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${d.method || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${d.transaction_code || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm">${getStatusBadge(d.status)}</td>
+                                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${formatTime(d.created_at)}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    ${d.status === 'pending' ? `
+                                        <button onclick="approveDeposit(${d.id})" class="text-green-600 hover:text-green-800 mr-2" title="Duyệt"><i class="fas fa-check"></i></button>
+                                        <button onclick="rejectDeposit(${d.id})" class="text-red-600 hover:text-red-800" title="Từ chối"><i class="fas fa-times"></i></button>
+                                    ` : ''}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+    
+    window.approveDeposit = async function(id) {
+        if (!confirm('Bạn có chắc muốn duyệt giao dịch này?')) return;
+        
+        try {
+            const res = await fetch(`${API_BASE}/deposits/${id}/approve`, { method: 'POST' });
+            const data = await res.json();
+            
+            if (data.success) {
+                alert('Duyệt thành công!');
+                loadDeposits();
+            } else {
+                alert('Lỗi: ' + (data.message || 'Không thể duyệt'));
+            }
+        } catch (error) {
+            console.error('Approve error:', error);
+            alert('Có lỗi xảy ra!');
+        }
+    };
+    
+    window.rejectDeposit = async function(id) {
+        if (!confirm('Bạn có chắc muốn từ chối giao dịch này?')) return;
+        
+        try {
+            const res = await fetch(`${API_BASE}/deposits/${id}/reject`, { method: 'POST' });
+            const data = await res.json();
+            
+            if (data.success) {
+                alert('Từ chối thành công!');
+                loadDeposits();
+            } else {
+                alert('Lỗi: ' + (data.message || 'Không thể từ chối'));
+            }
+        } catch (error) {
+            console.error('Reject error:', error);
+            alert('Có lỗi xảy ra!');
+        }
+    };
+    
+    window.refreshDeposits = function() {
+        loadDeposits();
+    };
+    
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    
+    if (searchInput) searchInput.addEventListener('input', filterDeposits);
+    if (statusFilter) statusFilter.addEventListener('change', filterDeposits);
+    
+    loadDeposits();
+    setInterval(loadDeposits, 30000);
+});

@@ -119,6 +119,44 @@ async function rejectDeposit(id) {
     return getDepositById(id);
 }
 
+async function getLatestDepositByUser(userId) {
+    const queryStr = `
+        SELECT TOP 1 *
+        FROM Deposits
+        WHERE user_id = @param0
+        ORDER BY created_at DESC
+    `;
+    const result = await query(queryStr, [userId]);
+    return result.recordset[0];
+}
+
+async function approveDepositById(id) {
+    const deposit = await getDepositById(id);
+    
+    if (!deposit) {
+        throw new Error('Deposit not found');
+    }
+    
+    await query(`
+        UPDATE Deposits 
+        SET status = 'completed',
+            updated_at = GETDATE()
+        WHERE id = @param0
+    `, [id]);
+    
+    const User = require('./User');
+    await User.updateBalance(deposit.user_id, deposit.amount);
+    
+    await User.createTransaction(
+        deposit.user_id,
+        'deposit',
+        deposit.amount,
+        `Nạp tiền qua ${deposit.method} - Mã GD: ${deposit.transaction_code}`
+    );
+    
+    return getDepositById(id);
+}
+
 module.exports = {
     createDeposit,
     getDepositById,
@@ -126,5 +164,7 @@ module.exports = {
     getAllDeposits,
     updateDepositStatus,
     approveDeposit,
-    rejectDeposit
+    rejectDeposit,
+    getLatestDepositByUser,
+    approveDepositById
 };
