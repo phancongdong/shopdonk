@@ -1,33 +1,57 @@
 const { query } = require('../config/database');
 
+let schemaCache = null;
+
+async function getSchema() {
+    if (schemaCache) return schemaCache;
+    
+    try {
+        const columns = await query(`
+            SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Categories'
+        `);
+        schemaCache = columns.recordset.map(c => c.COLUMN_NAME);
+        return schemaCache;
+    } catch (e) {
+        return ['id', 'name', 'description', 'image', 'created_at', 'updated_at'];
+    }
+}
+
 async function getAllCategories() {
+    const cols = await getSchema();
+    const hasParent = cols.includes('parent_id');
+    const hasDepth = cols.includes('depth');
+    const hasOrder = cols.includes('display_order');
+    
     const queryStr = `
         SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
-               ISNULL(c.parent_id, NULL) as parent_id,
-               ISNULL(c.depth, 0) as depth,
+               ${hasParent ? 'ISNULL(c.parent_id, NULL) as parent_id' : 'NULL as parent_id'},
+               ${hasDepth ? 'ISNULL(c.depth, 0) as depth' : '0 as depth'},
                ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
-               ISNULL(c.display_order, c.id) as display_order,
-               c.status, c.created_at, c.updated_at,
-               p.name as parent_name
+               ${hasOrder ? 'ISNULL(c.display_order, c.id) as display_order' : 'c.id as display_order'},
+               c.created_at, c.updated_at,
+               ${hasParent ? 'p.name as parent_name' : 'NULL as parent_name'}
         FROM Categories c
-        LEFT JOIN Categories p ON c.parent_id = p.id
-        ORDER BY ISNULL(c.depth, 0), ISNULL(c.display_order, c.id), c.name
+        ${hasParent ? 'LEFT JOIN Categories p ON c.parent_id = p.id' : ''}
+        ORDER BY ${hasDepth ? 'ISNULL(c.depth, 0)' : '0'}, ${hasOrder ? 'ISNULL(c.display_order, c.id)' : 'c.id'}, c.name
     `;
     const result = await query(queryStr);
     return result.recordset;
 }
 
 async function getCategoryById(id) {
+    const cols = await getSchema();
+    const hasParent = cols.includes('parent_id');
+    
     const queryStr = `
         SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
-               ISNULL(c.parent_id, NULL) as parent_id,
+               ${hasParent ? 'ISNULL(c.parent_id, NULL) as parent_id' : 'NULL as parent_id'},
                ISNULL(c.depth, 0) as depth,
                ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
                ISNULL(c.display_order, c.id) as display_order,
-               c.status, c.created_at, c.updated_at,
-               p.name as parent_name
+               c.created_at, c.updated_at,
+               ${hasParent ? 'p.name as parent_name' : 'NULL as parent_name'}
         FROM Categories c
-        LEFT JOIN Categories p ON c.parent_id = p.id
+        ${hasParent ? 'LEFT JOIN Categories p ON c.parent_id = p.id' : ''}
         WHERE c.id = @param0
     `;
     const result = await query(queryStr, [id]);
@@ -35,17 +59,20 @@ async function getCategoryById(id) {
 }
 
 async function getCategoryTree() {
+    const cols = await getSchema();
+    const hasParent = cols.includes('parent_id');
+    
     const queryStr = `
         SELECT c.id, c.name, c.slug, c.icon, c.color, c.image, c.description, 
-               ISNULL(c.parent_id, NULL) as parent_id,
+               ${hasParent ? 'ISNULL(c.parent_id, NULL) as parent_id' : 'NULL as parent_id'},
                ISNULL(c.depth, 0) as depth,
                ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))) as path,
                ISNULL(c.display_order, c.id) as display_order,
-               c.status, c.created_at, c.updated_at,
-               p.name as parent_name,
+               c.created_at, c.updated_at,
+               ${hasParent ? 'p.name as parent_name' : 'NULL as parent_name'},
                (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
-        LEFT JOIN Categories p ON c.parent_id = p.id
+        ${hasParent ? 'LEFT JOIN Categories p ON c.parent_id = p.id' : ''}
         ORDER BY ISNULL(c.depth, 0), ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
@@ -104,11 +131,20 @@ async function getCategoryWithAncestors(id) {
 }
 
 async function createCategory(data) {
+    const cols = await getSchema();
     const parentId = data.parent_id || null;
     let depth = 0;
     let path = '';
     
-    if (parentId) {
+    const hasParent = cols.includes('parent_id');
+    const hasDepth = cols.includes('depth');
+    const hasPath = cols.includes('path');
+    const hasSlug = cols.includes('slug');
+    const hasIcon = cols.includes('icon');
+    const hasColor = cols.includes('color');
+    const hasOrder = cols.includes('display_order');
+    
+    if (parentId && hasParent) {
         const parent = await getCategoryById(parentId);
         if (parent) {
             depth = (parent.depth || 0) + 1;
@@ -116,50 +152,78 @@ async function createCategory(data) {
         }
     }
     
-    const insertStr = `
-        INSERT INTO Categories (name, slug, icon, color, image, description, parent_id, depth, display_order, status, created_at)
-        OUTPUT INSERTED.id
-        VALUES (@param0, @param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, 1, GETDATE())
-    `;
+    let insertStr;
+    let params;
     
-    const result = await query(insertStr, [
-        data.name, 
-        data.slug, 
-        data.icon || null, 
-        data.color || null, 
-        data.image || null, 
-        data.description || null,
-        parentId,
-        depth,
-        data.display_order || 0
-    ]);
+    if (hasParent && hasDepth && hasOrder) {
+        insertStr = `
+            INSERT INTO Categories (name, ${hasSlug ? 'slug,' : ''} ${hasIcon ? 'icon,' : ''} ${hasColor ? 'color,' : ''} image, description, parent_id, depth, display_order, created_at)
+            OUTPUT INSERTED.id
+            VALUES (@param0, ${hasSlug ? '@param1,' : ''} ${hasIcon ? '@param2,' : ''} ${hasColor ? '@param3,' : ''} @param4, @param5, @param6, @param7, @param8, GETDATE())
+        `;
+        params = [
+            data.name, 
+            data.slug, 
+            data.icon || null, 
+            data.color || null, 
+            data.image || null, 
+            data.description || null,
+            parentId,
+            depth,
+            data.display_order || 0
+        ];
+    } else {
+        insertStr = `
+            INSERT INTO Categories (name, ${hasSlug ? 'slug,' : ''} image, description, created_at)
+            OUTPUT INSERTED.id
+            VALUES (@param0, ${hasSlug ? '@param1,' : ''} @param2, @param3, GETDATE())
+        `;
+        params = [
+            data.name, 
+            data.slug, 
+            data.image || null, 
+            data.description || null
+        ];
+    }
     
+    const result = await query(insertStr, params);
     const newId = result.recordset[0].id;
     
-    const newPath = path + newId;
-    await query(`
-        UPDATE Categories SET path = @param0 WHERE id = @param1
-    `, [newPath, newId]);
+    if (hasPath) {
+        const newPath = path + newId;
+        await query(`UPDATE Categories SET path = @param0 WHERE id = @param1`, [newPath, newId]);
+    }
     
-    try {
-        await query(`
-            INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
-            VALUES (@param0, @param0, 0)
-        `, [newId]);
-        
-        if (parentId) {
-            await query(`
-                INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
-                SELECT ancestor_id, @param0, depth + 1
-                FROM CategoryClosure
-                WHERE descendant_id = @param1
-            `, [newId, parentId]);
+    const hasClosure = await checkClosureTable();
+    if (hasClosure) {
+        try {
+            await query(`INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth) VALUES (@param0, @param0, 0)`, [newId]);
+            
+            if (parentId) {
+                await query(`
+                    INSERT INTO CategoryClosure (ancestor_id, descendant_id, depth)
+                    SELECT ancestor_id, @param0, depth + 1
+                    FROM CategoryClosure
+                    WHERE descendant_id = @param1
+                `, [newId, parentId]);
+            }
+        } catch (e) {
+            console.log('Warning: CategoryClosure update failed:', e.message);
         }
-    } catch (closureError) {
-        console.log('Warning: Could not update CategoryClosure:', closureError.message);
     }
     
     return getCategoryById(newId);
+}
+
+async function checkClosureTable() {
+    try {
+        const result = await query(`
+            SELECT COUNT(*) as count FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CategoryClosure'
+        `);
+        return result.recordset[0].count > 0;
+    } catch (e) {
+        return false;
+    }
 }
 
 async function updateCategory(id, data) {

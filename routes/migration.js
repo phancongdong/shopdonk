@@ -37,6 +37,22 @@ router.get('/check-schema', async (req, res) => {
     }
 });
 
+router.get('/debug', async (req, res) => {
+    try {
+        const testQuery = await query(`SELECT TOP 1 * FROM Categories`);
+        res.json({
+            success: true,
+            sample: testQuery.recordset[0] || null
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: error.message,
+            stack: error.stack
+        });
+    }
+});
+
 router.post('/run-migration', async (req, res) => {
     try {
         const steps = [];
