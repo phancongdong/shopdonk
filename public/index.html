@@ -650,6 +650,11 @@
             loadProductsBySlug(slug, hasChildren);
         }
         
+        window.goBackToParent = function(parentSlug) {
+            history.pushState({ slug: parentSlug }, '', `?slug=${parentSlug}`);
+            loadProductsBySlug(parentSlug, true);
+        }
+        
         async function loadProductsBySlug(slug, isParentCategory = false) {
             document.getElementById('categoriesGrid').parentElement.style.display = 'none';
             document.getElementById('partnersSection').style.display = 'none';
@@ -663,14 +668,16 @@
                 
                 let currentCat = null;
                 let childCategories = [];
+                let parentCat = null;
                 
                 if (catData.success) {
                     currentCat = catData.data.find(c => c.slug === slug);
                     if (currentCat) {
-                        document.getElementById('categoryTitle').innerHTML = `<a href="index.html" style="color:#6366f1"><i class="fas fa-arrow-left"></i></a> ${currentCat.name.toUpperCase()}`;
-                        document.getElementById('categoryDesc').textContent = currentCat.description || 'Danh sách tài khoản game chất lượng';
-                        
                         childCategories = catData.data.filter(c => c.parent_id === currentCat.id);
+                        
+                        if (currentCat.parent_id) {
+                            parentCat = catData.data.find(c => c.id === currentCat.parent_id);
+                        }
                     }
                 }
                 
@@ -679,6 +686,56 @@
                     document.getElementById('loadingOverlay').style.display = 'none';
                     return;
                 }
+                
+                const gamesSection = document.getElementById('gamesSection');
+                
+                let breadcrumbHtml = `<a href="index.html" style="color: #6366f1;"><i class="fas fa-home"></i></a>`;
+                if (parentCat) {
+                    breadcrumbHtml += ` <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 10px;"></i> <a href="#" onclick="goBackToParent('${parentCat.slug}'); return false;" style="color: #6366f1;">${parentCat.name}</a>`;
+                }
+                breadcrumbHtml += ` <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 10px;"></i> <span style="color: #fff;">${currentCat ? currentCat.name : ''}</span>`;
+                
+                gamesSection.innerHTML = `
+                    <div class="container" style="padding: 0;">
+                        <div class="section-title" style="margin: 30px 0;">
+                            <h2>${breadcrumbHtml}</h2>
+                            <p id="categoryDesc">${currentCat ? (currentCat.description || 'Danh sách tài khoản game chất lượng') : ''}</p>
+                        </div>
+                        <div class="filter-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <input type="text" id="searchProduct" class="filter-input" placeholder="Tìm kiếm sản phẩm...">
+                                </div>
+                                <div class="filter-group">
+                                    <select id="priceFilter" class="filter-select">
+                                        <option value="">Tất cả giá</option>
+                                        <option value="0-100000">Dưới 100.000đ</option>
+                                        <option value="100000-500000">100.000đ - 500.000đ</option>
+                                        <option value="500000-1000000">500.000đ - 1.000.000đ</option>
+                                        <option value="1000000-5000000">1.000.000đ - 5.000.000đ</option>
+                                        <option value="5000000-999999999">Trên 5.000.000đ</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <select id="sortFilter" class="filter-select">
+                                        <option value="">Sắp xếp mặc định</option>
+                                        <option value="price-asc">Giá tăng dần</option>
+                                        <option value="price-desc">Giá giảm dần</option>
+                                        <option value="name-asc">Tên A-Z</option>
+                                        <option value="name-desc">Tên Z-A</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="productsGrid" class="games-grid">
+                            <p style="text-align: center; color: #94a3b8; padding: 50px;">Đang tải...</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('searchProduct').addEventListener('input', filterProducts);
+                document.getElementById('priceFilter').addEventListener('change', filterProducts);
+                document.getElementById('sortFilter').addEventListener('change', filterProducts);
                 
                 const res = await fetch(`${API_BASE}/products?category_slug=${slug}`);
                 const data = await res.json();
@@ -698,35 +755,36 @@
             const timestamp = Date.now();
             
             gamesSection.innerHTML = `
-                <div class="games-header" style="margin-bottom: 24px;">
-                    <h2 id="categoryTitle" style="font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px;">
-                        <a href="index.html" style="color:#6366f1"><i class="fas fa-arrow-left"></i></a> 
-                        ${parent.name.toUpperCase()}
-                    </h2>
-                    <p id="categoryDesc" style="color: #94a3b8;">${parent.description || 'Chọn danh mục con bên dưới'}</p>
-                </div>
-                <div class="sub-categories-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-                    ${children.map(c => {
-                        let imageUrl = 'https://placehold.co/400x200/6366f1/fff?text=' + encodeURIComponent(c.name || 'N/A');
-                        if (c.image && c.image.trim()) {
-                            if (c.image.startsWith('data:')) {
-                                imageUrl = c.image;
-                            } else {
-                                imageUrl = c.image + (c.image.includes('?') ? '&' : '?') + 't=' + timestamp;
+                <div class="container" style="padding: 0;">
+                    <div class="section-title" style="margin: 30px 0;">
+                        <h2>
+                            <a href="index.html" style="color: #6366f1;"><i class="fas fa-home"></i></a>
+                            <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 15px;"></i>
+                            ${parent.name.toUpperCase()}
+                        </h2>
+                        <p>${parent.description || 'Chọn danh mục con bên dưới'}</p>
+                    </div>
+                    <div class="categories-grid">
+                        ${children.map(c => {
+                            let imageUrl = 'https://placehold.co/400x200/6366f1/fff?text=' + encodeURIComponent(c.name || 'N/A');
+                            if (c.image && c.image.trim()) {
+                                if (c.image.startsWith('data:')) {
+                                    imageUrl = c.image;
+                                } else {
+                                    imageUrl = c.image + (c.image.includes('?') ? '&' : '?') + 't=' + timestamp;
+                                }
                             }
-                        }
-                        return `
-                        <div class="category-card" onclick="selectCategory('${c.slug}')" style="background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.3s;">
-                            <img src="${imageUrl}" alt="${c.name}" style="width: 100%; height: 150px; object-fit: cover;" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(c.name || 'N/A')}'">
-                            <div style="padding: 16px;">
-                                <div style="font-weight: 600; color: #fff; margin-bottom: 8px;">${c.name}</div>
-                                <button style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;">
-                                    <i class="fas fa-eye"></i> XEM NGAY
-                                </button>
+                            return `
+                            <div class="category-card" onclick="selectCategory('${c.slug}')">
+                                <img class="category-img" src="${imageUrl}" alt="${c.name}" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(c.name || 'N/A')}'">
+                                <div class="category-info">
+                                    <div class="category-name">${c.name}</div>
+                                    <div class="category-btn"><i class="fas fa-eye"></i> XEM NGAY</div>
+                                </div>
                             </div>
-                        </div>
-                        `;
-                    }).join('')}
+                            `;
+                        }).join('')}
+                    </div>
                 </div>
             `;
         }
@@ -777,7 +835,7 @@
         document.getElementById('sortFilter').addEventListener('change', filterProducts);
         
         function renderProducts(products) {
-            const grid = document.getElementById('gamesGrid');
+            const grid = document.getElementById('productsGrid') || document.getElementById('gamesGrid');
             const timestamp = Date.now();
             
             const inStockProducts = products.filter(p => (p.stock || 0) > 0);
