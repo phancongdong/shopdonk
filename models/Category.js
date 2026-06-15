@@ -445,13 +445,16 @@ async function getCategoryPath(id) {
 }
 
 async function getCategoriesForSelect() {
+    const cols = await getSchema();
+    const hasStatus = cols.includes('status');
+    
     const queryStr = `
         SELECT c.id, c.name, 
                ISNULL(c.parent_id, NULL) as parent_id,
                ISNULL(c.depth, 0) as depth,
                (SELECT COUNT(*) FROM Products WHERE category_id = c.id) as product_count
         FROM Categories c
-        WHERE c.status = 1
+        WHERE ${hasStatus ? 'ISNULL(c.status, 1) = 1' : '1=1'}
         ORDER BY ISNULL(c.path, CAST(c.id AS NVARCHAR(1000))), ISNULL(c.display_order, c.id), c.name
     `;
     const result = await query(queryStr);
