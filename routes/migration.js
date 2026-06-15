@@ -152,6 +152,20 @@ router.post('/run-migration', async (req, res) => {
     }
 });
 
+router.get('/fix-status', async (req, res) => {
+    try {
+        await query(`UPDATE Categories SET status = 1 WHERE status IS NULL`);
+        const result = await query(`SELECT COUNT(*) as count FROM Categories WHERE status = 1`);
+        res.json({
+            success: true,
+            message: 'Status updated',
+            activeCategories: result.recordset[0].count
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 router.get('/run-migration', async (req, res) => {
     try {
         const steps = [];
