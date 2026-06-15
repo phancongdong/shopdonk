@@ -155,36 +155,57 @@ async function createCategory(data) {
     let insertStr;
     let params;
     
-    if (hasParent && hasDepth && hasOrder) {
-        insertStr = `
-            INSERT INTO Categories (name, ${hasSlug ? 'slug,' : ''} ${hasIcon ? 'icon,' : ''} ${hasColor ? 'color,' : ''} image, description, parent_id, depth, display_order, created_at)
-            OUTPUT INSERTED.id
-            VALUES (@param0, ${hasSlug ? '@param1,' : ''} ${hasIcon ? '@param2,' : ''} ${hasColor ? '@param3,' : ''} @param4, @param5, @param6, @param7, @param8, GETDATE())
-        `;
-        params = [
-            data.name, 
-            data.slug, 
-            data.icon || null, 
-            data.color || null, 
-            data.image || null, 
-            data.description || null,
-            parentId,
-            depth,
-            data.display_order || 0
-        ];
-    } else {
-        insertStr = `
-            INSERT INTO Categories (name, ${hasSlug ? 'slug,' : ''} image, description, created_at)
-            OUTPUT INSERTED.id
-            VALUES (@param0, ${hasSlug ? '@param1,' : ''} @param2, @param3, GETDATE())
-        `;
-        params = [
-            data.name, 
-            data.slug, 
-            data.image || null, 
-            data.description || null
-        ];
+    const columns = ['name'];
+    const values = ['@param0'];
+    params = [data.name];
+    let paramIndex = 1;
+    
+    if (hasSlug) {
+        columns.push('slug');
+        values.push(`@param${paramIndex}`);
+        params.push(data.slug);
+        paramIndex++;
     }
+    
+    if (hasIcon) {
+        columns.push('icon');
+        values.push(`@param${paramIndex}`);
+        params.push(data.icon || null);
+        paramIndex++;
+    }
+    
+    if (hasColor) {
+        columns.push('color');
+        values.push(`@param${paramIndex}`);
+        params.push(data.color || null);
+        paramIndex++;
+    }
+    
+    columns.push('image');
+    values.push(`@param${paramIndex}`);
+    params.push(data.image || null);
+    paramIndex++;
+    
+    columns.push('description');
+    values.push(`@param${paramIndex}`);
+    params.push(data.description || null);
+    paramIndex++;
+    
+    if (hasParent && hasDepth && hasOrder) {
+        columns.push('parent_id', 'depth', 'display_order');
+        values.push(`@param${paramIndex}`, `@param${paramIndex + 1}`, `@param${paramIndex + 2}`);
+        params.push(parentId, depth, data.display_order || 0);
+        paramIndex += 3;
+    }
+    
+    columns.push('created_at');
+    values.push('GETDATE()');
+    
+    insertStr = `
+        INSERT INTO Categories (${columns.join(', ')})
+        OUTPUT INSERTED.id
+        VALUES (${values.join(', ')})
+    `;
     
     const result = await query(insertStr, params);
     const newId = result.recordset[0].id;
@@ -211,6 +232,8 @@ async function createCategory(data) {
             console.log('Warning: CategoryClosure update failed:', e.message);
         }
     }
+    
+    schemaCache = null;
     
     return getCategoryById(newId);
 }
