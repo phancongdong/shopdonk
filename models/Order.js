@@ -160,13 +160,88 @@ async function getOrderStats() {
     return result.recordset[0];
 }
 
+async function getAllOrdersAdmin(filters = {}) {
+    let queryStr = `
+        SELECT o.*, p.name as product_name, u.name as user_name, u.email as user_email
+        FROM Orders o
+        LEFT JOIN Products p ON o.product_id = p.id
+        LEFT JOIN Users u ON o.user_id = u.id
+        WHERE 1=1
+    `;
+    
+    const params = [];
+    
+    if (filters.status) {
+        queryStr += ` AND o.status = @param${params.length}`;
+        params.push(filters.status);
+    }
+    
+    if (filters.search) {
+        queryStr += ` AND (o.id LIKE @param${params.length} OR u.name LIKE @param${params.length} OR u.email LIKE @param${params.length} OR p.name LIKE @param${params.length})`;
+        params.push(`%${filters.search}%`);
+    }
+    
+    if (filters.start_date) {
+        queryStr += ` AND o.created_at >= @param${params.length}`;
+        params.push(filters.start_date);
+    }
+    
+    if (filters.end_date) {
+        queryStr += ` AND o.created_at <= @param${params.length}`;
+        params.push(filters.end_date);
+    }
+    
+    queryStr += ` ORDER BY o.created_at DESC`;
+    
+    if (filters.limit) {
+        queryStr += ` OFFSET 0 ROWS FETCH NEXT @param${params.length} ROWS ONLY`;
+        params.push(filters.limit);
+    }
+    
+    const result = await query(queryStr, params);
+    
+    return result.recordset.map(order => {
+        if (order.account_info) {
+            try {
+                order.account_info = JSON.parse(order.account_info);
+            } catch (e) {}
+        }
+        return order;
+    });
+}
+
+async function getRecentOrders(limit = 10) {
+    const queryStr = `
+        SELECT TOP (${limit}) o.*, p.name as product_name, u.name as user_name
+        FROM Orders o
+        LEFT JOIN Products p ON o.product_id = p.id
+        LEFT JOIN Users u ON o.user_id = u.id
+        ORDER BY o.created_at DESC
+    `;
+    const result = await query(queryStr);
+    return result.recordset;
+}
+
+async function getOrdersCountToday() {
+    const queryStr = `
+        SELECT COUNT(*) as count, SUM(total_price) as revenue
+        FROM Orders
+        WHERE CAST(created_at AS DATE) = CAST(GETDATE() AS DATE)
+    `;
+    const result = await query(queryStr);
+    return result.recordset[0];
+}
+
 module.exports = {
     createOrder,
     getOrderById,
     getOrdersByUser,
     getAllOrders,
+    getAllOrdersAdmin,
     updateOrderStatus,
     completeOrder,
     cancelOrder,
-    getOrderStats
+    getOrderStats,
+    getRecentOrders,
+    getOrdersCountToday
 };

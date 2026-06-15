@@ -3,30 +3,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const isAdmin = user && user.role === 'admin';
     
+    let allOrders = [];
+    let autoRefreshInterval = null;
+    
     async function loadOrders() {
         try {
-            const productsRes = await fetch(`${API_BASE}/products`);
-            const productsData = await productsRes.json();
-            let products = productsData.success ? productsData.data : [];
+            let orders;
             
-            if (!isAdmin && user) {
-                products = products.filter(p => p.created_by === user.id || p.seller_id === user.id);
+            if (isAdmin) {
+                const res = await fetch(`${API_BASE}/admin/orders?limit=100`);
+                const data = await res.json();
+                orders = data.success ? data.data : [];
+            } else {
+                const ordersRes = await fetch(`${API_BASE}/orders`);
+                const ordersData = await ordersRes.json();
+                orders = ordersData.success ? ordersData.data : [];
+                
+                if (user) {
+                    const productsRes = await fetch(`${API_BASE}/products`);
+                    const productsData = await productsRes.json();
+                    const products = productsData.success ? productsData.data : [];
+                    const myProductIds = products.filter(p => p.created_by === user.id || p.seller_id === user.id).map(p => p.id);
+                    orders = orders.filter(o => myProductIds.includes(o.product_id));
+                }
             }
             
-            const myProductIds = products.map(p => p.id);
-            
-            const ordersRes = await fetch(`${API_BASE}/orders`);
-            const ordersData = await ordersRes.json();
-            let orders = ordersData.success ? ordersData.data : [];
-            
-            if (!isAdmin && user) {
-                orders = orders.filter(o => myProductIds.includes(o.product_id));
-            }
-            
-            renderOrders(orders, products);
+            allOrders = orders;
+            renderOrders(orders);
+            updateStats(orders);
         } catch (error) {
             console.error('Error loading orders:', error);
         }
+    }
+    
+    function updateStats(orders) {
+        const today = new Date().toDateString();
+        const todayOrders = orders.filter(o => new Date(o.created_at).toDateString() === today);
+        const todayRevenue = todayOrders.reduce((sum, o) => sum + (o.total_price || 0), 0);
+        
+        const pendingEl = document.getElementById('pendingCount');
+        const todayEl = document.getElementById('todayCount');
+        const revenueEl = document.getElementById('todayRevenue');
+        
+        if (pendingEl) pendingEl.textContent = orders.filter(o => o.status === 'pending').length;
+        if (todayEl) todayEl.textContent = todayOrders.length;
+        if (revenueEl) revenueEl.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(todayRevenue);
+    }
+    
+    function filterOrders() {
+        const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+        const status = document.getElementById('statusFilter')?.value || '';
+        
+        let filtered = allOrders;
+        
+        if (search) {
+            filtered = filtered.filter(o => 
+                o.id?.toString().includes(search) ||
+                o.user_name?.toLowerCase().includes(search) ||
+                o.product_name?.toLowerCase().includes(search)
+            );
+        }
+        
+        if (status) {
+            filtered = filtered.filter(o => o.status === status);
+        }
+        
+        renderOrders(filtered);
     }
     
     function formatCurrency(amount) {
@@ -49,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return `<span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${s.class}">${s.text}</span>`;
     }
     
-    function renderOrders(orders, products) {
+    function renderOrders(orders) {
         const container = document.querySelector('.rounded-xl.bg-white');
         if (!container) return;
         
@@ -57,9 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">Chưa có đơn hàng nào</p>';
             return;
         }
-        
-        const productMap = {};
-        products.forEach(p => { productMap[p.id] = p; });
         
         container.innerHTML = `
             <div class="overflow-x-auto">
@@ -80,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-900">
                                 <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">#${o.id}</td>
                                 <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">${o.user_name || 'N/A'}</td>
-                                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${o.product_name || productMap[o.product_id]?.name || 'N/A'}</td>
+                                <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${o.product_name || 'N/A'}</td>
                                 <td class="px-4 py-3 text-sm">
                                     <div class="text-xs">
                                         <div class="text-gray-900 dark:text-white">TK: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">${o.account_username || 'N/A'}</code></div>
@@ -97,6 +136,25 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
+    
+    window.refreshOrders = function() {
+        loadOrders();
+    };
+    
+    window.toggleAutoRefresh = function(enabled) {
+        if (enabled) {
+            autoRefreshInterval = setInterval(loadOrders, 10000);
+        } else {
+            clearInterval(autoRefreshInterval);
+            autoRefreshInterval = null;
+        }
+    };
+    
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    
+    if (searchInput) searchInput.addEventListener('input', filterOrders);
+    if (statusFilter) statusFilter.addEventListener('change', filterOrders);
     
     loadOrders();
     setInterval(loadOrders, 30000);

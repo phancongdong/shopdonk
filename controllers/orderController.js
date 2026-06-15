@@ -356,6 +356,67 @@ async function getOrderStats(req, res) {
     }
 }
 
+async function getAllOrdersAdmin(req, res) {
+    try {
+        const filters = {
+            status: req.query.status,
+            search: req.query.search,
+            start_date: req.query.start_date,
+            end_date: req.query.end_date,
+            limit: parseInt(req.query.limit) || 100
+        };
+        
+        const orders = await Order.getAllOrdersAdmin(filters);
+        
+        res.json({
+            success: true,
+            data: orders,
+            count: orders.length
+        });
+    } catch (error) {
+        console.error('Get all orders error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
+async function getRecentOrders(req, res) {
+    try {
+        const limit = parseInt(req.query.limit) || 10;
+        const orders = await Order.getRecentOrders(limit);
+        
+        res.json({
+            success: true,
+            data: orders
+        });
+    } catch (error) {
+        console.error('Get recent orders error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
+async function getOrdersCountToday(req, res) {
+    try {
+        const result = await Order.getOrdersCountToday();
+        
+        res.json({
+            success: true,
+            data: result
+        });
+    } catch (error) {
+        console.error('Get orders count today error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
 function generateRandomUsername() {
     return 'user_' + Math.random().toString(36).substring(2, 10);
 }
@@ -370,5 +431,8 @@ module.exports = {
     createOrder,
     updateOrderStatus,
     cancelOrder,
-    getOrderStats
+    getOrderStats,
+    getAllOrdersAdmin,
+    getRecentOrders,
+    getOrdersCountToday
 };
