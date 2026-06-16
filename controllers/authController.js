@@ -420,6 +420,48 @@ async function confirmPasswordChange(req, res) {
     }
 }
 
+async function changePasswordDirect(req, res) {
+    try {
+        const { user_id, current_password, new_password } = req.body;
+        
+        if (!user_id || !current_password || !new_password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Vui lòng nhập đầy đủ thông tin!'
+            });
+        }
+        
+        if (new_password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: 'Mật khẩu mới phải có ít nhất 6 ký tự!'
+            });
+        }
+        
+        const isValid = await User.validateCurrentPassword(user_id, current_password);
+        
+        if (!isValid) {
+            return res.status(401).json({
+                success: false,
+                message: 'Mật khẩu hiện tại không đúng!'
+            });
+        }
+        
+        const user = await User.updatePassword(user_id, new_password);
+        
+        res.json({
+            success: true,
+            message: 'Đổi mật khẩu thành công!'
+        });
+    } catch (error) {
+        console.error('Change password direct error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
 async function updateProfile(req, res) {
     try {
         const userId = req.params.id;
@@ -583,6 +625,7 @@ module.exports = {
     confirmEmailChange,
     requestPasswordVerification,
     confirmPasswordChange,
+    changePasswordDirect,
     updateProfile,
     getAllUsers,
     validateSession,
