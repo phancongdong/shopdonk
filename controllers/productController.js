@@ -1,6 +1,7 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const { query } = require('../config/database');
+const { sanitizeProduct, sanitizeProducts } = require('../utils/security');
 
 async function getProducts(req, res) {
     try {
@@ -14,11 +15,12 @@ async function getProducts(req, res) {
         };
         
         const products = await Product.getAllProducts(filters);
+        const sanitizedProducts = sanitizeProducts(products);
         
         res.json({
             success: true,
-            data: products,
-            count: products.length
+            data: sanitizedProducts,
+            count: sanitizedProducts.length
         });
     } catch (error) {
         console.error('Get products error:', error);
@@ -41,9 +43,11 @@ async function getProductById(req, res) {
             });
         }
         
+        const sanitizedProduct = sanitizeProduct(product);
+        
         res.json({
             success: true,
-            data: product
+            data: sanitizedProduct
         });
     } catch (error) {
         console.error('Get product error:', error);
@@ -66,9 +70,11 @@ async function getProductBySlug(req, res) {
             });
         }
         
+        const sanitizedProduct = sanitizeProduct(product);
+        
         res.json({
             success: true,
-            data: product
+            data: sanitizedProduct
         });
     } catch (error) {
         console.error('Get product error:', error);
@@ -93,11 +99,12 @@ async function createProduct(req, res) {
         data.slug = await generateUniqueSlug(data.name);
         
         const product = await Product.createProduct(data);
+        const sanitizedProduct = sanitizeProduct(product);
         
         res.status(201).json({
             success: true,
             message: 'Tạo sản phẩm thành công',
-            data: product
+            data: sanitizedProduct
         });
     } catch (error) {
         console.error('Create product error:', error);
@@ -126,11 +133,12 @@ async function updateProduct(req, res) {
         }
         
         const product = await Product.updateProduct(id, data);
+        const sanitizedProduct = sanitizeProduct(product);
         
         res.json({
             success: true,
             message: 'Cập nhật sản phẩm thành công',
-            data: product
+            data: sanitizedProduct
         });
     } catch (error) {
         console.error('Update product error:', error);
@@ -164,10 +172,11 @@ async function getFeaturedProducts(req, res) {
     try {
         const limit = req.query.limit || 10;
         const products = await Product.getFeaturedProducts(limit);
+        const sanitizedProducts = sanitizeProducts(products);
         
         res.json({
             success: true,
-            data: products
+            data: sanitizedProducts
         });
     } catch (error) {
         console.error('Get featured products error:', error);
@@ -338,7 +347,8 @@ async function getCategoryProducts(req, res) {
         const id = req.params.id;
         const includeDescendants = req.query.include_descendants === 'true';
         const products = await Category.getCategoryProducts(id, includeDescendants);
-        res.json({ success: true, data: products });
+        const sanitizedProducts = sanitizeProducts(products);
+        res.json({ success: true, data: sanitizedProducts });
     } catch (error) {
         console.error('Get category products error:', error);
         res.status(500).json({ success: false, message: 'Lỗi server' });

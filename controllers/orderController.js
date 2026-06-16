@@ -2,6 +2,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { beginTransaction, commitTransaction, rollbackTransaction, query } = require('../config/database');
+const { sanitizeOrder, sanitizeOrders } = require('../utils/security');
 
 async function getOrders(req, res) {
     try {
@@ -16,11 +17,12 @@ async function getOrders(req, res) {
         
         const limit = parseInt(req.query.limit) || 50;
         const orders = await Order.getOrdersByUser(userId, limit);
+        const sanitizedOrders = sanitizeOrders(orders, false);
         
         res.json({
             success: true,
-            data: orders,
-            count: orders.length
+            data: sanitizedOrders,
+            count: sanitizedOrders.length
         });
     } catch (error) {
         console.error('Get orders error:', error);
@@ -52,12 +54,79 @@ async function getOrderById(req, res) {
             });
         }
         
+        const sanitizedOrder = sanitizeOrder(order, false);
+        
         res.json({
             success: true,
-            data: order
+            data: sanitizedOrder
         });
     } catch (error) {
         console.error('Get order error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi server'
+        });
+    }
+}
+
+async function getOrderAccount(req, res) {
+    try {
+        const orderId = req.params.id;
+        const userId = req.user?.id;
+        
+        if (!userId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Vui lòng đăng nhập'
+            });
+        }
+        
+        const order = await Order.getOrderById(orderId);
+        
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy đơn hàng'
+            });
+        }
+        
+        if (order.user_id !== userId) {
+            console.warn(`[SECURITY] User ${userId} attempted to access order ${orderId} belonging to user ${order.user_id}`);
+            return res.status(403).json({
+                success: false,
+                message: 'Bạn không có quyền xem tài khoản này'
+            });
+        }
+        
+        if (order.status !== 'completed') {
+            return res.status(403).json({
+                success: false,
+                message: 'Đơn hàng chưa hoàn thành, không thể xem tài khoản'
+            });
+        }
+        
+        const accountInfo = order.account_info || {};
+        const accounts = accountInfo.accounts || [];
+        
+        if (accounts.length === 0 && order.account_username) {
+            accounts.push({
+                username: order.account_username,
+                password: order.account_password
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: {
+                order_id: order.id,
+                product_name: order.product_name,
+                accounts: accounts,
+                account_username: accounts[0]?.username || order.account_username,
+                account_password: accounts[0]?.password || order.account_password
+            }
+        });
+    } catch (error) {
+        console.error('Get order account error:', error);
         res.status(500).json({
             success: false,
             message: 'Lỗi server'
@@ -428,6 +497,7 @@ function generateRandomPassword() {
 module.exports = {
     getOrders,
     getOrderById,
+    getOrderAccount,
     createOrder,
     updateOrderStatus,
     cancelOrder,

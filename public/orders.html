@@ -146,15 +146,21 @@
                                     </thead>
                                     <tbody>
                                         ${data.data.map(order => {
-                                            const accounts = order.account_info?.accounts || [{username: order.account_username, password: order.account_password}] || [];
-                                            const accountsDisplay = accounts.map((a, i) => `<div style="font-size:11px;">#${i+1}: ${a.username}</div>`).join('');
+                                            const hasCredentials = order.account_info || order.account_username;
                                             return `
                                             <tr>
                                                 <td>#${order.id}</td>
                                                 <td>${order.product_name || 'N/A'}</td>
                                                 <td>${order.quantity || 1}</td>
                                                 <td>${formatCurrency(order.total_price)}</td>
-                                                <td><code style="display:block;">${accountsDisplay || 'N/A'}</code></td>
+                                                <td>
+                                                    ${order.status === 'completed' ? 
+                                                        `<button class="view-account-btn" data-order-id="${order.id}" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;border:none;cursor:pointer;">
+                                                            <i class="fas fa-eye"></i> Xem tài khoản
+                                                        </button>` : 
+                                                        `<span style="color:#94a3b8;">-</span>`
+                                                    }
+                                                </td>
                                                 <td><span class="status-${order.status}">${order.status === 'completed' ? 'Hoàn thành' : order.status === 'pending' ? 'Đang xử lý' : 'Đã hủy'}</span></td>
                                                 <td>${formatDate(order.created_at)}</td>
                                             </tr>
@@ -164,20 +170,6 @@
                             </div>
                             <div class="orders-cards">
                                 ${data.data.map(order => {
-                                    const accounts = order.account_info?.accounts || [{username: order.account_username, password: order.account_password}] || [];
-                                    const accountsHtml = accounts.map((a, i) => `
-                                        <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;">
-                                            <div style="color:#6366f1;font-size:11px;margin-bottom:4px;">Nick #${i+1}</div>
-                                            <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
-                                                <span style="color:#94a3b8;font-size:12px;">TK:</span>
-                                                <code style="font-size:11px;">${a.username || 'N/A'}</code>
-                                            </div>
-                                            <div style="display:flex;justify-content:space-between;">
-                                                <span style="color:#94a3b8;font-size:12px;">MK:</span>
-                                                <code style="font-size:11px;">${a.password || 'N/A'}</code>
-                                            </div>
-                                        </div>
-                                    `).join('');
                                     return `
                                     <div class="order-card">
                                         <div class="order-card-header">
@@ -199,7 +191,13 @@
                                             </div>
                                             <div class="order-row" style="flex-direction:column;align-items:flex-start;">
                                                 <span class="order-label" style="margin-bottom:6px;">Tài khoản:</span>
-                                                ${accountsHtml}
+                                                ${order.status === 'completed' ? 
+                                                    `<button class="view-account-btn card-view-btn" data-order-id="${order.id}" style="width:100%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:10px;border-radius:8px;font-size:13px;border:none;cursor:pointer;">
+                                                        <i class="fas fa-eye"></i> Xem tài khoản (${order.quantity || 1} nick)
+                                                    </button>
+                                                    <div id="accounts-${order.id}" style="display:none;width:100%;margin-top:8px;"></div>` : 
+                                                    `<span style="color:#94a3b8;font-size:12px;">Đơn hàng chưa hoàn thành</span>`
+                                                }
                                             </div>
                                             <div class="order-row">
                                                 <span class="order-label">Ngày mua:</span>
@@ -233,6 +231,69 @@
                     </div>
                 `;
             }
+        });
+        
+        document.addEventListener('click', async function(e) {
+            const btn = e.target.closest('.view-account-btn');
+            if (!btn) return;
+            
+            const orderId = btn.dataset.orderId;
+            const accountsContainer = document.getElementById(`accounts-${orderId}`);
+            
+            if (accountsContainer && accountsContainer.style.display === 'block') {
+                accountsContainer.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải...';
+            
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE}/orders/${orderId}/account`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    const accounts = data.data.accounts || [];
+                    const accountsHtml = accounts.map((a, i) => `
+                        <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;">
+                            <div style="color:#6366f1;font-size:11px;margin-bottom:4px;">Nick #${i+1}</div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
+                                <span style="color:#94a3b8;font-size:12px;">TK:</span>
+                                <code style="font-size:11px;">${a.username || 'N/A'}</code>
+                                <button onclick="navigator.clipboard.writeText('${a.username || ''}');this.innerHTML='✓';setTimeout(()=>this.innerHTML='📋',1000)" style="background:none;border:none;cursor:pointer;padding:2px;">📋</button>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="color:#94a3b8;font-size:12px;">MK:</span>
+                                <code style="font-size:11px;">${a.password || 'N/A'}</code>
+                                <button onclick="navigator.clipboard.writeText('${a.password || ''}');this.innerHTML='✓';setTimeout(()=>this.innerHTML='📋',1000)" style="background:none;border:none;cursor:pointer;padding:2px;">📋</button>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    if (accountsContainer) {
+                        accountsContainer.innerHTML = accountsHtml;
+                        accountsContainer.style.display = 'block';
+                    } else {
+                        alert(`Tài khoản:\n${accounts.map((a, i) => `Nick #${i+1}: ${a.username} - ${a.password}`).join('\n')}`);
+                    }
+                    
+                    btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn tài khoản';
+                } else {
+                    alert(data.message || 'Không thể xem tài khoản');
+                    btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
+                }
+            } catch (error) {
+                console.error('Error fetching accounts:', error);
+                alert('Lỗi khi tải tài khoản');
+                btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
+            }
+            
+            btn.disabled = false;
         });
     </script>
     <style>

@@ -4,6 +4,7 @@ const path = require('path');
 require('dotenv').config();
 
 const { connectDB } = require('./config/database');
+const { securityAuditMiddleware } = require('./middleware/securityAudit');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const productRoutes = require('./routes/products');
@@ -21,6 +22,8 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+app.use(securityAuditMiddleware);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

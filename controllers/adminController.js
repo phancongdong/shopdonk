@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Order = require('../models/Order');
+const { sanitizeOrders } = require('../utils/security');
 
 async function getAllUsers(req, res) {
     try {
@@ -219,10 +220,11 @@ async function getUserOrders(req, res) {
     try {
         const userId = req.params.userId;
         const orders = await Order.getOrdersByUser(userId, 50);
+        const sanitizedOrders = sanitizeOrders(orders, true);
         
         res.json({
             success: true,
-            data: orders
+            data: sanitizedOrders
         });
     } catch (error) {
         console.error('Get user orders error:', error);
