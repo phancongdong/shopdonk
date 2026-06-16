@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const response = await fetch(url, {
                 method: method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(productData)
             });
             
