@@ -27,7 +27,25 @@
   <url>
     <loc>https://shopdonk.com/orders.html</loc>
     <lastmod>2026-06-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://shopdonk.com/profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://shopdonk.com/change-password.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://shopdonk.com/transactions.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
