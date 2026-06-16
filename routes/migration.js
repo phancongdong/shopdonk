@@ -73,6 +73,8 @@ router.post('/run-migration', authMiddleware, adminMiddleware, async (req, res) 
             message: 'Migration endpoints không khả dụng trong production. Vui lòng chạy migration script trực tiếp trên server.'
         });
     }
+    
+    try {
         const steps = [];
         
         const columnsCheck = await query(`
