@@ -115,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (data.success) {
                 allProducts = data.data;
-                if (!isAdmin && user) {
+                const user = JSON.parse(localStorage.getItem('user') || 'null');
+                const userIsAdmin = user && user.role === 'admin';
+                if (!userIsAdmin && user) {
                     allProducts = allProducts.filter(p => p.created_by === user.id || p.seller_id === user.id);
                 }
                 renderProducts(allProducts);
