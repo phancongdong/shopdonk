@@ -16,8 +16,8 @@ function generateCode() {
 }
 
 const createSession = Session.createSession;
-const validateToken = (token) => {
-    const session = Session.validateToken(token);
+const validateToken = async (token) => {
+    const session = await Session.validateToken(token);
     return session;
 };
 const destroySession = Session.destroySession;
@@ -545,16 +545,16 @@ async function getAllUsers(req, res) {
 async function validateSession(req, res) {
     try {
         const token = req.headers['authorization']?.replace('Bearer ', '');
-        const userId = validateToken(token);
+        const sessionData = await validateToken(token);
         
-        if (!userId) {
+        if (!sessionData) {
             return res.status(401).json({
                 success: false,
                 message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
             });
         }
         
-        const user = await User.getUserById(userId);
+        const user = await User.getUserById(sessionData.userId);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -603,10 +603,15 @@ async function logout(req, res) {
 
 async function getMyTransactions(req, res) {
     try {
+        console.log('[TRANSACTIONS] Fetching transactions for user...');
         const token = req.headers['authorization']?.replace('Bearer ', '');
-        const userId = validateToken(token);
+        console.log('[TRANSACTIONS] Token present:', !!token);
         
-        if (!userId) {
+        const sessionData = await validateToken(token);
+        console.log('[TRANSACTIONS] Validated sessionData:', sessionData ? `userId=${sessionData.userId}` : null);
+        
+        if (!sessionData) {
+            console.log('[TRANSACTIONS] Invalid token, returning 401');
             return res.status(401).json({
                 success: false,
                 message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
@@ -614,11 +619,18 @@ async function getMyTransactions(req, res) {
         }
         
         const limit = parseInt(req.query.limit) || 50;
-        const transactions = await User.getTransactions(userId, limit);
+        console.log('[TRANSACTIONS] Querying with limit:', limit, 'userId:', sessionData.userId);
+        const transactions = await User.getTransactions(sessionData.userId, limit);
+        console.log('[TRANSACTIONS] Found', transactions.length, 'transactions');
         res.json({ success: true, data: transactions });
     } catch (error) {
-        console.error('Get transactions error:', error);
-        res.status(500).json({ success: false, message: 'Lỗi server' });
+        console.error('[TRANSACTIONS ERROR] Get transactions error:', error.message);
+        console.error('[TRANSACTIONS ERROR] Stack:', error.stack);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Lỗi server',
+            error: process.env.NODE_ENV !== 'production' ? error.message : undefined
+        });
     }
 }
 

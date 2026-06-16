@@ -2,7 +2,9 @@ const { query } = require('../config/database');
 
 async function getPublicSeoSettings(req, res) {
     try {
+        console.log('[SEO] Fetching public SEO settings...');
         const result = await query('SELECT TOP 1 * FROM SEOSettings ORDER BY updated_at DESC');
+        console.log('[SEO] Query result:', result.recordset.length, 'rows');
         
         if (result.recordset.length > 0) {
             const settings = result.recordset[0];
@@ -28,10 +30,12 @@ async function getPublicSeoSettings(req, res) {
             });
         }
     } catch (error) {
-        console.error('Get public SEO settings error:', error);
+        console.error('[SEO ERROR] Get public SEO settings error:', error.message);
+        console.error('[SEO ERROR] Stack:', error.stack);
         res.status(500).json({
             success: false,
-            message: 'Lỗi server'
+            message: 'Lỗi server',
+            error: process.env.NODE_ENV !== 'production' ? error.message : undefined
         });
     }
 }

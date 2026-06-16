@@ -59,11 +59,11 @@ app.use((req, res, next) => {
     
     const cspDirectives = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://accounts.google.com https://oauth2.googleapis.com",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.tailwindcss.com https://unpkg.com https://accounts.google.com https://oauth2.googleapis.com https://static.cloudflareinsights.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.tailwindcss.com",
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
         "img-src 'self' data: https: blob:",
-        "connect-src 'self' https://oauth2.googleapis.com",
+        "connect-src 'self' https://oauth2.googleapis.com https://shopdonk.com https://api.cloudinary.com",
         "frame-src https://accounts.google.com",
         "object-src 'none'",
         "base-uri 'self'"

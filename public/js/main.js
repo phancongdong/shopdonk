@@ -249,19 +249,28 @@ document.addEventListener('DOMContentLoaded', function() {
         if (user) {
             // Fetch latest user info from API
             try {
-                const res = await fetch(`${API_BASE}/auth/users`);
-                const data = await res.json();
-                if (data.success) {
-                    const latestUser = data.users.find(u => u.id === user.id);
-                    if (latestUser) {
-                        // Update localStorage with latest balance
-                        user.balance = latestUser.balance || 0;
-                        user.role = latestUser.role || 'user';
-                        localStorage.setItem('user', JSON.stringify(user));
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.log('No token found, skipping user sync');
+                } else {
+                    const res = await fetch(`${API_BASE}/auth/users`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        const latestUser = data.users.find(u => u.id === user.id);
+                        if (latestUser) {
+                            // Update localStorage with latest balance
+                            user.balance = latestUser.balance || 0;
+                            user.role = latestUser.role || 'user';
+                            localStorage.setItem('user', JSON.stringify(user));
+                        }
                     }
                 }
             } catch (error) {
-                console.log('Could not fetch latest user info');
+                console.log('Could not fetch latest user info:', error.message);
             }
             
             if (userBtn) {
