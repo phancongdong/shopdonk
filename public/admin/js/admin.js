@@ -88,7 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.getElementById('totalProducts').textContent = products.length;
             
-            const filteredProducts = products.filter(p => p.category_slug !== 'cay-thue-lien-quan');
+            const filteredProducts = products.filter(p => {
+                if (Array.isArray(p.category_slug)) {
+                    return !p.category_slug.includes('cay-thue-lien-quan');
+                }
+                return p.category_slug !== 'cay-thue-lien-quan';
+            });
             const totalProductsValue = filteredProducts.reduce((sum, p) => {
                 const price = parseFloat(p.price) || 0;
                 const stock = parseInt(p.stock) || 0;
