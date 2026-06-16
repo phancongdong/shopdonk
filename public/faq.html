@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/mobile.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
@@ -244,6 +246,46 @@
                     if (!isActive) {
                         item.classList.add('active');
                         answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        if (typeof SplitText !== 'undefined') gsap.registerPlugin(SplitText);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.from('header', { y: -50, opacity: 0, duration: 0.8, ease: "power3.out" });
+            gsap.from('.page-header', { y: 30, opacity: 0, duration: 0.6, delay: 0.3 });
+            
+            const faqItems = document.querySelectorAll('.faq-item');
+            if (faqItems.length > 0) {
+                gsap.from(faqItems, {
+                    opacity: 0,
+                    y: 30,
+                    stagger: 0.15,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    delay: 0.5
+                });
+            }
+
+            // Animate FAQ on open
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.addEventListener('click', () => {
+                    const item = q.parentElement;
+                    const answer = item.querySelector('.faq-answer');
+                    const content = item.querySelector('.faq-answer-content');
+                    
+                    if (item.classList.contains('active')) {
+                        gsap.from(content.children, {
+                            opacity: 0,
+                            y: 10,
+                            stagger: 0.05,
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
                     }
                 });
             });

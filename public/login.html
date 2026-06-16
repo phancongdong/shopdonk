@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="css/auth.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body class="auth-page">
     <!-- Floating Particles -->
@@ -96,5 +97,45 @@
     <script src="js/seo-loader.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/particles.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple entrance animation - no opacity changes
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.auth-card', {
+                    y: 30,
+                    duration: 0.8,
+                    ease: "back.out(1.7)"
+                });
+                
+                gsap.from('.auth-header', {
+                    y: -20,
+                    duration: 0.6,
+                    delay: 0.2
+                });
+                
+                gsap.from('.form-group', {
+                    x: -20,
+                    stagger: 0.1,
+                    duration: 0.4,
+                    delay: 0.3
+                });
+                
+                gsap.from('.auth-btn', {
+                    scale: 0.95,
+                    duration: 0.4,
+                    delay: 0.6,
+                    ease: "power2.out"
+                });
+                
+                gsap.from('.social-btn', {
+                    y: 15,
+                    stagger: 0.08,
+                    duration: 0.3,
+                    delay: 0.7
+                });
+            }
+        });
+    </script>
+</body>
 </body>
 </html>
