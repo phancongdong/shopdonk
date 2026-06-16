@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const { connectDB } = require('./config/database');
@@ -19,13 +20,75 @@ const migrationRoutes = require('./routes/migration');
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [
+    'https://shopdonk.com',
+    'https://www.shopdonk.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+];
+
+if (process.env.NODE_ENV !== 'production') {
+    allowedOrigins.push('http://localhost:5500', 'http://127.0.0.1:5500');
+}
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.warn(`[CORS] Blocked origin: ${origin}`);
+            callback(null, false);
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    if (process.env.NODE_ENV === 'production') {
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    
+    next();
+});
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: { success: false, message: 'Quá nhiều yêu cầu, vui lòng thử lại sau 15 phút' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const apiLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 100,
+    message: { success: false, message: 'Quá nhiều yêu cầu, vui lòng thử lại sau' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(securityAuditMiddleware);
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+app.use('/api/auth/forgot-password', authLimiter);
+app.use('/api', apiLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
@@ -81,7 +144,10 @@ app.get('/product/:slug', (req, res) => {
 
 app.get('/:slug', (req, res, next) => {
     const slug = req.params.slug;
-    if (slug.includes('.') || slug === 'api' || slug === 'admin') {
+    if (slug.includes('.') || slug.includes('..') || slug === 'api' || slug === 'admin') {
+        return next();
+    }
+    if (!/^[a-zA-Z0-9\-_]+$/.test(slug)) {
         return next();
     }
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -151,10 +217,13 @@ app.get('/sitemap.xml', async (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Server error:', err.message);
+    if (process.env.NODE_ENV !== 'production') {
+        console.error(err.stack);
+    }
     res.status(500).json({
         success: false,
-        message: 'Something went wrong!'
+        message: 'Lỗi server, vui lòng thử lại sau'
     });
 });
 
@@ -196,6 +265,7 @@ async function startServer() {
         app.listen(PORT, () => {
             console.log(`🚀 Server running on http://localhost:${PORT}`);
             console.log(`📊 Database: ${process.env.DB_DATABASE}`);
+            console.log(`🔒 Security: CORS, Rate Limiting, Security Headers enabled`);
         });
     } catch (error) {
         console.error('Failed to start server:', error);

@@ -258,12 +258,11 @@ async function requestEmailVerification(req, res) {
             expires: Date.now() + 600000
         });
         
-        console.log(`Verification code for user ${userId} (email change): ${code}`);
+        console.log(`[AUTH] Verification code generated for user ${userId} (email change)`);
         
         res.json({
             success: true,
-            message: 'Mã xác nhận đã được tạo! (Check console for code)',
-            code: code
+            message: 'Mã xác nhận đã được gửi. Vui lòng kiểm tra email của bạn.'
         });
     } catch (error) {
         console.error('Request email verification error:', error);
@@ -361,12 +360,11 @@ async function requestPasswordVerification(req, res) {
             expires: Date.now() + 600000
         });
         
-        console.log(`Verification code for user ${userId} (password change): ${code}`);
+        console.log(`[AUTH] Verification code generated for user ${userId} (password change)`);
         
         res.json({
             success: true,
-            message: 'Mã xác nhận đã được tạo! (Check console for code)',
-            code: code
+            message: 'Mã xác nhận đã được gửi. Vui lòng kiểm tra email của bạn.'
         });
     } catch (error) {
         console.error('Request password verification error:', error);
@@ -624,32 +622,23 @@ async function googleSignIn(req, res) {
         }
         
         console.log('[Google SignIn] Verifying credential...');
-        console.log('[Google SignIn] GOOGLE_CLIENT_ID:', GOOGLE_CLIENT_ID);
         
         const ticket = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
         const payload = await ticket.json();
-        
-        console.log('[Google SignIn] Payload aud:', payload.aud);
-        console.log('[Google SignIn] Payload:', JSON.stringify(payload, null, 2));
         
         if (payload.error) {
             console.log('[Google SignIn] Error from Google:', payload.error);
             return res.status(401).json({
                 success: false,
-                message: 'Token không hợp lệ hoặc đã hết hạn!',
-                error: payload.error
+                message: 'Token không hợp lệ hoặc đã hết hạn!'
             });
         }
         
         if (payload.aud !== GOOGLE_CLIENT_ID) {
-            console.log('[Google SignIn] AUD mismatch!');
+            console.warn('[SECURITY] Google SignIn AUD mismatch - potential token reuse attack');
             return res.status(401).json({
                 success: false,
-                message: 'Token không hợp lệ!',
-                debug: {
-                    expected: GOOGLE_CLIENT_ID,
-                    received: payload.aud
-                }
+                message: 'Token không hợp lệ!'
             });
         }
         
@@ -688,12 +677,10 @@ async function googleSignIn(req, res) {
             }
         });
     } catch (error) {
-        console.error('Google sign-in error:', error);
-        console.error('Error stack:', error.stack);
+        console.error('Google sign-in error:', error.message);
         res.status(500).json({
             success: false,
-            message: 'Lỗi đăng nhập Google!',
-            error: error.message
+            message: 'Lỗi đăng nhập Google!'
         });
     }
 }

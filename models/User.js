@@ -129,13 +129,14 @@ async function createTransaction(userId, type, amount, description) {
 }
 
 async function getTransactions(userId, limit = 20) {
+    const safeLimit = Math.max(1, Math.min(100, parseInt(limit) || 20));
     const queryStr = `
-        SELECT TOP (${limit}) *
+        SELECT TOP (@param0) *
         FROM Transactions 
-        WHERE user_id = @param0
+        WHERE user_id = @param1
         ORDER BY created_at DESC
     `;
-    const result = await query(queryStr, [userId]);
+    const result = await query(queryStr, [safeLimit, userId]);
     return result.recordset;
 }
 

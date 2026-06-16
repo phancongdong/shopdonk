@@ -33,7 +33,9 @@ async function getAllProducts(filters = {}) {
                 const descendantIds = descendantsResult.recordset.map(d => d.descendant_id);
                 
                 if (descendantIds.length > 0) {
-                    queryStr += ` AND p.category_id IN (${descendantIds.join(',')})`;
+                    const inParams = descendantIds.map((id, i) => `@param${params.length + i}`);
+                    queryStr += ` AND p.category_id IN (${inParams.join(',')})`;
+                    descendantIds.forEach(id => params.push(id));
                 } else {
                     queryStr += ` AND c.slug = @param${params.length}`;
                     params.push(filters.category_slug);
@@ -209,26 +211,28 @@ async function updateStockUnchecked(id, quantity, transaction = null) {
 }
 
 async function getProductsByCategory(categoryId, limit = 20) {
+    const safeLimit = Math.max(1, Math.min(100, parseInt(limit) || 20));
     const queryStr = `
-        SELECT TOP (${limit}) p.*, c.name as category_name
+        SELECT TOP (@param0) p.*, c.name as category_name
         FROM Products p
         LEFT JOIN Categories c ON p.category_id = c.id
-        WHERE p.category_id = @param0
+        WHERE p.category_id = @param1
         ORDER BY p.id DESC
     `;
-    const result = await query(queryStr, [categoryId]);
+    const result = await query(queryStr, [safeLimit, categoryId]);
     return result.recordset;
 }
 
 async function getFeaturedProducts(limit = 10) {
+    const safeLimit = Math.max(1, Math.min(50, parseInt(limit) || 10));
     const queryStr = `
-        SELECT TOP (${limit}) p.*, c.name as category_name
+        SELECT TOP (@param0) p.*, c.name as category_name
         FROM Products p
         LEFT JOIN Categories c ON p.category_id = c.id
         WHERE p.stock > 0
         ORDER BY p.id DESC
     `;
-    const result = await query(queryStr);
+    const result = await query(queryStr, [safeLimit]);
     return result.recordset;
 }
 

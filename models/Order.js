@@ -37,14 +37,15 @@ async function getOrderById(id) {
 }
 
 async function getOrdersByUser(userId, limit = 20) {
+    const safeLimit = Math.max(1, Math.min(100, parseInt(limit) || 20));
     const queryStr = `
-        SELECT TOP (${limit}) o.*, p.name as product_name, p.image as product_image, p.slug as product_slug
+        SELECT TOP (@param0) o.*, p.name as product_name, p.image as product_image, p.slug as product_slug
         FROM Orders o
         LEFT JOIN Products p ON o.product_id = p.id
-        WHERE o.user_id = @param0
+        WHERE o.user_id = @param1
         ORDER BY o.created_at DESC
     `;
-    const result = await query(queryStr, [userId]);
+    const result = await query(queryStr, [safeLimit, userId]);
     
     return result.recordset.map(order => {
         if (order.account_info) {
@@ -211,14 +212,15 @@ async function getAllOrdersAdmin(filters = {}) {
 }
 
 async function getRecentOrders(limit = 10) {
+    const safeLimit = Math.max(1, Math.min(50, parseInt(limit) || 10));
     const queryStr = `
-        SELECT TOP (${limit}) o.*, p.name as product_name, u.name as user_name
+        SELECT TOP (@param0) o.*, p.name as product_name, u.name as user_name
         FROM Orders o
         LEFT JOIN Products p ON o.product_id = p.id
         LEFT JOIN Users u ON o.user_id = u.id
         ORDER BY o.created_at DESC
     `;
-    const result = await query(queryStr);
+    const result = await query(queryStr, [safeLimit]);
     return result.recordset;
 }
 
