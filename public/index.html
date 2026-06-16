@@ -599,9 +599,16 @@
                 if (loading) loading.style.display = 'none';
             }, 3000);
             
-            // Check slug param
+            // Check slug param (support both ?slug=xxx and /xxx)
             const params = new URLSearchParams(location.search);
-            const slug = params.get('slug');
+            let slug = params.get('slug');
+            
+            // Also check URL path for clean URLs like /acc-lien-quan-vip
+            const pathParts = location.pathname.split('/').filter(p => p && p !== 'index.html');
+            if (!slug && pathParts.length > 0) {
+                slug = pathParts[0];
+            }
+            
             if (slug) {
                 loadProductsBySlug(slug);
             }
@@ -651,12 +658,17 @@
         }
         
         window.selectCategory = function(slug, hasChildren = false) {
-            history.pushState({ slug }, '', `?slug=${slug}`);
+            history.pushState({ slug }, '', `/${slug}`);
             loadProductsBySlug(slug, hasChildren);
         }
         
         window.goBackToParent = function(parentSlug) {
-            history.pushState({ slug: parentSlug }, '', `?slug=${parentSlug}`);
+            history.pushState({ slug: parentSlug }, '', `/${parentSlug}`);
+            loadProductsBySlug(parentSlug, true);
+        }
+        
+        window.goBackToParent = function(parentSlug) {
+            history.pushState({ slug: parentSlug }, '', `/${parentSlug}`);
             loadProductsBySlug(parentSlug, true);
         }
         

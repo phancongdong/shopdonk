@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="text-sm text-gray-900 dark:text-white flex-1 cursor-pointer hover:text-brand-500" onclick="editCategory(${node.id})">${node.name}</span>
                     <span class="text-xs text-gray-400">${productCount} SP</span>
                     <button onclick="showAddChildModal(${node.id})" class="text-xs text-green-500 hover:text-green-700 px-1" title="Thêm danh mục con"><i class="fas fa-plus"></i></button>
-                    <a href="../category.html?slug=${node.slug}" target="_blank" class="text-xs text-blue-500 hover:text-blue-700 px-1" title="Xem trang"><i class="fas fa-external-link-alt"></i></a>
+                    <a href="/${node.slug}" target="_blank" class="text-xs text-blue-500 hover:text-blue-700 px-1" title="Xem trang"><i class="fas fa-external-link-alt"></i></a>
                     <button onclick="editCategory(${node.id})" class="text-xs text-yellow-500 hover:text-yellow-700 px-1" title="Sửa"><i class="fas fa-edit"></i></button>
                     <button onclick="deleteCategory(${node.id})" class="text-xs text-red-500 hover:text-red-700 px-1" title="Xóa"><i class="fas fa-trash"></i></button>
                 </div>

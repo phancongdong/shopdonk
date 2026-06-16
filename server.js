@@ -72,6 +72,18 @@ app.get('/category', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'category.html'));
 });
 
+app.get('/product/:slug', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/:slug', (req, res, next) => {
+    const slug = req.params.slug;
+    if (slug.includes('.') || slug === 'api' || slug === 'admin') {
+        return next();
+    }
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({

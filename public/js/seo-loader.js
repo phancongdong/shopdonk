@@ -12,7 +12,7 @@
             og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
             og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
             og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
-            canonical_url: 'https://shopdonk.com/index.html?slug=acc-random-lien-quan-mobile',
+            canonical_url: 'https://shopdonk.com/acc-random-lien-quan-mobile',
             noindex: false,
             nofollow: false
         },
@@ -23,7 +23,7 @@
             og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
             og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
             og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
-            canonical_url: 'https://shopdonk.com/index.html?slug=random-acc-lien-quan-mobile',
+            canonical_url: 'https://shopdonk.com/random-acc-lien-quan-mobile',
             noindex: false,
             nofollow: false
         }
@@ -41,9 +41,10 @@
     else if (path.includes('profile.html')) pageName = 'profile';
     else if (path.includes('transactions.html')) pageName = 'transactions';
     
-    // Check for category page
+    // Check for category page from URL path
     const urlParams = new URLSearchParams(window.location.search);
-    const categorySlug = urlParams.get('slug');
+    const pathParts = path.split('/').filter(p => p);
+    const categorySlug = pathParts[0] || urlParams.get('slug');
     
     try {
         let seoData = null;

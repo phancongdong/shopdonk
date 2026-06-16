@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p>${cat.description}</p>
                     </div>
                     <div class="category-footer">
-                        <a href="category.html?slug=${cat.slug}" class="view-more-btn">
+                        <a href="/${cat.slug}" class="view-more-btn">
                             <i class="fas fa-eye"></i> Xem thêm
                         </a>
                     </div>
