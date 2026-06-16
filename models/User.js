@@ -208,6 +208,60 @@ async function validateCurrentPassword(userId, currentPassword) {
     return await bcrypt.compare(currentPassword, user.password);
 }
 
+async function findUserByGoogleId(googleId) {
+    const queryStr = `SELECT * FROM Users WHERE google_id = @param0`;
+    const result = await query(queryStr, [googleId]);
+    return result.recordset[0];
+}
+
+async function updateGoogleId(userId, googleId) {
+    const queryStr = `
+        UPDATE Users 
+        SET google_id = @param0,
+            updated_at = GETDATE()
+        WHERE id = @param1
+    `;
+    await query(queryStr, [googleId, userId]);
+    return getUserById(userId);
+}
+
+async function createUserWithGoogle(googleId, email, name, picture) {
+    try {
+        const queryStr = `
+            INSERT INTO Users (google_id, email, name, avatar, balance, role, created_at)
+            VALUES (@param0, @param1, @param2, @param3, 0, 'user', GETDATE())
+        `;
+        await query(queryStr, [googleId, email, name, picture || null]);
+        
+        const result = await query(`SELECT * FROM Users WHERE google_id = @param0`, [googleId]);
+        return result.recordset[0];
+    } catch (error) {
+        console.error('createUserWithGoogle error:', error);
+        throw error;
+    }
+}
+
+async function ensureGoogleColumns() {
+    try {
+        await query(`
+            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'google_id')
+            BEGIN
+                ALTER TABLE Users ADD google_id NVARCHAR(100) NULL
+            END
+        `);
+        await query(`
+            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'avatar')
+            BEGIN
+                ALTER TABLE Users ADD avatar NVARCHAR(500) NULL
+            END
+        `);
+    } catch (error) {
+        console.log('Column check error (may already exist):', error.message);
+    }
+}
+
+ensureGoogleColumns();
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -226,5 +280,8 @@ module.exports = {
     updateEmail,
     updatePhone,
     updatePassword,
-    validateCurrentPassword
+    validateCurrentPassword,
+    findUserByGoogleId,
+    updateGoogleId,
+    createUserWithGoogle
 };

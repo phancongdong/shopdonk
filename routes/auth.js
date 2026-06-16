@@ -28,6 +28,7 @@ router.post('/email/confirm/:id', authController.confirmEmailChange);
 router.post('/password/request/:id', authController.requestPasswordVerification);
 router.post('/password/confirm/:id', authController.confirmPasswordChange);
 router.post('/change-password', authController.changePasswordDirect);
+router.post('/google', authController.googleSignIn);
 router.put('/profile/:id', authController.updateProfile);
 router.get('/users', authController.getAllUsers);
 

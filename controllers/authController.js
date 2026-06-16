@@ -5,6 +5,8 @@ const crypto = require('crypto');
 const verificationCodes = new Map();
 const sessions = new Map();
 
+const GOOGLE_CLIENT_ID = '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com';
+
 function generateCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
@@ -610,6 +612,70 @@ async function getMyTransactions(req, res) {
     }
 }
 
+async function googleSignIn(req, res) {
+    try {
+        const { credential } = req.body;
+        
+        if (!credential) {
+            return res.status(400).json({
+                success: false,
+                message: 'Thiếu credential!'
+            });
+        }
+        
+        const ticket = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+        const payload = await ticket.json();
+        
+        if (payload.aud !== GOOGLE_CLIENT_ID) {
+            return res.status(401).json({
+                success: false,
+                message: 'Token không hợp lệ!'
+            });
+        }
+        
+        const googleId = payload.sub;
+        const email = payload.email;
+        const name = payload.name || email.split('@')[0];
+        const picture = payload.picture;
+        
+        let user = await User.findUserByGoogleId(googleId);
+        
+        if (!user && email) {
+            user = await User.findUserByEmail(email);
+            if (user) {
+                await User.updateGoogleId(user.id, googleId);
+            }
+        }
+        
+        if (!user) {
+            user = await User.createUserWithGoogle(googleId, email, name, picture);
+        }
+        
+        const token = createSession(user.id);
+        
+        res.json({
+            success: true,
+            message: 'Đăng nhập thành công!',
+            token: token,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar || picture,
+                balance: user.balance || 0,
+                role: user.role || 'user',
+                created_at: user.created_at
+            }
+        });
+    } catch (error) {
+        console.error('Google sign-in error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Lỗi đăng nhập Google!'
+        });
+    }
+}
+
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -632,5 +698,6 @@ module.exports = {
     logout,
     getMyTransactions,
     validateToken,
-    createSession
+    createSession,
+    googleSignIn
 };

@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Google Sign-In
+    initGoogleSignIn();
+
     // Login Form
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
@@ -145,6 +148,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showToast(message, type = 'success') {
         showModal(message, type);
+    }
+
+    // Google Sign-In
+    function initGoogleSignIn() {
+        if (typeof google !== 'undefined' && google.accounts) {
+            google.accounts.id.initialize({
+                client_id: '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com',
+                callback: handleGoogleSignIn
+            });
+            
+            const googleBtnContainer = document.getElementById('googleSignInBtn');
+            if (googleBtnContainer) {
+                google.accounts.id.renderButton(googleBtnContainer, {
+                    type: 'standard',
+                    theme: 'filled_black',
+                    size: 'large',
+                    width: 250,
+                    text: 'signin_with',
+                    shape: 'rectangular'
+                });
+            }
+        }
+    }
+
+    async function handleGoogleSignIn(response) {
+        const credential = response.credential;
+        
+        try {
+            const res = await fetch('/api/auth/google', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ credential })
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok && data.user) {
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                }
+                localStorage.setItem('user', JSON.stringify(data.user));
+                
+                showModal('Đăng nhập thành công!', 'success', () => {
+                    window.location.href = 'index.html';
+                });
+            } else {
+                showModal(data.message || 'Đăng nhập thất bại', 'error');
+            }
+        } catch (error) {
+            console.error('Google sign-in error:', error);
+            showModal('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+        }
     }
 
     const style = document.createElement('style');
