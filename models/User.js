@@ -241,27 +241,6 @@ async function createUserWithGoogle(googleId, email, name, picture) {
     }
 }
 
-async function ensureGoogleColumns() {
-    try {
-        await query(`
-            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'google_id')
-            BEGIN
-                ALTER TABLE Users ADD google_id NVARCHAR(100) NULL
-            END
-        `);
-        await query(`
-            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'avatar')
-            BEGIN
-                ALTER TABLE Users ADD avatar NVARCHAR(500) NULL
-            END
-        `);
-    } catch (error) {
-        console.log('Column check error (may already exist):', error.message);
-    }
-}
-
-ensureGoogleColumns();
-
 module.exports = {
     createUser,
     findUserByEmail,

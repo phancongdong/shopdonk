@@ -434,6 +434,11 @@
         if (!originalShowModal) return;
 
         window.showModal = function(type, title, content, buttons) {
+            var existingModal = document.querySelector('.modal-content');
+            if (existingModal) {
+                gsap.killTweensOf(existingModal);
+            }
+            
             originalShowModal(type, title, content, buttons);
 
             var modalContent = document.querySelector('.modal-content');

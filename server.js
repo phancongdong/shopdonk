@@ -152,9 +152,38 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
+async function migrateDatabase() {
+    const { query } = require('./config/database');
+    
+    try {
+        console.log('🔄 Running database migrations...');
+        
+        await query(`
+            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'google_id')
+            BEGIN
+                ALTER TABLE Users ADD google_id NVARCHAR(100) NULL
+                PRINT 'Added google_id column'
+            END
+        `);
+        
+        await query(`
+            IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Users') AND name = 'avatar')
+            BEGIN
+                ALTER TABLE Users ADD avatar NVARCHAR(500) NULL
+                PRINT 'Added avatar column'
+            END
+        `);
+        
+        console.log('✅ Database migrations completed');
+    } catch (error) {
+        console.error('❌ Migration error:', error.message);
+    }
+}
+
 async function startServer() {
     try {
         await connectDB();
+        await migrateDatabase();
         
         app.listen(PORT, () => {
             console.log(`🚀 Server running on http://localhost:${PORT}`);

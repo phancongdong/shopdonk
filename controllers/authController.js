@@ -623,13 +623,33 @@ async function googleSignIn(req, res) {
             });
         }
         
+        console.log('[Google SignIn] Verifying credential...');
+        console.log('[Google SignIn] GOOGLE_CLIENT_ID:', GOOGLE_CLIENT_ID);
+        
         const ticket = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
         const payload = await ticket.json();
         
-        if (payload.aud !== GOOGLE_CLIENT_ID) {
+        console.log('[Google SignIn] Payload aud:', payload.aud);
+        console.log('[Google SignIn] Payload:', JSON.stringify(payload, null, 2));
+        
+        if (payload.error) {
+            console.log('[Google SignIn] Error from Google:', payload.error);
             return res.status(401).json({
                 success: false,
-                message: 'Token không hợp lệ!'
+                message: 'Token không hợp lệ hoặc đã hết hạn!',
+                error: payload.error
+            });
+        }
+        
+        if (payload.aud !== GOOGLE_CLIENT_ID) {
+            console.log('[Google SignIn] AUD mismatch!');
+            return res.status(401).json({
+                success: false,
+                message: 'Token không hợp lệ!',
+                debug: {
+                    expected: GOOGLE_CLIENT_ID,
+                    received: payload.aud
+                }
             });
         }
         
@@ -669,9 +689,11 @@ async function googleSignIn(req, res) {
         });
     } catch (error) {
         console.error('Google sign-in error:', error);
+        console.error('Error stack:', error.stack);
         res.status(500).json({
             success: false,
-            message: 'Lỗi đăng nhập Google!'
+            message: 'Lỗi đăng nhập Google!',
+            error: error.message
         });
     }
 }
