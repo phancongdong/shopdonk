@@ -84,6 +84,64 @@ app.get('/:slug', (req, res, next) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/sitemap.xml', async (req, res) => {
+    try {
+        const { query } = require('./config/database');
+        
+        const products = await query('SELECT slug, updated_at FROM Products WHERE is_hidden = 0');
+        const categories = await query('SELECT slug, updated_at FROM Categories');
+        
+        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+        
+        const staticPages = [
+            { loc: 'https://shopdonk.com/', priority: '1.0', changefreq: 'daily' },
+            { loc: 'https://shopdonk.com/login.html', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/register.html', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/faq.html', priority: '0.6', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/contact.html', priority: '0.6', changefreq: 'monthly' }
+        ];
+        
+        staticPages.forEach(page => {
+            xml += '  <url>\n';
+            xml += `    <loc>${page.loc}</loc>\n`;
+            xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+            xml += `    <priority>${page.priority}</priority>\n`;
+            xml += '  </url>\n';
+        });
+        
+        categories.recordset.forEach(cat => {
+            xml += '  <url>\n';
+            xml += `    <loc>https://shopdonk.com/${cat.slug}</loc>\n`;
+            xml += `    <changefreq>daily</changefreq>\n`;
+            xml += '    <priority>0.9</priority>\n';
+            if (cat.updated_at) {
+                xml += `    <lastmod>${cat.updated_at.toISOString().split('T')[0]}</lastmod>\n`;
+            }
+            xml += '  </url>\n';
+        });
+        
+        products.recordset.forEach(prod => {
+            xml += '  <url>\n';
+            xml += `    <loc>https://shopdonk.com/product/${prod.slug}</loc>\n`;
+            xml += `    <changefreq>weekly</changefreq>\n`;
+            xml += '    <priority>0.8</priority>\n';
+            if (prod.updated_at) {
+                xml += `    <lastmod>${prod.updated_at.toISOString().split('T')[0]}</lastmod>\n`;
+            }
+            xml += '  </url>\n';
+        });
+        
+        xml += '</urlset>';
+        
+        res.header('Content-Type', 'application/xml');
+        res.send(xml);
+    } catch (error) {
+        console.error('Sitemap error:', error);
+        res.status(500).send('Error generating sitemap');
+    }
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({
