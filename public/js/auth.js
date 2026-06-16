@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof google !== 'undefined' && google.accounts) {
             google.accounts.id.initialize({
                 client_id: '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com',
-                callback: handleGoogleSignIn
+                callback: handleGoogleCredentialResponse
             });
             
             const googleBtnContainer = document.getElementById('googleSignInBtn');
@@ -172,7 +172,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function handleGoogleSignIn(response) {
+    // Handle Google Sign-In button click
+    window.handleGoogleSignIn = function() {
+        if (typeof google !== 'undefined' && google.accounts) {
+            google.accounts.id.initialize({
+                client_id: '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com',
+                callback: handleGoogleCredentialResponse
+            });
+            google.accounts.id.prompt();
+        }
+    }
+
+    async function handleGoogleCredentialResponse(response) {
         const credential = response.credential;
         
         try {
