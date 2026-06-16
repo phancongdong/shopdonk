@@ -1,18 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     const API_BASE = window.location.origin + '/api';
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    const token = localStorage.getItem('token');
-    const isAdmin = user && user.role === 'admin';
     let allProducts = [];
     let isLoading = false;
     let loadingProductIds = new Set();
     
     function getAuthHeaders() {
+        const token = localStorage.getItem('token');
         const headers = { 'Content-Type': 'application/json' };
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
         return headers;
+    }
+    
+    function checkAdmin() {
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        return user && user.role === 'admin';
     }
     
     function formatCurrency(amount) {

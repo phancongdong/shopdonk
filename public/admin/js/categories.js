@@ -3,6 +3,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let allCategories = [];
     let expandedIds = new Set();
     
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
+    
     async function loadCategories() {
         try {
             const res = await fetch(`${API_BASE}/categories?select=true`);
@@ -218,7 +227,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            const res = await fetch(`${API_BASE}/categories/${deleteCategoryId}`, { method: 'DELETE' });
+            const res = await fetch(`${API_BASE}/categories/${deleteCategoryId}`, { 
+                method: 'DELETE',
+                headers: getAuthHeaders()
+            });
             const result = await res.json();
             
             if (result.success) {
@@ -269,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const res = await fetch(url, {
                 method: method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(categoryData)
             });
             
