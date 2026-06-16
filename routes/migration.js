@@ -4,6 +4,13 @@ const { query, connectDB } = require('../config/database');
 const { authMiddleware, adminMiddleware } = require('../middleware/auth');
 
 router.get('/check-schema', authMiddleware, adminMiddleware, async (req, res) => {
+    if (process.env.NODE_ENV === 'production') {
+        return res.status(403).json({
+            success: false,
+            message: 'Migration endpoints không khả dụng trong production'
+        });
+    }
+    
     try {
         const columns = await query(`
             SELECT COLUMN_NAME 
@@ -37,6 +44,13 @@ router.get('/check-schema', authMiddleware, adminMiddleware, async (req, res) =>
 });
 
 router.get('/debug', authMiddleware, adminMiddleware, async (req, res) => {
+    if (process.env.NODE_ENV === 'production') {
+        return res.status(403).json({
+            success: false,
+            message: 'Debug endpoint không khả dụng trong production'
+        });
+    }
+    
     try {
         const testQuery = await query(`SELECT TOP 1 * FROM Categories`);
         res.json({
@@ -53,7 +67,12 @@ router.get('/debug', authMiddleware, adminMiddleware, async (req, res) => {
 });
 
 router.post('/run-migration', authMiddleware, adminMiddleware, async (req, res) => {
-    try {
+    if (process.env.NODE_ENV === 'production') {
+        return res.status(403).json({
+            success: false,
+            message: 'Migration endpoints không khả dụng trong production. Vui lòng chạy migration script trực tiếp trên server.'
+        });
+    }
         const steps = [];
         
         const columnsCheck = await query(`

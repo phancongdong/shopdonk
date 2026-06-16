@@ -1,7 +1,7 @@
-const { validateToken } = require('../controllers/authController');
+const Session = require('../models/Session');
 const { query } = require('../config/database');
 
-function authMiddleware(req, res, next) {
+async function authMiddleware(req, res, next) {
     const token = req.headers['authorization']?.replace('Bearer ', '');
     
     if (!token) {
@@ -11,17 +11,30 @@ function authMiddleware(req, res, next) {
         });
     }
     
-    const userId = validateToken(token);
-    
-    if (!userId) {
-        return res.status(401).json({
+    try {
+        const sessionData = await Session.validateToken(token);
+        
+        if (!sessionData) {
+            return res.status(401).json({
+                success: false,
+                message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
+            });
+        }
+        
+        req.user = { 
+            id: sessionData.userId, 
+            role: sessionData.role || 'user',
+            name: sessionData.name,
+            email: sessionData.email
+        };
+        next();
+    } catch (error) {
+        console.error('Auth middleware error:', error);
+        res.status(500).json({
             success: false,
-            message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
+            message: 'Lỗi xác thực'
         });
     }
-    
-    req.user = { id: userId };
-    next();
 }
 
 async function adminMiddleware(req, res, next) {
@@ -32,27 +45,15 @@ async function adminMiddleware(req, res, next) {
         });
     }
     
-    try {
-        const result = await query('SELECT role FROM Users WHERE id = @param0', [req.user.id]);
-        const user = result.recordset[0];
-        
-        if (!user || user.role !== 'admin') {
-            console.warn(`[SECURITY] Unauthorized admin access attempt by user ${req.user.id}`);
-            return res.status(403).json({
-                success: false,
-                message: 'Bạn không có quyền truy cập'
-            });
-        }
-        
-        req.user.role = user.role;
-        next();
-    } catch (error) {
-        console.error('Admin middleware error:', error);
-        res.status(500).json({
+    if (req.user.role !== 'admin') {
+        console.warn(`[SECURITY] Unauthorized admin access attempt by user ${req.user.id}`);
+        return res.status(403).json({
             success: false,
-            message: 'Lỗi server'
+            message: 'Bạn không có quyền truy cập'
         });
     }
+    
+    next();
 }
 
 async function ctvMiddleware(req, res, next) {
@@ -63,27 +64,15 @@ async function ctvMiddleware(req, res, next) {
         });
     }
     
-    try {
-        const result = await query('SELECT role FROM Users WHERE id = @param0', [req.user.id]);
-        const user = result.recordset[0];
-        
-        if (!user || (user.role !== 'admin' && user.role !== 'ctv')) {
-            console.warn(`[SECURITY] Unauthorized CTV access attempt by user ${req.user.id}`);
-            return res.status(403).json({
-                success: false,
-                message: 'Bạn không có quyền truy cập'
-            });
-        }
-        
-        req.user.role = user.role;
-        next();
-    } catch (error) {
-        console.error('CTV middleware error:', error);
-        res.status(500).json({
+    if (req.user.role !== 'admin' && req.user.role !== 'ctv') {
+        console.warn(`[SECURITY] Unauthorized CTV access attempt by user ${req.user.id}`);
+        return res.status(403).json({
             success: false,
-            message: 'Lỗi server'
+            message: 'Bạn không có quyền truy cập'
         });
     }
+    
+    next();
 }
 
 function optionalAuth(req, res, next) {

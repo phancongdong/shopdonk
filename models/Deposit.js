@@ -77,34 +77,59 @@ async function updateDepositStatus(id, status) {
 }
 
 async function approveDeposit(id) {
-    const deposit = await getDepositById(id);
+    const { beginTransaction, commitTransaction, rollbackTransaction } = require('../config/database');
+    let transaction = null;
     
-    if (!deposit) {
-        throw new Error('Deposit not found');
+    try {
+        transaction = await beginTransaction();
+        
+        const depositResult = await query(`
+            SELECT d.*, u.balance as current_balance
+            FROM Deposits d WITH (UPDLOCK, HOLDLOCK)
+            JOIN Users u WITH (UPDLOCK, HOLDLOCK) ON d.user_id = u.id
+            WHERE d.id = @param0
+        `, [id], transaction);
+        
+        const deposit = depositResult.recordset[0];
+        
+        if (!deposit) {
+            await rollbackTransaction(transaction);
+            throw new Error('Deposit not found');
+        }
+        
+        if (deposit.status !== 'pending') {
+            await rollbackTransaction(transaction);
+            throw new Error('Deposit already processed');
+        }
+        
+        await query(`
+            UPDATE Deposits 
+            SET status = 'completed',
+                updated_at = GETDATE()
+            WHERE id = @param0
+        `, [id], transaction);
+        
+        await query(`
+            UPDATE Users 
+            SET balance = balance + @param0,
+                updated_at = GETDATE()
+            WHERE id = @param1
+        `, [deposit.amount, deposit.user_id], transaction);
+        
+        await query(`
+            INSERT INTO Transactions (user_id, type, amount, description, created_at)
+            VALUES (@param0, @param1, @param2, @param3, GETDATE())
+        `, [deposit.user_id, 'deposit', deposit.amount, `Nạp tiền qua ${deposit.method} - Mã GD: ${deposit.transaction_code}`], transaction);
+        
+        await commitTransaction(transaction);
+        
+        return getDepositById(id);
+    } catch (error) {
+        if (transaction) {
+            await rollbackTransaction(transaction);
+        }
+        throw error;
     }
-    
-    if (deposit.status !== 'pending') {
-        throw new Error('Deposit already processed');
-    }
-    
-    await query(`
-        UPDATE Deposits 
-        SET status = 'completed',
-            updated_at = GETDATE()
-        WHERE id = @param0
-    `, [id]);
-    
-    const User = require('./User');
-    await User.updateBalance(deposit.user_id, deposit.amount);
-    
-    await User.createTransaction(
-        deposit.user_id,
-        'deposit',
-        deposit.amount,
-        `Nạp tiền qua ${deposit.method} - Mã GD: ${deposit.transaction_code}`
-    );
-    
-    return getDepositById(id);
 }
 
 async function rejectDeposit(id) {

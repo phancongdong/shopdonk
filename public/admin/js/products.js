@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const API_BASE = window.location.origin + '/api';
     const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const token = localStorage.getItem('token');
     const isAdmin = user && user.role === 'admin';
     let allProducts = [];
     let isLoading = false;
     let loadingProductIds = new Set();
+    
+    function getAuthHeaders() {
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
     
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount);
@@ -205,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(`${API_BASE}/products/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ is_hidden: isHidden })
             });
             
@@ -215,6 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     product.is_hidden = isHidden;
                     renderProducts(allProducts);
                 }
+            } else if (res.status === 401) {
+                alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+                window.location.href = '../login.html';
             }
         } catch (error) {
             console.error('Error toggling visibility:', error);
@@ -236,7 +248,15 @@ document.addEventListener('DOMContentLoaded', function() {
     window.confirmDelete = async function() {
         const id = document.getElementById('deleteProductId').value;
         try {
-            await fetch(`${API_BASE}/products/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${API_BASE}/products/${id}`, {
+                method: 'DELETE',
+                headers: getAuthHeaders()
+            });
+            if (res.status === 401) {
+                alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+                window.location.href = '../login.html';
+                return;
+            }
             closeDeleteModal();
             loadProducts();
         } catch (error) {

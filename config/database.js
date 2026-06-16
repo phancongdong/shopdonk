@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const useWindowsAuth = process.env.USE_WINDOWS_AUTH === 'true';
 const useNamedPipes = process.env.USE_NAMED_PIPES === 'true';
+const dbEncrypt = process.env.DB_ENCRYPT === 'true';
+const trustServerCert = process.env.DB_TRUST_SERVER_CERTIFICATE === 'true';
 
 let config;
 
@@ -11,8 +13,8 @@ if (useNamedPipes) {
         database: process.env.DB_DATABASE || 'CayTheDB',
         server: `np:\\\\.\\pipe\\MSSQLSERVER\\sql\\query`,
         options: {
-            encrypt: false,
-            trustServerCertificate: true,
+            encrypt: dbEncrypt,
+            trustServerCertificate: trustServerCert,
             enableArithAbort: true
         }
     };
@@ -22,8 +24,8 @@ if (useNamedPipes) {
         server: process.env.DB_SERVER || 'localhost',
         port: parseInt(process.env.DB_PORT) || 1433,
         options: {
-            encrypt: false,
-            trustServerCertificate: true,
+            encrypt: dbEncrypt,
+            trustServerCertificate: trustServerCert,
             enableArithAbort: true,
             authentication: {
                 type: 'ntlm'
@@ -38,11 +40,19 @@ if (useNamedPipes) {
         server: process.env.DB_SERVER || 'localhost',
         port: parseInt(process.env.DB_PORT) || 1433,
         options: {
-            encrypt: false,
-            trustServerCertificate: true,
+            encrypt: dbEncrypt,
+            trustServerCertificate: trustServerCert,
             enableArithAbort: true
         }
     };
+}
+
+if (dbEncrypt && !trustServerCert) {
+    console.log('[DB] Database connection encryption enabled (verifying certificate)');
+} else if (dbEncrypt) {
+    console.log('[DB] Database connection encryption enabled (trusting server certificate)');
+} else {
+    console.warn('[SECURITY WARNING] Database connection encryption is DISABLED. Enable DB_ENCRYPT=true in production.');
 }
 
 let pool = null;

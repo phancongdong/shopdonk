@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle password visibility
     const toggleBtns = document.querySelectorAll('.toggle-password');
     toggleBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Google Sign-In
     initGoogleSignIn();
 
     // Login Form
@@ -150,33 +148,50 @@ document.addEventListener('DOMContentLoaded', function() {
         showModal(message, type);
     }
 
-    // Google Sign-In
-    function initGoogleSignIn() {
-        if (typeof google !== 'undefined' && google.accounts) {
-            google.accounts.id.initialize({
-                client_id: '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com',
-                callback: handleGoogleCredentialResponse
-            });
+    let googleClientId = null;
+
+    async function initGoogleSignIn() {
+        try {
+            const configRes = await fetch('/api/config');
+            const configData = await configRes.json();
+            googleClientId = configData.data?.googleClientId;
             
-            const googleBtnContainer = document.getElementById('googleSignInBtn');
-            if (googleBtnContainer) {
-                google.accounts.id.renderButton(googleBtnContainer, {
-                    type: 'standard',
-                    theme: 'filled_black',
-                    size: 'large',
-                    width: 250,
-                    text: 'signin_with',
-                    shape: 'rectangular'
-                });
+            if (!googleClientId) {
+                console.log('Google Sign-In not configured');
+                return;
             }
+            
+            if (typeof google !== 'undefined' && google.accounts) {
+                google.accounts.id.initialize({
+                    client_id: googleClientId,
+                    callback: handleGoogleCredentialResponse
+                });
+                
+                const googleBtnContainer = document.getElementById('googleSignInBtn');
+                if (googleBtnContainer) {
+                    google.accounts.id.renderButton(googleBtnContainer, {
+                        type: 'standard',
+                        theme: 'filled_black',
+                        size: 'large',
+                        width: 250,
+                        text: 'signin_with',
+                        shape: 'rectangular'
+                    });
+                }
+            }
+        } catch (error) {
+            console.log('Failed to initialize Google Sign-In:', error);
         }
     }
 
-    // Handle Google Sign-In button click
     window.handleGoogleSignIn = function() {
+        if (!googleClientId) {
+            showModal('Google Sign-In chưa được cấu hình', 'error');
+            return;
+        }
         if (typeof google !== 'undefined' && google.accounts) {
             google.accounts.id.initialize({
-                client_id: '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com',
+                client_id: googleClientId,
                 callback: handleGoogleCredentialResponse
             });
             google.accounts.id.prompt();

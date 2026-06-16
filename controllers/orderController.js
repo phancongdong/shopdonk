@@ -141,8 +141,6 @@ async function createOrder(req, res) {
         const userId = req.user?.id;
         const { product_id, quantity = 1 } = req.body;
         
-        console.log('[DEBUG] createOrder called:', { userId, product_id, quantity });
-        
         if (!userId) {
             return res.status(401).json({
                 success: false,
@@ -162,6 +160,10 @@ async function createOrder(req, res) {
                 success: false,
                 message: 'Số lượng không hợp lệ (1-10)'
             });
+        }
+        
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('[DEBUG] createOrder called:', { userId, product_id, quantity });
         }
         
         transaction = await beginTransaction();
@@ -297,7 +299,9 @@ async function createOrder(req, res) {
         
         await commitTransaction(transaction);
         
-        console.log('[DEBUG] Order created successfully:', { userId, product_id, quantity, totalPrice });
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('[DEBUG] Order created successfully:', { userId, product_id, quantity, totalPrice });
+        }
         
         res.status(201).json({
             success: true,

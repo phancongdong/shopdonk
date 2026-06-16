@@ -1,10 +1,11 @@
 const Deposit = require('../models/Deposit');
 const User = require('../models/User');
+const { query } = require('../config/database');
 
 async function getDeposits(req, res) {
     try {
         const userId = req.user?.id;
-        const userRole = req.headers['x-user-role'];
+        const userRole = req.user?.role;
         const isAdmin = userRole === 'admin';
         
         const filters = {

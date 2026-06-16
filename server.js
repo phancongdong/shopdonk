@@ -55,8 +55,45 @@ app.use((req, res, next) => {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     
+    const cspDirectives = [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://accounts.google.com https://oauth2.googleapis.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+        "img-src 'self' data: https: blob:",
+        "connect-src 'self' https://oauth2.googleapis.com",
+        "frame-src https://accounts.google.com",
+        "object-src 'none'",
+        "base-uri 'self'"
+    ];
+    res.setHeader('Content-Security-Policy', cspDirectives.join('; '));
+    
+    res.setHeader('X-Content-Security-Policy', cspDirectives.join('; '));
+    
     if (process.env.NODE_ENV === 'production') {
-        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+    }
+    
+    if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method)) {
+        const origin = req.headers.origin || req.headers.referer;
+        const allowedOriginsList = [
+            'https://shopdonk.com',
+            'https://www.shopdonk.com',
+            'http://localhost:3000',
+            'http://127.0.0.1:3000'
+        ];
+        
+        if (process.env.NODE_ENV !== 'production') {
+            allowedOriginsList.push('http://localhost:5500', 'http://127.0.0.1:5500');
+        }
+        
+        if (origin && !allowedOriginsList.some(allowed => origin.startsWith(allowed))) {
+            console.warn(`[CSRF] Blocked request from invalid origin: ${origin}`);
+            return res.status(403).json({
+                success: false,
+                message: 'Invalid origin'
+            });
+        }
     }
     
     next();
@@ -67,13 +104,54 @@ const authLimiter = rateLimit({
     max: 10,
     message: { success: false, message: 'Quá nhiều yêu cầu, vui lòng thử lại sau 15 phút' },
     standardHeaders: true,
-    legacyHeaders: false
+    legacyHeaders: false,
+    skipSuccessfulRequests: false
 });
 
 const apiLimiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: 100,
     message: { success: false, message: 'Quá nhiều yêu cầu, vui lòng thử lại sau' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const orderLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 10,
+    message: { success: false, message: 'Quá nhiều đơn hàng, vui lòng thử lại sau 1 phút' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const depositLimiter = rateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 5,
+    message: { success: false, message: 'Quá nhiều yêu cầu nạp tiền, vui lòng thử lại sau 5 phút' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const passwordChangeLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 3,
+    message: { success: false, message: 'Quá nhiều yêu cầu đổi mật khẩu, vui lòng thử lại sau 1 giờ' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const uploadLimiter = rateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 10,
+    message: { success: false, message: 'Quá nhiều upload, vui lòng thử lại sau 5 phút' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+const adminActionLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 50,
+    message: { success: false, message: 'Quá nhiều thao tác admin, vui lòng thử lại sau' },
     standardHeaders: true,
     legacyHeaders: false
 });
@@ -88,6 +166,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 app.use('/api/auth/forgot-password', authLimiter);
+app.use('/api/auth/change-password', passwordChangeLimiter);
+app.use('/api/orders', orderLimiter);
+app.use('/api/deposits', depositLimiter);
+app.use('/api/upload', uploadLimiter);
+app.use('/api/upload-url', uploadLimiter);
+app.use('/api/admin', adminActionLimiter);
 app.use('/api', apiLimiter);
 
 app.use('/api/auth', authRoutes);
@@ -151,6 +235,15 @@ app.get('/:slug', (req, res, next) => {
         return next();
     }
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/api/config', (req, res) => {
+    res.json({
+        success: true,
+        data: {
+            googleClientId: process.env.GOOGLE_CLIENT_ID || null
+        }
+    });
 });
 
 app.get('/sitemap.xml', async (req, res) => {

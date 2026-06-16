@@ -1,44 +1,26 @@
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
+const Session = require('../models/Session');
 const crypto = require('crypto');
 
 const verificationCodes = new Map();
-const sessions = new Map();
 
-const GOOGLE_CLIENT_ID = '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+
+if (!GOOGLE_CLIENT_ID) {
+    console.warn('[WARNING] GOOGLE_CLIENT_ID not configured. Google Sign-In will not work.');
+}
 
 function generateCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-function generateToken() {
-    return crypto.randomBytes(32).toString('hex');
-}
-
-function createSession(userId) {
-    const token = generateToken();
-    sessions.set(token, {
-        userId: userId,
-        createdAt: Date.now(),
-        expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000
-    });
-    return token;
-}
-
-function validateToken(token) {
-    if (!token) return null;
-    const session = sessions.get(token);
-    if (!session) return null;
-    if (Date.now() > session.expiresAt) {
-        sessions.delete(token);
-        return null;
-    }
-    return session.userId;
-}
-
-function destroySession(token) {
-    sessions.delete(token);
-}
+const createSession = Session.createSession;
+const validateToken = (token) => {
+    const session = Session.validateToken(token);
+    return session;
+};
+const destroySession = Session.destroySession;
 
 async function register(req, res) {
     try {
@@ -116,7 +98,7 @@ async function login(req, res) {
             });
         }
         
-        const token = createSession(user.id);
+        const token = await createSession(user.id);
         
         res.json({
             success: true,
@@ -143,6 +125,16 @@ async function login(req, res) {
 async function getProfile(req, res) {
     try {
         const userId = req.params.id;
+        const requestingUserId = req.user?.id;
+        const requestingUserRole = req.user?.role;
+        
+        if (requestingUserRole !== 'admin' && requestingUserRole !== 'ctv' && requestingUserId !== parseInt(userId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Bạn không có quyền xem thông tin này'
+            });
+        }
+        
         const user = await User.getUserById(userId);
         
         if (!user) {
@@ -174,6 +166,16 @@ async function getProfile(req, res) {
 async function getBalance(req, res) {
     try {
         const userId = req.params.id;
+        const requestingUserId = req.user?.id;
+        const requestingUserRole = req.user?.role;
+        
+        if (requestingUserRole !== 'admin' && requestingUserRole !== 'ctv' && requestingUserId !== parseInt(userId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Bạn không có quyền xem thông tin này'
+            });
+        }
+        
         const balance = await User.getBalance(userId);
         
         res.json({
@@ -192,6 +194,16 @@ async function getBalance(req, res) {
 async function updateName(req, res) {
     try {
         const userId = req.params.id;
+        const requestingUserId = req.user?.id;
+        const requestingUserRole = req.user?.role;
+        
+        if (requestingUserRole !== 'admin' && requestingUserId !== parseInt(userId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Bạn không có quyền cập nhật thông tin này'
+            });
+        }
+        
         const { name } = req.body;
         
         if (!name || name.trim().length < 2) {
@@ -621,13 +633,17 @@ async function googleSignIn(req, res) {
             });
         }
         
-        console.log('[Google SignIn] Verifying credential...');
+        if (!GOOGLE_CLIENT_ID) {
+            return res.status(500).json({
+                success: false,
+                message: 'Google Sign-In chưa được cấu hình!'
+            });
+        }
         
         const ticket = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
         const payload = await ticket.json();
         
         if (payload.error) {
-            console.log('[Google SignIn] Error from Google:', payload.error);
             return res.status(401).json({
                 success: false,
                 message: 'Token không hợp lệ hoặc đã hết hạn!'
@@ -660,7 +676,7 @@ async function googleSignIn(req, res) {
             user = await User.createUserWithGoogle(googleId, email, name, picture);
         }
         
-        const token = createSession(user.id);
+        const token = await createSession(user.id);
         
         res.json({
             success: true,
