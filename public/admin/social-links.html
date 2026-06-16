@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qu?n l� M?ng x� h?i - Admin ShopDonk</title>
+    <title>Qu?n lï¿½ M?ng xï¿½ h?i - Admin ShopDonk</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -72,22 +72,22 @@
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay l?i</a>
-        <div class="logo">?? Shop<span>Donk</span></div>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lá»—i</a>
+        <div class="logo">ðŸŽ® Shop<span>Donk</span></div>
         <div></div>
     </header>
     
     <div class="content container">
         <div class="page-header">
-            <h1><i class="fas fa-share-alt"></i> Qu?n l� M?ng x� h?i</h1>
-            <p>C?u h�nh c�c li�n k?t m?ng x� h?i hi?n th? tr�n website</p>
+            <h1><i class="fas fa-share-alt"></i> Qu?n lï¿½ M?ng xï¿½ h?i</h1>
+            <p>C?u hï¿½nh cï¿½c liï¿½n k?t m?ng xï¿½ h?i hi?n thử trï¿½n website</p>
         </div>
         
         <div class="social-grid" id="socialGrid"></div>
         
         <div class="page-header" style="margin-top: 50px;">
-            <h1><i class="fas fa-comments"></i> Bong b�ng chat h? tr?</h1>
-            <p>C?u h�nh n�t chat hi?n th? g�c d??i b�n ph?i trang web</p>
+            <h1><i class="fas fa-comments"></i> Bong bï¿½ng chat h? trá»«</h1>
+            <p>C?u hï¿½nh nï¿½t chat hi?n thử gï¿½c dðŸŽ®i bï¿½n phải trang web</p>
         </div>
         
         <div class="social-grid" style="grid-template-columns: 1fr;">
@@ -97,23 +97,23 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <div class="social-info">
-                        <h3>Chat h? tr?</h3>
-                        <p id="chatBubbleUrlPreview">Ch?a c?u h�nh</p>
+                        <h3>Chat h? trá»«</h3>
+                        <p id="chatBubbleUrlPreview">ChÆ°a cÃ³u hï¿½nh</p>
                     </div>
                 </div>
                 <div class="social-body">
                     <div class="form-group">
-                        <label>URL li�n h?</label>
+                        <label>URL liï¿½n h?</label>
                         <input type="text" id="chatBubbleUrl" placeholder="contact.html ho?c https://t.me/username">
-                        <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Nh?p link trang li�n h? ho?c Telegram/Zalo/Messenger</p>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Nháº­p link trang liï¿½n h? ho?c Telegram/Zalo/Messenger</p>
                     </div>
                     <div class="toggle-wrapper">
-                        <span class="toggle-label">Hi?n th? tr�n website</span>
+                        <span class="toggle-label">Hi?n thử trï¿½n website</span>
                         <div class="toggle" id="chatBubbleToggle" onclick="toggleChatBubble()"></div>
                     </div>
                     <div style="margin-top: 15px; display: flex; gap: 10px;">
                         <button class="btn btn-primary" onclick="saveChatBubble()">
-                            <i class="fas fa-save"></i> L?u
+                            <i class="fas fa-save"></i> LÆ°u
                         </button>
                         <button class="btn btn-secondary" onclick="testChatBubble()">
                             <i class="fas fa-external-link-alt"></i> Test
@@ -130,7 +130,7 @@
             { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube', placeholder: 'https://youtube.com/@yourchannel' },
             { id: 'telegram', name: 'Telegram', icon: 'fab fa-telegram-plane', placeholder: 'https://t.me/yourchannel' },
             { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok', placeholder: 'https://tiktok.com/@youraccount' },
-            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account ho?c s? ?i?n tho?i' },
+            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account ho?c sá»‘ Ä‘iá»‡n thoáº¡i' },
             { id: 'discord', name: 'Discord', icon: 'fab fa-discord', placeholder: 'https://discord.gg/yourinvite' },
             { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter', placeholder: 'https://twitter.com/yourhandle' },
             { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram', placeholder: 'https://instagram.com/yourprofile' }
@@ -175,21 +175,21 @@
                             </div>
                             <div class="social-info">
                                 <h3>${platform.name}</h3>
-                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'Ch?a c?u h�nh'}</p>
+                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'ChÆ°a cÃ³u hï¿½nh'}</p>
                             </div>
                         </div>
                         <div class="social-body">
                             <div class="form-group">
-                                <label>URL li�n k?t</label>
+                                <label>URL liï¿½n k?t</label>
                                 <input type="url" id="url-${platform.id}" value="${link.url || ''}" placeholder="${platform.placeholder}">
                             </div>
                             <div class="toggle-wrapper">
-                                <span class="toggle-label">Hi?n th? tr�n website</span>
+                                <span class="toggle-label">Hi?n thử trï¿½n website</span>
                                 <div class="toggle ${link.active ? 'active' : ''}" id="toggle-${platform.id}" onclick="toggleActive('${platform.id}')"></div>
                             </div>
                             <div style="margin-top: 15px; display: flex; gap: 10px;">
                                 <button class="btn btn-primary" onclick="saveLink('${platform.id}')">
-                                    <i class="fas fa-save"></i> L?u
+                                    <i class="fas fa-save"></i> LÆ°u
                                 </button>
                                 ${link.url ? `<button class="btn btn-secondary" onclick="testLink('${platform.id}')"><i class="fas fa-external-link-alt"></i> Test</button>` : ''}
                             </div>
@@ -226,7 +226,7 @@
             }
             
             localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
-            showToast('?� l?u th�nh c�ng!');
+            showToast('?ï¿½ lưu thï¿½nh cï¿½ng!');
             renderSocialCards();
         }
         
@@ -247,7 +247,7 @@
         
         function renderChatBubbleCard() {
             document.getElementById('chatBubbleUrl').value = chatBubbleSettings.url;
-            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'Ch?a c?u h�nh';
+            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'ChÆ°a cÃ³u hï¿½nh';
             
             const toggle = document.getElementById('chatBubbleToggle');
             if (chatBubbleSettings.active) {
@@ -291,14 +291,14 @@
                 const updateData = await updateRes.json();
                 
                 if (updateData.success) {
-                    showToast('?� l?u c?u h�nh chat bubble!');
+                    showToast('?ï¿½ lưu cÃ³u hï¿½nh chat bubble!');
                     document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url;
                 } else {
-                    showToast('L?i: ' + (updateData.message || 'Kh�ng th? l?u'));
+                    showToast('Lá»—i: ' + (updateData.message || 'Khï¿½ng thử lưu'));
                 }
             } catch (e) {
                 console.error('Error saving chat bubble:', e);
-                showToast('C� l?i x?y ra!');
+                showToast('Cï¿½ lá»—i x?y ra!');
             }
         }
         
@@ -311,7 +311,7 @@
                     window.open(url, '_blank');
                 }
             } else {
-                showToast('Vui l�ng nh?p URL!');
+                showToast('Vui lï¿½ng nháº­p URL!');
             }
         }
     </script>

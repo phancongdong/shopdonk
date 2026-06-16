@@ -6,22 +6,22 @@
     // Hardcoded SEO for categories (fallback when API fails)
     const hardcodedCategorySEO = {
         'acc-random-lien-quan-mobile': {
-            title: 'Acc Random Liên Quân Mobile Giá Rẻ',
-            description: 'Danh mục Acc Random Liên Quân Mobile với nhiều phân khúc giá khác nhau. Người chơi có thể nhận tài khoản ngẫu nhiên với tỷ lệ ra skin vip cực cao.',
-            keywords: 'acc random liên quân, acc ngẫu nhiên liên quân, random acc lien quan mobile, acc lien quan gia re, skin ss liên quân, acc random giá rẻ, acc random sss',
-            og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
-            og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
+            title: 'Acc Random LiÃªn QuÃ¢n Mobile GiÃ¡ Ráº»',
+            description: 'Danh má»¥c Acc Random LiÃªn QuÃ¢n Mobile vá»›i nhiá»u phÃ¢n khÃºc giÃ¡ khÃ¡c nhau. NgÆ°á»i chÆ¡i cÃ³ thá»ƒ nháº­n tÃ i khoáº£n ngáº«u nhiÃªn vá»›i tá»· lá»‡ ra skin vip cá»±c cao.',
+            keywords: 'acc random liÃªn quÃ¢n, acc ngáº«u nhiÃªn liÃªn quÃ¢n, random acc lien quan mobile, acc lien quan gia re, skin ss liÃªn quÃ¢n, acc random giÃ¡ ráº», acc random sss',
+            og_title: 'Acc Random LiÃªn QuÃ¢n Mobile GiÃ¡ Ráº»',
+            og_description: 'Kho acc random LiÃªn QuÃ¢n Mobile Ä‘a dáº¡ng má»©c giÃ¡. Tá»· lá»‡ ra skin sss ss+ ss cá»±c cao giÃ¡ ráº»',
             og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
             canonical_url: 'https://shopdonk.com/acc-random-lien-quan-mobile',
             noindex: false,
             nofollow: false
         },
         'random-acc-lien-quan-mobile': {
-            title: 'Acc Random Liên Quân Mobile Giá Rẻ',
-            description: 'Danh mục Acc Random Liên Quân Mobile với nhiều phân khúc giá khác nhau. Người chơi có thể nhận tài khoản ngẫu nhiên với tỷ lệ ra skin vip cực cao.',
-            keywords: 'acc random liên quân, acc ngẫu nhiên liên quân, random acc lien quan mobile, acc lien quan gia re, skin ss liên quân, acc random giá rẻ, acc random sss',
-            og_title: 'Acc Random Liên Quân Mobile Giá Rẻ',
-            og_description: 'Kho acc random Liên Quân Mobile đa dạng mức giá. Tỷ lệ ra skin sss ss+ ss cực cao giá rẻ',
+            title: 'Acc Random LiÃªn QuÃ¢n Mobile GiÃ¡ Ráº»',
+            description: 'Danh má»¥c Acc Random LiÃªn QuÃ¢n Mobile vá»›i nhiá»u phÃ¢n khÃºc giÃ¡ khÃ¡c nhau. NgÆ°á»i chÆ¡i cÃ³ thá»ƒ nháº­n tÃ i khoáº£n ngáº«u nhiÃªn vá»›i tá»· lá»‡ ra skin vip cá»±c cao.',
+            keywords: 'acc random liÃªn quÃ¢n, acc ngáº«u nhiÃªn liÃªn quÃ¢n, random acc lien quan mobile, acc lien quan gia re, skin ss liÃªn quÃ¢n, acc random giÃ¡ ráº», acc random sss',
+            og_title: 'Acc Random LiÃªn QuÃ¢n Mobile GiÃ¡ Ráº»',
+            og_description: 'Kho acc random LiÃªn QuÃ¢n Mobile Ä‘a dáº¡ng má»©c giÃ¡. Tá»· lá»‡ ra skin sss ss+ ss cá»±c cao giÃ¡ ráº»',
             og_image: 'https://res.cloudinary.com/do1lnw3ik/image/upload/v1781263991/shopgame/zflbgox05xjndk6ecoka.jpg',
             canonical_url: 'https://shopdonk.com/random-acc-lien-quan-mobile',
             noindex: false,

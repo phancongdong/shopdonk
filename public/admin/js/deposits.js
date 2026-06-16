@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getStatusBadge(status) {
         const statusMap = {
-            'pending': { text: 'Chờ xử lý', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
-            'completed': { text: 'Hoàn thành', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
-            'rejected': { text: 'Đã hủy', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
+            'pending': { text: 'Chá» xá»­ lÃ½', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
+            'completed': { text: 'HoÃ n thÃ nh', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
+            'rejected': { text: 'ÄÃ£ há»§y', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
         };
         const s = statusMap[status] || statusMap['pending'];
         return `<span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${s.class}">${s.text}</span>`;
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!container) return;
         
         if (deposits.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">Chưa có giao dịch nạp tiền nào</p>';
+            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">ChÆ°a cÃ³ giao dá»‹ch náº¡p tiá»n nÃ o</p>';
             return;
         }
         
@@ -99,13 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <thead class="bg-gray-50 dark:bg-gray-900">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Người dùng</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Số tiền</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Phương thức</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Mã GD</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Trạng thái</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thời gian</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Hành động</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">NgÆ°á»i dÃ¹ng</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Sá»‘ tiá»n</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">PhÆ°Æ¡ng thá»©c</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">MÃ£ GD</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tráº¡ng thÃ¡i</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thá»i gian</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">HÃ nh Ä‘á»™ng</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${formatTime(d.created_at)}</td>
                                 <td class="px-4 py-3 text-sm">
                                     ${d.status === 'pending' ? `
-                                        <button onclick="approveDeposit(${d.id})" class="text-green-600 hover:text-green-800 mr-2" title="Duyệt"><i class="fas fa-check"></i></button>
-                                        <button onclick="rejectDeposit(${d.id})" class="text-red-600 hover:text-red-800" title="Từ chối"><i class="fas fa-times"></i></button>
+                                        <button onclick="approveDeposit(${d.id})" class="text-green-600 hover:text-green-800 mr-2" title="Duyá»‡t"><i class="fas fa-check"></i></button>
+                                        <button onclick="rejectDeposit(${d.id})" class="text-red-600 hover:text-red-800" title="Tá»« chá»‘i"><i class="fas fa-times"></i></button>
                                     ` : ''}
                                 </td>
                             </tr>
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     window.approveDeposit = async function(id) {
-        if (!confirm('Bạn có chắc muốn duyệt giao dịch này?')) return;
+        if (!confirm('Báº¡n cÃ³ cháº¯c muá»‘n duyá»‡t giao dá»‹ch nÃ y?')) return;
         
         try {
             const res = await fetch(`${API_BASE}/deposits/${id}/approve`, {
@@ -143,19 +143,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await res.json();
             
             if (data.success) {
-                alert('Duyệt thành công!');
+                alert('Duyá»‡t thÃ nh cÃ´ng!');
                 loadDeposits();
             } else {
-                alert('Lỗi: ' + (data.message || 'Không thể duyệt'));
+                alert('Lá»—i: ' + (data.message || 'KhÃ´ng thá»ƒ duyá»‡t'));
             }
         } catch (error) {
             console.error('Approve error:', error);
-            alert('Có lỗi xảy ra!');
+            alert('CÃ³ lá»—i xáº£y ra!');
         }
     };
     
     window.rejectDeposit = async function(id) {
-        if (!confirm('Bạn có chắc muốn từ chối giao dịch này?')) return;
+        if (!confirm('Báº¡n cÃ³ cháº¯c muá»‘n tá»« chá»‘i giao dá»‹ch nÃ y?')) return;
         
         try {
             const res = await fetch(`${API_BASE}/deposits/${id}/reject`, {
@@ -165,14 +165,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await res.json();
             
             if (data.success) {
-                alert('Từ chối thành công!');
+                alert('Tá»« chá»‘i thÃ nh cÃ´ng!');
                 loadDeposits();
             } else {
-                alert('Lỗi: ' + (data.message || 'Không thể từ chối'));
+                alert('Lá»—i: ' + (data.message || 'KhÃ´ng thá»ƒ tá»« chá»‘i'));
             }
         } catch (error) {
             console.error('Reject error:', error);
-            alert('Có lỗi xảy ra!');
+            alert('CÃ³ lá»—i xáº£y ra!');
         }
     };
     

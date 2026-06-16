@@ -17,8 +17,8 @@ console.log('depositContent innerHTML:', depositContent?.innerHTML?.substring(0,
 
 // Manual test - Force show deposit UI if user exists
 if (user) {
-    console.log('✅ User exists but not showing deposit UI');
+    console.log('âœ… User exists but not showing deposit UI');
     console.log('This means the JavaScript is not detecting the user correctly');
 } else {
-    console.log('❌ User is NULL - Need to login again');
+    console.log('âŒ User is NULL - Need to login again');
 }

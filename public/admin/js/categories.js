@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error loading categories:', error);
-            document.getElementById('categoryTree').innerHTML = '<p class="text-red-500">Lỗi tải danh mục</p>';
+            document.getElementById('categoryTree').innerHTML = '<p class="text-red-500">Lá»—i táº£i danh má»¥c</p>';
         }
     }
     
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('categoryTree');
         
         if (tree.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Không có danh mục</p>';
+            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400">KhÃ´ng cÃ³ danh má»¥c</p>';
             return;
         }
         
@@ -79,10 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i class="fas ${node.icon || 'fa-folder'} text-sm" style="color: ${node.color || '#0ea5e9'}"></i>
                     <span class="text-sm text-gray-900 dark:text-white flex-1 cursor-pointer hover:text-brand-500" onclick="editCategory(${node.id})">${node.name}</span>
                     <span class="text-xs text-gray-400">${productCount} SP</span>
-                    <button onclick="showAddChildModal(${node.id})" class="text-xs text-green-500 hover:text-green-700 px-1" title="Thêm danh mục con"><i class="fas fa-plus"></i></button>
+                    <button onclick="showAddChildModal(${node.id})" class="text-xs text-green-500 hover:text-green-700 px-1" title="ThÃªm danh má»¥c con"><i class="fas fa-plus"></i></button>
                     <a href="/${node.slug}" target="_blank" class="text-xs text-blue-500 hover:text-blue-700 px-1" title="Xem trang"><i class="fas fa-external-link-alt"></i></a>
-                    <button onclick="editCategory(${node.id})" class="text-xs text-yellow-500 hover:text-yellow-700 px-1" title="Sửa"><i class="fas fa-edit"></i></button>
-                    <button onclick="deleteCategory(${node.id})" class="text-xs text-red-500 hover:text-red-700 px-1" title="Xóa"><i class="fas fa-trash"></i></button>
+                    <button onclick="editCategory(${node.id})" class="text-xs text-yellow-500 hover:text-yellow-700 px-1" title="Sá»­a"><i class="fas fa-edit"></i></button>
+                    <button onclick="deleteCategory(${node.id})" class="text-xs text-red-500 hover:text-red-700 px-1" title="XÃ³a"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         `;
@@ -120,11 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function populateParentSelect(excludeId = null) {
         const select = document.getElementById('categoryParent');
-        select.innerHTML = '<option value="">-- Không có (danh mục gốc) --</option>';
+        select.innerHTML = '<option value="">-- KhÃ´ng cÃ³ (danh má»¥c gá»‘c) --</option>';
         
         allCategories.forEach(cat => {
             if (cat.id !== excludeId) {
-                const prefix = '—'.repeat(cat.depth || 0);
+                const prefix = 'â€”'.repeat(cat.depth || 0);
                 select.innerHTML += `<option value="${cat.id}">${prefix} ${cat.name}</option>`;
             }
         });
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     window.showAddCategoryModal = function() {
-        document.getElementById('modalTitle').textContent = 'Thêm danh mục mới';
+        document.getElementById('modalTitle').textContent = 'ThÃªm danh má»¥c má»›i';
         document.getElementById('categoryId').value = '';
         document.getElementById('categoryForm').reset();
         populateParentSelect();
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     window.showAddChildModal = function(parentId) {
-        document.getElementById('modalTitle').textContent = 'Thêm danh mục con';
+        document.getElementById('modalTitle').textContent = 'ThÃªm danh má»¥c con';
         document.getElementById('categoryId').value = '';
         document.getElementById('categoryForm').reset();
         populateParentSelect();
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const res = await fetch(`${API_BASE}/categories/${id}`);
             const data = await res.json();
             if (data.success) {
-                document.getElementById('modalTitle').textContent = 'Sửa danh mục';
+                document.getElementById('modalTitle').textContent = 'Sá»­a danh má»¥c';
                 document.getElementById('categoryId').value = data.data.id;
                 document.getElementById('categoryName').value = data.data.name;
                 document.getElementById('categoryDesc').value = data.data.description || '';
@@ -200,11 +200,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const children = allCategories.filter(c => c.parent_id === id);
         if (children.length > 0) {
-            document.getElementById('deleteMessage').textContent = 'Danh mục này có ' + children.length + ' danh mục con. Vui lòng xóa hoặc di chuyển danh mục con trước!';
+            document.getElementById('deleteMessage').textContent = 'Danh má»¥c nÃ y cÃ³ ' + children.length + ' danh má»¥c con. Vui lÃ²ng xÃ³a hoáº·c di chuyá»ƒn danh má»¥c con trÆ°á»›c!';
             document.getElementById('deleteModal').querySelector('.bg-red-600').style.display = 'none';
         } else {
             const cat = allCategories.find(c => c.id === id);
-            document.getElementById('deleteMessage').textContent = 'Bạn có chắc muốn xóa danh mục "' + (cat?.name || '') + '"?';
+            document.getElementById('deleteMessage').textContent = 'Báº¡n cÃ³ cháº¯c muá»‘n xÃ³a danh má»¥c "' + (cat?.name || '') + '"?';
             document.getElementById('deleteModal').querySelector('.bg-red-600').style.display = 'inline-block';
         }
         
@@ -236,11 +236,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 loadCategories();
             } else {
-                alert('Lỗi: ' + (result.message || 'Không thể xóa'));
+                alert('Lá»—i: ' + (result.message || 'KhÃ´ng thá»ƒ xÃ³a'));
             }
         } catch (error) {
             console.error('Error deleting category:', error);
-            alert('Có lỗi xảy ra khi xóa!');
+            alert('CÃ³ lá»—i xáº£y ra khi xÃ³a!');
         }
         closeDeleteModal();
     };
@@ -255,8 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const slug = name.toLowerCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
-            .replace(/đ/g, 'd')
-            .replace(/Đ/g, 'D')
+            .replace(/Ä‘/g, 'd')
+            .replace(/Ä/g, 'D')
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)/g, '');
         
@@ -291,11 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeCategoryModal();
                 loadCategories();
             } else {
-                alert('Lỗi: ' + (result.message || 'Không thể lưu'));
+                alert('Lá»—i: ' + (result.message || 'KhÃ´ng thá»ƒ lÆ°u'));
             }
         } catch (error) {
             console.error('Error saving category:', error);
-            alert('Có lỗi xảy ra khi lưu!');
+            alert('CÃ³ lá»—i xáº£y ra khi lÆ°u!');
         }
     });
     

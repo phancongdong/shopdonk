@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('adminName').textContent = user.name;
         const roleDisplay = document.querySelector('.text-xs.text-gray-500');
         if (roleDisplay) {
-            roleDisplay.textContent = user.role === 'admin' ? 'Quản trị viên' : 'Cộng tác viên';
+            roleDisplay.textContent = user.role === 'admin' ? 'Quáº£n trá»‹ viÃªn' : 'Cá»™ng tÃ¡c viÃªn';
         }
     }
     
@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getStatusBadge(status) {
         const statusMap = {
-            'pending': { text: 'Chờ xử lý', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
-            'completed': { text: 'Hoàn thành', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
-            'cancelled': { text: 'Đã hủy', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
+            'pending': { text: 'Chá» xá»­ lÃ½', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
+            'completed': { text: 'HoÃ n thÃ nh', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
+            'cancelled': { text: 'ÄÃ£ há»§y', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
         };
         const s = statusMap[status] || statusMap['pending'];
         return `<span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${s.class}">${s.text}</span>`;
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </tr>
                     `).join('');
                 } else {
-                    ordersTbody.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-gray-500">Chưa có đơn hàng nào</td></tr>';
+                    ordersTbody.innerHTML = '<tr><td colspan="7" class="px-6 py-4 text-center text-gray-500">ChÆ°a cÃ³ Ä‘Æ¡n hÃ ng nÃ o</td></tr>';
                 }
             }
             

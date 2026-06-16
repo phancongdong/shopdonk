@@ -1,4 +1,4 @@
-﻿// Floating Particles Effect
+// Floating Particles Effect
 document.addEventListener('DOMContentLoaded', function() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;

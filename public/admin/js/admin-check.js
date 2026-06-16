@@ -64,7 +64,7 @@
     const currentPage = window.location.pathname.split('/').pop();
     
     if (adminOnlyPages.includes(currentPage) && user.role !== 'admin') {
-        alert('Bạn không có quyền truy cập trang này!');
+        alert('Báº¡n khÃ´ng cÃ³ quyá»n truy cáº­p trang nÃ y!');
         window.location.href = 'index.html';
         return;
     }

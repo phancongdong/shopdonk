@@ -1,14 +1,14 @@
 (function() {
     'use strict';
     
-    console.log('🎬 GSAP Animations script loaded');
+    console.log('ðŸŽ¬ GSAP Animations script loaded');
     
     if (typeof gsap === 'undefined') {
         console.warn('GSAP not loaded. Animations disabled.');
         return;
     }
     
-    console.log('✅ GSAP detected, initializing animations...');
+    console.log('âœ… GSAP detected, initializing animations...');
 
     gsap.registerPlugin(ScrollTrigger);
 

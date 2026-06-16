@@ -161,9 +161,24 @@ const adminActionLimiter = rateLimit({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+app.use((req, res, next) => {
+    res.type('application/json');
+    next();
+});
+
 app.use(securityAuditMiddleware);
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+        } else if (filePath.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css; charset=UTF-8');
+        } else if (filePath.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
+        }
+    }
+}));
 
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);

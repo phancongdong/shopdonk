@@ -47,15 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     console.log('Login successful, user saved:', data.user);
                     
-                    showModal('Đăng nhập thành công!', 'success', () => {
+                    showModal('ÄÄƒng nháº­p thÃ nh cÃ´ng!', 'success', () => {
                         window.location.href = 'index.html';
                     });
                 } else {
-                    showModal(data.message || 'Đăng nhập thất bại', 'error');
+                    showModal(data.message || 'ÄÄƒng nháº­p tháº¥t báº¡i', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showModal('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+                showModal('CÃ³ lá»—i xáº£y ra. Vui lÃ²ng thá»­ láº¡i!', 'error');
             }
         });
     }
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const confirmPassword = document.getElementById('confirmPassword').value;
             
             if (password !== confirmPassword) {
-                showModal('Mật khẩu xác nhận không khớp!', 'error');
+                showModal('Máº­t kháº©u xÃ¡c nháº­n khÃ´ng khá»›p!', 'error');
                 return;
             }
             
@@ -89,15 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    showModal('Đăng ký thành công! Vui lòng đăng nhập.', 'success', () => {
+                    showModal('ÄÄƒng kÃ½ thÃ nh cÃ´ng! Vui lÃ²ng Ä‘Äƒng nháº­p.', 'success', () => {
                         window.location.href = 'login.html';
                     });
                 } else {
-                    showModal(data.message || 'Đăng ký thất bại', 'error');
+                    showModal(data.message || 'ÄÄƒng kÃ½ tháº¥t báº¡i', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showModal('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+                showModal('CÃ³ lá»—i xáº£y ra. Vui lÃ²ng thá»­ láº¡i!', 'error');
             }
         });
     }
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
             </div>
             <div class="modal-message">${message}</div>
-            <button class="modal-btn">Đóng</button>
+            <button class="modal-btn">ÄÃ³ng</button>
         `;
         
         overlay.appendChild(modal);
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.handleGoogleSignIn = function() {
         if (!googleClientId) {
-            showModal('Google Sign-In chưa được cấu hình', 'error');
+            showModal('Google Sign-In chÆ°a Ä‘Æ°á»£c cáº¥u hÃ¬nh', 'error');
             return;
         }
         if (typeof google !== 'undefined' && google.accounts) {
@@ -216,15 +216,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 localStorage.setItem('user', JSON.stringify(data.user));
                 
-                showModal('Đăng nhập thành công!', 'success', () => {
+                showModal('ÄÄƒng nháº­p thÃ nh cÃ´ng!', 'success', () => {
                     window.location.href = 'index.html';
                 });
             } else {
-                showModal(data.message || 'Đăng nhập thất bại', 'error');
+                showModal(data.message || 'ÄÄƒng nháº­p tháº¥t báº¡i', 'error');
             }
         } catch (error) {
             console.error('Google sign-in error:', error);
-            showModal('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            showModal('CÃ³ lá»—i xáº£y ra. Vui lÃ²ng thá»­ láº¡i!', 'error');
         }
     }
 
