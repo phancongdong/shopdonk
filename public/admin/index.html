@@ -68,7 +68,7 @@
               <li class="admin-only">
                 <a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800">
                   <i class="fas fa-users text-lg"></i>
-                  <span x-show="!sidebarToggle">Ngu?i dùng</span>
+                  <span x-show="!sidebarToggle">Ng??i dùng</span>
                 </a>
               </li>
               <li class="admin-only">
@@ -92,7 +92,7 @@
               <li class="admin-only">
                 <a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800">
                   <i class="fas fa-shopping-cart text-lg"></i>
-                  <span x-show="!sidebarToggle">Ðon hàng</span>
+                  <span x-show="!sidebarToggle">??n hàng</span>
                 </a>
               </li>
               <li class="admin-only">
@@ -134,7 +134,7 @@
               <li>
                 <a href="#" @click.prevent="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
                   <i class="fas fa-sign-out-alt text-lg"></i>
-                  <span x-show="!sidebarToggle">Ðang xu?t</span>
+                  <span x-show="!sidebarToggle">??ng xu?t</span>
                 </a>
               </li>
             </ul>
@@ -176,7 +176,7 @@
             <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-950">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">T?ng ngu?i dùng</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">T?ng ng??i dùng</p>
                   <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalUsers">0</p>
                 </div>
                 <div class="rounded-lg bg-blue-100 p-3 dark:bg-blue-900/30">
@@ -200,7 +200,7 @@
             <div class="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-950">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">T?ng don hàng</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">T?ng ??n hàng</p>
                   <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalOrders">0</p>
                 </div>
                 <div class="rounded-lg bg-orange-100 p-3 dark:bg-orange-900/30">
@@ -213,7 +213,7 @@
               <div class="flex items-center justify-between">
                 <div>
                   <p class="text-sm text-gray-500 dark:text-gray-400">T?ng n?p</p>
-                  <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalDeposits">0d</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalDeposits">0?</p>
                 </div>
                 <div class="rounded-lg bg-purple-100 p-3 dark:bg-purple-900/30">
                   <i class="fas fa-wallet text-xl text-purple-600 dark:text-purple-400"></i>
@@ -225,7 +225,7 @@
               <div class="flex items-center justify-between">
                 <div>
                   <p class="text-sm text-gray-500 dark:text-gray-400">T?ng giá tr? SP</p>
-                  <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalProductsValue">0d</p>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white" id="totalProductsValue">0?</p>
                 </div>
                 <div class="rounded-lg bg-cyan-100 p-3 dark:bg-cyan-900/30">
                   <i class="fas fa-coins text-xl text-cyan-600 dark:text-cyan-400"></i>
@@ -237,14 +237,14 @@
           <!-- Recent Orders -->
           <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 mt-6">
             <div class="border-b border-gray-200 px-6 py-4 dark:border-gray-800 flex justify-between items-center">
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Ðon hàng g?n dây</h2>
-              <a href="orders.html" class="text-sm text-brand-500 hover:text-brand-600">Xem t?t c? ?</a>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">??n hàng g?n ?ây</h2>
+              <a href="orders.html" class="text-sm text-brand-500 hover:text-brand-600">Xem t?t c? »</a>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full">
                 <thead class="bg-gray-50 dark:bg-gray-900">
                   <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Mã don</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Mã ??n</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Khách hàng</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">S?n ph?m</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Tài kho?n</th>
@@ -262,7 +262,7 @@
           <!-- Recent Users -->
           <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950">
             <div class="border-b border-gray-200 px-6 py-4 dark:border-gray-800">
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Ngu?i dùng g?n dây</h2>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Ng??i dùng g?n ?ây</h2>
             </div>
             <div class="overflow-x-auto">
               <table class="w-full">
@@ -271,7 +271,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Tên</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">S? du</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">S? d?</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Vai trò</th>
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Ngày t?o</th>
                   </tr>
