@@ -24,21 +24,40 @@ async function createSessionsTable() {
             )
         `);
         
-        await query(`
-            CREATE INDEX IX_Sessions_Token ON Sessions(token)
-        `);
-        
-        await query(`
-            CREATE INDEX IX_Sessions_User ON Sessions(user_id)
-        `);
-        
-        await query(`
-            CREATE INDEX IX_Sessions_Expires ON Sessions(expires_at)
-        `);
+        await query(`CREATE INDEX IX_Sessions_Token ON Sessions(token)`);
+        await query(`CREATE INDEX IX_Sessions_User ON Sessions(user_id)`);
+        await query(`CREATE INDEX IX_Sessions_Expires ON Sessions(expires_at)`);
         
         console.log('Sessions table created successfully');
     } else {
-        console.log('Sessions table already exists');
+        console.log('Sessions table already exists, checking columns...');
+        
+        const columns = await query(`
+            SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Sessions'
+        `);
+        const existingColumns = columns.recordset.map(c => c.COLUMN_NAME);
+        
+        if (!existingColumns.includes('is_active')) {
+            await query(`ALTER TABLE Sessions ADD is_active BIT DEFAULT 1`);
+            console.log('Added is_active column');
+        }
+        
+        if (!existingColumns.includes('invalidated_at')) {
+            await query(`ALTER TABLE Sessions ADD invalidated_at DATETIME NULL`);
+            console.log('Added invalidated_at column');
+        }
+        
+        if (!existingColumns.includes('ip_address')) {
+            await query(`ALTER TABLE Sessions ADD ip_address VARCHAR(45) NULL`);
+            console.log('Added ip_address column');
+        }
+        
+        if (!existingColumns.includes('user_agent')) {
+            await query(`ALTER TABLE Sessions ADD user_agent NVARCHAR(500) NULL`);
+            console.log('Added user_agent column');
+        }
+        
+        console.log('Sessions table schema is up to date');
     }
 }
 
