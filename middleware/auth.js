@@ -2,9 +2,15 @@ const Session = require('../models/Session');
 const { query } = require('../config/database');
 
 async function authMiddleware(req, res, next) {
-    const token = req.headers['authorization']?.replace('Bearer ', '');
+    const authHeader = req.headers['authorization'];
+    const token = authHeader?.replace('Bearer ', '');
+    
+    console.log('[AUTH] Path:', req.path, 'Method:', req.method);
+    console.log('[AUTH] Authorization header present:', !!authHeader);
+    console.log('[AUTH] Token present:', !!token);
     
     if (!token) {
+        console.log('[AUTH] No token provided, returning 401');
         return res.status(401).json({
             success: false,
             message: 'Vui lòng đăng nhập để tiếp tục'
@@ -13,8 +19,10 @@ async function authMiddleware(req, res, next) {
     
     try {
         const sessionData = await Session.validateToken(token);
+        console.log('[AUTH] Session data:', sessionData ? `userId=${sessionData.userId}, role=${sessionData.role}` : null);
         
         if (!sessionData) {
+            console.log('[AUTH] Invalid or expired token, returning 401');
             return res.status(401).json({
                 success: false,
                 message: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn'
@@ -27,9 +35,10 @@ async function authMiddleware(req, res, next) {
             name: sessionData.name,
             email: sessionData.email
         };
+        console.log('[AUTH] Authentication successful for user:', req.user.id);
         next();
     } catch (error) {
-        console.error('Auth middleware error:', error);
+        console.error('[AUTH ERROR] Auth middleware error:', error);
         res.status(500).json({
             success: false,
             message: 'Lỗi xác thực'
