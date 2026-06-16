@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <title>Quản lý sản phẩm | ShopDonk Admin</title>
+    <title>Qu?n l� s?n ph?m | ShopDonk Admin</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,7 +20,7 @@
       }
     </script>
     <style>body { font-family: 'Outfit', sans-serif; }</style>
-    <script src="js/admin-check.js"></script>
+    <script src="js/admin-check.js?v=20260617"></script>
   </head>
   <body class="bg-gray-100 dark:bg-gray-900" x-data="{ darkMode: true, sidebarToggle: false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode') || 'true')" :class="{ 'dark': darkMode }">
     
@@ -28,27 +28,27 @@
       <aside id="sidebar" class="fixed left-0 top-0 z-50 flex h-full w-60 flex-col overflow-y-auto border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 transition-transform -translate-x-full lg:static lg:translate-x-0" :class="sidebarToggle && 'lg:w-[70px]'">
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
           <a href="../index.html" class="flex items-center gap-2">
-            <span class="text-xl">🎮</span>
+            <span class="text-xl">??</span>
             <span class="text-lg font-bold text-gray-900 dark:text-white" x-show="!sidebarToggle">ShopDonk</span>
           </a>
         </div>
         <nav class="flex-1 overflow-y-auto px-3 py-3">
           <ul class="space-y-1">
             <li><a href="index.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-chart-line"></i><span x-show="!sidebarToggle">Dashboard</span></a></li>
-            <li class="admin-only"><a href="users.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-users"></i><span x-show="!sidebarToggle">Người dùng</span></a></li>
-            <li><a href="products.html" class="flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-600 dark:bg-brand-900/20 dark:text-brand-400"><i class="fas fa-box"></i><span x-show="!sidebarToggle">Sản phẩm</span></a></li>
-            <li><a href="orders.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-shopping-cart"></i><span x-show="!sidebarToggle">Đơn hàng</span></a></li>
-            <li class="admin-only"><a href="deposits.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-wallet"></i><span x-show="!sidebarToggle">Nạp tiền</span></a></li>
-            <li class="admin-only"><a href="categories.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-folder"></i><span x-show="!sidebarToggle">Danh mục</span></a></li>
+            <li class="admin-only"><a href="users.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-users"></i><span x-show="!sidebarToggle">Ngu?i d�ng</span></a></li>
+            <li><a href="products.html" class="flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-600 dark:bg-brand-900/20 dark:text-brand-400"><i class="fas fa-box"></i><span x-show="!sidebarToggle">S?n ph?m</span></a></li>
+            <li><a href="orders.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-shopping-cart"></i><span x-show="!sidebarToggle">�on h�ng</span></a></li>
+            <li class="admin-only"><a href="deposits.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-wallet"></i><span x-show="!sidebarToggle">N?p ti?n</span></a></li>
+            <li class="admin-only"><a href="categories.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-folder"></i><span x-show="!sidebarToggle">Danh m?c</span></a></li>
             <li class="admin-only"><a href="banners.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-images"></i><span x-show="!sidebarToggle">Banner</span></a></li>
-            <li class="admin-only"><a href="uploads.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-cloud-upload-alt"></i><span x-show="!sidebarToggle">Hình ảnh</span></a></li>
-            <li class="admin-only"><a href="social-links.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-share-alt"></i><span x-show="!sidebarToggle">Mạng xã hội</span></a></li>
-            <li class="admin-only"><a href="payment-settings.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-credit-card"></i><span x-show="!sidebarToggle">Thanh toán</span></a></li>
+            <li class="admin-only"><a href="uploads.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-cloud-upload-alt"></i><span x-show="!sidebarToggle">H�nh ?nh</span></a></li>
+            <li class="admin-only"><a href="social-links.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-share-alt"></i><span x-show="!sidebarToggle">M?ng x� h?i</span></a></li>
+            <li class="admin-only"><a href="payment-settings.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-credit-card"></i><span x-show="!sidebarToggle">Thanh to�n</span></a></li>
           </ul>
           <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
             <ul class="space-y-1">
               <li><a href="../index.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-globe"></i><span x-show="!sidebarToggle">Xem web</span></a></li>
-              <li><a href="#" @click.prevent="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fas fa-sign-out-alt"></i><span x-show="!sidebarToggle">Đăng xuất</span></a></li>
+              <li><a href="#" @click.prevent="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fas fa-sign-out-alt"></i><span x-show="!sidebarToggle">�ang xu?t</span></a></li>
             </ul>
           </div>
         </nav>
@@ -58,14 +58,14 @@
         <header class="flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-950">
           <div class="flex items-center gap-3">
             <button @click="document.getElementById('sidebar').classList.toggle('-translate-x-full')" class="lg:hidden text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"><i class="fas fa-bars"></i></button>
-            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Quản lý sản phẩm</h1>
+            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Qu?n l� s?n ph?m</h1>
           </div>
           <div class="flex items-center gap-3">
             <button @click="darkMode = !darkMode" class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
               <i class="fas fa-moon" x-show="!darkMode"></i>
               <i class="fas fa-sun" x-show="darkMode"></i>
             </button>
-            <button onclick="showAddProductModal()" class="bg-brand-500 hover:bg-brand-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium"><i class="fas fa-plus mr-1"></i>Thêm</button>
+            <button onclick="showAddProductModal()" class="bg-brand-500 hover:bg-brand-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium"><i class="fas fa-plus mr-1"></i>Th�m</button>
           </div>
         </header>
         
@@ -76,21 +76,21 @@
           <div id="bottomScroll" class="flex-1 overflow-auto p-4">
             <div class="rounded-lg bg-white shadow-sm dark:bg-gray-950 min-w-[1000px]">
               <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3">
-                <h2 class="text-base font-semibold text-gray-900 dark:text-white">Danh sách sản phẩm</h2>
-                <input type="text" id="searchInput" placeholder="Tìm ID, tên, danh mục..." class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white w-48">
+                <h2 class="text-base font-semibold text-gray-900 dark:text-white">Danh s�ch s?n ph?m</h2>
+                <input type="text" id="searchInput" placeholder="T�m ID, t�n, danh m?c..." class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white w-48">
               </div>
               <table class="w-full">
                 <thead class="bg-gray-50 dark:bg-gray-900">
                   <tr>
                     <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tên</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Danh mục</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Giá nhập</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Giá bán</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Lợi nhuận</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tồn kho</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Trạng thái</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Hành động</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">T�n</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Danh m?c</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Gi� nh?p</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Gi� b�n</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">L?i nhu?n</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">T?n kho</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tr?ng th�i</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">H�nh d?ng</th>
                   </tr>
                 </thead>
                 <tbody id="productsTable" class="divide-y divide-gray-200 dark:divide-gray-800"></tbody>
@@ -108,12 +108,12 @@
           <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
             <i class="fas fa-trash text-red-600 dark:text-red-400 text-xl"></i>
           </div>
-          <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-2">Xác nhận xóa</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Bạn có chắc muốn xóa sản phẩm "<span id="deleteProductName" class="font-medium text-gray-700 dark:text-gray-300"></span>"?</p>
+          <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-2">X�c nh?n x�a</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">B?n c� ch?c mu?n x�a s?n ph?m "<span id="deleteProductName" class="font-medium text-gray-700 dark:text-gray-300"></span>"?</p>
           <input type="hidden" id="deleteProductId">
           <div class="flex justify-center gap-2">
-            <button onclick="closeDeleteModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Hủy</button>
-            <button onclick="confirmDelete()" class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg">Xóa</button>
+            <button onclick="closeDeleteModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">H?y</button>
+            <button onclick="confirmDelete()" class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg">X�a</button>
           </div>
         </div>
       </div>
@@ -123,66 +123,66 @@
       <div class="flex items-center justify-center min-h-screen px-4">
         <div class="fixed inset-0 bg-black opacity-50" onclick="closeProductModal()"></div>
         <div class="bg-white dark:bg-gray-950 rounded-lg shadow-xl relative z-10 w-full max-w-lg p-5">
-          <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3" id="modalTitle">Thêm sản phẩm mới</h3>
+          <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3" id="modalTitle">Th�m s?n ph?m m?i</h3>
           <form id="productForm">
             <input type="hidden" id="productId">
             <div class="space-y-3">
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tên sản phẩm</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">T�n s?n ph?m</label>
                 <input type="text" id="productName" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Danh mục</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Danh m?c</label>
                 <select id="productCategory" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"></select>
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Giá nhập (VND)</label>
+                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Gi� nh?p (VND)</label>
                   <input type="number" id="productCostPrice" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                 </div>
                 <div>
-                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Giá bán (VND)</label>
+                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Gi� b�n (VND)</label>
                   <input type="number" id="productPrice" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
                 </div>
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Số lượng</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">S? lu?ng</label>
                 <input type="number" id="productStock" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">URL Hình ảnh</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">URL H�nh ?nh</label>
                 <input type="text" id="productImage" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Loại tài khoản</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Lo?i t�i kho?n</label>
                 <select id="accountType" onchange="toggleAccountFields()" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-                  <option value="single">Tài khoản đơn (1 tài khoản - nhiều lượt mua)</option>
-                  <option value="multiple">Danh sách tài khoản (nhiều TK - mỗi TK bán 1 lần)</option>
+                  <option value="single">T�i kho?n don (1 t�i kho?n - nhi?u lu?t mua)</option>
+                  <option value="multiple">Danh s�ch t�i kho?n (nhi?u TK - m?i TK b�n 1 l?n)</option>
                 </select>
               </div>
               <div id="singleAccountFields" class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tài khoản <span class="text-red-500">*</span></label>
-                  <input type="text" id="productAccount" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Tên đăng nhập">
+                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">T�i kho?n <span class="text-red-500">*</span></label>
+                  <input type="text" id="productAccount" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="T�n dang nh?p">
                 </div>
                 <div>
-                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mật khẩu <span class="text-red-500">*</span></label>
-                  <input type="text" id="productPassword" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Mật khẩu">
+                  <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">M?t kh?u <span class="text-red-500">*</span></label>
+                  <input type="text" id="productPassword" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="M?t kh?u">
                 </div>
               </div>
               <div id="multipleAccountFields" class="hidden">
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Danh sách tài khoản <span class="text-red-500">*</span></label>
-                <textarea id="accountsList" rows="6" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white font-mono" placeholder="Định dạng mỗi dòng: taikhoan-matkhau&#10;Ví dụ:&#10;user1-pass1&#10;user2-pass2&#10;user3-pass3"></textarea>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Mỗi dòng 1 tài khoản, số lượng sẽ tự động đếm theo số dòng</p>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Danh s�ch t�i kho?n <span class="text-red-500">*</span></label>
+                <textarea id="accountsList" rows="6" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white font-mono" placeholder="�?nh d?ng m?i d�ng: taikhoan-matkhau&#10;V� d?:&#10;user1-pass1&#10;user2-pass2&#10;user3-pass3"></textarea>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">M?i d�ng 1 t�i kho?n, s? lu?ng s? t? d?ng d?m theo s? d�ng</p>
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mô tả</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">M� t?</label>
                 <textarea id="productDescription" rows="2" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"></textarea>
               </div>
             </div>
             <div class="flex justify-end gap-2 mt-4">
-              <button type="button" onclick="closeProductModal()" class="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Hủy</button>
-              <button type="submit" class="px-3 py-1.5 text-sm bg-brand-500 hover:bg-brand-600 text-white rounded-lg">Lưu</button>
+              <button type="button" onclick="closeProductModal()" class="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">H?y</button>
+              <button type="submit" class="px-3 py-1.5 text-sm bg-brand-500 hover:bg-brand-600 text-white rounded-lg">Luu</button>
             </div>
           </form>
         </div>
@@ -201,7 +201,7 @@
           }
       })();
     </script>
-    <script src="js/products.js"></script>
+    <script src="js/products.js?v=20260617"></script>
     <script>
       const topScroll = document.getElementById('topScroll');
       const bottomScroll = document.getElementById('bottomScroll');
