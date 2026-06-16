@@ -31,7 +31,7 @@
     <style>
         body { font-family: 'Outfit', sans-serif; }
     </style>
-    <script src="js/admin-check.js?v=20260617"></script>
+    <script src="js/admin-check.js?v=20260617b"></script>
   </head>
   <body class="bg-gray-100 dark:bg-gray-900" x-data="{ page: 'ecommerce', loaded: true, darkMode: true, sidebarToggle: false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode') || 'true'); $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{ 'dark': darkMode }">
     
@@ -286,7 +286,7 @@
     </div>
     
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="js/admin.js?v=20260617"></script>
+    <script src="js/admin.js?v=20260617b"></script>
     <script>
       (function() {
           const user = JSON.parse(localStorage.getItem('user') || 'null');
