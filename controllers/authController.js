@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const verificationCodes = new Map();
 const sessions = new Map();
 
-const GOOGLE_CLIENT_ID = '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com';
 
 function generateCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();

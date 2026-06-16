@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initGoogleSignIn() {
         if (typeof google !== 'undefined' && google.accounts) {
             google.accounts.id.initialize({
-                client_id: '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com',
+                client_id: '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com',
                 callback: handleGoogleCredentialResponse
             });
             
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.handleGoogleSignIn = function() {
         if (typeof google !== 'undefined' && google.accounts) {
             google.accounts.id.initialize({
-                client_id: '178643627427-1qkjf2obrdkdivkp4jkdat7uf2fbrlrf.apps.googleusercontent.com',
+                client_id: '178643627427-7nvabtvb3bpj3sf88v6k2j5l2a7d4qv0.apps.googleusercontent.com',
                 callback: handleGoogleCredentialResponse
             });
             google.accounts.id.prompt();
