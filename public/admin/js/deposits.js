@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let allDeposits = [];
     
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        const headers = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
+    
     async function loadDeposits() {
         try {
             const res = await fetch(`${API_BASE}/deposits`);
@@ -127,7 +136,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!confirm('Bạn có chắc muốn duyệt giao dịch này?')) return;
         
         try {
-            const res = await fetch(`${API_BASE}/deposits/${id}/approve`, { method: 'POST' });
+            const res = await fetch(`${API_BASE}/deposits/${id}/approve`, {
+                method: 'POST',
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             
             if (data.success) {
@@ -146,7 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!confirm('Bạn có chắc muốn từ chối giao dịch này?')) return;
         
         try {
-            const res = await fetch(`${API_BASE}/deposits/${id}/reject`, { method: 'POST' });
+            const res = await fetch(`${API_BASE}/deposits/${id}/reject`, {
+                method: 'POST',
+                headers: getAuthHeaders()
+            });
             const data = await res.json();
             
             if (data.success) {

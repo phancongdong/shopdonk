@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const API_BASE = window.location.origin + '/api';
     
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        const headers = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
+    
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -51,7 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadDashboard() {
         try {
             if (isAdmin) {
-                const usersRes = await fetch(`${API_BASE}/auth/users`);
+                const usersRes = await fetch(`${API_BASE}/auth/users`, {
+                    headers: getAuthHeaders()
+                });
                 const usersData = await usersRes.json();
                 
                 if (usersData.success) {
@@ -101,7 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 0);
             document.getElementById('totalProductsValue').textContent = formatCurrency(totalProductsValue);
             
-            const ordersRes = await fetch(`${API_BASE}/orders`);
+            const ordersRes = await fetch(`${API_BASE}/orders`, {
+                headers: getAuthHeaders()
+            });
             const ordersData = await ordersRes.json();
             let orders = ordersData.success ? ordersData.data : [];
             

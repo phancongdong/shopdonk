@@ -6,12 +6,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let allOrders = [];
     let autoRefreshInterval = null;
     
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        const headers = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
+    
     async function loadOrders() {
         try {
             let orders;
             
             if (isAdmin) {
-                const res = await fetch(`${API_BASE}/admin/orders?limit=100`);
+                const res = await fetch(`${API_BASE}/admin/orders?limit=100`, {
+                    headers: getAuthHeaders()
+                });
                 const data = await res.json();
                 orders = data.success ? data.data : [];
             } else {

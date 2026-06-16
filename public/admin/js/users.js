@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const API_BASE = window.location.origin + '/api';
     let allUsers = [];
     
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+    }
+    
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount);
     }
@@ -102,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(`${API_BASE}/admin/users/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(data)
             });
             
@@ -151,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const res = await fetch(`${API_BASE}/admin/balance/${userId}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ amount: amount, description: description || `Admin ${amount > 0 ? 'cộng' : 'trừ'} ${Math.abs(amount)} VNĐ` })
             });
             
