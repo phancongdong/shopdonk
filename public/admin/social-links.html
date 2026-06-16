@@ -87,7 +87,7 @@
         
         <div class="page-header" style="margin-top: 50px;">
             <h1><i class="fas fa-comments"></i> Bong bóng chat h? tr?</h1>
-            <p>C?u hình nút chat hi?n th? góc du?i bên ph?i trang web</p>
+            <p>C?u hình nút chat hi?n th? góc d??i bên ph?i trang web</p>
         </div>
         
         <div class="social-grid" style="grid-template-columns: 1fr;">
@@ -98,7 +98,7 @@
                     </div>
                     <div class="social-info">
                         <h3>Chat h? tr?</h3>
-                        <p id="chatBubbleUrlPreview">Chua c?u hình</p>
+                        <p id="chatBubbleUrlPreview">Ch?a c?u hình</p>
                     </div>
                 </div>
                 <div class="social-body">
@@ -113,7 +113,7 @@
                     </div>
                     <div style="margin-top: 15px; display: flex; gap: 10px;">
                         <button class="btn btn-primary" onclick="saveChatBubble()">
-                            <i class="fas fa-save"></i> Luu
+                            <i class="fas fa-save"></i> L?u
                         </button>
                         <button class="btn btn-secondary" onclick="testChatBubble()">
                             <i class="fas fa-external-link-alt"></i> Test
@@ -130,7 +130,7 @@
             { id: 'youtube', name: 'YouTube', icon: 'fab fa-youtube', placeholder: 'https://youtube.com/@yourchannel' },
             { id: 'telegram', name: 'Telegram', icon: 'fab fa-telegram-plane', placeholder: 'https://t.me/yourchannel' },
             { id: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok', placeholder: 'https://tiktok.com/@youraccount' },
-            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account ho?c s? di?n tho?i' },
+            { id: 'zalo', name: 'Zalo', placeholder: 'Link Zalo Official Account ho?c s? ?i?n tho?i' },
             { id: 'discord', name: 'Discord', icon: 'fab fa-discord', placeholder: 'https://discord.gg/yourinvite' },
             { id: 'twitter', name: 'Twitter', icon: 'fab fa-twitter', placeholder: 'https://twitter.com/yourhandle' },
             { id: 'instagram', name: 'Instagram', icon: 'fab fa-instagram', placeholder: 'https://instagram.com/yourprofile' }
@@ -175,7 +175,7 @@
                             </div>
                             <div class="social-info">
                                 <h3>${platform.name}</h3>
-                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'Chua c?u hình'}</p>
+                                <p>${link.url ? link.url.substring(0, 40) + '...' : 'Ch?a c?u hình'}</p>
                             </div>
                         </div>
                         <div class="social-body">
@@ -189,7 +189,7 @@
                             </div>
                             <div style="margin-top: 15px; display: flex; gap: 10px;">
                                 <button class="btn btn-primary" onclick="saveLink('${platform.id}')">
-                                    <i class="fas fa-save"></i> Luu
+                                    <i class="fas fa-save"></i> L?u
                                 </button>
                                 ${link.url ? `<button class="btn btn-secondary" onclick="testLink('${platform.id}')"><i class="fas fa-external-link-alt"></i> Test</button>` : ''}
                             </div>
@@ -226,7 +226,7 @@
             }
             
             localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
-            showToast('Ðã luu thành công!');
+            showToast('?ã l?u thành công!');
             renderSocialCards();
         }
         
@@ -247,7 +247,7 @@
         
         function renderChatBubbleCard() {
             document.getElementById('chatBubbleUrl').value = chatBubbleSettings.url;
-            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'Chua c?u hình';
+            document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url || 'Ch?a c?u hình';
             
             const toggle = document.getElementById('chatBubbleToggle');
             if (chatBubbleSettings.active) {
@@ -291,10 +291,10 @@
                 const updateData = await updateRes.json();
                 
                 if (updateData.success) {
-                    showToast('Ðã luu c?u hình chat bubble!');
+                    showToast('?ã l?u c?u hình chat bubble!');
                     document.getElementById('chatBubbleUrlPreview').textContent = chatBubbleSettings.url;
                 } else {
-                    showToast('L?i: ' + (updateData.message || 'Không th? luu'));
+                    showToast('L?i: ' + (updateData.message || 'Không th? l?u'));
                 }
             } catch (e) {
                 console.error('Error saving chat bubble:', e);

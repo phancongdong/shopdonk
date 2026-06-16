@@ -113,7 +113,7 @@
                 <div class="add-banner-content">
                     <i class="fas fa-plus-circle"></i>
                     <h3>Thêm banner m?i</h3>
-                    <p>Click d? thêm banner</p>
+                    <p>Click ?? thêm banner</p>
                 </div>
             </div>
         </div>
@@ -131,8 +131,8 @@
                     <input type="hidden" id="bannerId">
                     
                     <div class="form-group">
-                        <label>Tiêu d?</label>
-                        <input type="text" id="bannerTitle" placeholder="Nh?p tiêu d? banner" required>
+                        <label>Tiêu ??</label>
+                        <input type="text" id="bannerTitle" placeholder="Nh?p tiêu ?? banner" required>
                     </div>
                     
                     <div class="form-group">
@@ -141,7 +141,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Link di?u hu?ng (tùy ch?n)</label>
+                        <label>Link ?i?u h??ng (tùy ch?n)</label>
                         <input type="url" id="bannerLink" placeholder="https://...">
                     </div>
                     
@@ -149,7 +149,7 @@
                         <label>Hình ?nh</label>
                         <div class="file-upload" onclick="document.getElementById('bannerImage').click()">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click d? ch?n ?nh ho?c kéo th? vào dây</p>
+                            <p>Click ?? ch?n ?nh ho?c kéo th? vào ?ây</p>
                             <input type="file" id="bannerImage" accept="image/*" onchange="previewFile(this)">
                         </div>
                         <div class="preview-image" id="previewContainer">
@@ -171,7 +171,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">H?y</button>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Luu</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> L?u</button>
                 </div>
             </form>
         </div>
@@ -209,7 +209,7 @@
                 card.innerHTML = `
                     <div class="banner-preview">
                         <img src="${banner.image}" alt="${banner.title}" onerror="this.src='https://placehold.co/500x200/6366f1/fff?text=Banner'">
-                        <span class="banner-status ${banner.active ? 'active' : 'inactive'}">${banner.active ? 'Ðang hi?n th?' : 'Ðã t?t'}</span>
+                        <span class="banner-status ${banner.active ? 'active' : 'inactive'}">${banner.active ? '?ang hi?n th?' : '?ã t?t'}</span>
                     </div>
                     <div class="banner-info">
                         <div class="banner-title">${banner.title}</div>
@@ -234,7 +234,7 @@
                 <div class="add-banner-content">
                     <i class="fas fa-plus-circle"></i>
                     <h3>Thêm banner m?i</h3>
-                    <p>Click d? thêm banner</p>
+                    <p>Click ?? thêm banner</p>
                 </div>
             `;
             grid.appendChild(addCard);
@@ -346,7 +346,7 @@
                     });
                     
                     loadBanners();
-                    showToast(banner.active ? 'Ðã b?t banner' : 'Ðã t?t banner');
+                    showToast(banner.active ? '?ã b?t banner' : '?ã t?t banner');
                 } catch (error) {
                     console.error('Error toggling banner:', error);
                     showToast('Có l?i x?y ra!', 'error');
@@ -359,7 +359,7 @@
                 try {
                     await fetch(`${API_BASE}/banners/${id}`, { method: 'DELETE' });
                     loadBanners();
-                    showToast('Ðã xóa banner');
+                    showToast('?ã xóa banner');
                 } catch (error) {
                     console.error('Error deleting banner:', error);
                     showToast('Có l?i x?y ra!', 'error');

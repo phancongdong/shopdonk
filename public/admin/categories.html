@@ -29,9 +29,9 @@
             <nav class="flex-1 overflow-y-auto px-4 py-4">
                 <ul class="space-y-1">
                     <li><a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-chart-line"></i>Dashboard</a></li>
-                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ngu?i dùng</a></li>
+                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ng??i dùng</a></li>
                     <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>S?n ph?m</a></li>
-                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>Ðon hàng</a></li>
+                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>??n hàng</a></li>
                     <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>N?p ti?n</a></li>
                     <li><a href="categories.html" class="flex items-center gap-3 rounded-lg bg-brand-50 px-4 py-3 text-brand-600"><i class="fas fa-folder"></i>Danh m?c</a></li>
                     <li class="admin-only"><a href="banners.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-images"></i>Banner</a></li>
@@ -42,7 +42,7 @@
                 </ul>
                 <ul class="space-y-1 mt-6">
                     <li><a href="../index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-globe"></i>Xem trang web</a></li>
-                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>Ðang xu?t</a></li>
+                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>??ng xu?t</a></li>
                 </ul>
             </nav>
         </aside>
@@ -66,13 +66,13 @@
                                 </div>
                             </div>
                             <div id="categoryTree" class="space-y-1">
-                                <p class="text-gray-500 dark:text-gray-400">Ðang t?i...</p>
+                                <p class="text-gray-500 dark:text-gray-400">?ang t?i...</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
-                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Hu?ng d?n</h2>
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">H??ng d?n</h2>
                             <div class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                                 <div class="flex items-start gap-2">
                                     <i class="fas fa-info-circle text-brand-500 mt-0.5"></i>
@@ -80,11 +80,11 @@
                                 </div>
                                 <div class="flex items-start gap-2">
                                     <i class="fas fa-plus-circle text-green-500 mt-0.5"></i>
-                                    <p>Nh?n "Thêm danh m?c con" d? t?o danh m?c con trong danh m?c dã ch?n.</p>
+                                    <p>Nh?n "Thêm danh m?c con" ?? t?o danh m?c con trong danh m?c ?ã ch?n.</p>
                                 </div>
                                 <div class="flex items-start gap-2">
                                     <i class="fas fa-edit text-yellow-500 mt-0.5"></i>
-                                    <p>Nh?n vào tên danh m?c d? ch?nh s?a.</p>
+                                    <p>Nh?n vào tên danh m?c ?? ch?nh s?a.</p>
                                 </div>
                                 <div class="flex items-start gap-2">
                                     <i class="fas fa-trash text-red-500 mt-0.5"></i>
@@ -104,7 +104,7 @@
                                     <span id="rootCategories" class="font-semibold text-gray-900 dark:text-white">0</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600 dark:text-gray-400">Ð? sâu t?i da:</span>
+                                    <span class="text-gray-600 dark:text-gray-400">?? sâu t?i ?a:</span>
                                     <span id="maxDepth" class="font-semibold text-gray-900 dark:text-white">0</span>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                     </div>
                     <div class="flex justify-end gap-3 mt-6">
                         <button type="button" onclick="closeCategoryModal()" class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">H?y</button>
-                        <button type="submit" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">Luu</button>
+                        <button type="submit" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg">L?u</button>
                     </div>
                 </form>
             </div>

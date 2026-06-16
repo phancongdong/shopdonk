@@ -35,9 +35,9 @@
         <nav class="flex-1 overflow-y-auto px-3 py-3">
           <ul class="space-y-1">
             <li><a href="index.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-chart-line"></i><span x-show="!sidebarToggle">Dashboard</span></a></li>
-            <li class="admin-only"><a href="users.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-users"></i><span x-show="!sidebarToggle">Ngu?i dùng</span></a></li>
+            <li class="admin-only"><a href="users.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-users"></i><span x-show="!sidebarToggle">Ng??i dùng</span></a></li>
             <li><a href="products.html" class="flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-600 dark:bg-brand-900/20 dark:text-brand-400"><i class="fas fa-box"></i><span x-show="!sidebarToggle">S?n ph?m</span></a></li>
-            <li><a href="orders.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-shopping-cart"></i><span x-show="!sidebarToggle">Ðon hàng</span></a></li>
+            <li><a href="orders.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-shopping-cart"></i><span x-show="!sidebarToggle">??n hàng</span></a></li>
             <li class="admin-only"><a href="deposits.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-wallet"></i><span x-show="!sidebarToggle">N?p ti?n</span></a></li>
             <li class="admin-only"><a href="categories.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-folder"></i><span x-show="!sidebarToggle">Danh m?c</span></a></li>
             <li class="admin-only"><a href="banners.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-images"></i><span x-show="!sidebarToggle">Banner</span></a></li>
@@ -48,7 +48,7 @@
           <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
             <ul class="space-y-1">
               <li><a href="../index.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"><i class="fas fa-globe"></i><span x-show="!sidebarToggle">Xem web</span></a></li>
-              <li><a href="#" @click.prevent="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fas fa-sign-out-alt"></i><span x-show="!sidebarToggle">Ðang xu?t</span></a></li>
+              <li><a href="#" @click.prevent="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"><i class="fas fa-sign-out-alt"></i><span x-show="!sidebarToggle">??ng xu?t</span></a></li>
             </ul>
           </div>
         </nav>
@@ -90,7 +90,7 @@
                     <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">L?i nhu?n</th>
                     <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">T?n kho</th>
                     <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tr?ng thái</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Hành d?ng</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Hành ??ng</th>
                   </tr>
                 </thead>
                 <tbody id="productsTable" class="divide-y divide-gray-200 dark:divide-gray-800"></tbody>
@@ -146,7 +146,7 @@
                 </div>
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">S? lu?ng</label>
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">S? l??ng</label>
                 <input type="number" id="productStock" required class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
               </div>
               <div>
@@ -156,14 +156,14 @@
               <div>
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Lo?i tài kho?n</label>
                 <select id="accountType" onchange="toggleAccountFields()" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-                  <option value="single">Tài kho?n don (1 tài kho?n - nhi?u lu?t mua)</option>
+                  <option value="single">Tài kho?n ??n (1 tài kho?n - nhi?u l??t mua)</option>
                   <option value="multiple">Danh sách tài kho?n (nhi?u TK - m?i TK bán 1 l?n)</option>
                 </select>
               </div>
               <div id="singleAccountFields" class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Tài kho?n <span class="text-red-500">*</span></label>
-                  <input type="text" id="productAccount" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Tên dang nh?p">
+                  <input type="text" id="productAccount" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Tên ??ng nh?p">
                 </div>
                 <div>
                   <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">M?t kh?u <span class="text-red-500">*</span></label>
@@ -172,8 +172,8 @@
               </div>
               <div id="multipleAccountFields" class="hidden">
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Danh sách tài kho?n <span class="text-red-500">*</span></label>
-                <textarea id="accountsList" rows="6" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white font-mono" placeholder="Ð?nh d?ng m?i dòng: taikhoan-matkhau&#10;Ví d?:&#10;user1-pass1&#10;user2-pass2&#10;user3-pass3"></textarea>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">M?i dòng 1 tài kho?n, s? lu?ng s? t? d?ng d?m theo s? dòng</p>
+                <textarea id="accountsList" rows="6" class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white font-mono" placeholder="??nh d?ng m?i dòng: taikhoan-matkhau&#10;Ví d?:&#10;user1-pass1&#10;user2-pass2&#10;user3-pass3"></textarea>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">M?i dòng 1 tài kho?n, s? l??ng s? t? ??ng ??m theo s? dòng</p>
               </div>
               <div>
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mô t?</label>
@@ -182,7 +182,7 @@
             </div>
             <div class="flex justify-end gap-2 mt-4">
               <button type="button" onclick="closeProductModal()" class="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">H?y</button>
-              <button type="submit" class="px-3 py-1.5 text-sm bg-brand-500 hover:bg-brand-600 text-white rounded-lg">Luu</button>
+              <button type="submit" class="px-3 py-1.5 text-sm bg-brand-500 hover:bg-brand-600 text-white rounded-lg">L?u</button>
             </div>
           </form>
         </div>

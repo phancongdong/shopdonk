@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <title>Qu?n lý hình ?nh | ShopDonk Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,9 +19,9 @@
             <nav class="flex-1 overflow-y-auto px-4 py-4">
                 <ul class="space-y-1">
                     <li><a href="index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-chart-line"></i>Dashboard</a></li>
-                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ngu?i dùng</a></li>
+                    <li class="admin-only"><a href="users.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-users"></i>Ng??i dùng</a></li>
                     <li><a href="products.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-box"></i>S?n ph?m</a></li>
-                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>Ðon hàng</a></li>
+                    <li><a href="orders.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-shopping-cart"></i>??n hàng</a></li>
                     <li class="admin-only"><a href="deposits.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-wallet"></i>N?p ti?n</a></li>
                     <li class="admin-only"><a href="categories.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-folder"></i>Danh m?c</a></li>
                     <li class="admin-only"><a href="banners.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-images"></i>Banner</a></li>
@@ -31,7 +31,7 @@
                 </ul>
                 <ul class="space-y-1 mt-6">
                     <li><a href="../index.html" class="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300"><i class="fas fa-globe"></i>Xem trang web</a></li>
-                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>Ðang xu?t</a></li>
+                    <li><a href="#" onclick="localStorage.clear(); window.location.href='../login.html'" class="flex items-center gap-3 rounded-lg px-4 py-3 text-red-600"><i class="fas fa-sign-out-alt"></i>??ng xu?t</a></li>
                 </ul>
             </nav>
         </aside>
@@ -54,8 +54,8 @@
                                 <div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 text-center hover:border-brand-500 transition-colors cursor-pointer" id="dropZone">
                                     <input type="file" id="fileInput" accept="image/*" class="hidden">
                                     <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Kéo th? ho?c click d? ch?n file</p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG, GIF t?i da 10MB</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Kéo th? ho?c click ?? ch?n file</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG, GIF t?i ?a 10MB</p>
                                 </div>
                                 <div id="previewContainer" class="mt-4 hidden">
                                     <img id="previewImage" src="" alt="Preview" class="max-w-full h-32 rounded-lg border border-gray-300 dark:border-gray-700">
@@ -74,7 +74,7 @@
                                 <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                     <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">K?t qu? upload</h4>
                                     <div id="uploadResult" class="text-sm text-gray-500 dark:text-gray-400">
-                                        Chua có k?t qu?
+                                        Ch?a có k?t qu?
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                     <div class="rounded-xl bg-white shadow-sm dark:bg-gray-950 p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                <i class="fas fa-images text-brand-600"></i> Hình ?nh dã upload
+                                <i class="fas fa-images text-brand-600"></i> Hình ?nh ?ã upload
                             </h3>
                             <button onclick="loadImages()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
                                 <i class="fas fa-sync-alt mr-2"></i>Làm m?i
@@ -92,7 +92,7 @@
                         </div>
                         
                         <div id="imagesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                            <p class="col-span-full text-center text-gray-500 py-8">Ðang t?i...</p>
+                            <p class="col-span-full text-center text-gray-500 py-8">?ang t?i...</p>
                         </div>
                     </div>
                     
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-4">
-                    <button onclick="closeImageModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Ðóng</button>
+                    <button onclick="closeImageModal()" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">?óng</button>
                     <button onclick="deleteCurrentImage()" class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg"><i class="fas fa-trash mr-1"></i>Xóa</button>
                 </div>
             </div>
@@ -245,7 +245,7 @@
         
         async function loadImages() {
             const grid = document.getElementById('imagesGrid');
-            grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Ðang t?i...</p>';
+            grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">?ang t?i...</p>';
             
             try {
                 const res = await fetch(`${API_BASE}/images?limit=100`);
@@ -255,7 +255,7 @@
                     uploadedImages = data.data;
                     renderImages(data.data);
                 } else {
-                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Chua có hình ?nh nào</p>';
+                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Ch?a có hình ?nh nào</p>';
                 }
             } catch (error) {
                 console.error('Load images error:', error);
@@ -297,7 +297,7 @@
         
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Ðã sao chép!');
+                showToast('?ã sao chép!');
             });
         }
         
@@ -314,7 +314,7 @@
                 const data = await res.json();
                 
                 if (data.success) {
-                    showToast('Ðã xóa hình ?nh!');
+                    showToast('?ã xóa hình ?nh!');
                     closeImageModal();
                     loadImages();
                 } else {
