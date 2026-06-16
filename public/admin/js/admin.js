@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.getElementById('totalProducts').textContent = products.length;
             
+            const totalProductsValue = products.reduce((sum, p) => sum + ((p.price || 0) * (p.stock || 0)), 0);
+            document.getElementById('totalProductsValue').textContent = formatCurrency(totalProductsValue);
+            
             const ordersRes = await fetch(`${API_BASE}/orders`);
             const ordersData = await ordersRes.json();
             let orders = ordersData.success ? ordersData.data : [];
