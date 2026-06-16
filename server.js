@@ -98,6 +98,8 @@ app.get('/sitemap.xml', async (req, res) => {
             { loc: 'https://shopdonk.com/', priority: '1.0', changefreq: 'daily' },
             { loc: 'https://shopdonk.com/login.html', priority: '0.5', changefreq: 'monthly' },
             { loc: 'https://shopdonk.com/register.html', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/deposit.html', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/orders.html', priority: '0.5', changefreq: 'monthly' },
             { loc: 'https://shopdonk.com/faq.html', priority: '0.6', changefreq: 'monthly' },
             { loc: 'https://shopdonk.com/contact.html', priority: '0.6', changefreq: 'monthly' }
         ];
