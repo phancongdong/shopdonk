@@ -20,6 +20,8 @@ const migrationRoutes = require('./routes/migration');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 const allowedOrigins = [
     'https://shopdonk.com',
     'https://www.shopdonk.com',
