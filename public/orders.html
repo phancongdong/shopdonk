@@ -263,17 +263,17 @@
                 if (data.success) {
                     const accounts = data.data.accounts || [];
                     const accountsHtml = accounts.map((a, i) => `
-                        <div style="background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;">
-                            <div style="color:#6366f1;font-size:11px;margin-bottom:4px;">Nick #${i+1}</div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
-                                <span style="color:#94a3b8;font-size:12px;">TK:</span>
-                                <code style="font-size:11px;">${escapeHtml(a.username || 'N/A')}</code>
-                                <button onclick="navigator.clipboard.writeText('${escapeJs(a.username || '')}');this.innerHTML='✓';setTimeout(()=>this.innerHTML='📋',1000)" style="background:none;border:none;cursor:pointer;padding:2px;">📋</button>
+                        <div class="account-item">
+                            <div class="account-item-title">Nick #${i+1}</div>
+                            <div class="credential-row">
+                                <span class="credential-label">TK:</span>
+                                <code class="credential-value">${escapeHtml(a.username || 'N/A')}</code>
+                                <button class="copy-btn-mobile" onclick="handleCopyToClipboard('${escapeJs(a.username || '')}', this)">📋</button>
                             </div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;">
-                                <span style="color:#94a3b8;font-size:12px;">MK:</span>
-                                <code style="font-size:11px;">${escapeHtml(a.password || 'N/A')}</code>
-                                <button onclick="navigator.clipboard.writeText('${escapeJs(a.password || '')}');this.innerHTML='✓';setTimeout(()=>this.innerHTML='📋',1000)" style="background:none;border:none;cursor:pointer;padding:2px;">📋</button>
+                            <div class="credential-row">
+                                <span class="credential-label">MK:</span>
+                                <code class="credential-value">${escapeHtml(a.password || 'N/A')}</code>
+                                <button class="copy-btn-mobile" onclick="handleCopyToClipboard('${escapeJs(a.password || '')}', this)">📋</button>
                             </div>
                         </div>
                     `).join('');
@@ -287,17 +287,85 @@
                     
                     btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn tài khoản';
                 } else {
-                    alert(data.message || 'Không thể xem tài khoản');
+                    showToast(data.message || 'Không thể xem tài khoản');
                     btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
                 }
             } catch (error) {
                 console.error('Error fetching accounts:', error);
-                alert('Lỗi khi tải tài khoản');
+                showToast('Lỗi khi tải tài khoản');
                 btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
             }
             
             btn.disabled = false;
         });
+        
+        async function handleCopyToClipboard(text, btn) {
+            if (!text) {
+                showToast('Không có dữ liệu để copy');
+                return;
+            }
+            
+            const success = await copyToClipboard(text);
+            
+            if (success) {
+                btn.innerHTML = '✓';
+                btn.classList.add('copied');
+                showToast('Đã copy!');
+                
+                setTimeout(() => {
+                    btn.innerHTML = '📋';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } else {
+                showToast('Copy thất bại, vui lòng copy thủ công');
+            }
+        }
+        
+        async function copyToClipboard(text) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                }
+                
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.top = '0';
+                textarea.style.left = '0';
+                textarea.style.opacity = '0';
+                textarea.style.fontSize = '16px';
+                textarea.setAttribute('readonly', '');
+                document.body.appendChild(textarea);
+                
+                textarea.select();
+                textarea.setSelectionRange(0, 99999);
+                
+                const success = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                return success;
+            } catch (e) {
+                console.error('Copy failed:', e);
+                return false;
+            }
+        }
+        
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
     </script>
     <style>
         .orders-container {
@@ -504,6 +572,113 @@
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
         
+        .account-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .account-item-title {
+            color: #6366f1;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .credential-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            min-height: 44px;
+        }
+        
+        .credential-label {
+            color: #94a3b8;
+            font-size: 14px;
+            min-width: 30px;
+            flex-shrink: 0;
+        }
+        
+        .credential-value {
+            font-size: 13px;
+            color: #00f0ff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 6px;
+            flex: 1;
+            min-width: 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .copy-btn-mobile {
+            min-width: 44px;
+            min-height: 44px;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .copy-btn-mobile:active {
+            transform: scale(0.95);
+            background: rgba(99, 102, 241, 0.4);
+        }
+        
+        .copy-btn-mobile.copied {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: rgba(46, 204, 113, 0.5);
+        }
+        
+        .toast-notification {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.95);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            font-size: 14px;
+            z-index: 10000;
+            animation: toastFadeIn 0.3s ease, toastFadeOut 0.3s ease 2.7s;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        @keyframes toastFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        @keyframes toastFadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
             .orders-container {
                 padding: 15px 10px;
@@ -664,39 +839,26 @@
             }
             
             .account-item {
-                padding: 12px;
-                border-radius: 8px;
+                padding: 10px;
             }
             
             .account-item-title {
                 font-size: 12px;
-                margin-bottom: 8px;
             }
             
-            .credential-row {
-                flex-wrap: wrap;
-                gap: 6px;
-                padding: 8px 0;
-            }
-            
-            .credential-row span {
+            .credential-label {
                 font-size: 13px;
             }
             
-            .credential-row code {
+            .credential-value {
                 font-size: 12px;
-                flex: 1;
-                min-width: 0;
+                padding: 6px 10px;
             }
             
-            .credential-row button {
-                padding: 6px 10px;
+            .copy-btn-mobile {
+                min-width: 40px;
+                min-height: 40px;
                 font-size: 14px;
-                min-width: 44px;
-                min-height: 44px;
-                background: rgba(99, 102, 241, 0.2);
-                border-radius: 6px;
-                flex-shrink: 0;
             }
         }
     </style>
@@ -707,6 +869,24 @@
             gsap.from('.page-header', { y: 30, opacity: 0, duration: 0.6, delay: 0.3 });
             gsap.from('#ordersContent', { y: 40, opacity: 0, duration: 0.7, delay: 0.5, ease: "power2.out" });
         });
+        
+        // Touch event optimization for mobile
+        let touchStartTime = 0;
+        let touchStartTarget = null;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartTime = Date.now();
+            touchStartTarget = e.target;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', async function(e) {
+            if (Date.now() - touchStartTime > 500) return;
+            
+            const btn = e.target.closest('.view-account-btn');
+            if (!btn) return;
+            
+            e.preventDefault();
+        }, { passive: false });
     </script>
 </body>
 </html>
