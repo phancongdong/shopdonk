@@ -927,21 +927,7 @@ img {
         font-size: 20px;
     }
     
-    /* Orders Table */
-    .orders-table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .orders-table {
-        min-width: 600px;
-    }
-    
-    .orders-table th,
-    .orders-table td {
-        padding: 12px 10px;
-        font-size: 13px;
-    }
+
     
     /* Order Cards Mobile */
     .order-card {
