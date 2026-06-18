@@ -1068,23 +1068,6 @@
             gsap.from('#ordersContent', { y: 40, opacity: 0, duration: 0.7, delay: 0.5, ease: "power2.out" });
         });
         
-        // Touch event optimization for mobile
-        let touchStartTime = 0;
-        let touchStartTarget = null;
-        
-        document.addEventListener('touchstart', function(e) {
-            touchStartTime = Date.now();
-            touchStartTarget = e.target;
-        }, { passive: true });
-        
-        document.addEventListener('touchend', async function(e) {
-            if (Date.now() - touchStartTime > 500) return;
-            
-            const btn = e.target.closest('.view-account-btn');
-            if (!btn) return;
-            
-            e.preventDefault();
-        }, { passive: false });
     </script>
 </body>
 </html>
