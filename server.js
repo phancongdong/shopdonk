@@ -183,7 +183,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
 // SEO: Redirect .html URLs to clean URLs (only for navigation, not static assets)
 app.use((req, res, next) => {
     if (req.path.endsWith('.html') && req.method === 'GET' && !req.path.includes('/admin/')) {
-        const cleanPath = req.path.replace('.html', '');
+        let cleanPath = req.path.replace('.html', '');
+        if (cleanPath === '/index') cleanPath = '/';
         const query = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
         return res.redirect(301, cleanPath + query);
     }
@@ -215,6 +216,10 @@ app.use('/api/admin', migrationRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).end();
 });
 
 app.get('/login', (req, res) => {
