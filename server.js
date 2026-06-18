@@ -168,16 +168,6 @@ app.use((req, res, next) => {
 
 app.use(securityAuditMiddleware);
 
-// SEO: Redirect .html URLs to clean URLs (MUST be before express.static)
-app.use((req, res, next) => {
-    if (req.path.endsWith('.html') && req.method === 'GET') {
-        const cleanPath = req.path.replace('.html', '');
-        const query = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
-        return res.redirect(301, cleanPath + query);
-    }
-    next();
-});
-
 app.use(express.static(path.join(__dirname, 'public'), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.html')) {
@@ -189,6 +179,16 @@ app.use(express.static(path.join(__dirname, 'public'), {
         }
     }
 }));
+
+// SEO: Redirect .html URLs to clean URLs (only for navigation, not static assets)
+app.use((req, res, next) => {
+    if (req.path.endsWith('.html') && req.method === 'GET' && !req.path.includes('/admin/')) {
+        const cleanPath = req.path.replace('.html', '');
+        const query = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
+        return res.redirect(301, cleanPath + query);
+    }
+    next();
+});
 
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
