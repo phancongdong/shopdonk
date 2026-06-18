@@ -180,6 +180,16 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
 }));
 
+// SEO: Redirect .html URLs to clean URLs
+app.use((req, res, next) => {
+    if (req.path.endsWith('.html') && req.method === 'GET') {
+        const cleanPath = req.path.replace('.html', '');
+        const query = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
+        return res.redirect(301, cleanPath + query);
+    }
+    next();
+});
+
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 app.use('/api/auth/forgot-password', authLimiter);
@@ -239,6 +249,23 @@ app.get('/category', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'category.html'));
 });
 
+// SEO: Clean URL routes
+app.get('/cay-thue-lien-quan', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'cay-thue-lien-quan.html'));
+});
+
+app.get('/faq', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'faq.html'));
+});
+
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
+app.get('/change-password', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'change-password.html'));
+});
+
 app.get('/product/:slug', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -275,15 +302,16 @@ app.get('/sitemap.xml', async (req, res) => {
         
         const staticPages = [
             { loc: 'https://shopdonk.com/', priority: '1.0', changefreq: 'daily' },
-            { loc: 'https://shopdonk.com/login.html', priority: '0.8', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/register.html', priority: '0.8', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/deposit.html', priority: '0.7', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/orders.html', priority: '0.7', changefreq: 'daily' },
-            { loc: 'https://shopdonk.com/profile.html', priority: '0.5', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/change-password.html', priority: '0.5', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/transactions.html', priority: '0.5', changefreq: 'daily' },
-            { loc: 'https://shopdonk.com/faq.html', priority: '0.6', changefreq: 'monthly' },
-            { loc: 'https://shopdonk.com/contact.html', priority: '0.6', changefreq: 'monthly' }
+            { loc: 'https://shopdonk.com/cay-thue-lien-quan', priority: '0.9', changefreq: 'weekly' },
+            { loc: 'https://shopdonk.com/login', priority: '0.8', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/register', priority: '0.8', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/deposit', priority: '0.7', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/orders', priority: '0.7', changefreq: 'daily' },
+            { loc: 'https://shopdonk.com/profile', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/change-password', priority: '0.5', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/transactions', priority: '0.5', changefreq: 'daily' },
+            { loc: 'https://shopdonk.com/faq', priority: '0.6', changefreq: 'monthly' },
+            { loc: 'https://shopdonk.com/contact', priority: '0.6', changefreq: 'monthly' }
         ];
         
         staticPages.forEach(page => {
