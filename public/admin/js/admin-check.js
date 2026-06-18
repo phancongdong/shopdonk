@@ -5,7 +5,7 @@
     // Check if user is logged in and has admin or ctv role
     if (!user || (user.role !== 'admin' && user.role !== 'ctv')) {
         console.log('[ADMIN-CHECK] No valid user, redirecting to login');
-        window.location.href = '../login.html';
+        window.location.href = '../login';
         return;
     }
     
@@ -13,7 +13,7 @@
     if (!token) {
         console.log('[ADMIN-CHECK] No token found, redirecting to login');
         localStorage.removeItem('user');
-        window.location.href = '../login.html';
+        window.location.href = '../login';
         return;
     }
     
@@ -30,7 +30,7 @@
             console.log('[ADMIN-CHECK] Token invalid or expired, redirecting to login');
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            window.location.href = '../login.html';
+            window.location.href = '../login';
             return null;
         }
         return res.json();
@@ -64,7 +64,7 @@
     const currentPage = window.location.pathname.split('/').pop();
     
     if (adminOnlyPages.includes(currentPage) && user.role !== 'admin') {
-        alert('Báº¡n khÃ´ng cÃ³ quyá»n truy cáº­p trang nÃ y!');
+        alert('Bạn không có quyền truy cập trang này!');
         window.location.href = 'index.html';
         return;
     }
