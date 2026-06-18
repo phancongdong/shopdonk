@@ -4,6 +4,49 @@ document.addEventListener('DOMContentLoaded', function() {
     let isLoading = false;
     let loadingProductIds = new Set();
     
+    window.uploadProductImage = async function(input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const imageInput = document.getElementById('productImage');
+        
+        preview.classList.remove('hidden');
+        previewImg.src = URL.createObjectURL(file);
+        uploadStatus.textContent = 'Đang tải lên...';
+        uploadStatus.className = 'text-xs text-yellow-500 mt-1';
+        
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        try {
+            const res = await fetch(`${API_BASE}/upload`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await res.json();
+            
+            if (data.success && data.data && data.data.url) {
+                imageInput.value = data.data.url;
+                previewImg.src = data.data.url;
+                uploadStatus.textContent = 'Tải lên thành công!';
+                uploadStatus.className = 'text-xs text-green-500 mt-1';
+            } else {
+                uploadStatus.textContent = 'Lỗi: ' + (data.message || 'Không thể tải lên');
+                uploadStatus.className = 'text-xs text-red-500 mt-1';
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            uploadStatus.textContent = 'Lỗi kết nối!';
+            uploadStatus.className = 'text-xs text-red-500 mt-1';
+        }
+        
+        input.value = '';
+    };
+    
     function getAuthHeaders() {
         const token = localStorage.getItem('token');
         const headers = { 'Content-Type': 'application/json' };
@@ -160,10 +203,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('accountsList')?.addEventListener('input', updateStockFromAccountsList);
     
     window.showAddProductModal = function() {
-        document.getElementById('modalTitle').textContent = 'ThÃªm sáº£n pháº©m má»›i';
+        document.getElementById('modalTitle').textContent = 'Thêm sản phẩm mới';
         document.getElementById('productId').value = '';
         document.getElementById('accountType').value = 'single';
         document.getElementById('productForm').reset();
+        document.getElementById('imagePreview').classList.add('hidden');
         toggleAccountFields();
         document.getElementById('productModal').classList.remove('hidden');
     };
@@ -192,6 +236,18 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('productPrice').value = product.price || 0;
             document.getElementById('productStock').value = product.stock || 0;
             document.getElementById('productImage').value = product.image || '';
+            
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const uploadStatus = document.getElementById('uploadStatus');
+            if (product.image) {
+                imagePreview.classList.remove('hidden');
+                previewImg.src = product.image;
+                uploadStatus.textContent = '';
+            } else {
+                imagePreview.classList.add('hidden');
+            }
+            
             document.getElementById('productDescription').value = product.description || '';
             
             const accountType = product.account_type || 'single';
