@@ -5,20 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
         {
             id: 'tft',
             slug: 'tft',
-            name: 'ACC TFT Äáº¤U TRÆ¯á»œNG CHÃ‚N LÃ',
+            name: 'ACC TFT ĐẤU TRƯỜNG CHÂN LÝ',
             icon: 'fa-chess',
             color: '#E74C3C',
             image: 'https://placehold.co/300x150/E74C3C/FFFFFF?text=TFT+Arenas',
-            description: 'Mua tÃ i khoáº£n TFT vá»›i Ä‘áº§y Ä‘á»§ linh thÃº, arena Ä‘áº¹p. ÄÄƒng nháº­p ngay Ä‘á»ƒ nháº­n Æ°u Ä‘Ã£i!'
+            description: 'Mua tài khoản TFT với đầy đủ linh thú, arena đẹp. Đăng nhập ngay để nhận ưu đãi!'
         },
         {
             id: 'lienquan',
             slug: 'lien-quan',
-            name: 'ACC LIÃŠN QUÃ‚N MOBILE',
+            name: 'ACC LIÊN QUÂN MOBILE',
             icon: 'fa-mobile-alt',
             color: '#E67E22',
             image: 'https://placehold.co/300x150/E67E22/FFFFFF?text=Lien+Quan',
-            description: 'Acc LiÃªn QuÃ¢n Mobile giÃ¡ ráº», Ä‘áº§y Ä‘á»§ skin, rank cao. Báº£o hÃ nh trá»n Ä‘á»i!'
+            description: 'Acc Liên Quân Mobile giá rẻ, đầy đủ skin, rank cao. Bảo hành trọn đời!'
         },
         {
             id: 'freefire',
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             icon: 'fa-fire',
             color: '#3498DB',
             image: 'https://placehold.co/300x150/3498DB/FFFFFF?text=Free+Fire',
-            description: 'Acc Free Fire VIP, nhiá»u skin, gun Ä‘áº¹p. GiÃ¡ cá»±c ráº» cho game thá»§!'
+            description: 'Acc Free Fire VIP, nhiều skin, gun đẹp. Giá cực rẻ cho game thủ!'
         },
         {
             id: 'roblox',
@@ -36,11 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
             icon: 'fa-cube',
             color: '#9B59B6',
             image: 'https://placehold.co/300x150/9B59B6/FFFFFF?text=Roblox',
-            description: 'Acc Roblox cÃ³ Robux, nhiá»u item hiáº¿m. Mua ngay Ä‘á»ƒ tráº£i nghiá»‡m!'
+            description: 'Acc Roblox có Robux, nhiều item hiếm. Mua ngay để trải nghiệm!'
         }
     ];
 
-    // Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const menuToggle = document.getElementById('menuToggle');
     const sidebarClose = document.getElementById('sidebarClose');
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.querySelector('.main-content');
     const footer = document.querySelector('.footer');
 
-    // Sidebar collapse/expand toggle
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
@@ -56,12 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (mainContent) mainContent.classList.toggle('expanded');
             if (footer) footer.classList.toggle('collapsed');
             
-            // Save state to localStorage
             const isCollapsed = sidebar.classList.contains('collapsed');
             localStorage.setItem('sidebarCollapsed', isCollapsed);
         });
         
-        // Restore sidebar state from localStorage
         const savedState = localStorage.getItem('sidebarCollapsed');
         if (savedState === 'true') {
             sidebar.classList.add('collapsed');
@@ -71,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Mobile menu toggle
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             sidebar.classList.add('active');
@@ -84,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // User Dropdown
     const userBtn = document.getElementById('userBtn');
     const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -99,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Load Products from API
     async function loadProducts() {
         try {
             const response = await fetch(`${API_BASE}/products`);
@@ -138,23 +131,23 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                                 <div class="product-info">
                                     <h3 class="product-title">
-                                        <a href="product-detail.htmlá»—id=${product.id}">${product.name}</a>
+                                        <a href="product-detail.html?id=${product.id}">${product.name}</a>
                                     </h3>
                                     ${product.price > 0 ? `
                                         <div class="product-price">
                                             <i class="fas fa-tag"></i>
-                                            <span>Chá»‰ tá»«: ${formatCurrency(product.price)}</span>
+                                            <span>Chỉ từ: ${formatCurrency(product.price)}</span>
                                         </div>
                                     ` : ''}
                                     <p class="product-stock">
                                         ${product.stock > 0 
-                                            ? `CÃ²n <span class="count">${product.stock}</span> nick` 
-                                            : '<span style="color: #999;">Háº¿t hÃ ng</span>'
+                                            ? `Còn <span class="count">${product.stock}</span> nick` 
+                                            : '<span style="color: #999;">Hết hàng</span>'
                                         }
                                     </p>
-                                    <a href="product-detail.htmlá»—id=${product.id}" class="product-btn">
+                                    <a href="product-detail.html?id=${product.id}" class="product-btn">
                                         <img src="https://placehold.co/100x30/FF5D05/FFFFFF?text=Xem+All" 
-                                             alt="Xem táº¥t cáº£" style="height: 30px;">
+                                             alt="Xem tất cả" style="height: 30px;">
                                     </a>
                                 </div>
                             </div>
@@ -166,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="category-footer">
                         <a href="/${cat.slug}" class="view-more-btn">
-                            <i class="fas fa-eye"></i> Xem thÃªm
+                            <i class="fas fa-eye"></i> Xem thêm
                         </a>
                     </div>
                 </div>
@@ -178,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCategories(products);
     }
 
-    // Format Currency
     function formatCurrency(amount) {
         return new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -187,24 +179,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }).format(amount);
     }
 
-    // Load sample products as fallback
     function loadSampleProducts() {
         const sampleProducts = {
             tft: [
-                { id: 1, name: 'Linh ThÃº Aatrox Huyáº¿t Nguyá»‡t', price: 110500, stock: 1, image: 'https://placehold.co/300x200/FF6B35/FFFFFF?text=Aatrox', category_slug: 'tft' },
-                { id: 2, name: 'Linh ThÃº Jhin Háº¯c Tinh Äá»™t PhÃ¡', price: 90000, stock: 15, image: 'https://placehold.co/300x200/9B59B6/FFFFFF?text=Jhin', category_slug: 'tft' },
-                { id: 3, name: 'Linh ThÃº Jin Háº¯c Tinh', price: 112500, stock: 14, image: 'https://placehold.co/300x200/3498DB/FFFFFF?text=Jin', category_slug: 'tft' },
-                { id: 4, name: 'Linh XÃ  Tháº§n Vá»±c', price: 97500, stock: 11, image: 'https://placehold.co/300x200/2ECC71/FFFFFF?text=Linh+Xa', category_slug: 'tft' },
+                { id: 1, name: 'Linh Thú Aatrox Huyết Nguyệt', price: 110500, stock: 1, image: 'https://placehold.co/300x200/FF6B35/FFFFFF?text=Aatrox', category_slug: 'tft' },
+                { id: 2, name: 'Linh Thú Jhin Hắc Tinh Đột Phá', price: 90000, stock: 15, image: 'https://placehold.co/300x200/9B59B6/FFFFFF?text=Jhin', category_slug: 'tft' },
+                { id: 3, name: 'Linh Thú Jin Hắc Tinh', price: 112500, stock: 14, image: 'https://placehold.co/300x200/3498DB/FFFFFF?text=Jin', category_slug: 'tft' },
+                { id: 4, name: 'Linh Xà Thần Vực', price: 97500, stock: 11, image: 'https://placehold.co/300x200/2ECC71/FFFFFF?text=Linh+Xa', category_slug: 'tft' },
             ],
             'lien-quan': [
-                { id: 5, name: 'Nick LiÃªn QuÃ¢n Tráº¯ng ThÃ´ng Tin', price: 100000, stock: 8, image: 'https://placehold.co/300x200/E74C3C/FFFFFF?text=Lien+Quan', category_slug: 'lien-quan' },
-                { id: 6, name: 'Nick Reg Tráº¯ng ThÃ´ng Tin', price: 30000, stock: 111, image: 'https://placehold.co/300x200/F39C12/FFFFFF?text=Nick+Reg', category_slug: 'lien-quan' },
+                { id: 5, name: 'Nick Liên Quân Trắng Thông Tin', price: 100000, stock: 8, image: 'https://placehold.co/300x200/E74C3C/FFFFFF?text=Lien+Quan', category_slug: 'lien-quan' },
+                { id: 6, name: 'Nick Reg Trắng Thông Tin', price: 30000, stock: 111, image: 'https://placehold.co/300x200/F39C12/FFFFFF?text=Nick+Reg', category_slug: 'lien-quan' },
             ],
             'free-fire': [
                 { id: 7, name: 'Acc Free Fire VIP', price: 150000, stock: 10, image: 'https://placehold.co/300x200/FF5722/FFFFFF?text=FF+VIP', category_slug: 'free-fire' },
             ],
             'roblox': [
-                { id: 8, name: 'Acc Roblox CÃ³ Robux', price: 200000, stock: 5, image: 'https://placehold.co/300x200/E91E63/FFFFFF?text=Robux', category_slug: 'roblox' },
+                { id: 8, name: 'Acc Roblox Có Robux', price: 200000, stock: 5, image: 'https://placehold.co/300x200/E91E63/FFFFFF?text=Robux', category_slug: 'roblox' },
             ]
         };
 
@@ -212,10 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCategories(allProducts);
     }
 
-    // Initialize
     loadProducts();
 
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -229,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Cart Badge Update
     function updateCartBadge() {
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
         const badge = document.getElementById('cartBadge');
@@ -240,14 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateCartBadge();
 
-    // Load User Info
     async function loadUserInfo() {
         const user = JSON.parse(localStorage.getItem('user') || 'null');
         const userBtn = document.getElementById('userBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         
         if (user) {
-            // Fetch latest user info from API
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
@@ -262,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data.success) {
                         const latestUser = data.users.find(u => u.id === user.id);
                         if (latestUser) {
-                            // Update localStorage with latest balance
                             user.balance = latestUser.balance || 0;
                             user.role = latestUser.role || 'user';
                             localStorage.setItem('user', JSON.stringify(user));
@@ -286,16 +271,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdownMenu.innerHTML = `
                     <div class="dropdown-user-info">
                         <div class="dropdown-user-name"><i class="fas fa-user"></i> ${user.name}</div>
-                        <div class="dropdown-user-email">${user.email || 'ChÆ°a cÃ³ email'}</div>
+                        <div class="dropdown-user-email">${user.email || 'Chưa có email'}</div>
                         <div class="dropdown-user-balance"><i class="fas fa-wallet"></i> ${formatCurrency(user.balance || 0)}</div>
                     </div>
                     <div class="dropdown-divider"></div>
-                    ${user.role === 'admin' ? '<a href="admin/index.html"><i class="fas fa-cog"></i> Trang quáº£n trá»‹</a>' : ''}
-                    <a href="profile.html"><i class="fas fa-user-cog"></i> ThÃ´ng tin tÃ i khoáº£n</a>
-                    <a href="deposit.html"><i class="fas fa-wallet"></i> Náº¡p tiá»n</a>
-                    <a href="orders.html"><i class="fas fa-history"></i> Lá»‹ch sá»­ mua</a>
+                    ${user.role === 'admin' ? '<a href="admin/index.html"><i class="fas fa-cog"></i> Trang quản trị</a>' : ''}
+                    <a href="profile.html"><i class="fas fa-user-cog"></i> Thông tin tài khoản</a>
+                    <a href="deposit.html"><i class="fas fa-wallet"></i> Nạp tiền</a>
+                    <a href="orders.html"><i class="fas fa-history"></i> Lịch sử mua</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> ÄÄƒng xuáº¥t</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                 `;
             }
             
