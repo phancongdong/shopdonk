@@ -276,7 +276,10 @@ app.get('/product/:slug', (req, res) => {
 
 app.get('/:slug', (req, res, next) => {
     const slug = req.params.slug;
-    if (slug.includes('.') || slug.includes('..') || slug === 'api' || slug === 'admin') {
+    if (slug.includes('.') || slug.includes('..') || slug === 'api' || slug === 'admin' || slug === 'index') {
+        if (slug === 'index') {
+            return res.redirect(301, '/');
+        }
         return next();
     }
     if (!/^[a-zA-Z0-9\-_]+$/.test(slug)) {
