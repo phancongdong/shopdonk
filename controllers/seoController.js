@@ -160,32 +160,32 @@ async function generateSitemap(req, res) {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/login.html</loc>
+    <loc>https://shopdonk.com/login</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/register.html</loc>
+    <loc>https://shopdonk.com/register</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/deposit.html</loc>
+    <loc>https://shopdonk.com/deposit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/faq.html</loc>
+    <loc>https://shopdonk.com/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/contact.html</loc>
+    <loc>https://shopdonk.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://shopdonk.com/terms.html</loc>
+    <loc>https://shopdonk.com/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>`;
@@ -193,7 +193,7 @@ async function generateSitemap(req, res) {
         categories.recordset.forEach(cat => {
             sitemap += `
   <url>
-    <loc>https://shopdonk.com/?slug=${encodeURIComponent(cat.slug)}</loc>
+    <loc>https://shopdonk.com/${encodeURIComponent(cat.slug)}</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>`;
