@@ -195,7 +195,7 @@
                                             <div class="order-row" style="flex-direction:column;align-items:flex-start;">
                                                 <span class="order-label" style="margin-bottom:6px;">Tài khoản:</span>
                                                 ${order.status === 'completed' ? 
-                                                    `<button class="view-account-btn card-view-btn" data-order-id="${order.id}" onclick="alert('Button clicked! Order: ${order.id}')" style="width:100%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:10px;border-radius:8px;font-size:13px;border:none;cursor:pointer;">
+                                                    `<button class="view-account-btn card-view-btn" data-order-id="${order.id}" style="width:100%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:10px;border-radius:8px;font-size:13px;border:none;cursor:pointer;">
                                                         <i class="fas fa-eye"></i> Xem tài khoản (${order.quantity || 1} nick)
                                                     </button>
                                                     <div id="accounts-${order.id}" style="display:none;width:100%;margin-top:8px;"></div>` : 
@@ -237,11 +237,9 @@
         });
         
         document.addEventListener('click', async function(e) {
-            alert('Click detected!');
             const btn = e.target.closest('.view-account-btn');
             if (!btn) return;
             
-            alert('Button found! OrderID: ' + btn.dataset.orderId);
             const orderId = btn.dataset.orderId;
             const isMobileView = btn.classList.contains('card-view-btn');
             
@@ -256,11 +254,9 @@
                     });
                     
                     const data = await res.json();
-                    console.log('API Response:', data);
                     
                     if (data.success) {
                         const accounts = data.data?.accounts || data.accounts || [];
-                        console.log('Accounts:', accounts);
                         if (accounts.length === 0) {
                             showToast('Không có tài khoản nào');
                             btn.innerHTML = '<i class="fas fa-eye"></i> Xem tài khoản';
@@ -415,7 +411,6 @@
         }
         
         function showAccountModal(orderId, accounts) {
-            console.log('showAccountModal called with:', orderId, accounts);
             const existingModal = document.querySelector('.account-modal');
             if (existingModal) existingModal.remove();
             
@@ -457,7 +452,6 @@
             `;
             
             document.body.appendChild(modal);
-            console.log('Modal appended to body:', modal);
             document.body.style.overflow = 'hidden';
         }
         
