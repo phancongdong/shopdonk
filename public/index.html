@@ -256,15 +256,15 @@
     <!-- Header -->
     <header>
         <div class="header-content container">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <div class="logo-icon">🎮</div>
                 <div class="logo-text">Shop<span>Donk</span></div>
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="index.html" class="active">Trang chủ</a>
-                <a href="orders.html">Lịch sử</a>
-                <a href="deposit.html">Nạp tiền</a>
-                <a href="faq.html">FAQ</a>
+                <a href="/" class="active">Trang chủ</a>
+                <a href="/orders">Lịch sử</a>
+                <a href="/deposit">Nạp tiền</a>
+                <a href="/faq">FAQ</a>
             </nav>
             <div class="header-right">
                 <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
@@ -277,13 +277,13 @@
                     <span class="user-balance" id="userBalance"></span>
                     <i class="fas fa-chevron-down"></i>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài khoản</a>
-                        <a href="change-password.html"><i class="fas fa-key"></i> Đổi mật khẩu</a>
-                        <a href="orders.html"><i class="fas fa-shopping-cart"></i> Đơn hàng của tôi</a>
-                        <a href="deposit.html"><i class="fas fa-wallet"></i> Nạp tiền</a>
-                        <a href="transactions.html"><i class="fas fa-exchange-alt"></i> Lịch sử giao dịch</a>
-                        <a href="contact.html"><i class="fas fa-headset"></i> Liên hệ hỗ trợ</a>
-                        <a href="terms.html"><i class="fas fa-file-contract"></i> Điều khoản & Chính sách</a>
+                        <a href="/profile"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                        <a href="/change-password"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                        <a href="/orders"><i class="fas fa-shopping-cart"></i> Đơn hàng của tôi</a>
+                        <a href="/deposit"><i class="fas fa-wallet"></i> Nạp tiền</a>
+                        <a href="/transactions"><i class="fas fa-exchange-alt"></i> Lịch sử giao dịch</a>
+                        <a href="/contact"><i class="fas fa-headset"></i> Liên hệ hỗ trợ</a>
+                        <a href="/terms"><i class="fas fa-file-contract"></i> Điều khoản & Chính sách</a>
                         <a href="#" class="logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                     </div>
                 </div>
@@ -293,11 +293,11 @@
     
     <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
-        <a href="index.html" class="mobile-nav-item active"><i class="fas fa-home"></i><span>Trang chủ</span></a>
-        <a href="orders.html" class="mobile-nav-item"><i class="fas fa-shopping-cart"></i><span>Đơn hàng</span></a>
-        <a href="deposit.html" class="mobile-nav-item"><i class="fas fa-wallet"></i><span>Nạp tiền</span></a>
-        <a href="faq.html" class="mobile-nav-item"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
-        <a href="profile.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Tài khoản</span></a>
+        <a href="/" class="mobile-nav-item active"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+        <a href="/orders" class="mobile-nav-item"><i class="fas fa-shopping-cart"></i><span>Đơn hàng</span></a>
+        <a href="/deposit" class="mobile-nav-item"><i class="fas fa-wallet"></i><span>Nạp tiền</span></a>
+        <a href="/faq" class="mobile-nav-item"><i class="fas fa-question-circle"></i><span>FAQ</span></a>
+        <a href="/profile" class="mobile-nav-item"><i class="fas fa-user"></i><span>Tài khoản</span></a>
     </nav>
     
     <!-- Banner -->
@@ -425,9 +425,9 @@
             </div>
             <div class="footer-section">
                 <h3>Hỗ trợ</h3>
-                <p><a href="faq.html" style="color:#94a3b8;"><i class="fas fa-question-circle"></i> FAQ - Câu hỏi thường gặp</a></p>
-                <p><a href="contact.html" style="color:#94a3b8;"><i class="fas fa-headset"></i> Liên hệ hỗ trợ</a></p>
-                <p><a href="terms.html" style="color:#94a3b8;"><i class="fas fa-file-contract"></i> Điều khoản & Chính sách</a></p>
+                <p><a href="/faq" style="color:#94a3b8;"><i class="fas fa-question-circle"></i> FAQ - Câu hỏi thường gặp</a></p>
+                <p><a href="/contact" style="color:#94a3b8;"><i class="fas fa-headset"></i> Liên hệ hỗ trợ</a></p>
+                <p><a href="/terms" style="color:#94a3b8;"><i class="fas fa-file-contract"></i> Điều khoản & Chính sách</a></p>
             </div>
             <div class="footer-section">
                 <h3>Theo dõi</h3>
@@ -595,7 +595,7 @@
                         userDropdown.classList.toggle('show');
                         e.stopPropagation();
                     } else {
-                        location.href = 'login.html';
+                        location.href = '/login';
                     }
                 });
             }
@@ -768,7 +768,7 @@
                 
                 const gamesSection = document.getElementById('gamesSection');
                 
-                let breadcrumbHtml = `<a href="index.html" style="color: #6366f1;"><i class="fas fa-home"></i></a>`;
+                let breadcrumbHtml = `<a href="/" style="color: #6366f1;"><i class="fas fa-home"></i></a>`;
                 if (parentCat) {
                     breadcrumbHtml += ` <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 10px;"></i> <a href="#" onclick="goBackToParent('${parentCat.slug}'); return false;" style="color: #6366f1;">${parentCat.name}</a>`;
                 }
@@ -840,7 +840,7 @@
                 <div class="container" style="padding: 0;">
                     <div class="section-title" style="margin: 30px 0;">
                         <h2>
-                            <a href="index.html" style="color: #6366f1;"><i class="fas fa-home"></i></a>
+                            <a href="/" style="color: #6366f1;"><i class="fas fa-home"></i></a>
                             <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 15px;"></i>
                             ${parent.name.toUpperCase()}
                         </h2>
@@ -1074,7 +1074,7 @@
             if (!user) {
                 showModal('warning', 'Yeu cau dang nhap', 'Ban can dang nhap de mua hang!', [
                     { text: 'Huy', class: 'secondary', action: closeModal },
-                    { text: 'Dang nhap', class: 'primary', action: () => location.href = 'login.html' }
+                    { text: 'Dang nhap', class: 'primary', action: () => location.href = '/login' }
                 ]);
                 return;
             }
@@ -1102,7 +1102,7 @@
                     </div>
                 `, [
                     { text: 'Huy', class: 'secondary', action: closeModal },
-                    { text: 'Nạp tiền', class: 'primary', action: () => location.href = 'deposit.html' }
+                    { text: 'Nạp tiền', class: 'primary', action: () => location.href = '/deposit' }
                 ]);
                 return;
             }
@@ -1250,7 +1250,7 @@
                                 </div>
                             `).join('')}
                     `, [
-                        { text: 'Xem đơn hàng', class: 'secondary', action: () => location.href = 'orders.html' },
+                        { text: 'Xem đơn hàng', class: 'secondary', action: () => location.href = '/orders' },
                         { text: 'Đóng', class: 'primary', action: closeModal }
                     ]);
                 } else {

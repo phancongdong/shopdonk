@@ -80,16 +80,16 @@
 <body>
     <header>
         <div class="header-content container">
-            <a href="index.html" class="logo" style="display:flex;align-items:center;gap:10px;">
+            <a href="/" class="logo" style="display:flex;align-items:center;gap:10px;">
                 <div class="logo-icon">🎮</div>
                 <div class="logo-text">Shop<span>Donk</span></div>
             </a>
             <nav class="nav-menu">
-                <a href="index.html">Trang chủ</a>
-                <a href="orders.html">Lịch sử</a>
-                <a href="deposit.html">Nạp tiền</a>
-                <a href="transactions.html">Giao dịch</a>
-                <a href="faq.html">FAQ</a>
+                <a href="/">Trang chủ</a>
+                <a href="/orders">Lịch sử</a>
+                <a href="/deposit">Nạp tiền</a>
+                <a href="/transactions">Giao dịch</a>
+                <a href="/faq">FAQ</a>
             </nav>
             <div class="header-right">
                 <div class="lang-selector">
@@ -101,11 +101,11 @@
                     <span class="user-balance" id="userBalance"></span>
                     <i class="fas fa-chevron-down"></i>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài khoản</a>
-                        <a href="change-password.html"><i class="fas fa-key"></i> Đổi mật khẩu</a>
-                        <a href="orders.html"><i class="fas fa-shopping-cart"></i> Đơn hàng của tôi</a>
-                        <a href="deposit.html"><i class="fas fa-wallet"></i> Nạp tiền</a>
-                        <a href="transactions.html"><i class="fas fa-exchange-alt"></i> Lịch sử giao dịch</a>
+                        <a href="/profile"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                        <a href="/change-password"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                        <a href="/orders"><i class="fas fa-shopping-cart"></i> Đơn hàng của tôi</a>
+                        <a href="/deposit"><i class="fas fa-wallet"></i> Nạp tiền</a>
+                        <a href="/transactions"><i class="fas fa-exchange-alt"></i> Lịch sử giao dịch</a>
                         <a href="#" class="logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
             const userDropdown = document.getElementById('userDropdown');
             userBtn.addEventListener('click', (e) => {
                 if (user) { userDropdown.classList.toggle('show'); e.stopPropagation(); }
-                else { location.href = 'login.html'; }
+                else { location.href = '/login'; }
             });
             document.addEventListener('click', () => { userDropdown.classList.remove('show'); });
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
@@ -156,14 +156,14 @@
                 const roleText = user.role === 'admin' ? 'Quản trị viên' : user.role === 'ctv' ? 'Cộng tác viên' : 'Thành viên';
                 const roleClass = user.role === 'admin' ? 'style="color:#a855f7"' : user.role === 'ctv' ? 'style="color:#3b82f6"' : '';
                 const showAdminBtn = user.role === 'admin' || user.role === 'ctv';
-                profileContent.innerHTML = '<div class="profile-card"><div class="profile-header"><div class="profile-avatar"><i class="fas fa-user"></i></div><div><div class="profile-name">' + user.name + '</div><div class="profile-email">' + (user.email || 'Chưa có email') + '</div></div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-wallet"></i> Số dư tài khoản</div><div class="profile-balance">' + formatCurrency(user.balance || 0) + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-user-circle"></i> ID tài khoản</div><div class="profile-info-value">#' + user.id + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-calendar"></i> Ngày đăng ký</div><div class="profile-info-value">' + formatDate(user.created_at) + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-envelope"></i> Email</div><div class="profile-info-value" id="userEmail">' + (user.email || 'Chưa có email') + '</div><button class="edit-btn" onclick="openEditModal(\'email\')" title="Thay đổi email"><i class="fas fa-edit"></i></button></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-phone"></i> Số điện thoại</div><div class="profile-info-value" id="userPhone">' + (user.phone || 'Chưa có số điện thoại') + '</div><button class="edit-btn" onclick="openEditModal(\'phone\')" title="Thay đổi số điện thoại"><i class="fas fa-edit"></i></button></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-shield-alt"></i> Vai trò</div><div class="profile-info-value" ' + roleClass + '>' + roleText + '</div></div>' + (showAdminBtn ? '<div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-tools"></i> Quản trị</div><a href="admin/index.html" class="btn-deposit" style="min-width:auto;padding:8px 20px;font-size:14px;text-decoration:none;"><i class="fas fa-cog"></i> Vào trang quản trị</a></div>' : '') + '<div class="profile-actions"><a href="deposit.html" class="profile-btn btn-deposit"><i class="fas fa-plus"></i> Nạp tiền</a><a href="orders.html" class="profile-btn btn-secondary"><i class="fas fa-shopping-cart"></i> Lịch sử mua</a><a href="change-password.html" class="profile-btn btn-secondary"><i class="fas fa-key"></i> Đổi mật khẩu</a><button id="logoutBtn2" class="profile-btn btn-logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button></div></div>';
+                profileContent.innerHTML = '<div class="profile-card"><div class="profile-header"><div class="profile-avatar"><i class="fas fa-user"></i></div><div><div class="profile-name">' + user.name + '</div><div class="profile-email">' + (user.email || 'Chưa có email') + '</div></div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-wallet"></i> Số dư tài khoản</div><div class="profile-balance">' + formatCurrency(user.balance || 0) + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-user-circle"></i> ID tài khoản</div><div class="profile-info-value">#' + user.id + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-calendar"></i> Ngày đăng ký</div><div class="profile-info-value">' + formatDate(user.created_at) + '</div></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-envelope"></i> Email</div><div class="profile-info-value" id="userEmail">' + (user.email || 'Chưa có email') + '</div><button class="edit-btn" onclick="openEditModal(\'email\')" title="Thay đổi email"><i class="fas fa-edit"></i></button></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-phone"></i> Số điện thoại</div><div class="profile-info-value" id="userPhone">' + (user.phone || 'Chưa có số điện thoại') + '</div><button class="edit-btn" onclick="openEditModal(\'phone\')" title="Thay đổi số điện thoại"><i class="fas fa-edit"></i></button></div><div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-shield-alt"></i> Vai trò</div><div class="profile-info-value" ' + roleClass + '>' + roleText + '</div></div>' + (showAdminBtn ? '<div class="profile-info-item"><div class="profile-info-label"><i class="fas fa-tools"></i> Quản trị</div><a href="admin/index.html" class="btn-deposit" style="min-width:auto;padding:8px 20px;font-size:14px;text-decoration:none;"><i class="fas fa-cog"></i> Vào trang quản trị</a></div>' : '') + '<div class="profile-actions"><a href="/deposit" class="profile-btn btn-deposit"><i class="fas fa-plus"></i> Nạp tiền</a><a href="/orders" class="profile-btn btn-secondary"><i class="fas fa-shopping-cart"></i> Lịch sử mua</a><a href="/change-password" class="profile-btn btn-secondary"><i class="fas fa-key"></i> Đổi mật khẩu</a><button id="logoutBtn2" class="profile-btn btn-logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button></div></div>';
                 document.getElementById('logoutBtn2').addEventListener('click', function() {
                     localStorage.removeItem('user');
                     localStorage.removeItem('token');
-                    window.location.href = 'login.html';
+                    window.location.href = '/login';
                 });
             } else {
-                profileContent.innerHTML = '<div class="profile-card"><div class="coming-soon"><i class="fas fa-sign-in-alt"></i><h2>Vui lòng đăng nhập</h2><p>Đăng nhập để xem thông tin tài khoản của bạn</p><a href="login.html" class="btn-primary">Đăng nhập ngay</a></div></div>';
+                profileContent.innerHTML = '<div class="profile-card"><div class="coming-soon"><i class="fas fa-sign-in-alt"></i><h2>Vui lòng đăng nhập</h2><p>Đăng nhập để xem thông tin tài khoản của bạn</p><a href="/login" class="btn-primary">Đăng nhập ngay</a></div></div>';
             }
         });
         function formatCurrency(amount) { return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(amount); }

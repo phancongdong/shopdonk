@@ -64,15 +64,15 @@
 <body>
     <header>
         <div class="header-content container">
-            <a href="index.html" class="logo" style="display:flex;align-items:center;gap:10px;">
+            <a href="/" class="logo" style="display:flex;align-items:center;gap:10px;">
                 <div class="logo-icon" style="width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">🎮</div>
                 <div class="logo-text" style="font-size:24px;font-weight:800;color:#fff;">Shop<span style="color:#6366f1;">Donk</span></div>
             </a>
             <nav class="nav-menu">
-                <a href="index.html">Trang chủ</a>
-                <a href="orders.html">Lịch sử</a>
-                <a href="deposit.html">Nạp tiền</a>
-                <a href="faq.html">FAQ</a>
+                <a href="/">Trang chủ</a>
+                <a href="/orders">Lịch sử</a>
+                <a href="/deposit">Nạp tiền</a>
+                <a href="/faq">FAQ</a>
             </nav>
             <div class="header-right">
                 <div class="lang-selector">
@@ -83,8 +83,8 @@
                     <span id="userName">Đăng nhập</span>
                     <i class="fas fa-chevron-down"></i>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="profile.html"><i class="fas fa-user"></i> Thông tin tài khoản</a>
-                        <a href="orders.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+                        <a href="/profile"><i class="fas fa-user"></i> Thông tin tài khoản</a>
+                        <a href="/orders"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
                         <a href="#" class="logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                     </div>
                 </div>
@@ -203,8 +203,8 @@
             </div>
             <div class="footer-section">
                 <h3>Hỗ trợ</h3>
-                <p><a href="contact.html" style="color:#94a3b8;">Liên hệ hỗ trợ</a></p>
-                <p><a href="terms.html" style="color:#94a3b8;">Điều khoản & Chính sách</a></p>
+                <p><a href="/contact" style="color:#94a3b8;">Liên hệ hỗ trợ</a></p>
+                <p><a href="/terms" style="color:#94a3b8;">Điều khoản & Chính sách</a></p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -221,7 +221,7 @@
             const userDropdown = document.getElementById('userDropdown');
             userBtn.addEventListener('click', (e) => {
                 if (user) { userDropdown.classList.toggle('show'); e.stopPropagation(); }
-                else location.href = 'login.html';
+                else location.href = '/login';
             });
             document.addEventListener('click', () => userDropdown.classList.remove('show'));
             
