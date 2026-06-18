@@ -94,9 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getStatusBadge(status) {
         const statusMap = {
-            'pending': { text: 'Chá» xá»­ lÃ½', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
-            'completed': { text: 'HoÃ n thÃ nh', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
-            'cancelled': { text: 'ÄÃ£ há»§y', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
+            'pending': { text: 'Chờ xử lý', class: 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' },
+            'completed': { text: 'Hoàn thành', class: 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' },
+            'cancelled': { text: 'Đã hủy', class: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' }
         };
         const s = statusMap[status] || statusMap['pending'];
         return `<span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${s.class}">${s.text}</span>`;
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!container) return;
         
         if (orders.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">ChÆ°a cÃ³ Ä‘Æ¡n hÃ ng nÃ o</p>';
+            container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-10">Chưa có đơn hàng nào</p>';
             return;
         }
         
@@ -117,12 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <thead class="bg-gray-50 dark:bg-gray-900">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ID</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">NgÆ°á»i mua</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Sáº£n pháº©m</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">TÃ i khoáº£n</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">ThÃ nh tiá»n</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tráº¡ng thÃ¡i</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thá»i gian</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Người mua</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Sản phẩm</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Tài khoản</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thành tiền</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Trạng thái</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">Thời gian</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-800">

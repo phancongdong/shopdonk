@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderProducts(products) {
         const tbody = document.getElementById('productsTable');
         if (products.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9" class="px-4 py-8 text-center text-gray-500">KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" class="px-4 py-8 text-center text-gray-500">Không tìm thấy sản phẩm</td></tr>';
             return;
         }
         const timestamp = Date.now();
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                  class="w-8 h-8 rounded object-cover"
                                  onerror="this.src='https://placehold.co/32x32/1a1a2e/00f0ff?text=N/A'">
                             <span class="text-gray-900 dark:text-white">${p.name}</span>
-                            ${isHidden ? '<span class="text-xs bg-gray-400 text-white px-1.5 py-0.5 rounded">áº¨n</span>' : ''}
+                            ${isHidden ? '<span class="text-xs bg-gray-400 text-white px-1.5 py-0.5 rounded">Ẩn</span>' : ''}
                         </div>
                     </td>
                     <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">${p.category_name || p.category_slug || '-'}</td>
@@ -100,18 +100,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td class="px-4 py-2 text-sm font-semibold ${profitColor}">${formatCurrency(profit)}</td>
                     <td class="px-4 py-2 text-sm">
                         <span class="inline-flex rounded-full px-2 py-1 text-xs font-medium ${stockNum > 10 ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : stockNum > 0 ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'}">${stockNum}</span>
-                        <span class="text-xs text-gray-400 ml-1">(${p.account_type === 'multiple' ? 'Nhiá»u TK' : '1 TK'})</span>
+                        <span class="text-xs text-gray-400 ml-1">(${p.account_type === 'multiple' ? 'Nhiều TK' : '1 TK'})</span>
                     </td>
                     <td class="px-4 py-2 text-sm">
                         <button onclick="toggleProductVisibility(${p.id}, ${isHidden ? 0 : 1})" 
                                 class="${isHidden ? 'text-green-600 hover:text-green-800' : 'text-gray-400 hover:text-gray-600'} mr-2" 
-                                title="${isHidden ? 'Hiá»‡n sáº£n pháº©m' : 'áº¨n sáº£n pháº©m'}">
+                                title="${isHidden ? 'Hiện sản phẩm' : 'Ẩn sản phẩm'}">
                             <i class="fas fa-${isHidden ? 'eye' : 'eye-slash'}"></i>
                         </button>
                     </td>
                     <td class="px-4 py-2 text-sm">
-                        <button onclick="editProduct(${p.id})" class="text-brand-600 hover:text-brand-800 dark:text-brand-400 mr-2" title="Sá»­a"><i class="fas fa-edit"></i></button>
-                        <button onclick="showDeleteModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="text-red-600 hover:text-red-800 dark:text-red-400" title="XÃ³a"><i class="fas fa-trash"></i></button>
+                        <button onclick="editProduct(${p.id})" class="text-brand-600 hover:text-brand-800 dark:text-brand-400 mr-2" title="Sửa"><i class="fas fa-edit"></i></button>
+                        <button onclick="showDeleteModal(${p.id}, '${p.name.replace(/'/g, "\\'")}')" class="text-red-600 hover:text-red-800 dark:text-red-400" title="Xóa"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             `;
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 const select = document.getElementById('productCategory');
                 select.innerHTML = data.data.map(c => {
-                    const prefix = 'â€”'.repeat(c.depth || 0);
+                    const prefix = '—'.repeat(c.depth || 0);
                     return `<option value="${c.id}" data-slug="${c.slug}">${prefix} ${c.name}</option>`;
                 }).join('');
             }
@@ -222,13 +222,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await res.json();
             
             if (!data.success || !data.data) {
-                alert('KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m');
+                alert('Không tìm thấy sản phẩm');
                 return;
             }
             
             const product = data.data;
             
-            document.getElementById('modalTitle').textContent = 'Sá»­a sáº£n pháº©m';
+            document.getElementById('modalTitle').textContent = 'Sửa sản phẩm';
             document.getElementById('productId').value = product.id;
             document.getElementById('productName').value = product.name || '';
             document.getElementById('productCategory').value = product.category_id || '';
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('productModal').classList.remove('hidden');
         } catch (error) {
             console.error('Error loading product:', error);
-            alert('CÃ³ lá»—i xáº£y ra khi táº£i thÃ´ng tin sáº£n pháº©m');
+            alert('Có lỗi xảy ra khi tải thông tin sản phẩm');
         }
     };
     
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     renderProducts(allProducts);
                 }
             } else if (res.status === 401) {
-                alert('PhiÃªn Ä‘Äƒng nháº­p Ä‘Ã£ háº¿t háº¡n. Vui lÃ²ng Ä‘Äƒng nháº­p láº¡i.');
+                alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
                 window.location.href = '../login.html';
             }
         } catch (error) {
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: getAuthHeaders()
             });
             if (res.status === 401) {
-                alert('PhiÃªn Ä‘Äƒng nháº­p Ä‘Ã£ háº¿t háº¡n. Vui lÃ²ng Ä‘Äƒng nháº­p láº¡i.');
+                alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
                 window.location.href = '../login.html';
                 return;
             }
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
         } catch (error) {
             console.error('Error deleting product:', error);
-            alert('CÃ³ lá»—i xáº£y ra khi xÃ³a sáº£n pháº©m!');
+            alert('Có lỗi xảy ra khi xóa sản phẩm!');
         }
     };
     
@@ -345,18 +345,18 @@ document.addEventListener('DOMContentLoaded', function() {
             accountUsername = document.getElementById('productAccount').value;
             accountPassword = document.getElementById('productPassword').value;
             if (!accountUsername || !accountPassword) {
-                alert('Vui lÃ²ng nháº­p tÃ i khoáº£n vÃ  máº­t kháº©u!');
+                alert('Vui lòng nhập tài khoản và mật khẩu!');
                 return;
             }
         } else {
             accountsList = document.getElementById('accountsList').value.trim();
             if (!accountsList) {
-                alert('Vui lÃ²ng nháº­p danh sÃ¡ch tÃ i khoáº£n!');
+                alert('Vui lòng nhập danh sách tài khoản!');
                 return;
             }
             const lines = accountsList.split('\n').filter(line => line.trim().includes('-'));
             if (lines.length === 0) {
-                alert('Danh sÃ¡ch tÃ i khoáº£n khÃ´ng há»£p lá»‡! Má»—i dÃ²ng pháº£i cÃ³ Ä‘á»‹nh dáº¡ng: taikhoan-matkhau');
+                alert('Danh sách tài khoản không hợp lệ! Mỗi dòng phải có định dạng: taikhoan-matkhau');
                 return;
             }
         }
@@ -414,11 +414,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             } else {
-                alert('Lá»—i: ' + (result.message || 'KhÃ´ng thá»ƒ lÆ°u sáº£n pháº©m'));
+                alert('Lỗi: ' + (result.message || 'Không thể lưu sản phẩm'));
             }
         } catch (error) {
             console.error('Error saving product:', error);
-            alert('CÃ³ lá»—i xáº£y ra khi lÆ°u sáº£n pháº©m!');
+            alert('Có lỗi xảy ra khi lưu sản phẩm!');
         }
     });
     

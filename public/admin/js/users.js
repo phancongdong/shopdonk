@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderUsers(users) {
         const tbody = document.getElementById('usersTable');
         if (users.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-gray-500">KhÃ´ng tÃ¬m tháº¥y ngÆ°á»i dÃ¹ng</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-gray-500">Không tìm thấy người dùng</td></tr>';
             return;
         }
         tbody.innerHTML = users.map(u => `
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </td>
                 <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">${formatDate(u.created_at)}</td>
                 <td class="px-4 py-2 text-sm">
-                    <button onclick="viewOrders(${u.id}, '${u.name}')" class="text-green-600 hover:text-green-800 dark:text-green-400 mr-2" title="Lá»‹ch sá»­ mua"><i class="fas fa-history"></i></button>
-                    <button onclick="editUser(${u.id})" class="text-brand-600 hover:text-brand-800 dark:text-brand-400 mr-2" title="Chá»‰nh sá»­a"><i class="fas fa-edit"></i></button>
-                    <button onclick="addBalance(${u.id}, '${u.name}')" class="text-yellow-600 hover:text-yellow-800 dark:text-yellow-400" title="Cá»™ng tiá»n"><i class="fas fa-plus-circle"></i></button>
+                    <button onclick="viewOrders(${u.id}, '${u.name}')" class="text-green-600 hover:text-green-800 dark:text-green-400 mr-2" title="Lịch sử mua"><i class="fas fa-history"></i></button>
+                    <button onclick="editUser(${u.id})" class="text-brand-600 hover:text-brand-800 dark:text-brand-400 mr-2" title="Chỉnh sửa"><i class="fas fa-edit"></i></button>
+                    <button onclick="addBalance(${u.id}, '${u.name}')" class="text-yellow-600 hover:text-yellow-800 dark:text-yellow-400" title="Cộng tiền"><i class="fas fa-plus-circle"></i></button>
                 </td>
             </tr>
         `).join('');
@@ -118,15 +118,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await res.json();
             
             if (result.success) {
-                alert('Cáº­p nháº­t thÃ nh cÃ´ng!');
+                alert('Cập nhật thành công!');
                 closeEditModal();
                 loadUsers();
             } else {
-                alert(result.message || 'CÃ³ lá»—i xáº£y ra!');
+                alert(result.message || 'Có lỗi xảy ra!');
             }
         } catch (error) {
             console.error('Error updating user:', error);
-            alert('CÃ³ lá»—i xáº£y ra!');
+            alert('Có lỗi xảy ra!');
         }
     });
     
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('balanceUserId').value = id;
             document.getElementById('balanceAmount').value = '';
             document.getElementById('balanceDescription').value = '';
-            document.getElementById('balanceModalTitle').textContent = `Cá»™ng/trá»« tiá»n - ${name} (Sá»‘ dÆ°: ${formatCurrency(user.balance || 0)})`;
+            document.getElementById('balanceModalTitle').textContent = `Cộng/trừ tiền - ${name} (Số dư: ${formatCurrency(user.balance || 0)})`;
             document.getElementById('balanceModal').classList.remove('hidden');
         }
     };
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const description = document.getElementById('balanceDescription').value;
         
         if (!amount || isNaN(amount) || amount === 0) {
-            alert('Vui lÃ²ng nháº­p sá»‘ tiá»n há»£p lá»‡ (khÃ¡c 0)!');
+            alert('Vui lòng nhập số tiền hợp lệ (khác 0)!');
             return;
         }
         
@@ -161,21 +161,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const res = await fetch(`${API_BASE}/admin/balance/${userId}`, {
                 method: 'PUT',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({ amount: amount, description: description || `Admin ${amount > 0 ? 'cá»™ng' : 'trá»«'} ${Math.abs(amount)} VNÄ` })
+                body: JSON.stringify({ amount: amount, description: description || `Admin ${amount > 0 ? 'cộng' : 'trừ'} ${Math.abs(amount)} VNĐ` })
             });
             
             const result = await res.json();
             
             if (result.success) {
-                alert(`${amount > 0 ? 'Cá»™ng' : 'Trá»«'} tiá»n thÃ nh cÃ´ng!`);
+                alert(`${amount > 0 ? 'Cộng' : 'Trừ'} tiền thành công!`);
                 closeBalanceModal();
                 loadUsers();
             } else {
-                alert(result.message || 'CÃ³ lá»—i xáº£y ra!');
+                alert(result.message || 'Có lỗi xảy ra!');
             }
         } catch (error) {
             console.error('Error updating balance:', error);
-            alert('CÃ³ lá»—i xáº£y ra!');
+            alert('Có lỗi xảy ra!');
         }
     });
     
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const res = await fetch(`${API_BASE}/orders?user_id=${userId}`);
             const data = await res.json();
             
-            document.getElementById('orderModalTitle').textContent = `Lá»‹ch sá»­ mua hÃ ng - ${userName}`;
+            document.getElementById('orderModalTitle').textContent = `Lịch sử mua hàng - ${userName}`;
             const tbody = document.getElementById('orderTableBody');
             
             if (data.success && data.data.length > 0) {
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </tr>
                 `).join('');
             } else {
-                tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-gray-500">KhÃ´ng cÃ³ Ä‘Æ¡n hÃ ng nÃ o</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-gray-500">Không có đơn hàng nào</td></tr>';
             }
             
             document.getElementById('orderModal').classList.remove('hidden');
@@ -227,9 +227,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getStatusText(status) {
         switch(status) {
-            case 'completed': return 'HoÃ n thÃ nh';
-            case 'pending': return 'Äang xá»­ lÃ½';
-            case 'cancelled': return 'ÄÃ£ há»§y';
+            case 'completed': return 'Hoàn thành';
+            case 'pending': return 'Đang xử lý';
+            case 'cancelled': return 'Đã hủy';
             default: return status;
         }
     }

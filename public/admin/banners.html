@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qu?n lï¿½ Banner - Admin ShopDonk</title>
+    <title>Quản lý Banner - Admin ShopDonk</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -97,23 +97,23 @@
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lá»—i</a>
-        <div class="logo">ðŸŽ® Shop<span>Donk</span></div>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+        <div class="logo">🎮 Shop<span>Donk</span></div>
         <div></div>
     </header>
     
     <div class="content container">
         <div class="page-header">
-            <h1><i class="fas fa-images"></i> Qu?n lï¿½ Banner</h1>
-            <p>Qu?n lï¿½ banner hi?n thử trï¿½n trang chỉ</p>
+            <h1><i class="fas fa-images"></i> Quản lý Banner</h1>
+            <p>Quản lý banner hiển thị trên trang chủ</p>
         </div>
         
         <div class="banner-grid" id="bannerGrid">
             <div class="banner-card add-banner-card" onclick="openAddModal()">
                 <div class="add-banner-content">
                     <i class="fas fa-plus-circle"></i>
-                    <h3>Thï¿½m banner má»—i</h3>
-                    <p>Click ðŸŽ® thï¿½m banner</p>
+                    <h3>Thêm banner mới</h3>
+                    <p>Click để thêm banner</p>
                 </div>
             </div>
         </div>
@@ -123,7 +123,7 @@
     <div class="modal-overlay" id="bannerModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">Thï¿½m banner má»—i</h2>
+                <h2 id="modalTitle">Thêm banner mới</h2>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <form id="bannerForm">
@@ -131,25 +131,25 @@
                     <input type="hidden" id="bannerId">
                     
                     <div class="form-group">
-                        <label>Tiï¿½u ðŸŽ®</label>
-                        <input type="text" id="bannerTitle" placeholder="Nháº­p tiï¿½u ðŸŽ® banner" required>
+                        <label>Tiêu đề</label>
+                        <input type="text" id="bannerTitle" placeholder="Nhập tiêu đề banner" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>Mï¿½ t?</label>
-                        <textarea id="bannerDesc" placeholder="Nháº­p mï¿½ t? (tï¿½y chỉn)"></textarea>
+                        <label>Mô tả</label>
+                        <textarea id="bannerDesc" placeholder="Nhập mô tả (tùy chọn)"></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label>Link ?i?u hÄÆ¡ng (tï¿½y chỉn)</label>
+                        <label>Link điều hướng (tùy chọn)</label>
                         <input type="url" id="bannerLink" placeholder="https://...">
                     </div>
                     
                     <div class="form-group">
-                        <label>Hï¿½nh ?nh</label>
+                        <label>Hình ảnh</label>
                         <div class="file-upload" onclick="document.getElementById('bannerImage').click()">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click ðŸŽ® chỉn ?nh ho?c kï¿½o thử vï¿½o ?ï¿½y</p>
+                            <p>Click để chọn ảnh hoặc kéo thả vào đây</p>
                             <input type="file" id="bannerImage" accept="image/*" onchange="previewFile(this)">
                         </div>
                         <div class="preview-image" id="previewContainer">
@@ -158,20 +158,20 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Ho?c nháº­p URL ?nh</label>
+                        <label>Hoặc nhập URL ảnh</label>
                         <input type="url" id="bannerImageUrl" placeholder="https://..." oninput="previewUrl(this.value)">
                     </div>
                     
                     <div class="form-group">
                         <div class="checkbox-group">
                             <input type="checkbox" id="bannerActive" checked>
-                            <label for="bannerActive" style="margin:0;">Kï¿½ch ho?t banner</label>
+                            <label for="bannerActive" style="margin:0;">Kích hoạt banner</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Há»§y</button>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> LÆ°u</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
                 </div>
             </form>
         </div>
@@ -209,18 +209,18 @@
                 card.innerHTML = `
                     <div class="banner-preview">
                         <img src="${banner.image}" alt="${banner.title}" onerror="this.src='https://placehold.co/500x200/6366f1/fff?text=Banner'">
-                        <span class="banner-status ${banner.active ? 'active' : 'inactive'}">${banner.active ? '?ang hi?n thử' : '?ï¿½ t?t'}</span>
+                        <span class="banner-status ${banner.active ? 'active' : 'inactive'}">${banner.active ? 'Đang hiển thị' : 'Đã tắt'}</span>
                     </div>
                     <div class="banner-info">
                         <div class="banner-title">${banner.title}</div>
-                        <div class="banner-desc">${banner.description || 'Khï¿½ng cï¿½ mï¿½ t?'}</div>
+                        <div class="banner-desc">${banner.description || 'Không có mô tả'}</div>
                         ${banner.link ? `<div class="banner-url"><i class="fas fa-link"></i> ${banner.link}</div>` : ''}
                         <div class="banner-actions">
-                            <button class="btn btn-primary" onclick="editBanner(${banner.id})"><i class="fas fa-edit"></i> S?a</button>
+                            <button class="btn btn-primary" onclick="editBanner(${banner.id})"><i class="fas fa-edit"></i> Sửa</button>
                             <button class="btn ${banner.active ? 'btn-secondary' : 'btn-primary'}" onclick="toggleBanner(${banner.id})">
-                                <i class="fas fa-${banner.active ? 'eye-slash' : 'eye'}"></i> ${banner.active ? 'T?t' : 'B?t'}
+                                <i class="fas fa-${banner.active ? 'eye-slash' : 'eye'}"></i> ${banner.active ? 'Tắt' : 'Bật'}
                             </button>
-                            <button class="btn btn-danger" onclick="deleteBanner(${banner.id})"><i class="fas fa-trash"></i> Xï¿½a</button>
+                            <button class="btn btn-danger" onclick="deleteBanner(${banner.id})"><i class="fas fa-trash"></i> Xóa</button>
                         </div>
                     </div>
                 `;
@@ -233,15 +233,15 @@
             addCard.innerHTML = `
                 <div class="add-banner-content">
                     <i class="fas fa-plus-circle"></i>
-                    <h3>Thï¿½m banner má»—i</h3>
-                    <p>Click ðŸŽ® thï¿½m banner</p>
+                    <h3>Thêm banner mới</h3>
+                    <p>Click để thêm banner</p>
                 </div>
             `;
             grid.appendChild(addCard);
         }
         
         function openAddModal() {
-            document.getElementById('modalTitle').textContent = 'Thï¿½m banner má»—i';
+            document.getElementById('modalTitle').textContent = 'Thêm banner mới';
             document.getElementById('bannerForm').reset();
             document.getElementById('bannerId').value = '';
             document.getElementById('previewContainer').style.display = 'none';
@@ -254,7 +254,7 @@
             const banner = banners.find(b => b.id === id);
             if (!banner) return;
             
-            document.getElementById('modalTitle').textContent = 'S?a banner';
+            document.getElementById('modalTitle').textContent = 'Sửa banner';
             document.getElementById('bannerId').value = banner.id;
             document.getElementById('bannerTitle').value = banner.title;
             document.getElementById('bannerDesc').value = banner.description || '';
@@ -323,13 +323,13 @@
                 if (result.success) {
                     closeModal();
                     loadBanners();
-                    showToast(id ? 'Cáº­p nháº­t banner thï¿½nh cï¿½ng!' : 'Thï¿½m banner thï¿½nh cï¿½ng!');
+                    showToast(id ? 'Cập nhật banner thành công!' : 'Thêm banner thành công!');
                 } else {
-                    showToast(result.message || 'Lá»—i!', 'error');
+                    showToast(result.message || 'Lỗi!', 'error');
                 }
             } catch (error) {
                 console.error('Error saving banner:', error);
-                showToast('Cï¿½ lá»—i x?y ra!', 'error');
+                showToast('Có lỗi xảy ra!', 'error');
             }
         });
         
@@ -346,23 +346,23 @@
                     });
                     
                     loadBanners();
-                    showToast(banner.active ? '?ï¿½ b?t banner' : '?ï¿½ t?t banner');
+                    showToast(banner.active ? 'Đã bật banner' : 'Đã tắt banner');
                 } catch (error) {
                     console.error('Error toggling banner:', error);
-                    showToast('Cï¿½ lá»—i x?y ra!', 'error');
+                    showToast('Có lỗi xảy ra!', 'error');
                 }
             }
         }
         
         async function deleteBanner(id) {
-            if (confirm('Báº¡n cï¿½ chỉc muá»‘n xï¿½a banner nï¿½y?')) {
+            if (confirm('Bạn có chắc muốn xóa banner này?')) {
                 try {
                     await fetch(`${API_BASE}/banners/${id}`, { method: 'DELETE' });
                     loadBanners();
-                    showToast('?ï¿½ xï¿½a banner');
+                    showToast('Đã xóa banner');
                 } catch (error) {
                     console.error('Error deleting banner:', error);
-                    showToast('Cï¿½ lá»—i x?y ra!', 'error');
+                    showToast('Có lỗi xảy ra!', 'error');
                 }
             }
         }
