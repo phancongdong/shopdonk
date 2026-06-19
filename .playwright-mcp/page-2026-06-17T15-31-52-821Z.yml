@@ -1,0 +1,1639 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - text: Line wrap
+    - checkbox "Line wrap" [ref=e5]
+  - table [ref=e6]:
+    - rowgroup [ref=e7]:
+      - row "1 <!DOCTYPE html>" [ref=e8]:
+        - cell "1" [ref=e9]
+        - cell "<!DOCTYPE html>" [ref=e10]
+      - row "2 <html lang=\"vi\">" [ref=e11]:
+        - cell "2" [ref=e12]
+        - cell "<html lang=\"vi\">" [ref=e13]:
+          - generic [ref=e14]: <html lang="vi">
+      - row "3 <head>" [ref=e15]:
+        - cell "3" [ref=e16]
+        - cell "<head>" [ref=e17]
+      - row "4 <meta charset=\"UTF-8\">" [ref=e18]:
+        - cell "4" [ref=e19]
+        - cell "<meta charset=\"UTF-8\">" [ref=e20]:
+          - generic [ref=e21]: <meta charset="UTF-8">
+      - row "5 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" [ref=e22]:
+        - cell "5" [ref=e23]
+        - cell "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" [ref=e24]:
+          - generic [ref=e25]: <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      - row "6 <title>Lịch sử mua - ShopDonk</title>" [ref=e26]:
+        - cell "6" [ref=e27]
+        - cell "<title>Lịch sử mua - ShopDonk</title>" [ref=e28]
+      - row "7 <link rel=\"icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E\">" [ref=e29]:
+        - cell "7" [ref=e30]
+        - cell "<link rel=\"icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E\">" [ref=e31]:
+          - generic [ref=e32]:
+            - text: <link rel="icon" type="image/svg+xml" href="
+            - link "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E" [ref=e33] [cursor=pointer]:
+              - /url: data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E
+            - text: "\">"
+      - row "8 <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">" [ref=e34]:
+        - cell "8" [ref=e35]
+        - cell "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">" [ref=e36]:
+          - generic [ref=e37]:
+            - text: <link rel="stylesheet" href="
+            - link "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" [ref=e38] [cursor=pointer]:
+              - /url: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+            - text: "\">"
+      - row "9 <link href=\"https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\">" [ref=e39]:
+        - cell "9" [ref=e40]
+        - cell "<link href=\"https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\">" [ref=e41]:
+          - generic [ref=e42]:
+            - text: <link href="
+            - link "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" [ref=e43] [cursor=pointer]:
+              - /url: https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap
+            - text: "\" rel=\"stylesheet\">"
+      - row "10 <link rel=\"stylesheet\" href=\"css/style.css\">" [ref=e44]:
+        - cell "10" [ref=e45]
+        - cell "<link rel=\"stylesheet\" href=\"css/style.css\">" [ref=e46]:
+          - generic [ref=e47]:
+            - text: <link rel="stylesheet" href="
+            - link "css/style.css" [ref=e48] [cursor=pointer]:
+              - /url: css/style.css
+            - text: "\">"
+      - row "11 <link rel=\"stylesheet\" href=\"css/mobile.css\">" [ref=e49]:
+        - cell "11" [ref=e50]
+        - cell "<link rel=\"stylesheet\" href=\"css/mobile.css\">" [ref=e51]:
+          - generic [ref=e52]:
+            - text: <link rel="stylesheet" href="
+            - link "css/mobile.css" [ref=e53] [cursor=pointer]:
+              - /url: css/mobile.css
+            - text: "\">"
+      - row "12 <script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js\"></script>" [ref=e54]:
+        - cell "12" [ref=e55]
+        - cell "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js\"></script>" [ref=e56]:
+          - generic [ref=e57]:
+            - text: <script src="
+            - link "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" [ref=e58] [cursor=pointer]:
+              - /url: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
+            - text: "\">"
+          - text: </script>
+      - row "13 <script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js\"></script>" [ref=e59]:
+        - cell "13" [ref=e60]
+        - cell "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js\"></script>" [ref=e61]:
+          - generic [ref=e62]:
+            - text: <script src="
+            - link "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" [ref=e63] [cursor=pointer]:
+              - /url: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js
+            - text: "\">"
+          - text: </script>
+      - row "14 </head>" [ref=e64]:
+        - cell "14" [ref=e65]
+        - cell "</head>" [ref=e66]
+      - row "15 <body>" [ref=e67]:
+        - cell "15" [ref=e68]
+        - cell "<body>" [ref=e69]
+      - row "16 <div class=\"particles\" id=\"particles\"></div>" [ref=e70]:
+        - cell "16" [ref=e71]
+        - cell "<div class=\"particles\" id=\"particles\"></div>" [ref=e72]:
+          - generic [ref=e73]: <div class="particles" id="particles">
+          - text: </div>
+      - row "17" [ref=e74]:
+        - cell "17" [ref=e75]
+        - cell [ref=e76]
+      - row "18 <header class=\"header\">" [ref=e77]:
+        - cell "18" [ref=e78]
+        - cell "<header class=\"header\">" [ref=e79]:
+          - generic [ref=e80]: <header class="header">
+      - row "19 <div class=\"header-left\">" [ref=e81]:
+        - cell "19" [ref=e82]
+        - cell "<div class=\"header-left\">" [ref=e83]:
+          - generic [ref=e84]: <div class="header-left">
+      - row "20 <a href=\"index.html\" class=\"logo\" style=\"display:flex;align-items:center;gap:10px;\">" [ref=e85]:
+        - cell "20" [ref=e86]
+        - cell "<a href=\"index.html\" class=\"logo\" style=\"display:flex;align-items:center;gap:10px;\">" [ref=e87]:
+          - generic [ref=e88]:
+            - text: <a href="
+            - link "index.html" [ref=e89] [cursor=pointer]:
+              - /url: index.html
+            - text: "\" class=\"logo\" style=\"display:flex;align-items:center;gap:10px;\">"
+      - 'row "21 <div class=\"logo-icon\" style=\"width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;\">🎮</div>" [ref=e90]':
+        - cell "21" [ref=e91]
+        - 'cell "<div class=\"logo-icon\" style=\"width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;\">🎮</div>" [ref=e92]':
+          - generic [ref=e93]: "<div class=\"logo-icon\" style=\"width:40px;height:40px;background:linear-gradient(135deg, #6366f1, #8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;\">"
+          - text: 🎮</div>
+      - row "22 <div class=\"logo-text\" style=\"font-size:24px;font-weight:800;color:#fff;\">Shop<span style=\"color:#6366f1;\">Donk</span></div>" [ref=e94]:
+        - cell "22" [ref=e95]
+        - cell "<div class=\"logo-text\" style=\"font-size:24px;font-weight:800;color:#fff;\">Shop<span style=\"color:#6366f1;\">Donk</span></div>" [ref=e96]:
+          - generic [ref=e97]: <div class="logo-text" style="font-size:24px;font-weight:800;color:#fff;">
+          - text: Shop
+          - generic [ref=e98]: <span style="color:#6366f1;">
+          - text: Donk</span></div>
+      - row "23 </a>" [ref=e99]:
+        - cell "23" [ref=e100]
+        - cell "</a>" [ref=e101]
+      - row "24 </div>" [ref=e102]:
+        - cell "24" [ref=e103]
+        - cell "</div>" [ref=e104]
+      - row "25 <nav class=\"header-nav\">" [ref=e105]:
+        - cell "25" [ref=e106]
+        - cell "<nav class=\"header-nav\">" [ref=e107]:
+          - generic [ref=e108]: <nav class="header-nav">
+      - row "26 <a href=\"index.html\">Trang chủ</a>" [ref=e109]:
+        - cell "26" [ref=e110]
+        - cell "<a href=\"index.html\">Trang chủ</a>" [ref=e111]:
+          - generic [ref=e112]:
+            - text: <a href="
+            - link "index.html" [ref=e113] [cursor=pointer]:
+              - /url: index.html
+            - text: "\">"
+          - text: Trang chủ</a>
+      - row "27 <a href=\"orders.html\" class=\"active\">Lịch sử Mua</a>" [ref=e114]:
+        - cell "27" [ref=e115]
+        - cell "<a href=\"orders.html\" class=\"active\">Lịch sử Mua</a>" [ref=e116]:
+          - generic [ref=e117]:
+            - text: <a href="
+            - link "orders.html" [ref=e118] [cursor=pointer]:
+              - /url: orders.html
+            - text: "\" class=\"active\">"
+          - text: Lịch sử Mua</a>
+      - row "28 <a href=\"deposit.html\">Nạp tiền</a>" [ref=e119]:
+        - cell "28" [ref=e120]
+        - cell "<a href=\"deposit.html\">Nạp tiền</a>" [ref=e121]:
+          - generic [ref=e122]:
+            - text: <a href="
+            - link "deposit.html" [ref=e123] [cursor=pointer]:
+              - /url: deposit.html
+            - text: "\">"
+          - text: Nạp tiền</a>
+      - row "29 <a href=\"transactions.html\">Dòng Tiền</a>" [ref=e124]:
+        - cell "29" [ref=e125]
+        - cell "<a href=\"transactions.html\">Dòng Tiền</a>" [ref=e126]:
+          - generic [ref=e127]:
+            - text: <a href="
+            - link "transactions.html" [ref=e128] [cursor=pointer]:
+              - /url: transactions.html
+            - text: "\">"
+          - text: Dòng Tiền</a>
+      - row "30 <a href=\"faq.html\">FAQ</a>" [ref=e129]:
+        - cell "30" [ref=e130]
+        - cell "<a href=\"faq.html\">FAQ</a>" [ref=e131]:
+          - generic [ref=e132]:
+            - text: <a href="
+            - link "faq.html" [ref=e133] [cursor=pointer]:
+              - /url: faq.html
+            - text: "\">"
+          - text: FAQ</a>
+      - row "31 </nav>" [ref=e134]:
+        - cell "31" [ref=e135]
+        - cell "</nav>" [ref=e136]
+      - row "32 <div class=\"header-right\">" [ref=e137]:
+        - cell "32" [ref=e138]
+        - cell "<div class=\"header-right\">" [ref=e139]:
+          - generic [ref=e140]: <div class="header-right">
+      - row "33 <div class=\"user-dropdown\">" [ref=e141]:
+        - cell "33" [ref=e142]
+        - cell "<div class=\"user-dropdown\">" [ref=e143]:
+          - generic [ref=e144]: <div class="user-dropdown">
+      - row "34 <button class=\"user-btn\" id=\"userBtn\">" [ref=e145]:
+        - cell "34" [ref=e146]
+        - cell "<button class=\"user-btn\" id=\"userBtn\">" [ref=e147]:
+          - generic [ref=e148]: <button class="user-btn" id="userBtn">
+      - 'row "35 <span class=\"logo-text\" style=\"font-size: 16px;\">🎮 ShopDonk</span>" [ref=e149]':
+        - cell "35" [ref=e150]
+        - 'cell "<span class=\"logo-text\" style=\"font-size: 16px;\">🎮 ShopDonk</span>" [ref=e151]':
+          - generic [ref=e152]: "<span class=\"logo-text\" style=\"font-size: 16px;\">"
+          - text: 🎮 ShopDonk</span>
+      - row "36 <span class=\"user-balance\" id=\"userBalance\">0 ₫</span>" [ref=e153]:
+        - cell "36" [ref=e154]
+        - cell "<span class=\"user-balance\" id=\"userBalance\">0 ₫</span>" [ref=e155]:
+          - generic [ref=e156]: <span class="user-balance" id="userBalance">
+          - text: 0 ₫</span>
+      - row "37 <i class=\"fas fa-chevron-down\"></i>" [ref=e157]:
+        - cell "37" [ref=e158]
+        - cell "<i class=\"fas fa-chevron-down\"></i>" [ref=e159]:
+          - generic [ref=e160]: <i class="fas fa-chevron-down">
+          - text: </i>
+      - row "38 </button>" [ref=e161]:
+        - cell "38" [ref=e162]
+        - cell "</button>" [ref=e163]
+      - row "39 <div class=\"dropdown-menu\" id=\"dropdownMenu\">" [ref=e164]:
+        - cell "39" [ref=e165]
+        - cell "<div class=\"dropdown-menu\" id=\"dropdownMenu\">" [ref=e166]:
+          - generic [ref=e167]: <div class="dropdown-menu" id="dropdownMenu">
+      - row "40 <a href=\"profile.html\"><i class=\"fas fa-user\"></i> Thông tin tài khoản</a>" [ref=e168]:
+        - cell "40" [ref=e169]
+        - cell "<a href=\"profile.html\"><i class=\"fas fa-user\"></i> Thông tin tài khoản</a>" [ref=e170]:
+          - generic [ref=e171]:
+            - text: <a href="
+            - link "profile.html" [ref=e172] [cursor=pointer]:
+              - /url: profile.html
+            - text: "\">"
+          - generic [ref=e173]: <i class="fas fa-user">
+          - text: </i> Thông tin tài khoản</a>
+      - row "41 <a href=\"change-password.html\"><i class=\"fas fa-key\"></i> Đổi mật khẩu</a>" [ref=e174]:
+        - cell "41" [ref=e175]
+        - cell "<a href=\"change-password.html\"><i class=\"fas fa-key\"></i> Đổi mật khẩu</a>" [ref=e176]:
+          - generic [ref=e177]:
+            - text: <a href="
+            - link "change-password.html" [ref=e178] [cursor=pointer]:
+              - /url: change-password.html
+            - text: "\">"
+          - generic [ref=e179]: <i class="fas fa-key">
+          - text: </i> Đổi mật khẩu</a>
+      - row "42 <a href=\"orders.html\"><i class=\"fas fa-shopping-cart\"></i> Đơn hàng</a>" [ref=e180]:
+        - cell "42" [ref=e181]
+        - cell "<a href=\"orders.html\"><i class=\"fas fa-shopping-cart\"></i> Đơn hàng</a>" [ref=e182]:
+          - generic [ref=e183]:
+            - text: <a href="
+            - link "orders.html" [ref=e184] [cursor=pointer]:
+              - /url: orders.html
+            - text: "\">"
+          - generic [ref=e185]: <i class="fas fa-shopping-cart">
+          - text: </i> Đơn hàng</a>
+      - row "43 <a href=\"deposit.html\"><i class=\"fas fa-wallet\"></i> Nạp tiền</a>" [ref=e186]:
+        - cell "43" [ref=e187]
+        - cell "<a href=\"deposit.html\"><i class=\"fas fa-wallet\"></i> Nạp tiền</a>" [ref=e188]:
+          - generic [ref=e189]:
+            - text: <a href="
+            - link "deposit.html" [ref=e190] [cursor=pointer]:
+              - /url: deposit.html
+            - text: "\">"
+          - generic [ref=e191]: <i class="fas fa-wallet">
+          - text: </i> Nạp tiền</a>
+      - row "44 <a href=\"contact.html\"><i class=\"fas fa-headset\"></i> Liên hệ</a>" [ref=e192]:
+        - cell "44" [ref=e193]
+        - cell "<a href=\"contact.html\"><i class=\"fas fa-headset\"></i> Liên hệ</a>" [ref=e194]:
+          - generic [ref=e195]:
+            - text: <a href="
+            - link "contact.html" [ref=e196] [cursor=pointer]:
+              - /url: contact.html
+            - text: "\">"
+          - generic [ref=e197]: <i class="fas fa-headset">
+          - text: </i> Liên hệ</a>
+      - row "45 <a href=\"login.html\" id=\"loginLink\"><i class=\"fas fa-sign-in-alt\"></i> Đăng nhập</a>" [ref=e198]:
+        - cell "45" [ref=e199]
+        - cell "<a href=\"login.html\" id=\"loginLink\"><i class=\"fas fa-sign-in-alt\"></i> Đăng nhập</a>" [ref=e200]:
+          - generic [ref=e201]:
+            - text: <a href="
+            - link "login.html" [ref=e202] [cursor=pointer]:
+              - /url: login.html
+            - text: "\" id=\"loginLink\">"
+          - generic [ref=e203]: <i class="fas fa-sign-in-alt">
+          - text: </i> Đăng nhập</a>
+      - row "46 <a href=\"#\" id=\"logoutBtn\" style=\"display:none; color:#ef4444;\"><i class=\"fas fa-sign-out-alt\"></i> Đăng xuất</a>" [ref=e204]:
+        - cell "46" [ref=e205]
+        - cell "<a href=\"#\" id=\"logoutBtn\" style=\"display:none; color:#ef4444;\"><i class=\"fas fa-sign-out-alt\"></i> Đăng xuất</a>" [ref=e206]:
+          - generic [ref=e207]:
+            - text: <a href="
+            - link "#" [ref=e208] [cursor=pointer]:
+              - /url: "#"
+            - text: "\" id=\"logoutBtn\" style=\"display:none; color:#ef4444;\">"
+          - generic [ref=e209]: <i class="fas fa-sign-out-alt">
+          - text: </i> Đăng xuất</a>
+      - row "47 </div>" [ref=e210]:
+        - cell "47" [ref=e211]
+        - cell "</div>" [ref=e212]
+      - row "48 </div>" [ref=e213]:
+        - cell "48" [ref=e214]
+        - cell "</div>" [ref=e215]
+      - row "49 </div>" [ref=e216]:
+        - cell "49" [ref=e217]
+        - cell "</div>" [ref=e218]
+      - row "50 </header>" [ref=e219]:
+        - cell "50" [ref=e220]
+        - cell "</header>" [ref=e221]
+      - row "51" [ref=e222]:
+        - cell "51" [ref=e223]
+        - cell [ref=e224]
+      - row "52 <section class=\"content-section\">" [ref=e225]:
+        - cell "52" [ref=e226]
+        - cell "<section class=\"content-section\">" [ref=e227]:
+          - generic [ref=e228]: <section class="content-section">
+      - row "53 <div class=\"page-header\">" [ref=e229]:
+        - cell "53" [ref=e230]
+        - cell "<div class=\"page-header\">" [ref=e231]:
+          - generic [ref=e232]: <div class="page-header">
+      - row "54 <h1><i class=\"fas fa-history\"></i> Lịch sử Mua Nick</h1>" [ref=e233]:
+        - cell "54" [ref=e234]
+        - cell "<h1><i class=\"fas fa-history\"></i> Lịch sử Mua Nick</h1>" [ref=e235]:
+          - text: <h1>
+          - generic [ref=e236]: <i class="fas fa-history">
+          - text: </i> Lịch sử Mua Nick</h1>
+      - row "55 </div>" [ref=e237]:
+        - cell "55" [ref=e238]
+        - cell "</div>" [ref=e239]
+      - row "56 <div id=\"ordersContent\">" [ref=e240]:
+        - cell "56" [ref=e241]
+        - cell "<div id=\"ordersContent\">" [ref=e242]:
+          - generic [ref=e243]: <div id="ordersContent">
+      - row "57 <div class=\"coming-soon\">" [ref=e244]:
+        - cell "57" [ref=e245]
+        - cell "<div class=\"coming-soon\">" [ref=e246]:
+          - generic [ref=e247]: <div class="coming-soon">
+      - row "58 <i class=\"fas fa-spinner fa-spin\"></i>" [ref=e248]:
+        - cell "58" [ref=e249]
+        - cell "<i class=\"fas fa-spinner fa-spin\"></i>" [ref=e250]:
+          - generic [ref=e251]: <i class="fas fa-spinner fa-spin">
+          - text: </i>
+      - row "59 <h2>Đang tải...</h2>" [ref=e252]:
+        - cell "59" [ref=e253]
+        - cell "<h2>Đang tải...</h2>" [ref=e254]
+      - row "60 </div>" [ref=e255]:
+        - cell "60" [ref=e256]
+        - cell "</div>" [ref=e257]
+      - row "61 </div>" [ref=e258]:
+        - cell "61" [ref=e259]
+        - cell "</div>" [ref=e260]
+      - row "62 </section>" [ref=e261]:
+        - cell "62" [ref=e262]
+        - cell "</section>" [ref=e263]
+      - row "63" [ref=e264]:
+        - cell "63" [ref=e265]
+        - cell [ref=e266]
+      - row "64 <script src=\"js/main.js\"></script>" [ref=e267]:
+        - cell "64" [ref=e268]
+        - cell "<script src=\"js/main.js\"></script>" [ref=e269]:
+          - generic [ref=e270]:
+            - text: <script src="
+            - link "js/main.js" [ref=e271] [cursor=pointer]:
+              - /url: js/main.js
+            - text: "\">"
+          - text: </script>
+      - row "65 <script src=\"js/sanitize.js\"></script>" [ref=e272]:
+        - cell "65" [ref=e273]
+        - cell "<script src=\"js/sanitize.js\"></script>" [ref=e274]:
+          - generic [ref=e275]:
+            - text: <script src="
+            - link "js/sanitize.js" [ref=e276] [cursor=pointer]:
+              - /url: js/sanitize.js
+            - text: "\">"
+          - text: </script>
+      - row "66 <script src=\"js/particles.js\"></script>" [ref=e277]:
+        - cell "66" [ref=e278]
+        - cell "<script src=\"js/particles.js\"></script>" [ref=e279]:
+          - generic [ref=e280]:
+            - text: <script src="
+            - link "js/particles.js" [ref=e281] [cursor=pointer]:
+              - /url: js/particles.js
+            - text: "\">"
+          - text: </script>
+      - row "67 <script src=\"js/seo-loader.js\"></script>" [ref=e282]:
+        - cell "67" [ref=e283]
+        - cell "<script src=\"js/seo-loader.js\"></script>" [ref=e284]:
+          - generic [ref=e285]:
+            - text: <script src="
+            - link "js/seo-loader.js" [ref=e286] [cursor=pointer]:
+              - /url: js/seo-loader.js
+            - text: "\">"
+          - text: </script>
+      - row "68 <script>" [ref=e287]:
+        - cell "68" [ref=e288]
+        - cell "<script>" [ref=e289]
+      - row "69 const API_BASE = window.location.origin + '/api';" [ref=e290]:
+        - cell "69" [ref=e291]
+        - cell "const API_BASE = window.location.origin + '/api';" [ref=e292]
+      - row "70" [ref=e293]:
+        - cell "70" [ref=e294]
+        - cell [ref=e295]
+      - 'row "71 document.addEventListener(''DOMContentLoaded'', async function() {" [ref=e296]':
+        - cell "71" [ref=e297]
+        - 'cell "document.addEventListener(''DOMContentLoaded'', async function() {" [ref=e298]'
+      - row "72 const user = JSON.parse(localStorage.getItem('user') || 'null');" [ref=e299]:
+        - cell "72" [ref=e300]
+        - cell "const user = JSON.parse(localStorage.getItem('user') || 'null');" [ref=e301]
+      - row "73 const ordersContent = document.getElementById('ordersContent');" [ref=e302]:
+        - cell "73" [ref=e303]
+        - cell "const ordersContent = document.getElementById('ordersContent');" [ref=e304]
+      - row "74" [ref=e305]:
+        - cell "74" [ref=e306]
+        - cell [ref=e307]
+      - 'row "75 if (user) {" [ref=e308]':
+        - cell "75" [ref=e309]
+        - 'cell "if (user) {" [ref=e310]'
+      - 'row "76 document.getElementById(''userBalance'').textContent = new Intl.NumberFormat(''vi-VN'', {style: ''currency'', currency: ''VND'', maximumFractionDigits: 0}).format(user.balance || 0);" [ref=e311]':
+        - cell "76" [ref=e312]
+        - 'cell "document.getElementById(''userBalance'').textContent = new Intl.NumberFormat(''vi-VN'', {style: ''currency'', currency: ''VND'', maximumFractionDigits: 0}).format(user.balance || 0);" [ref=e313]'
+      - row "77 document.getElementById('loginLink').style.display = 'none';" [ref=e314]:
+        - cell "77" [ref=e315]
+        - cell "document.getElementById('loginLink').style.display = 'none';" [ref=e316]
+      - row "78 document.getElementById('logoutBtn').style.display = 'block';" [ref=e317]:
+        - cell "78" [ref=e318]
+        - cell "document.getElementById('logoutBtn').style.display = 'block';" [ref=e319]
+      - 'row "79 }" [ref=e320]':
+        - cell "79" [ref=e321]
+        - 'cell "}" [ref=e322]'
+      - row "80" [ref=e323]:
+        - cell "80" [ref=e324]
+        - cell [ref=e325]
+      - 'row "81 document.getElementById(''logoutBtn'').addEventListener(''click'', function(e) {" [ref=e326]':
+        - cell "81" [ref=e327]
+        - 'cell "document.getElementById(''logoutBtn'').addEventListener(''click'', function(e) {" [ref=e328]'
+      - row "82 e.preventDefault();" [ref=e329]:
+        - cell "82" [ref=e330]
+        - cell "e.preventDefault();" [ref=e331]
+      - row "83 localStorage.removeItem('user');" [ref=e332]:
+        - cell "83" [ref=e333]
+        - cell "localStorage.removeItem('user');" [ref=e334]
+      - row "84 localStorage.removeItem('token');" [ref=e335]:
+        - cell "84" [ref=e336]
+        - cell "localStorage.removeItem('token');" [ref=e337]
+      - row "85 location.reload();" [ref=e338]:
+        - cell "85" [ref=e339]
+        - cell "location.reload();" [ref=e340]
+      - 'row "86 });" [ref=e341]':
+        - cell "86" [ref=e342]
+        - 'cell "});" [ref=e343]'
+      - row "87" [ref=e344]:
+        - cell "87" [ref=e345]
+        - cell [ref=e346]
+      - 'row "88 function formatCurrency(amount) {" [ref=e347]':
+        - cell "88" [ref=e348]
+        - 'cell "function formatCurrency(amount) {" [ref=e349]'
+      - 'row "89 return new Intl.NumberFormat(''vi-VN'', { style: ''currency'', currency: ''VND'', maximumFractionDigits: 0 }).format(amount);" [ref=e350]':
+        - cell "89" [ref=e351]
+        - 'cell "return new Intl.NumberFormat(''vi-VN'', { style: ''currency'', currency: ''VND'', maximumFractionDigits: 0 }).format(amount);" [ref=e352]'
+      - 'row "90 }" [ref=e353]':
+        - cell "90" [ref=e354]
+        - 'cell "}" [ref=e355]'
+      - row "91" [ref=e356]:
+        - cell "91" [ref=e357]
+        - cell [ref=e358]
+      - 'row "92 function formatDate(dateStr) {" [ref=e359]':
+        - cell "92" [ref=e360]
+        - 'cell "function formatDate(dateStr) {" [ref=e361]'
+      - row "93 if (!dateStr) return 'N/A';" [ref=e362]:
+        - cell "93" [ref=e363]
+        - cell "if (!dateStr) return 'N/A';" [ref=e364]
+      - row "94 return new Date(dateStr).toLocaleString('vi-VN');" [ref=e365]:
+        - cell "94" [ref=e366]
+        - cell "return new Date(dateStr).toLocaleString('vi-VN');" [ref=e367]
+      - 'row "95 }" [ref=e368]':
+        - cell "95" [ref=e369]
+        - 'cell "}" [ref=e370]'
+      - row "96" [ref=e371]:
+        - cell "96" [ref=e372]
+        - cell [ref=e373]
+      - 'row "97 if (!user) {" [ref=e374]':
+        - cell "97" [ref=e375]
+        - 'cell "if (!user) {" [ref=e376]'
+      - 'row "98 ordersContent.innerHTML = `" [ref=e377]':
+        - cell "98" [ref=e378]
+        - 'cell "ordersContent.innerHTML = `" [ref=e379]'
+      - row "99 <div class=\"coming-soon\">" [ref=e380]:
+        - cell "99" [ref=e381]
+        - cell "<div class=\"coming-soon\">" [ref=e382]
+      - row "100 <i class=\"fas fa-sign-in-alt\"></i>" [ref=e383]:
+        - cell "100" [ref=e384]
+        - cell "<i class=\"fas fa-sign-in-alt\"></i>" [ref=e385]
+      - row "101 <h2>Vui lòng đăng nhập</h2>" [ref=e386]:
+        - cell "101" [ref=e387]
+        - cell "<h2>Vui lòng đăng nhập</h2>" [ref=e388]
+      - row "102 <p>Đăng nhập để xem Lịch sử mua nick của bạn</p>" [ref=e389]:
+        - cell "102" [ref=e390]
+        - cell "<p>Đăng nhập để xem Lịch sử mua nick của bạn</p>" [ref=e391]
+      - row "103 <a href=\"login.html\" class=\"btn-primary\">Đăng nhập ngay</a>" [ref=e392]:
+        - cell "103" [ref=e393]
+        - cell "<a href=\"login.html\" class=\"btn-primary\">Đăng nhập ngay</a>" [ref=e394]
+      - row "104 </div>" [ref=e395]:
+        - cell "104" [ref=e396]
+        - cell "</div>" [ref=e397]
+      - 'row "105 `;" [ref=e398]':
+        - cell "105" [ref=e399]
+        - 'cell "`;" [ref=e400]'
+      - row "106 return;" [ref=e401]:
+        - cell "106" [ref=e402]
+        - cell "return;" [ref=e403]
+      - 'row "107 }" [ref=e404]':
+        - cell "107" [ref=e405]
+        - 'cell "}" [ref=e406]'
+      - row "108" [ref=e407]:
+        - cell "108" [ref=e408]
+        - cell [ref=e409]
+      - 'row "109 try {" [ref=e410]':
+        - cell "109" [ref=e411]
+        - 'cell "try {" [ref=e412]'
+      - row "110 const token = localStorage.getItem('token');" [ref=e413]:
+        - cell "110" [ref=e414]
+        - cell "const token = localStorage.getItem('token');" [ref=e415]
+      - 'row "111 const res = await fetch(`${API_BASE}/orders`, {" [ref=e416]':
+        - cell "111" [ref=e417]
+        - 'cell "const res = await fetch(`${API_BASE}/orders`, {" [ref=e418]'
+      - 'row "112 headers: {" [ref=e419]':
+        - cell "112" [ref=e420]
+        - 'cell "headers: {" [ref=e421]'
+      - 'row "113 ''Authorization'': `Bearer ${token}`" [ref=e422]':
+        - cell "113" [ref=e423]
+        - 'cell "''Authorization'': `Bearer ${token}`" [ref=e424]'
+      - 'row "114 }" [ref=e425]':
+        - cell "114" [ref=e426]
+        - 'cell "}" [ref=e427]'
+      - 'row "115 });" [ref=e428]':
+        - cell "115" [ref=e429]
+        - 'cell "});" [ref=e430]'
+      - row "116" [ref=e431]:
+        - cell "116" [ref=e432]
+        - cell [ref=e433]
+      - 'row "117 if (res.status === 401) {" [ref=e434]':
+        - cell "117" [ref=e435]
+        - 'cell "if (res.status === 401) {" [ref=e436]'
+      - row "118 localStorage.removeItem('user');" [ref=e437]:
+        - cell "118" [ref=e438]
+        - cell "localStorage.removeItem('user');" [ref=e439]
+      - row "119 localStorage.removeItem('token');" [ref=e440]:
+        - cell "119" [ref=e441]
+        - cell "localStorage.removeItem('token');" [ref=e442]
+      - 'row "120 ordersContent.innerHTML = `" [ref=e443]':
+        - cell "120" [ref=e444]
+        - 'cell "ordersContent.innerHTML = `" [ref=e445]'
+      - row "121 <div class=\"coming-soon\">" [ref=e446]:
+        - cell "121" [ref=e447]
+        - cell "<div class=\"coming-soon\">" [ref=e448]
+      - row "122 <i class=\"fas fa-sign-in-alt\"></i>" [ref=e449]:
+        - cell "122" [ref=e450]
+        - cell "<i class=\"fas fa-sign-in-alt\"></i>" [ref=e451]
+      - row "123 <h2>Phiên đăng nhập đã hết hạn</h2>" [ref=e452]:
+        - cell "123" [ref=e453]
+        - cell "<h2>Phiên đăng nhập đã hết hạn</h2>" [ref=e454]
+      - row "124 <p>Vui lòng đăng nhập lại</p>" [ref=e455]:
+        - cell "124" [ref=e456]
+        - cell "<p>Vui lòng đăng nhập lại</p>" [ref=e457]
+      - row "125 <a href=\"login.html\" class=\"btn-primary\">Đăng nhập ngay</a>" [ref=e458]:
+        - cell "125" [ref=e459]
+        - cell "<a href=\"login.html\" class=\"btn-primary\">Đăng nhập ngay</a>" [ref=e460]
+      - row "126 </div>" [ref=e461]:
+        - cell "126" [ref=e462]
+        - cell "</div>" [ref=e463]
+      - 'row "127 `;" [ref=e464]':
+        - cell "127" [ref=e465]
+        - 'cell "`;" [ref=e466]'
+      - row "128 return;" [ref=e467]:
+        - cell "128" [ref=e468]
+        - cell "return;" [ref=e469]
+      - 'row "129 }" [ref=e470]':
+        - cell "129" [ref=e471]
+        - 'cell "}" [ref=e472]'
+      - row "130" [ref=e473]:
+        - cell "130" [ref=e474]
+        - cell [ref=e475]
+      - row "131 const data = await res.json();" [ref=e476]:
+        - cell "131" [ref=e477]
+        - cell "const data = await res.json();" [ref=e478]
+      - row "132" [ref=e479]:
+        - cell "132" [ref=e480]
+        - cell [ref=e481]
+      - 'row "133 if (data.success && data.data.length > 0) {" [ref=e482]':
+        - cell "133" [ref=e483]
+        - 'cell "if (data.success && data.data.length > 0) {" [ref=e484]'
+      - 'row "134 ordersContent.innerHTML = `" [ref=e485]':
+        - cell "134" [ref=e486]
+        - 'cell "ordersContent.innerHTML = `" [ref=e487]'
+      - row "135 <div class=\"orders-container\">" [ref=e488]:
+        - cell "135" [ref=e489]
+        - cell "<div class=\"orders-container\">" [ref=e490]
+      - row "136 <div class=\"orders-table-wrapper\">" [ref=e491]:
+        - cell "136" [ref=e492]
+        - cell "<div class=\"orders-table-wrapper\">" [ref=e493]
+      - row "137 <table class=\"orders-table\">" [ref=e494]:
+        - cell "137" [ref=e495]
+        - cell "<table class=\"orders-table\">" [ref=e496]
+      - row "138 <thead>" [ref=e497]:
+        - cell "138" [ref=e498]
+        - cell "<thead>" [ref=e499]
+      - row "139 <tr>" [ref=e500]:
+        - cell "139" [ref=e501]
+        - cell "<tr>" [ref=e502]
+      - row "140 <th>Mã đơn</th>" [ref=e503]:
+        - cell "140" [ref=e504]
+        - cell "<th>Mã đơn</th>" [ref=e505]
+      - row "141 <th>Sản phẩm</th>" [ref=e506]:
+        - cell "141" [ref=e507]
+        - cell "<th>Sản phẩm</th>" [ref=e508]
+      - row "142 <th>SL</th>" [ref=e509]:
+        - cell "142" [ref=e510]
+        - cell "<th>SL</th>" [ref=e511]
+      - row "143 <th>Giá</th>" [ref=e512]:
+        - cell "143" [ref=e513]
+        - cell "<th>Giá</th>" [ref=e514]
+      - row "144 <th>Tài khoản</th>" [ref=e515]:
+        - cell "144" [ref=e516]
+        - cell "<th>Tài khoản</th>" [ref=e517]
+      - row "145 <th>Trạng thái</th>" [ref=e518]:
+        - cell "145" [ref=e519]
+        - cell "<th>Trạng thái</th>" [ref=e520]
+      - row "146 <th>Ngày</th>" [ref=e521]:
+        - cell "146" [ref=e522]
+        - cell "<th>Ngày</th>" [ref=e523]
+      - row "147 </tr>" [ref=e524]:
+        - cell "147" [ref=e525]
+        - cell "</tr>" [ref=e526]
+      - row "148 </thead>" [ref=e527]:
+        - cell "148" [ref=e528]
+        - cell "</thead>" [ref=e529]
+      - row "149 <tbody>" [ref=e530]:
+        - cell "149" [ref=e531]
+        - cell "<tbody>" [ref=e532]
+      - 'row "150 ${data.data.map(order => {" [ref=e533]':
+        - cell "150" [ref=e534]
+        - 'cell "${data.data.map(order => {" [ref=e535]'
+      - row "151 const hasCredentials = order.account_info || order.account_username;" [ref=e536]:
+        - cell "151" [ref=e537]
+        - cell "const hasCredentials = order.account_info || order.account_username;" [ref=e538]
+      - 'row "152 return `" [ref=e539]':
+        - cell "152" [ref=e540]
+        - 'cell "return `" [ref=e541]'
+      - row "153 <tr>" [ref=e542]:
+        - cell "153" [ref=e543]
+        - cell "<tr>" [ref=e544]
+      - 'row "154 <td>#${order.id}</td>" [ref=e545]':
+        - cell "154" [ref=e546]
+        - 'cell "<td>#${order.id}</td>" [ref=e547]'
+      - 'row "155 <td>${order.product_name || ''N/A''}</td>" [ref=e548]':
+        - cell "155" [ref=e549]
+        - 'cell "<td>${order.product_name || ''N/A''}</td>" [ref=e550]'
+      - 'row "156 <td>${order.quantity || 1}</td>" [ref=e551]':
+        - cell "156" [ref=e552]
+        - 'cell "<td>${order.quantity || 1}</td>" [ref=e553]'
+      - 'row "157 <td>${formatCurrency(order.total_price)}</td>" [ref=e554]':
+        - cell "157" [ref=e555]
+        - 'cell "<td>${formatCurrency(order.total_price)}</td>" [ref=e556]'
+      - row "158 <td>" [ref=e557]:
+        - cell "158" [ref=e558]
+        - cell "<td>" [ref=e559]
+      - 'row "159 ${order.status === ''completed'' ?" [ref=e560]':
+        - cell "159" [ref=e561]
+        - 'cell "${order.status === ''completed'' ?" [ref=e562]'
+      - 'row "160 `<button class=\"view-account-btn\" data-order-id=\"${order.id}\" style=\"background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;border:none;cursor:pointer;\">" [ref=e563]':
+        - cell "160" [ref=e564]
+        - 'cell "`<button class=\"view-account-btn\" data-order-id=\"${order.id}\" style=\"background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:4px 12px;border-radius:6px;font-size:11px;border:none;cursor:pointer;\">" [ref=e565]'
+      - row "161 <i class=\"fas fa-eye\"></i> Xem tài khoản" [ref=e566]:
+        - cell "161" [ref=e567]
+        - cell "<i class=\"fas fa-eye\"></i> Xem tài khoản" [ref=e568]
+      - row "162 </button>" [ref=e569]:
+        - cell "162" [ref=e570]
+        - cell "</button>" [ref=e571]
+      - 'row "163 <div id=\"accounts-${order.id}\" style=\"display:none;margin-top:8px;\"></div>` :" [ref=e572]':
+        - cell "163" [ref=e573]
+        - 'cell "<div id=\"accounts-${order.id}\" style=\"display:none;margin-top:8px;\"></div>` :" [ref=e574]'
+      - 'row "164 `<span style=\"color:#94a3b8;\">-</span>`" [ref=e575]':
+        - cell "164" [ref=e576]
+        - 'cell "`<span style=\"color:#94a3b8;\">-</span>`" [ref=e577]'
+      - 'row "165 }" [ref=e578]':
+        - cell "165" [ref=e579]
+        - 'cell "}" [ref=e580]'
+      - row "166 </td>" [ref=e581]:
+        - cell "166" [ref=e582]
+        - cell "</td>" [ref=e583]
+      - 'row "167 <td><span class=\"status-${order.status}\">${order.status === ''completed'' ? ''Hoàn thành'' : order.status === ''pending'' ? ''Đang xử lý'' : ''Đã hủy''}</span></td>" [ref=e584]':
+        - cell "167" [ref=e585]
+        - 'cell "<td><span class=\"status-${order.status}\">${order.status === ''completed'' ? ''Hoàn thành'' : order.status === ''pending'' ? ''Đang xử lý'' : ''Đã hủy''}</span></td>" [ref=e586]'
+      - 'row "168 <td>${formatDate(order.created_at)}</td>" [ref=e587]':
+        - cell "168" [ref=e588]
+        - 'cell "<td>${formatDate(order.created_at)}</td>" [ref=e589]'
+      - row "169 </tr>" [ref=e590]:
+        - cell "169" [ref=e591]
+        - cell "</tr>" [ref=e592]
+      - 'row "170 `}).join('''')}" [ref=e593]':
+        - cell "170" [ref=e594]
+        - 'cell "`}).join('''')}" [ref=e595]'
+      - row "171 </tbody>" [ref=e596]:
+        - cell "171" [ref=e597]
+        - cell "</tbody>" [ref=e598]
+      - row "172 </table>" [ref=e599]:
+        - cell "172" [ref=e600]
+        - cell "</table>" [ref=e601]
+      - row "173 </div>" [ref=e602]:
+        - cell "173" [ref=e603]
+        - cell "</div>" [ref=e604]
+      - row "174 <div class=\"orders-cards\">" [ref=e605]:
+        - cell "174" [ref=e606]
+        - cell "<div class=\"orders-cards\">" [ref=e607]
+      - 'row "175 ${data.data.map(order => {" [ref=e608]':
+        - cell "175" [ref=e609]
+        - 'cell "${data.data.map(order => {" [ref=e610]'
+      - 'row "176 return `" [ref=e611]':
+        - cell "176" [ref=e612]
+        - 'cell "return `" [ref=e613]'
+      - row "177 <div class=\"order-card\">" [ref=e614]:
+        - cell "177" [ref=e615]
+        - cell "<div class=\"order-card\">" [ref=e616]
+      - row "178 <div class=\"order-card-header\">" [ref=e617]:
+        - cell "178" [ref=e618]
+        - cell "<div class=\"order-card-header\">" [ref=e619]
+      - 'row "179 <span class=\"order-id\">#${order.id}</span>" [ref=e620]':
+        - cell "179" [ref=e621]
+        - 'cell "<span class=\"order-id\">#${order.id}</span>" [ref=e622]'
+      - 'row "180 <span class=\"status-${order.status}\">${order.status === ''completed'' ? ''Hoàn thành'' : order.status === ''pending'' ? ''Đang xử lý'' : ''Đã hủy''}</span>" [ref=e623]':
+        - cell "180" [ref=e624]
+        - 'cell "<span class=\"status-${order.status}\">${order.status === ''completed'' ? ''Hoàn thành'' : order.status === ''pending'' ? ''Đang xử lý'' : ''Đã hủy''}</span>" [ref=e625]'
+      - row "181 </div>" [ref=e626]:
+        - cell "181" [ref=e627]
+        - cell "</div>" [ref=e628]
+      - row "182 <div class=\"order-card-body\">" [ref=e629]:
+        - cell "182" [ref=e630]
+        - cell "<div class=\"order-card-body\">" [ref=e631]
+      - row "183 <div class=\"order-row\">" [ref=e632]:
+        - cell "183" [ref=e633]
+        - cell "<div class=\"order-row\">" [ref=e634]
+      - row "184 <span class=\"order-label\">Sản phẩm:</span>" [ref=e635]:
+        - cell "184" [ref=e636]
+        - cell "<span class=\"order-label\">Sản phẩm:</span>" [ref=e637]
+      - 'row "185 <span class=\"order-value\">${order.product_name || ''N/A''}</span>" [ref=e638]':
+        - cell "185" [ref=e639]
+        - 'cell "<span class=\"order-value\">${order.product_name || ''N/A''}</span>" [ref=e640]'
+      - row "186 </div>" [ref=e641]:
+        - cell "186" [ref=e642]
+        - cell "</div>" [ref=e643]
+      - row "187 <div class=\"order-row\">" [ref=e644]:
+        - cell "187" [ref=e645]
+        - cell "<div class=\"order-row\">" [ref=e646]
+      - row "188 <span class=\"order-label\">Số lượng:</span>" [ref=e647]:
+        - cell "188" [ref=e648]
+        - cell "<span class=\"order-label\">Số lượng:</span>" [ref=e649]
+      - 'row "189 <span class=\"order-value\">${order.quantity || 1} nick</span>" [ref=e650]':
+        - cell "189" [ref=e651]
+        - 'cell "<span class=\"order-value\">${order.quantity || 1} nick</span>" [ref=e652]'
+      - row "190 </div>" [ref=e653]:
+        - cell "190" [ref=e654]
+        - cell "</div>" [ref=e655]
+      - row "191 <div class=\"order-row\">" [ref=e656]:
+        - cell "191" [ref=e657]
+        - cell "<div class=\"order-row\">" [ref=e658]
+      - row "192 <span class=\"order-label\">Giá:</span>" [ref=e659]:
+        - cell "192" [ref=e660]
+        - cell "<span class=\"order-label\">Giá:</span>" [ref=e661]
+      - 'row "193 <span class=\"order-value price\">${formatCurrency(order.total_price)}</span>" [ref=e662]':
+        - cell "193" [ref=e663]
+        - 'cell "<span class=\"order-value price\">${formatCurrency(order.total_price)}</span>" [ref=e664]'
+      - row "194 </div>" [ref=e665]:
+        - cell "194" [ref=e666]
+        - cell "</div>" [ref=e667]
+      - row "195 <div class=\"order-row\" style=\"flex-direction:column;align-items:flex-start;\">" [ref=e668]:
+        - cell "195" [ref=e669]
+        - cell "<div class=\"order-row\" style=\"flex-direction:column;align-items:flex-start;\">" [ref=e670]
+      - row "196 <span class=\"order-label\" style=\"margin-bottom:6px;\">Tài khoản:</span>" [ref=e671]:
+        - cell "196" [ref=e672]
+        - cell "<span class=\"order-label\" style=\"margin-bottom:6px;\">Tài khoản:</span>" [ref=e673]
+      - 'row "197 ${order.status === ''completed'' ?" [ref=e674]':
+        - cell "197" [ref=e675]
+        - 'cell "${order.status === ''completed'' ?" [ref=e676]'
+      - 'row "198 `<button class=\"view-account-btn card-view-btn\" data-order-id=\"${order.id}\" style=\"width:100%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:10px;border-radius:8px;font-size:13px;border:none;cursor:pointer;\">" [ref=e677]':
+        - cell "198" [ref=e678]
+        - 'cell "`<button class=\"view-account-btn card-view-btn\" data-order-id=\"${order.id}\" style=\"width:100%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:10px;border-radius:8px;font-size:13px;border:none;cursor:pointer;\">" [ref=e679]'
+      - 'row "199 <i class=\"fas fa-eye\"></i> Xem tài khoản (${order.quantity || 1} nick)" [ref=e680]':
+        - cell "199" [ref=e681]
+        - 'cell "<i class=\"fas fa-eye\"></i> Xem tài khoản (${order.quantity || 1} nick)" [ref=e682]'
+      - row "200 </button>" [ref=e683]:
+        - cell "200" [ref=e684]
+        - cell "</button>" [ref=e685]
+      - 'row "201 <div id=\"accounts-${order.id}\" style=\"display:none;width:100%;margin-top:8px;\"></div>` :" [ref=e686]':
+        - cell "201" [ref=e687]
+        - 'cell "<div id=\"accounts-${order.id}\" style=\"display:none;width:100%;margin-top:8px;\"></div>` :" [ref=e688]'
+      - 'row "202 `<span style=\"color:#94a3b8;font-size:12px;\">Đơn hàng chưa hoàn thành</span>`" [ref=e689]':
+        - cell "202" [ref=e690]
+        - 'cell "`<span style=\"color:#94a3b8;font-size:12px;\">Đơn hàng chưa hoàn thành</span>`" [ref=e691]'
+      - 'row "203 }" [ref=e692]':
+        - cell "203" [ref=e693]
+        - 'cell "}" [ref=e694]'
+      - row "204 </div>" [ref=e695]:
+        - cell "204" [ref=e696]
+        - cell "</div>" [ref=e697]
+      - row "205 <div class=\"order-row\">" [ref=e698]:
+        - cell "205" [ref=e699]
+        - cell "<div class=\"order-row\">" [ref=e700]
+      - row "206 <span class=\"order-label\">Ngày mua:</span>" [ref=e701]:
+        - cell "206" [ref=e702]
+        - cell "<span class=\"order-label\">Ngày mua:</span>" [ref=e703]
+      - 'row "207 <span class=\"order-value\">${formatDate(order.created_at)}</span>" [ref=e704]':
+        - cell "207" [ref=e705]
+        - 'cell "<span class=\"order-value\">${formatDate(order.created_at)}</span>" [ref=e706]'
+      - row "208 </div>" [ref=e707]:
+        - cell "208" [ref=e708]
+        - cell "</div>" [ref=e709]
+      - row "209 </div>" [ref=e710]:
+        - cell "209" [ref=e711]
+        - cell "</div>" [ref=e712]
+      - row "210 </div>" [ref=e713]:
+        - cell "210" [ref=e714]
+        - cell "</div>" [ref=e715]
+      - 'row "211 `}).join('''')}" [ref=e716]':
+        - cell "211" [ref=e717]
+        - 'cell "`}).join('''')}" [ref=e718]'
+      - row "212 </div>" [ref=e719]:
+        - cell "212" [ref=e720]
+        - cell "</div>" [ref=e721]
+      - row "213 </div>" [ref=e722]:
+        - cell "213" [ref=e723]
+        - cell "</div>" [ref=e724]
+      - 'row "214 `;" [ref=e725]':
+        - cell "214" [ref=e726]
+        - 'cell "`;" [ref=e727]'
+      - 'row "215 } else {" [ref=e728]':
+        - cell "215" [ref=e729]
+        - 'cell "} else {" [ref=e730]'
+      - 'row "216 ordersContent.innerHTML = `" [ref=e731]':
+        - cell "216" [ref=e732]
+        - 'cell "ordersContent.innerHTML = `" [ref=e733]'
+      - 'row "217 <div style=\"background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);\">" [ref=e734]':
+        - cell "217" [ref=e735]
+        - 'cell "<div style=\"background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3);\">" [ref=e736]'
+      - 'row "218 <h2 style=\"color: #fff; margin-bottom: 20px;\"><i class=\"fas fa-history\"></i> Lịch sử mua nick</h2>" [ref=e737]':
+        - cell "218" [ref=e738]
+        - 'cell "<h2 style=\"color: #fff; margin-bottom: 20px;\"><i class=\"fas fa-history\"></i> Lịch sử mua nick</h2>" [ref=e739]'
+      - 'row "219 <div style=\"text-align: center; padding: 40px; color: #a0aec0;\">" [ref=e740]':
+        - cell "219" [ref=e741]
+        - 'cell "<div style=\"text-align: center; padding: 40px; color: #a0aec0;\">" [ref=e742]'
+      - 'row "220 <i class=\"fas fa-box-open\" style=\"font-size: 50px; color: var(--primary); margin-bottom: 20px;\"></i>" [ref=e743]':
+        - cell "220" [ref=e744]
+        - 'cell "<i class=\"fas fa-box-open\" style=\"font-size: 50px; color: var(--primary); margin-bottom: 20px;\"></i>" [ref=e745]'
+      - row "221 <p>Bạn chưa có đơn hàng nào</p>" [ref=e746]:
+        - cell "221" [ref=e747]
+        - cell "<p>Bạn chưa có đơn hàng nào</p>" [ref=e748]
+      - 'row "222 <a href=\"index.html\" style=\"background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; display: inline-block; margin-top: 20px; text-decoration: none;\">Mua nick ngay</a>" [ref=e749]':
+        - cell "222" [ref=e750]
+        - 'cell "<a href=\"index.html\" style=\"background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; display: inline-block; margin-top: 20px; text-decoration: none;\">Mua nick ngay</a>" [ref=e751]'
+      - row "223 </div>" [ref=e752]:
+        - cell "223" [ref=e753]
+        - cell "</div>" [ref=e754]
+      - row "224 </div>" [ref=e755]:
+        - cell "224" [ref=e756]
+        - cell "</div>" [ref=e757]
+      - 'row "225 `;" [ref=e758]':
+        - cell "225" [ref=e759]
+        - 'cell "`;" [ref=e760]'
+      - 'row "226 }" [ref=e761]':
+        - cell "226" [ref=e762]
+        - 'cell "}" [ref=e763]'
+      - 'row "227 } catch (error) {" [ref=e764]':
+        - cell "227" [ref=e765]
+        - 'cell "} catch (error) {" [ref=e766]'
+      - row "228 console.error('Error loading orders:', error);" [ref=e767]:
+        - cell "228" [ref=e768]
+        - cell "console.error('Error loading orders:', error);" [ref=e769]
+      - 'row "229 ordersContent.innerHTML = `" [ref=e770]':
+        - cell "229" [ref=e771]
+        - 'cell "ordersContent.innerHTML = `" [ref=e772]'
+      - 'row "230 <div style=\"background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3); text-align: center;\">" [ref=e773]':
+        - cell "230" [ref=e774]
+        - 'cell "<div style=\"background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 20px; border: 1px solid rgba(0, 240, 255, 0.3); text-align: center;\">" [ref=e775]'
+      - 'row "231 <i class=\"fas fa-exclamation-circle\" style=\"font-size: 50px; color: #ef4444; margin-bottom: 20px;\"></i>" [ref=e776]':
+        - cell "231" [ref=e777]
+        - 'cell "<i class=\"fas fa-exclamation-circle\" style=\"font-size: 50px; color: #ef4444; margin-bottom: 20px;\"></i>" [ref=e778]'
+      - 'row "232 <p style=\"color: #fff;\">Có lỗi xảy ra khi tải đơn hàng</p>" [ref=e779]':
+        - cell "232" [ref=e780]
+        - 'cell "<p style=\"color: #fff;\">Có lỗi xảy ra khi tải đơn hàng</p>" [ref=e781]'
+      - 'row "233 <button onclick=\"location.reload()\" style=\"background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; border: none; margin-top: 20px; cursor: pointer;\">Thử lại</button>" [ref=e782]':
+        - cell "233" [ref=e783]
+        - 'cell "<button onclick=\"location.reload()\" style=\"background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 30px; border-radius: 10px; border: none; margin-top: 20px; cursor: pointer;\">Thử lại</button>" [ref=e784]'
+      - row "234 </div>" [ref=e785]:
+        - cell "234" [ref=e786]
+        - cell "</div>" [ref=e787]
+      - 'row "235 `;" [ref=e788]':
+        - cell "235" [ref=e789]
+        - 'cell "`;" [ref=e790]'
+      - 'row "236 }" [ref=e791]':
+        - cell "236" [ref=e792]
+        - 'cell "}" [ref=e793]'
+      - 'row "237 });" [ref=e794]':
+        - cell "237" [ref=e795]
+        - 'cell "});" [ref=e796]'
+      - row "238" [ref=e797]:
+        - cell "238" [ref=e798]
+        - cell [ref=e799]
+      - 'row "239 document.addEventListener(''click'', async function(e) {" [ref=e800]':
+        - cell "239" [ref=e801]
+        - 'cell "document.addEventListener(''click'', async function(e) {" [ref=e802]'
+      - row "240 const btn = e.target.closest('.view-account-btn');" [ref=e803]:
+        - cell "240" [ref=e804]
+        - cell "const btn = e.target.closest('.view-account-btn');" [ref=e805]
+      - row "241 if (!btn) return;" [ref=e806]:
+        - cell "241" [ref=e807]
+        - cell "if (!btn) return;" [ref=e808]
+      - row "242" [ref=e809]:
+        - cell "242" [ref=e810]
+        - cell [ref=e811]
+      - row "243 const orderId = btn.dataset.orderId;" [ref=e812]:
+        - cell "243" [ref=e813]
+        - cell "const orderId = btn.dataset.orderId;" [ref=e814]
+      - 'row "244 const accountsContainer = document.getElementById(`accounts-${orderId}`);" [ref=e815]':
+        - cell "244" [ref=e816]
+        - 'cell "const accountsContainer = document.getElementById(`accounts-${orderId}`);" [ref=e817]'
+      - row "245" [ref=e818]:
+        - cell "245" [ref=e819]
+        - cell [ref=e820]
+      - 'row "246 if (accountsContainer && accountsContainer.style.display === ''block'') {" [ref=e821]':
+        - cell "246" [ref=e822]
+        - 'cell "if (accountsContainer && accountsContainer.style.display === ''block'') {" [ref=e823]'
+      - row "247 accountsContainer.style.display = 'none';" [ref=e824]:
+        - cell "247" [ref=e825]
+        - cell "accountsContainer.style.display = 'none';" [ref=e826]
+      - row "248 btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e827]:
+        - cell "248" [ref=e828]
+        - cell "btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e829]
+      - row "249 return;" [ref=e830]:
+        - cell "249" [ref=e831]
+        - cell "return;" [ref=e832]
+      - 'row "250 }" [ref=e833]':
+        - cell "250" [ref=e834]
+        - 'cell "}" [ref=e835]'
+      - row "251" [ref=e836]:
+        - cell "251" [ref=e837]
+        - cell [ref=e838]
+      - row "252 btn.disabled = true;" [ref=e839]:
+        - cell "252" [ref=e840]
+        - cell "btn.disabled = true;" [ref=e841]
+      - row "253 btn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> Đang tải...';" [ref=e842]:
+        - cell "253" [ref=e843]
+        - cell "btn.innerHTML = '<i class=\"fas fa-spinner fa-spin\"></i> Đang tải...';" [ref=e844]
+      - row "254" [ref=e845]:
+        - cell "254" [ref=e846]
+        - cell [ref=e847]
+      - 'row "255 try {" [ref=e848]':
+        - cell "255" [ref=e849]
+        - 'cell "try {" [ref=e850]'
+      - row "256 const token = localStorage.getItem('token');" [ref=e851]:
+        - cell "256" [ref=e852]
+        - cell "const token = localStorage.getItem('token');" [ref=e853]
+      - 'row "257 const res = await fetch(`${API_BASE}/orders/${orderId}/account`, {" [ref=e854]':
+        - cell "257" [ref=e855]
+        - 'cell "const res = await fetch(`${API_BASE}/orders/${orderId}/account`, {" [ref=e856]'
+      - 'row "258 headers: { ''Authorization'': `Bearer ${token}` }" [ref=e857]':
+        - cell "258" [ref=e858]
+        - 'cell "headers: { ''Authorization'': `Bearer ${token}` }" [ref=e859]'
+      - 'row "259 });" [ref=e860]':
+        - cell "259" [ref=e861]
+        - 'cell "});" [ref=e862]'
+      - row "260" [ref=e863]:
+        - cell "260" [ref=e864]
+        - cell [ref=e865]
+      - row "261 const data = await res.json();" [ref=e866]:
+        - cell "261" [ref=e867]
+        - cell "const data = await res.json();" [ref=e868]
+      - row "262" [ref=e869]:
+        - cell "262" [ref=e870]
+        - cell [ref=e871]
+      - 'row "263 if (data.success) {" [ref=e872]':
+        - cell "263" [ref=e873]
+        - 'cell "if (data.success) {" [ref=e874]'
+      - row "264 const accounts = data.data.accounts || [];" [ref=e875]:
+        - cell "264" [ref=e876]
+        - cell "const accounts = data.data.accounts || [];" [ref=e877]
+      - 'row "265 const accountsHtml = accounts.map((a, i) => `" [ref=e878]':
+        - cell "265" [ref=e879]
+        - 'cell "const accountsHtml = accounts.map((a, i) => `" [ref=e880]'
+      - row "266 <div style=\"background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;\">" [ref=e881]:
+        - cell "266" [ref=e882]
+        - cell "<div style=\"background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;margin-bottom:6px;\">" [ref=e883]
+      - 'row "267 <div style=\"color:#6366f1;font-size:11px;margin-bottom:4px;\">Nick #${i+1}</div>" [ref=e884]':
+        - cell "267" [ref=e885]
+        - 'cell "<div style=\"color:#6366f1;font-size:11px;margin-bottom:4px;\">Nick #${i+1}</div>" [ref=e886]'
+      - row "268 <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;\">" [ref=e887]:
+        - cell "268" [ref=e888]
+        - cell "<div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;\">" [ref=e889]
+      - row "269 <span style=\"color:#94a3b8;font-size:12px;\">TK:</span>" [ref=e890]:
+        - cell "269" [ref=e891]
+        - cell "<span style=\"color:#94a3b8;font-size:12px;\">TK:</span>" [ref=e892]
+      - 'row "270 <code style=\"font-size:11px;\">${escapeHtml(a.username || ''N/A'')}</code>" [ref=e893]':
+        - cell "270" [ref=e894]
+        - 'cell "<code style=\"font-size:11px;\">${escapeHtml(a.username || ''N/A'')}</code>" [ref=e895]'
+      - 'row "271 <button onclick=\"navigator.clipboard.writeText(''${escapeJs(a.username || '''')}'');this.innerHTML=''✓'';setTimeout(()=>this.innerHTML=''📋'',1000)\" style=\"background:none;border:none;cursor:pointer;padding:2px;\">📋</button>" [ref=e896]':
+        - cell "271" [ref=e897]
+        - 'cell "<button onclick=\"navigator.clipboard.writeText(''${escapeJs(a.username || '''')}'');this.innerHTML=''✓'';setTimeout(()=>this.innerHTML=''📋'',1000)\" style=\"background:none;border:none;cursor:pointer;padding:2px;\">📋</button>" [ref=e898]'
+      - row "272 </div>" [ref=e899]:
+        - cell "272" [ref=e900]
+        - cell "</div>" [ref=e901]
+      - row "273 <div style=\"display:flex;justify-content:space-between;align-items:center;\">" [ref=e902]:
+        - cell "273" [ref=e903]
+        - cell "<div style=\"display:flex;justify-content:space-between;align-items:center;\">" [ref=e904]
+      - row "274 <span style=\"color:#94a3b8;font-size:12px;\">MK:</span>" [ref=e905]:
+        - cell "274" [ref=e906]
+        - cell "<span style=\"color:#94a3b8;font-size:12px;\">MK:</span>" [ref=e907]
+      - 'row "275 <code style=\"font-size:11px;\">${escapeHtml(a.password || ''N/A'')}</code>" [ref=e908]':
+        - cell "275" [ref=e909]
+        - 'cell "<code style=\"font-size:11px;\">${escapeHtml(a.password || ''N/A'')}</code>" [ref=e910]'
+      - 'row "276 <button onclick=\"navigator.clipboard.writeText(''${escapeJs(a.password || '''')}'');this.innerHTML=''✓'';setTimeout(()=>this.innerHTML=''📋'',1000)\" style=\"background:none;border:none;cursor:pointer;padding:2px;\">📋</button>" [ref=e911]':
+        - cell "276" [ref=e912]
+        - 'cell "<button onclick=\"navigator.clipboard.writeText(''${escapeJs(a.password || '''')}'');this.innerHTML=''✓'';setTimeout(()=>this.innerHTML=''📋'',1000)\" style=\"background:none;border:none;cursor:pointer;padding:2px;\">📋</button>" [ref=e913]'
+      - row "277 </div>" [ref=e914]:
+        - cell "277" [ref=e915]
+        - cell "</div>" [ref=e916]
+      - row "278 </div>" [ref=e917]:
+        - cell "278" [ref=e918]
+        - cell "</div>" [ref=e919]
+      - 'row "279 `).join('''');" [ref=e920]':
+        - cell "279" [ref=e921]
+        - 'cell "`).join('''');" [ref=e922]'
+      - row "280" [ref=e923]:
+        - cell "280" [ref=e924]
+        - cell [ref=e925]
+      - 'row "281 if (accountsContainer) {" [ref=e926]':
+        - cell "281" [ref=e927]
+        - 'cell "if (accountsContainer) {" [ref=e928]'
+      - row "282 accountsContainer.innerHTML = accountsHtml;" [ref=e929]:
+        - cell "282" [ref=e930]
+        - cell "accountsContainer.innerHTML = accountsHtml;" [ref=e931]
+      - row "283 accountsContainer.style.display = 'block';" [ref=e932]:
+        - cell "283" [ref=e933]
+        - cell "accountsContainer.style.display = 'block';" [ref=e934]
+      - 'row "284 } else {" [ref=e935]':
+        - cell "284" [ref=e936]
+        - 'cell "} else {" [ref=e937]'
+      - 'row "285 alert(`Tài khoản:\\n${accounts.map((a, i) => `Nick #${i+1}: ${a.username} - ${a.password}`).join(''\\n'')}`);" [ref=e938]':
+        - cell "285" [ref=e939]
+        - 'cell "alert(`Tài khoản:\\n${accounts.map((a, i) => `Nick #${i+1}: ${a.username} - ${a.password}`).join(''\\n'')}`);" [ref=e940]'
+      - 'row "286 }" [ref=e941]':
+        - cell "286" [ref=e942]
+        - 'cell "}" [ref=e943]'
+      - row "287" [ref=e944]:
+        - cell "287" [ref=e945]
+        - cell [ref=e946]
+      - row "288 btn.innerHTML = '<i class=\"fas fa-eye-slash\"></i> Ẩn tài khoản';" [ref=e947]:
+        - cell "288" [ref=e948]
+        - cell "btn.innerHTML = '<i class=\"fas fa-eye-slash\"></i> Ẩn tài khoản';" [ref=e949]
+      - 'row "289 } else {" [ref=e950]':
+        - cell "289" [ref=e951]
+        - 'cell "} else {" [ref=e952]'
+      - row "290 alert(data.message || 'Không thể xem tài khoản');" [ref=e953]:
+        - cell "290" [ref=e954]
+        - cell "alert(data.message || 'Không thể xem tài khoản');" [ref=e955]
+      - row "291 btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e956]:
+        - cell "291" [ref=e957]
+        - cell "btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e958]
+      - 'row "292 }" [ref=e959]':
+        - cell "292" [ref=e960]
+        - 'cell "}" [ref=e961]'
+      - 'row "293 } catch (error) {" [ref=e962]':
+        - cell "293" [ref=e963]
+        - 'cell "} catch (error) {" [ref=e964]'
+      - row "294 console.error('Error fetching accounts:', error);" [ref=e965]:
+        - cell "294" [ref=e966]
+        - cell "console.error('Error fetching accounts:', error);" [ref=e967]
+      - row "295 alert('Lỗi khi tải tài khoản');" [ref=e968]:
+        - cell "295" [ref=e969]
+        - cell "alert('Lỗi khi tải tài khoản');" [ref=e970]
+      - row "296 btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e971]:
+        - cell "296" [ref=e972]
+        - cell "btn.innerHTML = '<i class=\"fas fa-eye\"></i> Xem tài khoản';" [ref=e973]
+      - 'row "297 }" [ref=e974]':
+        - cell "297" [ref=e975]
+        - 'cell "}" [ref=e976]'
+      - row "298" [ref=e977]:
+        - cell "298" [ref=e978]
+        - cell [ref=e979]
+      - row "299 btn.disabled = false;" [ref=e980]:
+        - cell "299" [ref=e981]
+        - cell "btn.disabled = false;" [ref=e982]
+      - 'row "300 });" [ref=e983]':
+        - cell "300" [ref=e984]
+        - 'cell "});" [ref=e985]'
+      - row "301 </script>" [ref=e986]:
+        - cell "301" [ref=e987]
+        - cell "</script>" [ref=e988]
+      - row "302 <style>" [ref=e989]:
+        - cell "302" [ref=e990]
+        - cell "<style>" [ref=e991]
+      - 'row "303 .orders-container {" [ref=e992]':
+        - cell "303" [ref=e993]
+        - 'cell ".orders-container {" [ref=e994]'
+      - 'row "304 background: rgba(30, 41, 59, 0.95);" [ref=e995]':
+        - cell "304" [ref=e996]
+        - 'cell "background: rgba(30, 41, 59, 0.95);" [ref=e997]'
+      - 'row "305 padding: 30px;" [ref=e998]':
+        - cell "305" [ref=e999]
+        - 'cell "padding: 30px;" [ref=e1000]'
+      - 'row "306 border-radius: 20px;" [ref=e1001]':
+        - cell "306" [ref=e1002]
+        - 'cell "border-radius: 20px;" [ref=e1003]'
+      - 'row "307 border: 1px solid rgba(0, 240, 255, 0.3);" [ref=e1004]':
+        - cell "307" [ref=e1005]
+        - 'cell "border: 1px solid rgba(0, 240, 255, 0.3);" [ref=e1006]'
+      - 'row "308 }" [ref=e1007]':
+        - cell "308" [ref=e1008]
+        - 'cell "}" [ref=e1009]'
+      - row "309" [ref=e1010]:
+        - cell "309" [ref=e1011]
+        - cell [ref=e1012]
+      - 'row "310 .orders-table {" [ref=e1013]':
+        - cell "310" [ref=e1014]
+        - 'cell ".orders-table {" [ref=e1015]'
+      - 'row "311 width: 100%;" [ref=e1016]':
+        - cell "311" [ref=e1017]
+        - 'cell "width: 100%;" [ref=e1018]'
+      - 'row "312 border-collapse: collapse;" [ref=e1019]':
+        - cell "312" [ref=e1020]
+        - 'cell "border-collapse: collapse;" [ref=e1021]'
+      - 'row "313 }" [ref=e1022]':
+        - cell "313" [ref=e1023]
+        - 'cell "}" [ref=e1024]'
+      - row "314" [ref=e1025]:
+        - cell "314" [ref=e1026]
+        - cell [ref=e1027]
+      - 'row "315 .orders-table th {" [ref=e1028]':
+        - cell "315" [ref=e1029]
+        - 'cell ".orders-table th {" [ref=e1030]'
+      - 'row "316 background: rgba(0, 240, 255, 0.1);" [ref=e1031]':
+        - cell "316" [ref=e1032]
+        - 'cell "background: rgba(0, 240, 255, 0.1);" [ref=e1033]'
+      - 'row "317 color: var(--primary);" [ref=e1034]':
+        - cell "317" [ref=e1035]
+        - 'cell "color: var(--primary);" [ref=e1036]'
+      - 'row "318 padding: 15px;" [ref=e1037]':
+        - cell "318" [ref=e1038]
+        - 'cell "padding: 15px;" [ref=e1039]'
+      - 'row "319 text-align: left;" [ref=e1040]':
+        - cell "319" [ref=e1041]
+        - 'cell "text-align: left;" [ref=e1042]'
+      - 'row "320 font-size: 14px;" [ref=e1043]':
+        - cell "320" [ref=e1044]
+        - 'cell "font-size: 14px;" [ref=e1045]'
+      - 'row "321 border-bottom: 2px solid rgba(0, 240, 255, 0.3);" [ref=e1046]':
+        - cell "321" [ref=e1047]
+        - 'cell "border-bottom: 2px solid rgba(0, 240, 255, 0.3);" [ref=e1048]'
+      - 'row "322 }" [ref=e1049]':
+        - cell "322" [ref=e1050]
+        - 'cell "}" [ref=e1051]'
+      - row "323" [ref=e1052]:
+        - cell "323" [ref=e1053]
+        - cell [ref=e1054]
+      - 'row "324 .orders-table td {" [ref=e1055]':
+        - cell "324" [ref=e1056]
+        - 'cell ".orders-table td {" [ref=e1057]'
+      - 'row "325 padding: 15px;" [ref=e1058]':
+        - cell "325" [ref=e1059]
+        - 'cell "padding: 15px;" [ref=e1060]'
+      - 'row "326 color: #fff;" [ref=e1061]':
+        - cell "326" [ref=e1062]
+        - 'cell "color: #fff;" [ref=e1063]'
+      - 'row "327 border-bottom: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1064]':
+        - cell "327" [ref=e1065]
+        - 'cell "border-bottom: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1066]'
+      - 'row "328 }" [ref=e1067]':
+        - cell "328" [ref=e1068]
+        - 'cell "}" [ref=e1069]'
+      - row "329" [ref=e1070]:
+        - cell "329" [ref=e1071]
+        - cell [ref=e1072]
+      - 'row "330 .orders-table code {" [ref=e1073]':
+        - cell "330" [ref=e1074]
+        - 'cell ".orders-table code {" [ref=e1075]'
+      - 'row "331 background: rgba(0, 0, 0, 0.3);" [ref=e1076]':
+        - cell "331" [ref=e1077]
+        - 'cell "background: rgba(0, 0, 0, 0.3);" [ref=e1078]'
+      - 'row "332 padding: 5px 10px;" [ref=e1079]':
+        - cell "332" [ref=e1080]
+        - 'cell "padding: 5px 10px;" [ref=e1081]'
+      - 'row "333 border-radius: 5px;" [ref=e1082]':
+        - cell "333" [ref=e1083]
+        - 'cell "border-radius: 5px;" [ref=e1084]'
+      - 'row "334 color: #00f0ff;" [ref=e1085]':
+        - cell "334" [ref=e1086]
+        - 'cell "color: #00f0ff;" [ref=e1087]'
+      - 'row "335 font-family: ''Courier New'', monospace;" [ref=e1088]':
+        - cell "335" [ref=e1089]
+        - 'cell "font-family: ''Courier New'', monospace;" [ref=e1090]'
+      - 'row "336 }" [ref=e1091]':
+        - cell "336" [ref=e1092]
+        - 'cell "}" [ref=e1093]'
+      - row "337" [ref=e1094]:
+        - cell "337" [ref=e1095]
+        - cell [ref=e1096]
+      - 'row "338 .status-completed {" [ref=e1097]':
+        - cell "338" [ref=e1098]
+        - 'cell ".status-completed {" [ref=e1099]'
+      - 'row "339 background: rgba(46, 204, 113, 0.2);" [ref=e1100]':
+        - cell "339" [ref=e1101]
+        - 'cell "background: rgba(46, 204, 113, 0.2);" [ref=e1102]'
+      - 'row "340 color: #2ecc71;" [ref=e1103]':
+        - cell "340" [ref=e1104]
+        - 'cell "color: #2ecc71;" [ref=e1105]'
+      - 'row "341 padding: 5px 10px;" [ref=e1106]':
+        - cell "341" [ref=e1107]
+        - 'cell "padding: 5px 10px;" [ref=e1108]'
+      - 'row "342 border-radius: 5px;" [ref=e1109]':
+        - cell "342" [ref=e1110]
+        - 'cell "border-radius: 5px;" [ref=e1111]'
+      - 'row "343 }" [ref=e1112]':
+        - cell "343" [ref=e1113]
+        - 'cell "}" [ref=e1114]'
+      - row "344" [ref=e1115]:
+        - cell "344" [ref=e1116]
+        - cell [ref=e1117]
+      - 'row "345 .status-pending {" [ref=e1118]':
+        - cell "345" [ref=e1119]
+        - 'cell ".status-pending {" [ref=e1120]'
+      - 'row "346 background: rgba(243, 156, 18, 0.2);" [ref=e1121]':
+        - cell "346" [ref=e1122]
+        - 'cell "background: rgba(243, 156, 18, 0.2);" [ref=e1123]'
+      - 'row "347 color: #f39c12;" [ref=e1124]':
+        - cell "347" [ref=e1125]
+        - 'cell "color: #f39c12;" [ref=e1126]'
+      - 'row "348 padding: 5px 10px;" [ref=e1127]':
+        - cell "348" [ref=e1128]
+        - 'cell "padding: 5px 10px;" [ref=e1129]'
+      - 'row "349 border-radius: 5px;" [ref=e1130]':
+        - cell "349" [ref=e1131]
+        - 'cell "border-radius: 5px;" [ref=e1132]'
+      - 'row "350 }" [ref=e1133]':
+        - cell "350" [ref=e1134]
+        - 'cell "}" [ref=e1135]'
+      - row "351" [ref=e1136]:
+        - cell "351" [ref=e1137]
+        - cell [ref=e1138]
+      - 'row "352 .status-cancelled {" [ref=e1139]':
+        - cell "352" [ref=e1140]
+        - 'cell ".status-cancelled {" [ref=e1141]'
+      - 'row "353 background: rgba(231, 76, 60, 0.2);" [ref=e1142]':
+        - cell "353" [ref=e1143]
+        - 'cell "background: rgba(231, 76, 60, 0.2);" [ref=e1144]'
+      - 'row "354 color: #e74c3c;" [ref=e1145]':
+        - cell "354" [ref=e1146]
+        - 'cell "color: #e74c3c;" [ref=e1147]'
+      - 'row "355 padding: 5px 10px;" [ref=e1148]':
+        - cell "355" [ref=e1149]
+        - 'cell "padding: 5px 10px;" [ref=e1150]'
+      - 'row "356 border-radius: 5px;" [ref=e1151]':
+        - cell "356" [ref=e1152]
+        - 'cell "border-radius: 5px;" [ref=e1153]'
+      - 'row "357 }" [ref=e1154]':
+        - cell "357" [ref=e1155]
+        - 'cell "}" [ref=e1156]'
+      - row "358" [ref=e1157]:
+        - cell "358" [ref=e1158]
+        - cell [ref=e1159]
+      - 'row "359 .orders-table tbody tr:hover {" [ref=e1160]':
+        - cell "359" [ref=e1161]
+        - 'cell ".orders-table tbody tr:hover {" [ref=e1162]'
+      - 'row "360 background: rgba(0, 240, 255, 0.05);" [ref=e1163]':
+        - cell "360" [ref=e1164]
+        - 'cell "background: rgba(0, 240, 255, 0.05);" [ref=e1165]'
+      - 'row "361 }" [ref=e1166]':
+        - cell "361" [ref=e1167]
+        - 'cell "}" [ref=e1168]'
+      - row "362" [ref=e1169]:
+        - cell "362" [ref=e1170]
+        - cell [ref=e1171]
+      - 'row "363 .orders-table-wrapper {" [ref=e1172]':
+        - cell "363" [ref=e1173]
+        - 'cell ".orders-table-wrapper {" [ref=e1174]'
+      - 'row "364 overflow-x: auto;" [ref=e1175]':
+        - cell "364" [ref=e1176]
+        - 'cell "overflow-x: auto;" [ref=e1177]'
+      - 'row "365 -webkit-overflow-scrolling: touch;" [ref=e1178]':
+        - cell "365" [ref=e1179]
+        - 'cell "-webkit-overflow-scrolling: touch;" [ref=e1180]'
+      - 'row "366 }" [ref=e1181]':
+        - cell "366" [ref=e1182]
+        - 'cell "}" [ref=e1183]'
+      - row "367" [ref=e1184]:
+        - cell "367" [ref=e1185]
+        - cell [ref=e1186]
+      - 'row "368 .orders-cards {" [ref=e1187]':
+        - cell "368" [ref=e1188]
+        - 'cell ".orders-cards {" [ref=e1189]'
+      - 'row "369 display: none;" [ref=e1190]':
+        - cell "369" [ref=e1191]
+        - 'cell "display: none;" [ref=e1192]'
+      - 'row "370 }" [ref=e1193]':
+        - cell "370" [ref=e1194]
+        - 'cell "}" [ref=e1195]'
+      - row "371" [ref=e1196]:
+        - cell "371" [ref=e1197]
+        - cell [ref=e1198]
+      - 'row "372 .order-card {" [ref=e1199]':
+        - cell "372" [ref=e1200]
+        - 'cell ".order-card {" [ref=e1201]'
+      - 'row "373 background: rgba(0, 0, 0, 0.3);" [ref=e1202]':
+        - cell "373" [ref=e1203]
+        - 'cell "background: rgba(0, 0, 0, 0.3);" [ref=e1204]'
+      - 'row "374 border-radius: 12px;" [ref=e1205]':
+        - cell "374" [ref=e1206]
+        - 'cell "border-radius: 12px;" [ref=e1207]'
+      - 'row "375 padding: 15px;" [ref=e1208]':
+        - cell "375" [ref=e1209]
+        - 'cell "padding: 15px;" [ref=e1210]'
+      - 'row "376 margin-bottom: 15px;" [ref=e1211]':
+        - cell "376" [ref=e1212]
+        - 'cell "margin-bottom: 15px;" [ref=e1213]'
+      - 'row "377 border: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1214]':
+        - cell "377" [ref=e1215]
+        - 'cell "border: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1216]'
+      - 'row "378 }" [ref=e1217]':
+        - cell "378" [ref=e1218]
+        - 'cell "}" [ref=e1219]'
+      - row "379" [ref=e1220]:
+        - cell "379" [ref=e1221]
+        - cell [ref=e1222]
+      - 'row "380 .order-card-header {" [ref=e1223]':
+        - cell "380" [ref=e1224]
+        - 'cell ".order-card-header {" [ref=e1225]'
+      - 'row "381 display: flex;" [ref=e1226]':
+        - cell "381" [ref=e1227]
+        - 'cell "display: flex;" [ref=e1228]'
+      - 'row "382 justify-content: space-between;" [ref=e1229]':
+        - cell "382" [ref=e1230]
+        - 'cell "justify-content: space-between;" [ref=e1231]'
+      - 'row "383 align-items: center;" [ref=e1232]':
+        - cell "383" [ref=e1233]
+        - 'cell "align-items: center;" [ref=e1234]'
+      - 'row "384 margin-bottom: 15px;" [ref=e1235]':
+        - cell "384" [ref=e1236]
+        - 'cell "margin-bottom: 15px;" [ref=e1237]'
+      - 'row "385 padding-bottom: 12px;" [ref=e1238]':
+        - cell "385" [ref=e1239]
+        - 'cell "padding-bottom: 12px;" [ref=e1240]'
+      - 'row "386 border-bottom: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1241]':
+        - cell "386" [ref=e1242]
+        - 'cell "border-bottom: 1px solid rgba(255, 255, 255, 0.1);" [ref=e1243]'
+      - 'row "387 }" [ref=e1244]':
+        - cell "387" [ref=e1245]
+        - 'cell "}" [ref=e1246]'
+      - row "388" [ref=e1247]:
+        - cell "388" [ref=e1248]
+        - cell [ref=e1249]
+      - 'row "389 .order-id {" [ref=e1250]':
+        - cell "389" [ref=e1251]
+        - 'cell ".order-id {" [ref=e1252]'
+      - 'row "390 font-weight: 600;" [ref=e1253]':
+        - cell "390" [ref=e1254]
+        - 'cell "font-weight: 600;" [ref=e1255]'
+      - 'row "391 color: #00f0ff;" [ref=e1256]':
+        - cell "391" [ref=e1257]
+        - 'cell "color: #00f0ff;" [ref=e1258]'
+      - 'row "392 font-size: 16px;" [ref=e1259]':
+        - cell "392" [ref=e1260]
+        - 'cell "font-size: 16px;" [ref=e1261]'
+      - 'row "393 }" [ref=e1262]':
+        - cell "393" [ref=e1263]
+        - 'cell "}" [ref=e1264]'
+      - row "394" [ref=e1265]:
+        - cell "394" [ref=e1266]
+        - cell [ref=e1267]
+      - 'row "395 .order-card-body .order-row {" [ref=e1268]':
+        - cell "395" [ref=e1269]
+        - 'cell ".order-card-body .order-row {" [ref=e1270]'
+      - 'row "396 display: flex;" [ref=e1271]':
+        - cell "396" [ref=e1272]
+        - 'cell "display: flex;" [ref=e1273]'
+      - 'row "397 justify-content: space-between;" [ref=e1274]':
+        - cell "397" [ref=e1275]
+        - 'cell "justify-content: space-between;" [ref=e1276]'
+      - 'row "398 align-items: center;" [ref=e1277]':
+        - cell "398" [ref=e1278]
+        - 'cell "align-items: center;" [ref=e1279]'
+      - 'row "399 padding: 8px 0;" [ref=e1280]':
+        - cell "399" [ref=e1281]
+        - 'cell "padding: 8px 0;" [ref=e1282]'
+      - 'row "400 border-bottom: 1px solid rgba(255, 255, 255, 0.05);" [ref=e1283]':
+        - cell "400" [ref=e1284]
+        - 'cell "border-bottom: 1px solid rgba(255, 255, 255, 0.05);" [ref=e1285]'
+      - 'row "401 }" [ref=e1286]':
+        - cell "401" [ref=e1287]
+        - 'cell "}" [ref=e1288]'
+      - row "402" [ref=e1289]:
+        - cell "402" [ref=e1290]
+        - cell [ref=e1291]
+      - 'row "403 .order-label {" [ref=e1292]':
+        - cell "403" [ref=e1293]
+        - 'cell ".order-label {" [ref=e1294]'
+      - 'row "404 color: #94a3b8;" [ref=e1295]':
+        - cell "404" [ref=e1296]
+        - 'cell "color: #94a3b8;" [ref=e1297]'
+      - 'row "405 font-size: 13px;" [ref=e1298]':
+        - cell "405" [ref=e1299]
+        - 'cell "font-size: 13px;" [ref=e1300]'
+      - 'row "406 }" [ref=e1301]':
+        - cell "406" [ref=e1302]
+        - 'cell "}" [ref=e1303]'
+      - row "407" [ref=e1304]:
+        - cell "407" [ref=e1305]
+        - cell [ref=e1306]
+      - 'row "408 .order-value {" [ref=e1307]':
+        - cell "408" [ref=e1308]
+        - 'cell ".order-value {" [ref=e1309]'
+      - 'row "409 color: #fff;" [ref=e1310]':
+        - cell "409" [ref=e1311]
+        - 'cell "color: #fff;" [ref=e1312]'
+      - 'row "410 font-size: 14px;" [ref=e1313]':
+        - cell "410" [ref=e1314]
+        - 'cell "font-size: 14px;" [ref=e1315]'
+      - 'row "411 }" [ref=e1316]':
+        - cell "411" [ref=e1317]
+        - 'cell "}" [ref=e1318]'
+      - row "412" [ref=e1319]:
+        - cell "412" [ref=e1320]
+        - cell [ref=e1321]
+      - 'row "413 .order-value.price {" [ref=e1322]':
+        - cell "413" [ref=e1323]
+        - 'cell ".order-value.price {" [ref=e1324]'
+      - 'row "414 color: #10b981;" [ref=e1325]':
+        - cell "414" [ref=e1326]
+        - 'cell "color: #10b981;" [ref=e1327]'
+      - 'row "415 font-weight: 600;" [ref=e1328]':
+        - cell "415" [ref=e1329]
+        - 'cell "font-weight: 600;" [ref=e1330]'
+      - 'row "416 }" [ref=e1331]':
+        - cell "416" [ref=e1332]
+        - 'cell "}" [ref=e1333]'
+      - row "417" [ref=e1334]:
+        - cell "417" [ref=e1335]
+        - cell [ref=e1336]
+      - 'row "418 .order-code {" [ref=e1337]':
+        - cell "418" [ref=e1338]
+        - 'cell ".order-code {" [ref=e1339]'
+      - 'row "419 background: rgba(99, 102, 241, 0.2);" [ref=e1340]':
+        - cell "419" [ref=e1341]
+        - 'cell "background: rgba(99, 102, 241, 0.2);" [ref=e1342]'
+      - 'row "420 padding: 4px 8px;" [ref=e1343]':
+        - cell "420" [ref=e1344]
+        - 'cell "padding: 4px 8px;" [ref=e1345]'
+      - 'row "421 border-radius: 4px;" [ref=e1346]':
+        - cell "421" [ref=e1347]
+        - 'cell "border-radius: 4px;" [ref=e1348]'
+      - 'row "422 color: #00f0ff;" [ref=e1349]':
+        - cell "422" [ref=e1350]
+        - 'cell "color: #00f0ff;" [ref=e1351]'
+      - 'row "423 font-size: 13px;" [ref=e1352]':
+        - cell "423" [ref=e1353]
+        - 'cell "font-size: 13px;" [ref=e1354]'
+      - 'row "424 }" [ref=e1355]':
+        - cell "424" [ref=e1356]
+        - 'cell "}" [ref=e1357]'
+      - row "425" [ref=e1358]:
+        - cell "425" [ref=e1359]
+        - cell [ref=e1360]
+      - 'row "426 @media (max-width: 768px) {" [ref=e1361]':
+        - cell "426" [ref=e1362]
+        - 'cell "@media (max-width: 768px) {" [ref=e1363]'
+      - 'row "427 .orders-container {" [ref=e1364]':
+        - cell "427" [ref=e1365]
+        - 'cell ".orders-container {" [ref=e1366]'
+      - 'row "428 padding: 15px 10px;" [ref=e1367]':
+        - cell "428" [ref=e1368]
+        - 'cell "padding: 15px 10px;" [ref=e1369]'
+      - 'row "429 }" [ref=e1370]':
+        - cell "429" [ref=e1371]
+        - 'cell "}" [ref=e1372]'
+      - row "430" [ref=e1373]:
+        - cell "430" [ref=e1374]
+        - cell [ref=e1375]
+      - 'row "431 .orders-table-wrapper {" [ref=e1376]':
+        - cell "431" [ref=e1377]
+        - 'cell ".orders-table-wrapper {" [ref=e1378]'
+      - 'row "432 display: none;" [ref=e1379]':
+        - cell "432" [ref=e1380]
+        - 'cell "display: none;" [ref=e1381]'
+      - 'row "433 }" [ref=e1382]':
+        - cell "433" [ref=e1383]
+        - 'cell "}" [ref=e1384]'
+      - row "434" [ref=e1385]:
+        - cell "434" [ref=e1386]
+        - cell [ref=e1387]
+      - 'row "435 .orders-cards {" [ref=e1388]':
+        - cell "435" [ref=e1389]
+        - 'cell ".orders-cards {" [ref=e1390]'
+      - 'row "436 display: block;" [ref=e1391]':
+        - cell "436" [ref=e1392]
+        - 'cell "display: block;" [ref=e1393]'
+      - 'row "437 }" [ref=e1394]':
+        - cell "437" [ref=e1395]
+        - 'cell "}" [ref=e1396]'
+      - row "438" [ref=e1397]:
+        - cell "438" [ref=e1398]
+        - cell [ref=e1399]
+      - 'row "439 .page-header h1 {" [ref=e1400]':
+        - cell "439" [ref=e1401]
+        - 'cell ".page-header h1 {" [ref=e1402]'
+      - 'row "440 font-size: 20px;" [ref=e1403]':
+        - cell "440" [ref=e1404]
+        - 'cell "font-size: 20px;" [ref=e1405]'
+      - 'row "441 }" [ref=e1406]':
+        - cell "441" [ref=e1407]
+        - 'cell "}" [ref=e1408]'
+      - 'row "442 }" [ref=e1409]':
+        - cell "442" [ref=e1410]
+        - 'cell "}" [ref=e1411]'
+      - row "443" [ref=e1412]:
+        - cell "443" [ref=e1413]
+        - cell [ref=e1414]
+      - 'row "444 @media (max-width: 480px) {" [ref=e1415]':
+        - cell "444" [ref=e1416]
+        - 'cell "@media (max-width: 480px) {" [ref=e1417]'
+      - 'row "445 .order-card {" [ref=e1418]':
+        - cell "445" [ref=e1419]
+        - 'cell ".order-card {" [ref=e1420]'
+      - 'row "446 padding: 12px;" [ref=e1421]':
+        - cell "446" [ref=e1422]
+        - 'cell "padding: 12px;" [ref=e1423]'
+      - 'row "447 }" [ref=e1424]':
+        - cell "447" [ref=e1425]
+        - 'cell "}" [ref=e1426]'
+      - row "448" [ref=e1427]:
+        - cell "448" [ref=e1428]
+        - cell [ref=e1429]
+      - 'row "449 .order-card-header {" [ref=e1430]':
+        - cell "449" [ref=e1431]
+        - 'cell ".order-card-header {" [ref=e1432]'
+      - 'row "450 margin-bottom: 12px;" [ref=e1433]':
+        - cell "450" [ref=e1434]
+        - 'cell "margin-bottom: 12px;" [ref=e1435]'
+      - 'row "451 padding-bottom: 10px;" [ref=e1436]':
+        - cell "451" [ref=e1437]
+        - 'cell "padding-bottom: 10px;" [ref=e1438]'
+      - 'row "452 }" [ref=e1439]':
+        - cell "452" [ref=e1440]
+        - 'cell "}" [ref=e1441]'
+      - row "453" [ref=e1442]:
+        - cell "453" [ref=e1443]
+        - cell [ref=e1444]
+      - 'row "454 .order-id {" [ref=e1445]':
+        - cell "454" [ref=e1446]
+        - 'cell ".order-id {" [ref=e1447]'
+      - 'row "455 font-size: 15px;" [ref=e1448]':
+        - cell "455" [ref=e1449]
+        - 'cell "font-size: 15px;" [ref=e1450]'
+      - 'row "456 }" [ref=e1451]':
+        - cell "456" [ref=e1452]
+        - 'cell "}" [ref=e1453]'
+      - row "457" [ref=e1454]:
+        - cell "457" [ref=e1455]
+        - cell [ref=e1456]
+      - 'row "458 .order-label {" [ref=e1457]':
+        - cell "458" [ref=e1458]
+        - 'cell ".order-label {" [ref=e1459]'
+      - 'row "459 font-size: 12px;" [ref=e1460]':
+        - cell "459" [ref=e1461]
+        - 'cell "font-size: 12px;" [ref=e1462]'
+      - 'row "460 }" [ref=e1463]':
+        - cell "460" [ref=e1464]
+        - 'cell "}" [ref=e1465]'
+      - row "461" [ref=e1466]:
+        - cell "461" [ref=e1467]
+        - cell [ref=e1468]
+      - 'row "462 .order-value {" [ref=e1469]':
+        - cell "462" [ref=e1470]
+        - 'cell ".order-value {" [ref=e1471]'
+      - 'row "463 font-size: 13px;" [ref=e1472]':
+        - cell "463" [ref=e1473]
+        - 'cell "font-size: 13px;" [ref=e1474]'
+      - 'row "464 }" [ref=e1475]':
+        - cell "464" [ref=e1476]
+        - 'cell "}" [ref=e1477]'
+      - row "465" [ref=e1478]:
+        - cell "465" [ref=e1479]
+        - cell [ref=e1480]
+      - 'row "466 .order-code {" [ref=e1481]':
+        - cell "466" [ref=e1482]
+        - 'cell ".order-code {" [ref=e1483]'
+      - 'row "467 font-size: 12px;" [ref=e1484]':
+        - cell "467" [ref=e1485]
+        - 'cell "font-size: 12px;" [ref=e1486]'
+      - 'row "468 padding: 3px 6px;" [ref=e1487]':
+        - cell "468" [ref=e1488]
+        - 'cell "padding: 3px 6px;" [ref=e1489]'
+      - 'row "469 }" [ref=e1490]':
+        - cell "469" [ref=e1491]
+        - 'cell "}" [ref=e1492]'
+      - 'row "470 }" [ref=e1493]':
+        - cell "470" [ref=e1494]
+        - 'cell "}" [ref=e1495]'
+      - row "471 </style>" [ref=e1496]:
+        - cell "471" [ref=e1497]
+        - cell "</style>" [ref=e1498]
+      - row "472 <script>" [ref=e1499]:
+        - cell "472" [ref=e1500]
+        - cell "<script>" [ref=e1501]
+      - row "473 gsap.registerPlugin(ScrollTrigger);" [ref=e1502]:
+        - cell "473" [ref=e1503]
+        - cell "gsap.registerPlugin(ScrollTrigger);" [ref=e1504]
+      - 'row "474 document.addEventListener(''DOMContentLoaded'', function() {" [ref=e1505]':
+        - cell "474" [ref=e1506]
+        - 'cell "document.addEventListener(''DOMContentLoaded'', function() {" [ref=e1507]'
+      - 'row "475 gsap.from(''.header'', { y: -50, opacity: 0, duration: 0.8, ease: \"power3.out\" });" [ref=e1508]':
+        - cell "475" [ref=e1509]
+        - 'cell "gsap.from(''.header'', { y: -50, opacity: 0, duration: 0.8, ease: \"power3.out\" });" [ref=e1510]'
+      - 'row "476 gsap.from(''.page-header'', { y: 30, opacity: 0, duration: 0.6, delay: 0.3 });" [ref=e1511]':
+        - cell "476" [ref=e1512]
+        - 'cell "gsap.from(''.page-header'', { y: 30, opacity: 0, duration: 0.6, delay: 0.3 });" [ref=e1513]'
+      - 'row "477 gsap.from(''#ordersContent'', { y: 40, opacity: 0, duration: 0.7, delay: 0.5, ease: \"power2.out\" });" [ref=e1514]':
+        - cell "477" [ref=e1515]
+        - 'cell "gsap.from(''#ordersContent'', { y: 40, opacity: 0, duration: 0.7, delay: 0.5, ease: \"power2.out\" });" [ref=e1516]'
+      - 'row "478 });" [ref=e1517]':
+        - cell "478" [ref=e1518]
+        - 'cell "});" [ref=e1519]'
+      - row "479 </script>" [ref=e1520]:
+        - cell "479" [ref=e1521]
+        - cell "</script>" [ref=e1522]
+      - 'row "480 <script defer src=\"https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447\" integrity=\"sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==\" data-cf-beacon=''{\"version\":\"2024.11.0\",\"token\":\"4a0beaee6fbf4daeaacf9fe3a381af43\",\"r\":1,\"server_timing\":{\"name\":{\"cfCacheStatus\":true,\"cfEdge\":true,\"cfExtPri\":true,\"cfL4\":true,\"cfOrigin\":true,\"cfSpeedBrain\":true},\"location_startswith\":null}}'' crossorigin=\"anonymous\"></script>" [ref=e1523]':
+        - cell "480" [ref=e1524]
+        - 'cell "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447\" integrity=\"sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==\" data-cf-beacon=''{\"version\":\"2024.11.0\",\"token\":\"4a0beaee6fbf4daeaacf9fe3a381af43\",\"r\":1,\"server_timing\":{\"name\":{\"cfCacheStatus\":true,\"cfEdge\":true,\"cfExtPri\":true,\"cfL4\":true,\"cfOrigin\":true,\"cfSpeedBrain\":true},\"location_startswith\":null}}'' crossorigin=\"anonymous\"></script>" [ref=e1525]':
+          - generic [ref=e1526]:
+            - text: <script defer src="
+            - link "https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" [ref=e1527] [cursor=pointer]:
+              - /url: https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447
+            - text: "\" integrity=\"sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==\" data-cf-beacon='{\"version\":\"2024.11.0\",\"token\":\"4a0beaee6fbf4daeaacf9fe3a381af43\",\"r\":1,\"server_timing\":{\"name\":{\"cfCacheStatus\":true,\"cfEdge\":true,\"cfExtPri\":true,\"cfL4\":true,\"cfOrigin\":true,\"cfSpeedBrain\":true},\"location_startswith\":null}}' crossorigin=\"anonymous\">"
+          - text: </script>
+      - row "481 </body>" [ref=e1528]:
+        - cell "481" [ref=e1529]
+        - cell "</body>" [ref=e1530]
+      - row "482 </html>" [ref=e1531]:
+        - cell "482" [ref=e1532]
+        - cell "</html>" [ref=e1533]
+      - row "483" [ref=e1534]:
+        - cell "483" [ref=e1535]
+        - cell [ref=e1536]

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Admin - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+        .telegram-btn {
+            background: linear-gradient(135deg, #0088cc 0%, #00a0dc 100%);
+        }
+        .telegram-btn:hover {
+            background: linear-gradient(135deg, #00a0dc 0%, #00b8f0 100%);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center">
+    <div class="w-full max-w-md p-8">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <i class="fab fa-telegram text-4xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">Bot Admin Panel</h1>
+                <p class="text-gray-400">Telegram Bot Management Dashboard</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-gray-300 mb-2">Telegram ID</label>
+                    <input type="text" id="telegramId" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition" placeholder="Nhập Telegram ID của bạn">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Admin Key</label>
+                    <input type="password" id="adminKey" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition" placeholder="Nhập Admin Key">
+                </div>
+                
+                <button type="submit" class="telegram-btn w-full py-3 rounded-lg text-white font-semibold transition transform hover:scale-105 shadow-lg">
+                    <i class="fab fa-telegram mr-2"></i> Đăng Nhập
+                </button>
+            </form>
+            
+            <div id="errorMsg" class="hidden mt-4 p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400 text-center"></div>
+            
+            <div class="mt-6 text-center text-gray-400 text-sm">
+                <p>Chỉ Admin Telegram ID được cấu hình trong bot có thể đăng nhập</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = window.location.origin + '/api';
+        
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const telegramId = document.getElementById('telegramId').value.trim();
+            const adminKey = document.getElementById('adminKey').value.trim();
+            
+            if (!telegramId || !adminKey) {
+                showError('Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_BASE}/bot-admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ telegramId, adminKey })
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    localStorage.setItem('botAdminToken', data.token);
+                    localStorage.setItem('botAdminId', telegramId);
+                    window.location.href = '/bot-admin/dashboard.html';
+                } else {
+                    showError(data.message || 'Đăng nhập thất bại');
+                }
+            } catch (err) {
+                showError('Lỗi kết nối server');
+            }
+        });
+        
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            el.textContent = msg;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>

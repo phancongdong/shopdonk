@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Admin - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+        .sidebar-link {
+            transition: all 0.3s ease;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: linear-gradient(135deg, #0088cc 0%, #00a0dc 100%);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2) 0%, rgba(0, 160, 220, 0.1) 100%);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 136, 204, 0.5);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="flex">
+    <aside class="w-64 min-h-screen bg-black/30 border-r border-white/10 flex flex-col">
+        <div class="p-6 border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <i class="fab fa-telegram text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-white font-bold">Bot Admin</h1>
+                    <p class="text-gray-400 text-xs">Telegram Management</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="flex-1 p-4">
+            <a href="#" onclick="showSection('dashboard')" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-white mb-2" data-section="dashboard">
+                <i class="fas fa-chart-line w-5"></i> Dashboard
+            </a>
+            <a href="#" onclick="showSection('products')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="products">
+                <i class="fas fa-box w-5"></i> Sản Phẩm
+            </a>
+            <a href="#" onclick="showSection('orders')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="orders">
+                <i class="fas fa-shopping-cart w-5"></i> Đơn Hàng
+            </a>
+            <a href="#" onclick="showSection('users')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="users">
+                <i class="fas fa-users w-5"></i> Người Dùng
+            </a>
+            <a href="#" onclick="showSection('deposits')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="deposits">
+                <i class="fas fa-money-bill-wave w-5"></i> Nạp Tiền
+            </a>
+            <a href="#" onclick="showSection('broadcast')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="broadcast">
+                <i class="fas fa-bullhorn w-5"></i> Gửi Thông Báo
+            </a>
+            <a href="#" onclick="showSection('settings')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="settings">
+                <i class="fas fa-cog w-5"></i> Cài Đặt
+            </a>
+        </nav>
+        
+        <div class="p-4 border-t border-white/10">
+            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition">
+                <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+            </button>
+        </div>
+    </aside>
+    
+    <main class="flex-1 min-h-screen">
+        <header class="bg-black/20 border-b border-white/10 px-6 py-4 flex items-center justify-between">
+            <h2 id="pageTitle" class="text-xl font-bold text-white">Dashboard</h2>
+            <div class="flex items-center gap-4">
+                <span id="adminInfo" class="text-gray-400 text-sm"></span>
+                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                    <i class="fas fa-user text-blue-400"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="p-6">
+            <section id="section-dashboard" class="section">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="stat-card card rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm">Tổng Doanh Thu</p>
+                                <p id="stat-revenue" class="text-2xl font-bold text-white mt-1">0đ</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-green-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card card rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm">Tổng Đơn Hàng</p>
+                                <p id="stat-orders" class="text-2xl font-bold text-white mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card card rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm">Người Dùng</p>
+                                <p id="stat-users" class="text-2xl font-bold text-white mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                <i class="fas fa-users text-purple-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card card rounded-xl p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm">Chờ Duyệt</p>
+                                <p id="stat-pending" class="text-2xl font-bold text-white mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card rounded-xl p-5">
+                        <h3 class="text-white font-semibold mb-4">Đơn Hàng Gần Đây</h3>
+                        <div id="recentOrders" class="space-y-3">
+                            <p class="text-gray-400 text-center py-4">Đang tải...</p>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-5">
+                        <h3 class="text-white font-semibold mb-4">Nạp Tiền Chờ Duyệt</h3>
+                        <div id="pendingDeposits" class="space-y-3">
+                            <p class="text-gray-400 text-center py-4">Đang tải...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-products" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-white font-semibold">Danh Sách Sản Phẩm</h3>
+                        <button onclick="showAddProductModal()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
+                            <i class="fas fa-plus mr-2"></i> Thêm Mới
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-white/10">
+                                    <th class="pb-3 px-2">Tên</th>
+                                    <th class="pb-3 px-2">Danh Mục</th>
+                                    <th class="pb-3 px-2">Giá</th>
+                                    <th class="pb-3 px-2">Tồn Kho</th>
+                                    <th class="pb-3 px-2">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable" class="text-gray-300">
+                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-orders" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <h3 class="text-white font-semibold mb-4">Danh Sách Đơn Hàng</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-white/10">
+                                    <th class="pb-3 px-2">ID</th>
+                                    <th class="pb-3 px-2">Người Mua</th>
+                                    <th class="pb-3 px-2">Sản Phẩm</th>
+                                    <th class="pb-3 px-2">Tổng</th>
+                                    <th class="pb-3 px-2">Trạng Thái</th>
+                                    <th class="pb-3 px-2">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable" class="text-gray-300">
+                                <tr><td colspan="6" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-users" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <h3 class="text-white font-semibold mb-4">Danh Sách Người Dùng</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-white/10">
+                                    <th class="pb-3 px-2">Telegram ID</th>
+                                    <th class="pb-3 px-2">Tên</th>
+                                    <th class="pb-3 px-2">Số Dư</th>
+                                    <th class="pb-3 px-2">Vai Trò</th>
+                                    <th class="pb-3 px-2">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable" class="text-gray-300">
+                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-deposits" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <h3 class="text-white font-semibold mb-4">Yêu Cầu Nạp Tiền</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-white/10">
+                                    <th class="pb-3 px-2">User</th>
+                                    <th class="pb-3 px-2">Số Tiền</th>
+                                    <th class="pb-3 px-2">Phương Thức</th>
+                                    <th class="pb-3 px-2">Trạng Thái</th>
+                                    <th class="pb-3 px-2">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="depositsTable" class="text-gray-300">
+                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-broadcast" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <h3 class="text-white font-semibold mb-4">Gửi Thông Báo Đến Tất Cả User</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-300 mb-2">Nội Dung Thông Báo</label>
+                            <textarea id="broadcastMsg" rows="5" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" placeholder="Nhập nội dung thông báo..."></textarea>
+                        </div>
+                        <button onclick="sendBroadcast()" class="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
+                            <i class="fas fa-paper-plane mr-2"></i> Gửi Thông Báo
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="section-settings" class="section hidden">
+                <div class="card rounded-xl p-5">
+                    <h3 class="text-white font-semibold mb-4">Cài Đặt Bot</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-300 mb-2">Admin Key (đổi mật khẩu đăng nhập)</label>
+                            <input type="password" id="newAdminKey" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Nhập Admin Key mới">
+                        </div>
+                        <button onclick="updateAdminKey()" class="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
+                            <i class="fas fa-save mr-2"></i> Cập Nhật
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-white/10">
+            <div class="flex items-center justify-between mb-4">
+                <h3 id="modalTitle" class="text-white font-semibold">Modal</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

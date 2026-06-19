@@ -1,0 +1,1031 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - button [ref=e7]:
+      - img [ref=e8]
+    - toolbar [ref=e17]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - button "BTCUSDT.P" [ref=e24]:
+              - generic [ref=e25]: BTCUSDT.P
+            - button "Đổi loại dữ liệu" [ref=e26]:
+              - img [ref=e27]:
+                - img [ref=e28]
+          - button "So sánh các mã giao dịch" [ref=e30]:
+            - img [ref=e31]:
+              - img [ref=e32]
+        - button "1 ngày" [ref=e39]:
+          - generic [ref=e41]: D
+        - button "Biểu đồ nến" [ref=e46]:
+          - img [ref=e48]:
+            - img [ref=e49]
+        - generic [ref=e56]:
+          - button "Chỉ báo, chỉ số và chiến lược" [ref=e58]:
+            - img [ref=e59]:
+              - img [ref=e60]
+          - button "Mẫu chỉ báo" [ref=e64]:
+            - img [ref=e66]:
+              - img [ref=e67]
+        - generic [ref=e71]:
+          - button "Tạo cảnh báo" [ref=e72]:
+            - img [ref=e73]:
+              - img [ref=e74]
+          - button "Thanh phát lại" [ref=e77]:
+            - img [ref=e78]:
+              - img [ref=e79]
+        - generic [ref=e84]:
+          - button [disabled] [ref=e85]:
+            - img [ref=e86]:
+              - img [ref=e87]
+          - button [disabled] [ref=e89]:
+            - img [ref=e90]:
+              - img [ref=e91]
+        - generic [ref=e94]:
+          - button "Thiết lập bố cục" [ref=e95]:
+            - img [ref=e96]:
+              - img
+          - generic [ref=e98]:
+            - button "Lưu tất cả các biểu đồ cho tất cả các mã và các khung thời gian" [ref=e99]:
+              - generic [ref=e101]:
+                - generic [ref=e102]: Lưu
+                - generic: Lưu
+            - button "Quản lý bố cục" [ref=e104]:
+              - img [ref=e107]:
+                - img [ref=e108]
+        - generic [ref=e112]:
+          - button "Tìm kiếm nhanh" [ref=e113]:
+            - img [ref=e114]:
+              - img [ref=e115]
+          - button "Cài đặt" [ref=e118]:
+            - img [ref=e119]:
+              - img [ref=e120]
+          - button "Chế độ toàn màn hình" [ref=e124]:
+            - img [ref=e125]:
+              - img [ref=e126]
+          - button "Chụp ảnh tức thì" [ref=e128]:
+            - img [ref=e130]:
+              - img [ref=e131]
+      - button "Giao dịch" [ref=e137]:
+        - generic [ref=e143]: Giao dịch
+      - button "Chia sẻ ý tưởng của bạn với cộng đồng nhà giao dịch" [ref=e145]:
+        - generic [ref=e147]: Xuất bản ý tưởng
+    - toolbar [ref=e149]:
+      - generic [ref=e153]:
+        - generic [ref=e154]:
+          - generic [ref=e157]:
+            - button "Đường chéo" [ref=e159]:
+              - img [ref=e160]:
+                - img [ref=e161]
+            - button "Con trỏ" [pressed] [ref=e165]:
+              - img [ref=e166]:
+                - img [ref=e167]
+          - generic [ref=e171]:
+            - button "Đường xu hướng" [ref=e173]:
+              - img [ref=e174]:
+                - img [ref=e175]
+            - button "Công cụ xu hướng" [ref=e179]:
+              - img [ref=e180]:
+                - img [ref=e181]
+          - generic [ref=e185]:
+            - button "Fib thoái lui" [ref=e187]:
+              - img [ref=e188]:
+                - img [ref=e189]
+            - button "Các công cụ Gann và Fibonacci" [ref=e196]:
+              - img [ref=e197]:
+                - img [ref=e198]
+          - generic [ref=e202]:
+            - button "Mô hình XABCD" [ref=e204]:
+              - img [ref=e205]:
+                - img [ref=e206]
+            - button "Mô hình" [ref=e210]:
+              - img [ref=e211]:
+                - img [ref=e212]
+          - generic [ref=e216]:
+            - button "Vị thế mua" [ref=e218]:
+              - img [ref=e219]:
+                - img [ref=e220]
+            - button "Các công cụ dự báo và đo lường" [ref=e222]:
+              - img [ref=e223]:
+                - img [ref=e224]
+          - generic [ref=e228]:
+            - button "Cọ" [ref=e230]:
+              - img [ref=e231]:
+                - img [ref=e232]
+            - button "Các dạng hình học" [ref=e236]:
+              - img [ref=e237]:
+                - img [ref=e238]
+          - generic [ref=e242]:
+            - button "Văn bản" [ref=e244]:
+              - img [ref=e245]:
+                - img [ref=e246]
+            - button "Công cụ chú thích" [ref=e248]:
+              - img [ref=e249]:
+                - img [ref=e250]
+          - generic [ref=e253]:
+            - button "Biểu tượng" [ref=e255]:
+              - img [ref=e256]:
+                - img [ref=e257]
+            - button "Các Biểu tượng" [ref=e259]:
+              - img [ref=e260]:
+                - img [ref=e261]
+        - generic [ref=e263]:
+          - button "Đo lường" [ref=e264]:
+            - img [ref=e265]:
+              - img [ref=e266]
+          - button "Phóng to" [ref=e268]:
+            - img [ref=e269]:
+              - img [ref=e270]
+        - generic [ref=e275]:
+          - generic [ref=e278]:
+            - button "Chế độ Magnet chụp các bản vẽ đặt gần các thanh giá với giá trị OHLC gần nhất" [ref=e280]:
+              - img [ref=e281]:
+                - img [ref=e282]
+            - button "Nam châm" [ref=e286]:
+              - img [ref=e287]:
+                - img [ref=e288]
+          - button "Tiếp tục vẽ nào" [ref=e290]:
+            - img [ref=e291]:
+              - img [ref=e292]
+          - button "Khóa tất cả công cụ vẽ" [ref=e294]:
+            - img [ref=e295]:
+              - img [ref=e296]
+          - generic [ref=e299]:
+            - button "Ẩn tất cả các công cụ vẽ" [ref=e301]:
+              - img [ref=e302]:
+                - img [ref=e303]
+            - button "Ẩn các tùy chọn" [ref=e305]:
+              - img [ref=e306]:
+                - img [ref=e307]
+        - generic [ref=e311]:
+          - button "Di chuyển đối tượng" [ref=e313]:
+            - img [ref=e314]:
+              - img [ref=e315]
+          - button "Xóa các tùy chọn" [ref=e317]:
+            - img [ref=e318]:
+              - img [ref=e319]
+    - generic [ref=e323]:
+      - 'region "Biểu đồ #1" [ref=e326]':
+        - generic [ref=e330]:
+          - generic:
+            - generic:
+              - toolbar:
+                - generic:
+                  - generic [ref=e331]:
+                    - generic "Thay đổi mã giao dịch" [ref=e332]:
+                      - generic [ref=e333]:
+                        - img [ref=e335]
+                        - generic [ref=e336]: B
+                      - button "Thay đổi mã giao dịch" [ref=e337]: BTC / Tether PERPETUAL FUTURES
+                    - generic "Thay đổi Khoảng thời gian" [ref=e338]:
+                      - text: ·
+                      - button "Thay đổi Khoảng thời gian" [ref=e339]: 1D
+                    - generic [ref=e340]:
+                      - text: ·
+                      - generic [ref=e341]: MEXC
+                  - generic:
+                    - generic:
+                      - button "Gắn cờ mã giao dịch":
+                        - generic:
+                          - generic:
+                            - generic:
+                              - img
+                      - button "Xem thêm":
+                        - generic:
+                          - img
+                  - button "Thị trường mở cửa" [ref=e343]:
+                    - img [ref=e344]:
+                      - img [ref=e345]
+                - generic [ref=e348]:
+                  - generic [ref=e349]:
+                    - generic [ref=e350]: O
+                    - generic [ref=e351]: 64,477.4
+                  - generic [ref=e352]:
+                    - generic [ref=e353]: H
+                    - generic [ref=e354]: 64,780.7
+                  - generic [ref=e355]:
+                    - generic [ref=e356]: L
+                    - generic [ref=e357]: 63,796.9
+                  - generic [ref=e358]:
+                    - generic [ref=e359]: C
+                    - generic [ref=e360]: 63,966.0
+                  - generic [ref=e362]: −511.4 (−0.79%)
+              - generic [ref=e365]:
+                - generic [ref=e367]:
+                  - generic: 63,965.9
+                  - generic: Bán
+                - generic "Chênh lệch giá" [ref=e369]: "0.1"
+                - generic [ref=e371]:
+                  - generic: 63,966.0
+                  - generic: Mua
+            - generic:
+              - button "Ẩn chú thích chỉ báo" [ref=e372]:
+                - img [ref=e374]
+              - generic:
+                - toolbar:
+                  - generic:
+                    - generic "Khối lượng · Ticks" [ref=e377]:
+                      - generic [ref=e378]: Khối lượng · Ticks
+                    - generic:
+                      - generic:
+                        - button "Ẩn":
+                          - generic:
+                            - img
+                        - button "Cài đặt":
+                          - generic:
+                            - img
+                        - button "Loại bỏ":
+                          - generic:
+                            - img
+                        - button "Xem thêm":
+                          - generic:
+                            - img
+                  - generic "Volume" [ref=e986]: 97.88 M
+          - generic "Biểu đồ dành cho MEXC:BTCUSDT.P, 1 ngày" [ref=e380]
+      - toolbar [ref=e394]:
+        - generic [ref=e396]:
+          - generic [ref=e397]:
+            - button "1 ngày trong 1 khoảng thời gian bằng phút" [ref=e398]:
+              - generic [ref=e399]: 1Ngày
+            - button "5 ngày trong 5 khoảng thời gian bằng phút" [ref=e400]:
+              - generic [ref=e401]: 5Ngày
+            - button "1 tháng trong 30 khoảng thời gian bằng phút" [ref=e402]:
+              - generic [ref=e403]: 1Tháng
+            - button "3 tháng trong 1 khoảng thời gian bằng giờ" [ref=e404]:
+              - generic [ref=e405]: 3Tháng
+            - button "6 tháng trong 2 khoảng thời gian bằng giờ" [ref=e406]:
+              - generic [ref=e407]: 6 tháng
+            - button "Từ đầu năm đến nay trong các khoảng thời gian 1 ngày" [ref=e408]:
+              - generic [ref=e409]: YTD
+            - button "1 năm trong các khoảng thời gian 1 ngày" [ref=e410]:
+              - generic [ref=e411]: 1Năm
+            - button "5 năm trong các khoảng thời gian 1 tuần" [ref=e412]:
+              - generic [ref=e413]: 5Năm
+            - button "Tất cả dữ liệu trong các khoảng thời gian 1 tháng" [ref=e414]:
+              - generic [ref=e415]: Tất cả
+          - button "Đến" [ref=e417]:
+            - img [ref=e418]:
+              - img [ref=e419]
+        - button "Múi giờ" [ref=e424]:
+          - generic [ref=e425]: 11:25:38 UTC+7
+    - generic [ref=e427]:
+      - toolbar [ref=e432]:
+        - button "Danh sách theo dõi, thông tin chi tiết và tin tức" [pressed] [ref=e433]:
+          - img [ref=e434]:
+            - img [ref=e435]
+        - button "Cảnh báo" [ref=e438]:
+          - img [ref=e439]:
+            - img [ref=e440]
+        - button "Cây đối tượng và cửa sổ dữ liệu" [ref=e443]:
+          - img [ref=e444]:
+            - img [ref=e445]
+        - button "Bộ lọc" [ref=e448]:
+          - img [ref=e449]:
+            - img [ref=e450]
+        - button "Pine" [ref=e454]:
+          - img [ref=e455]:
+            - img [ref=e456]
+        - button "Lịch" [ref=e459]:
+          - img [ref=e460]:
+            - img [ref=e461]
+        - button "Cộng đồng" [ref=e463]:
+          - img [ref=e464]:
+            - img [ref=e465]
+        - button "Thông báo" [ref=e470]:
+          - img [ref=e471]:
+            - img [ref=e472]
+        - button "Sản phẩm" [ref=e474]:
+          - img [ref=e475]:
+            - img [ref=e476]
+        - button "Trung tâm trợ giúp" [ref=e479]:
+          - img [ref=e480]:
+            - img [ref=e481]
+      - generic [ref=e485]:
+        - generic [ref=e486]:
+          - generic [ref=e489]:
+            - button "Danh sách theo dõi" [ref=e491]:
+              - generic [ref=e494]: Danh sách theo dõi
+              - img [ref=e497]:
+                - img [ref=e498]
+            - generic [ref=e501]:
+              - button "Thêm Mã" [ref=e502]:
+                - img [ref=e503]:
+                  - img [ref=e504]
+              - button "Chế độ xem nâng cao" [ref=e506]:
+                - img [ref=e507]:
+                  - img [ref=e508]
+              - button "Cài đặt" [ref=e510]:
+                - img [ref=e511]:
+                  - img [ref=e512]
+          - generic [ref=e517]:
+            - generic [ref=e519]:
+              - button [ref=e521]:
+                - img [ref=e522]:
+                  - img [ref=e523]
+              - button "Mã giao dịch" [ref=e526]
+              - button "Lần cuối" [ref=e528]
+              - button "Th.đổi" [ref=e530]
+              - button "%Thđổi" [ref=e532]
+            - generic [ref=e537]:
+              - generic [ref=e542]:
+                - generic [ref=e544]:
+                  - generic [ref=e545]:
+                    - img [ref=e987]
+                    - generic [ref=e548]: V
+                  - generic [ref=e550]:
+                    - generic [ref=e551]: VNINDEX
+                    - generic "Báo giá bị trễ sau 15 phút" [ref=e988]: D
+                - generic [ref=e989]: 1,833.80
+                - generic [ref=e990]: "27.60"
+                - generic [ref=e991]: 1.53%
+              - generic [ref=e559]:
+                - generic [ref=e561]:
+                  - generic [ref=e562]:
+                    - img [ref=e992]
+                    - generic [ref=e565]: H
+                  - generic [ref=e567]:
+                    - generic [ref=e568]: HNXINDEX
+                    - generic "Báo giá bị trễ sau 15 phút" [ref=e569]: D
+                - generic [ref=e571]: "335.14"
+                - generic [ref=e573]: "4.94"
+                - generic [ref=e575]: 1.50%
+              - generic [ref=e578]:
+                - generic [ref=e580]:
+                  - generic [ref=e581]:
+                    - img [ref=e993]
+                    - generic [ref=e584]: S
+                  - generic [ref=e586]:
+                    - generic [ref=e587]: SPX
+                    - generic "Thị trường đóng cửa" [ref=e588]
+                - generic [ref=e591]: 7,420.11
+                - generic [ref=e593]: −91.23
+                - generic [ref=e595]: −1.21%
+              - generic [ref=e598]:
+                - generic [ref=e600]:
+                  - generic [ref=e601]:
+                    - img [ref=e994]
+                    - generic [ref=e604]: "N"
+                  - generic [ref=e606]:
+                    - generic [ref=e607]: NDQ
+                    - generic "Thị trường đóng cửa" [ref=e608]
+                - generic [ref=e611]: 29,670.95
+                - generic [ref=e613]: −297.18
+                - generic [ref=e615]: −0.99%
+              - generic [ref=e618]:
+                - generic [ref=e620]:
+                  - generic [ref=e621]:
+                    - img [ref=e995]
+                    - generic [ref=e624]: V
+                  - generic [ref=e626]:
+                    - generic [ref=e627]: VIX
+                    - generic "Thị trường đóng cửa" [ref=e628]
+                - generic [ref=e631]: "18.43"
+                - generic [ref=e633]: "2.01"
+                - generic [ref=e635]: 12.24%
+              - generic [ref=e639]:
+                - img [ref=e640]:
+                  - img [ref=e641]
+                - generic [ref=e643]: Tiền điện tử
+              - generic [ref=e646]:
+                - generic [ref=e648]:
+                  - generic [ref=e649]:
+                    - img [ref=e651]
+                    - generic [ref=e653]: B
+                  - generic [ref=e656]: BTCUSD
+                - generic [ref=e658]: 63,934
+                - generic [ref=e660]: −510
+                - generic [ref=e662]: −0.79%
+              - generic [ref=e665]:
+                - generic [ref=e667]:
+                  - generic [ref=e668]:
+                    - img [ref=e670]
+                    - generic [ref=e672]: B
+                  - generic [ref=e675]: BTCUSDT
+                - generic [ref=e677]: 63,994.80
+                - generic [ref=e679]: −514.60
+                - generic [ref=e681]: −0.80%
+              - generic [ref=e684]:
+                - generic [ref=e686]:
+                  - generic [ref=e687]:
+                    - img [ref=e996]
+                    - generic [ref=e690]: E
+                  - generic [ref=e693]: ETHUSD
+                - generic [ref=e695]: 1,734.3
+                - generic [ref=e697]: −14.6
+                - generic [ref=e699]: −0.84%
+              - generic [ref=e703]:
+                - img [ref=e704]:
+                  - img [ref=e705]
+                - generic [ref=e707]: Cổ phiếu
+              - generic [ref=e710]:
+                - generic [ref=e712]:
+                  - generic [ref=e713]:
+                    - img [ref=e997]
+                    - generic [ref=e716]: H
+                  - generic [ref=e718]:
+                    - generic [ref=e719]: HPG
+                    - generic "Báo giá bị trễ sau 15 phút" [ref=e720]: D
+                - generic [ref=e722]: 24,050
+                - generic [ref=e724]: "50"
+                - generic [ref=e726]: 0.21%
+              - generic [ref=e729]:
+                - generic [ref=e731]:
+                  - generic [ref=e732]:
+                    - img [ref=e998]
+                    - generic [ref=e735]: V
+                  - generic [ref=e737]:
+                    - generic [ref=e738]: VCB
+                    - generic "Báo giá bị trễ sau 15 phút" [ref=e739]: D
+                - generic [ref=e741]: 62,000
+                - generic [ref=e743]: −200
+                - generic [ref=e745]: −0.32%
+              - generic [ref=e748]:
+                - generic [ref=e750]:
+                  - generic [ref=e751]:
+                    - img [ref=e999]
+                    - generic [ref=e754]: F
+                  - generic [ref=e756]:
+                    - generic [ref=e757]: FPT
+                    - generic "Báo giá bị trễ sau 15 phút" [ref=e758]: D
+                - generic [ref=e760]: 71,700
+                - generic [ref=e762]: −600
+                - generic [ref=e764]: −0.83%
+              - generic [ref=e767]:
+                - generic [ref=e769]:
+                  - generic [ref=e770]:
+                    - img [ref=e1000]
+                    - generic [ref=e773]: A
+                  - generic [ref=e775]:
+                    - generic [ref=e776]: AAPL
+                    - generic "Thị trường đóng cửa" [ref=e777]
+                - generic [ref=e780]: "295.95"
+                - generic [ref=e782]: −3.29
+                - generic [ref=e784]: −1.10%
+              - generic [ref=e787]:
+                - generic [ref=e789]:
+                  - generic [ref=e790]:
+                    - img [ref=e1001]
+                    - generic [ref=e793]: T
+                  - generic [ref=e795]:
+                    - generic [ref=e796]: TSLA
+                    - generic "Thị trường đóng cửa" [ref=e797]
+                - generic [ref=e800]: "396.38"
+                - generic [ref=e802]: −8.28
+                - generic [ref=e804]: −2.05%
+              - generic [ref=e808]:
+                - img [ref=e809]:
+                  - img [ref=e810]
+                - generic [ref=e812]: Ngoại hối
+              - generic [ref=e815]:
+                - generic [ref=e817]:
+                  - generic [ref=e818]:
+                    - generic [ref=e1003]:
+                      - img [ref=e1005]
+                      - img [ref=e1007]
+                    - generic [ref=e821]: E
+                  - generic [ref=e824]: EURUSD
+                - generic [ref=e826]:
+                  - text: "1.1521"
+                  - superscript [ref=e1009]: "1"
+                - generic [ref=e829]: "0.00201"
+                - generic [ref=e831]: 0.17%
+              - generic [ref=e834]:
+                - generic [ref=e836]:
+                  - generic [ref=e837]:
+                    - generic [ref=e1011]:
+                      - img [ref=e1013]
+                      - img [ref=e1015]
+                    - generic [ref=e840]: G
+                  - generic [ref=e843]: GBPUSD
+                - generic [ref=e845]:
+                  - text: "1.3312"
+                  - superscript [ref=e846]: "5"
+                - generic [ref=e848]: "0.00240"
+                - generic [ref=e850]: 0.18%
+              - generic [ref=e853]:
+                - generic [ref=e855]:
+                  - generic [ref=e856]:
+                    - generic [ref=e1017]:
+                      - img [ref=e1019]
+                      - img [ref=e1021]
+                    - generic [ref=e859]: U
+                  - generic [ref=e862]: USDJPY
+                - generic [ref=e864]:
+                  - text: "160.61"
+                  - superscript [ref=e1023]: "8"
+                - generic [ref=e867]: −0.006
+                - generic [ref=e869]: 0.00%
+              - generic [ref=e873]:
+                - img [ref=e874]:
+                  - img [ref=e875]
+                - generic [ref=e877]: Hợp đồng Tương lai
+              - generic [ref=e880]:
+                - generic [ref=e882]:
+                  - generic [ref=e883]:
+                    - img [ref=e1024]
+                    - generic [ref=e886]: U
+                  - generic [ref=e889]: USOIL
+                - generic [ref=e891]: "74.28"
+                - generic [ref=e893]: −0.72
+                - generic [ref=e895]: −0.96%
+              - generic [ref=e898]:
+                - generic [ref=e900]:
+                  - generic [ref=e901]:
+                    - img [ref=e1025]
+                    - generic [ref=e904]: U
+                  - generic [ref=e907]: UKOIL
+                - generic [ref=e909]: "77.98"
+                - generic [ref=e911]: −0.69
+                - generic [ref=e913]: −0.88%
+              - generic [ref=e916]:
+                - generic [ref=e918]:
+                  - generic [ref=e919]:
+                    - img [ref=e1026]
+                    - generic [ref=e922]: G
+                  - generic [ref=e925]: GOLD
+                - generic [ref=e927]: 4,314.195
+                - generic [ref=e929]: "56.635"
+                - generic [ref=e931]: 1.33%
+        - generic [ref=e934]:
+          - generic [ref=e936]:
+            - generic [ref=e937]:
+              - img [ref=e939]
+              - generic [ref=e941]: B
+            - generic [ref=e942]: BTCUSDT.P
+            - generic [ref=e943]:
+              - button "Chỉ số" [ref=e944]:
+                - img [ref=e945]:
+                  - img [ref=e946]
+              - generic "Thêm ghi chú" [ref=e948]:
+                - img [ref=e949]:
+                  - img [ref=e950]
+              - generic "Cài đặt" [ref=e953]:
+                - img [ref=e954]:
+                  - img [ref=e955]
+          - generic [ref=e959]:
+            - generic [ref=e960]:
+              - generic [ref=e962]:
+                - link "BTC / Tether PERPETUAL FUTURES" [ref=e963] [cursor=pointer]:
+                  - /url: https://vn.tradingview.com/symbols/BTCUSDT.P/
+                  - text: BTC / Tether PERPETUAL FUTURES
+                  - img [ref=e964]:
+                    - img [ref=e965]
+                - text: MEXC
+              - generic [ref=e970]:
+                - text: Hợp đồng Hoán đổi
+                - text: Tiền điện tử
+            - generic [ref=e1027]:
+              - generic [ref=e1028]:
+                - generic [ref=e1029]: 63,968.4
+                - generic [ref=e1031]: USDT
+              - generic [ref=e1032]:
+                - generic [ref=e1033]: −509.0
+                - generic [ref=e1034]: −0.79%
+            - generic [ref=e1037]:
+              - img [ref=e1038]:
+                - img [ref=e1039]
+              - generic [ref=e1041]: Thị trường Mở
+            - generic [ref=e1043]:
+              - img [ref=e1044]:
+                - img [ref=e1045]
+              - generic [ref=e1047]:
+                - time [ref=e1048]: 10 thg 6
+                - text: Chỉ số sợ hãi của Bitcoin chạm mức từng thấy khi giá ở 3,000 USD và 18,000 USD
+              - img [ref=e1051]:
+                - img [ref=e1052]
+            - generic [ref=e1054]:
+              - generic [ref=e1056]: Chỉ số chính
+              - generic [ref=e1057]:
+                - generic [ref=e1058]:
+                  - generic [ref=e1060]: Khối lượng
+                  - generic [ref=e1061]: ‪97.88 M‬
+                - generic [ref=e1062]:
+                  - generic [ref=e1064]: Khối lượng Trung bình (30)
+                  - generic [ref=e1065]: ‪974.00 M‬
+            - generic [ref=e1066]:
+              - generic [ref=e1068]: Hiệu suất
+              - generic [ref=e1069]:
+                - generic [ref=e1070]:
+                  - generic [ref=e1071]: 3.97%
+                  - generic [ref=e1072]: 1W
+                - generic [ref=e1073]:
+                  - generic [ref=e1074]: −16.95%
+                  - generic [ref=e1075]: 1M
+                - generic [ref=e1076]:
+                  - generic [ref=e1077]: −8.54%
+                  - generic [ref=e1078]: 3M
+                - generic [ref=e1079]:
+                  - generic [ref=e1080]: −27.45%
+                  - generic [ref=e1081]: 6M
+                - generic [ref=e1082]:
+                  - generic [ref=e1083]: −27.04%
+                  - generic [ref=e1084]: YTD
+                - generic [ref=e1085]:
+                  - generic [ref=e1086]: −38.84%
+                  - generic [ref=e1087]: 1Y
+            - generic [ref=e1088]:
+              - generic [ref=e1089]: Các chỉ số có tính thời vụ
+              - table [ref=e1093]:
+                - row [ref=e1094]:
+                  - cell
+                  - cell [ref=e1095]
+                  - cell
+                - row [ref=e1099]:
+                  - cell
+                  - cell [ref=e1100]
+                  - cell
+              - generic [ref=e1104]:
+                - generic [ref=e1105]: "2026"
+                - generic [ref=e1107]: "2025"
+                - generic [ref=e1109]: "2024"
+            - button "Xem thêm dữ liệu thời vụ" [ref=e1112]
+            - generic [ref=e1113]:
+              - generic [ref=e1114]: Kỹ thuật
+              - generic [ref=e1115]:
+                - generic [ref=e1116]:
+                  - generic [ref=e1117]: Trung lập
+                  - generic [ref=e1118]:
+                    - generic [ref=e1119]: Bán
+                    - generic [ref=e1120]: Mua
+                  - generic [ref=e1121]:
+                    - generic [ref=e1122]: Bán mạnh
+                    - generic [ref=e1123]: Mua mạnh
+                - img [ref=e1132]:
+                  - img [ref=e1133]
+                - generic [ref=e1135]:
+                  - generic [ref=e1136]: Bán mạnh
+                  - generic [ref=e1137]: Bán
+                  - generic [ref=e1138]: Trung lập
+                  - generic [ref=e1139]: Mua
+                  - generic [ref=e1140]: Mua mạnh
+            - button "Thêm thông tin kỹ thuật" [ref=e1143]
+      - generic "Tab Ẩn" [ref=e976]:
+        - img [ref=e977]
+    - generic "Bảng điều khiển giao dịch"
+  - generic:
+    - generic:
+      - generic:
+        - generic: 1 ngày
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+              - generic:
+                - log:
+                  - list
+    - treegrid [active] [ref=e1144]:
+      - generic [ref=e1148]:
+        - row "Thêm khoảng thời gian tùy chỉnh" [level=1] [ref=e1150]:
+          - generic [ref=e1151]:
+            - img [ref=e1154]:
+              - img [ref=e1155]
+            - gridcell "Thêm khoảng thời gian tùy chỉnh…" [ref=e1159]
+        - separator [ref=e1160]
+        - generic [ref=e1162]:
+          - row "Ticks" [expanded] [level=1] [ref=e1163]:
+            - generic [ref=e1165]:
+              - gridcell "Ticks" [ref=e1168]
+              - img [ref=e1169]:
+                - img [ref=e1170]
+          - menu
+        - rowgroup "Ticks" [ref=e1172]:
+          - row "1 tick" [level=2] [ref=e1174]:
+            - generic [ref=e1175]:
+              - gridcell "1 tick" [ref=e1178]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1181]:
+                - button "Thêm vào mục yêu thích" [ref=e1182]:
+                  - img [ref=e1183]:
+                    - img [ref=e1184]
+          - row "10 ticks" [level=2] [ref=e1187]:
+            - generic [ref=e1188]:
+              - gridcell "10 ticks" [ref=e1191]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1194]:
+                - button "Thêm vào mục yêu thích" [ref=e1195]:
+                  - img [ref=e1196]:
+                    - img [ref=e1197]
+          - row "100 ticks" [level=2] [ref=e1200]:
+            - generic [ref=e1201]:
+              - gridcell "100 ticks" [ref=e1204]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1207]:
+                - button "Thêm vào mục yêu thích" [ref=e1208]:
+                  - img [ref=e1209]:
+                    - img [ref=e1210]
+          - row "1000 ticks" [level=2] [ref=e1213]:
+            - generic [ref=e1214]:
+              - gridcell "1000 ticks" [ref=e1217]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1220]:
+                - button "Thêm vào mục yêu thích" [ref=e1221]:
+                  - img [ref=e1222]:
+                    - img [ref=e1223]
+        - separator [ref=e1225]
+        - generic [ref=e1227]:
+          - row "Giây" [expanded] [level=1] [ref=e1228]:
+            - generic [ref=e1230]:
+              - gridcell "Giây" [ref=e1233]
+              - img [ref=e1234]:
+                - img [ref=e1235]
+          - menu
+        - rowgroup "Giây" [ref=e1237]:
+          - row "1 giây" [level=2] [ref=e1239]:
+            - generic [ref=e1240]:
+              - gridcell "1 giây" [ref=e1243]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1246]:
+                - button "Thêm vào mục yêu thích" [ref=e1247]:
+                  - img [ref=e1248]:
+                    - img [ref=e1249]
+          - row "5 giây" [level=2] [ref=e1252]:
+            - generic [ref=e1253]:
+              - gridcell "5 giây" [ref=e1256]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1259]:
+                - button "Thêm vào mục yêu thích" [ref=e1260]:
+                  - img [ref=e1261]:
+                    - img [ref=e1262]
+          - row "10 giây" [level=2] [ref=e1265]:
+            - generic [ref=e1266]:
+              - gridcell "10 giây" [ref=e1269]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1272]:
+                - button "Thêm vào mục yêu thích" [ref=e1273]:
+                  - img [ref=e1274]:
+                    - img [ref=e1275]
+          - row "15 giây" [level=2] [ref=e1278]:
+            - generic [ref=e1279]:
+              - gridcell "15 giây" [ref=e1282]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1285]:
+                - button "Thêm vào mục yêu thích" [ref=e1286]:
+                  - img [ref=e1287]:
+                    - img [ref=e1288]
+          - row "30 giây" [level=2] [ref=e1291]:
+            - generic [ref=e1292]:
+              - gridcell "30 giây" [ref=e1295]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1298]:
+                - button "Thêm vào mục yêu thích" [ref=e1299]:
+                  - img [ref=e1300]:
+                    - img [ref=e1301]
+          - row "45 giây" [level=2] [ref=e1304]:
+            - generic [ref=e1305]:
+              - gridcell "45 giây" [ref=e1308]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1311]:
+                - button "Thêm vào mục yêu thích" [ref=e1312]:
+                  - img [ref=e1313]:
+                    - img [ref=e1314]
+        - separator [ref=e1316]
+        - generic [ref=e1318]:
+          - row "Phút" [expanded] [level=1] [ref=e1319]:
+            - generic [ref=e1321]:
+              - gridcell "Phút" [ref=e1324]
+              - img [ref=e1325]:
+                - img [ref=e1326]
+          - menu
+        - rowgroup "Phút" [ref=e1328]:
+          - row "1 phút" [level=2] [ref=e1330]:
+            - generic [ref=e1331]:
+              - gridcell "1 phút" [ref=e1334]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1337]:
+                - button "Thêm vào mục yêu thích" [ref=e1338]:
+                  - img [ref=e1339]:
+                    - img [ref=e1340]
+          - row "2 phút" [level=2] [ref=e1343]:
+            - generic [ref=e1344]:
+              - gridcell "2 phút" [ref=e1347]
+              - generic [ref=e1349]:
+                - gridcell "Loại bỏ" [ref=e1350]:
+                  - button "Loại bỏ" [ref=e1351]:
+                    - img [ref=e1352]:
+                      - img [ref=e1353]
+                - gridcell "Thêm vào mục yêu thích" [ref=e1355]:
+                  - button "Thêm vào mục yêu thích" [ref=e1356]:
+                    - img [ref=e1357]:
+                      - img [ref=e1358]
+          - row "3 phút" [level=2] [ref=e1361]:
+            - generic [ref=e1362]:
+              - gridcell "3 phút" [ref=e1365]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1368]:
+                - button "Thêm vào mục yêu thích" [ref=e1369]:
+                  - img [ref=e1370]:
+                    - img [ref=e1371]
+          - row "5 phút" [level=2] [ref=e1374]:
+            - generic [ref=e1375]:
+              - gridcell "5 phút" [ref=e1378]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1381]:
+                - button "Thêm vào mục yêu thích" [ref=e1382]:
+                  - img [ref=e1383]:
+                    - img [ref=e1384]
+          - row "10 phút" [level=2] [ref=e1387]:
+            - generic [ref=e1388]:
+              - gridcell "10 phút" [ref=e1391]
+              - generic [ref=e1393]:
+                - gridcell "Loại bỏ" [ref=e1394]:
+                  - button "Loại bỏ" [ref=e1395]:
+                    - img [ref=e1396]:
+                      - img [ref=e1397]
+                - gridcell "Thêm vào mục yêu thích" [ref=e1399]:
+                  - button "Thêm vào mục yêu thích" [ref=e1400]:
+                    - img [ref=e1401]:
+                      - img [ref=e1402]
+          - row "15 phút" [level=2] [ref=e1405]:
+            - generic [ref=e1406]:
+              - gridcell "15 phút" [ref=e1409]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1412]:
+                - button "Thêm vào mục yêu thích" [ref=e1413]:
+                  - img [ref=e1414]:
+                    - img [ref=e1415]
+          - row "30 phút" [level=2] [ref=e1418]:
+            - generic [ref=e1419]:
+              - gridcell "30 phút" [ref=e1422]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1425]:
+                - button "Thêm vào mục yêu thích" [ref=e1426]:
+                  - img [ref=e1427]:
+                    - img [ref=e1428]
+          - row "45 phút" [level=2] [ref=e1431]:
+            - generic [ref=e1432]:
+              - gridcell "45 phút" [ref=e1435]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1438]:
+                - button "Thêm vào mục yêu thích" [ref=e1439]:
+                  - img [ref=e1440]:
+                    - img [ref=e1441]
+        - separator [ref=e1443]
+        - generic [ref=e1445]:
+          - row "Giờ" [expanded] [level=1] [ref=e1446]:
+            - generic [ref=e1448]:
+              - gridcell "Giờ" [ref=e1451]
+              - img [ref=e1452]:
+                - img [ref=e1453]
+          - menu
+        - rowgroup "Giờ" [ref=e1455]:
+          - row "1 giờ" [level=2] [ref=e1457]:
+            - generic [ref=e1458]:
+              - gridcell "1 giờ" [ref=e1461]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1464]:
+                - button "Thêm vào mục yêu thích" [ref=e1465]:
+                  - img [ref=e1466]:
+                    - img [ref=e1467]
+          - row "2 giờ" [level=2] [ref=e1470]:
+            - generic [ref=e1471]:
+              - gridcell "2 giờ" [ref=e1474]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1477]:
+                - button "Thêm vào mục yêu thích" [ref=e1478]:
+                  - img [ref=e1479]:
+                    - img [ref=e1480]
+          - row "3 giờ" [level=2] [ref=e1483]:
+            - generic [ref=e1484]:
+              - gridcell "3 giờ" [ref=e1487]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1490]:
+                - button "Thêm vào mục yêu thích" [ref=e1491]:
+                  - img [ref=e1492]:
+                    - img [ref=e1493]
+          - row "4 giờ" [level=2] [ref=e1496]:
+            - generic [ref=e1497]:
+              - gridcell "4 giờ" [ref=e1500]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1503]:
+                - button "Thêm vào mục yêu thích" [ref=e1504]:
+                  - img [ref=e1505]:
+                    - img [ref=e1506]
+        - separator [ref=e1508]
+        - generic [ref=e1510]:
+          - row "Ngày" [expanded] [level=1] [ref=e1511]:
+            - generic [ref=e1513]:
+              - gridcell "Ngày" [ref=e1516]
+              - img [ref=e1517]:
+                - img [ref=e1518]
+          - menu
+        - rowgroup "Ngày" [ref=e1520]:
+          - row "1 ngày" [level=2] [selected] [ref=e1522]:
+            - generic [ref=e1523]:
+              - gridcell "1 ngày" [ref=e1526]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1529]:
+                - button "Thêm vào mục yêu thích" [ref=e1530]:
+                  - img [ref=e1531]:
+                    - img [ref=e1532]
+          - row "1 tuần" [level=2] [ref=e1535]:
+            - generic [ref=e1536]:
+              - gridcell "1 tuần" [ref=e1539]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1542]:
+                - button "Thêm vào mục yêu thích" [ref=e1543]:
+                  - img [ref=e1544]:
+                    - img [ref=e1545]
+          - row "1 tháng" [level=2] [ref=e1548]:
+            - generic [ref=e1549]:
+              - gridcell "1 tháng" [ref=e1552]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1555]:
+                - button "Thêm vào mục yêu thích" [ref=e1556]:
+                  - img [ref=e1557]:
+                    - img [ref=e1558]
+          - row "3 tháng" [level=2] [ref=e1561]:
+            - generic [ref=e1562]:
+              - gridcell "3 tháng" [ref=e1565]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1568]:
+                - button "Thêm vào mục yêu thích" [ref=e1569]:
+                  - img [ref=e1570]:
+                    - img [ref=e1571]
+          - row "6 tháng" [level=2] [ref=e1574]:
+            - generic [ref=e1575]:
+              - gridcell "6 tháng" [ref=e1578]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1581]:
+                - button "Thêm vào mục yêu thích" [ref=e1582]:
+                  - img [ref=e1583]:
+                    - img [ref=e1584]
+          - row "12 tháng" [level=2] [ref=e1587]:
+            - generic [ref=e1588]:
+              - gridcell "12 tháng" [ref=e1591]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1594]:
+                - button "Thêm vào mục yêu thích" [ref=e1595]:
+                  - img [ref=e1596]:
+                    - img [ref=e1597]
+        - separator [ref=e1599]
+        - generic [ref=e1601]:
+          - row "Vùng" [expanded] [level=1] [ref=e1602]:
+            - generic [ref=e1604]:
+              - gridcell "Vùng" [ref=e1607]
+              - img [ref=e1608]:
+                - img [ref=e1609]
+          - menu
+        - rowgroup "Vùng" [ref=e1611]:
+          - row "1 phạm vi" [level=2] [ref=e1613]:
+            - generic [ref=e1614]:
+              - gridcell "1 phạm vi" [ref=e1617]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1620]:
+                - button "Thêm vào mục yêu thích" [ref=e1621]:
+                  - img [ref=e1622]:
+                    - img [ref=e1623]
+          - row "10 phạm vi" [level=2] [ref=e1626]:
+            - generic [ref=e1627]:
+              - gridcell "10 phạm vi" [ref=e1630]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1633]:
+                - button "Thêm vào mục yêu thích" [ref=e1634]:
+                  - img [ref=e1635]:
+                    - img [ref=e1636]
+          - row "100 phạm vi" [level=2] [ref=e1639]:
+            - generic [ref=e1640]:
+              - gridcell "100 phạm vi" [ref=e1643]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1646]:
+                - button "Thêm vào mục yêu thích" [ref=e1647]:
+                  - img [ref=e1648]:
+                    - img [ref=e1649]
+          - row "1000 phạm vi" [level=2] [ref=e1652]:
+            - generic [ref=e1653]:
+              - gridcell "1000 phạm vi" [ref=e1656]
+              - gridcell "Thêm vào mục yêu thích" [ref=e1659]:
+                - button "Thêm vào mục yêu thích" [ref=e1660]:
+                  - img [ref=e1661]:
+                    - img [ref=e1662]

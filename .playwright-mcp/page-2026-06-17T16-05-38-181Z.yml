@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "🎮 ShopDonk" [ref=e5] [cursor=pointer]:
+        - /url: index.html
+      - heading "Đăng nhập" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Chào mừng bạn quay trở lại!
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: 
+          - text: Tên đăng nhập
+        - textbox " Tên đăng nhập" [ref=e12]:
+          - /placeholder: nhập tên đăng nhập
+          - text: admin
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]: 
+          - text: mật khẩu
+        - textbox " mật khẩu" [ref=e16]:
+          - /placeholder: nhập mật khẩu
+          - text: admin123
+        - button "" [ref=e17] [cursor=pointer]:
+          - generic [ref=e18]: 
+      - generic [ref=e19]:
+        - generic [ref=e20] [cursor=pointer]:
+          - checkbox "Ghi nhớ đăng nhập" [ref=e21]
+          - generic [ref=e22]: Ghi nhớ đăng nhập
+        - link "Quên mật khẩu?" [ref=e23] [cursor=pointer]:
+          - /url: forgot-password.html
+      - button " Đăng nhập" [ref=e24] [cursor=pointer]:
+        - generic [ref=e25]: 
+        - text: Đăng nhập
+      - generic [ref=e26]: hoặc đăng nhập với
+      - generic [ref=e27]:
+        - button " Google" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: 
+          - text: Google
+        - text: 
+      - paragraph [ref=e30]:
+        - text: Chưa có tài khoản?
+        - link "Đăng ký ngay" [ref=e31] [cursor=pointer]:
+          - /url: register.html
+      - generic [ref=e32]:
+        - link " FAQ" [ref=e33] [cursor=pointer]:
+          - /url: faq.html
+          - generic [ref=e34]: 
+          - text: FAQ
+        - link " Liên hệ" [ref=e35] [cursor=pointer]:
+          - /url: contact.html
+          - generic [ref=e36]: 
+          - text: Liên hệ
+        - link " Điều khoản" [ref=e37] [cursor=pointer]:
+          - /url: terms.html
+          - generic [ref=e38]: 
+          - text: Điều khoản
+  - generic [ref=e40]:
+    - generic [ref=e42]: 
+    - generic [ref=e43]: "Ä\x90Äƒng nháºp thÃ nh cÃ´ng!"
+    - 'button "ÄÃ³ng" [ref=e44] [cursor=pointer]'

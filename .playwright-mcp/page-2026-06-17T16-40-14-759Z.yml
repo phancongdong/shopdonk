@@ -1,0 +1,136 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "🎮 ShopDonk" [ref=e4] [cursor=pointer]:
+        - /url: index.html
+        - generic [ref=e5]: 🎮
+        - generic [ref=e6]: ShopDonk
+      - navigation [ref=e7]:
+        - link "Trang chủ" [ref=e8] [cursor=pointer]:
+          - /url: index.html
+        - link "Lịch sử" [ref=e9] [cursor=pointer]:
+          - /url: orders.html
+        - link "Nạp tiền" [ref=e10] [cursor=pointer]:
+          - /url: deposit.html
+        - link "FAQ" [ref=e11] [cursor=pointer]:
+          - /url: faq.html
+      - generic [ref=e12]:
+        - text: 
+        - generic [ref=e13] [cursor=pointer]:
+          - img "VN" [ref=e14]
+          - generic [ref=e15]: VI | VND
+        - generic [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: admin
+          - generic [ref=e18]: 0 ₫
+          - generic [ref=e19]: 
+          - text:        
+  - text:     
+  - link "r" [ref=e22] [cursor=pointer]:
+    - /url: "#"
+    - img "r" [ref=e105]
+  - generic [ref=e23]:
+    - generic [ref=e24]:
+      - heading " DANH MỤC GAME" [level=2] [ref=e25]:
+        - generic [ref=e26]: 
+        - text: DANH MỤC GAME
+      - paragraph [ref=e27]: Chọn game bạn muốn mua tài khoản
+    - generic [ref=e28]:
+      - generic [ref=e29] [cursor=pointer]:
+        - img "ACC LIÊN QUÂN VIP" [ref=e30]
+        - generic [ref=e31]:
+          - generic [ref=e32]: ACC LIÊN QUÂN VIP
+          - generic [ref=e33]:
+            - generic [ref=e34]: 
+            - text: XEM NGAY
+      - generic [ref=e35] [cursor=pointer]:
+        - img "RANDOM ACC LIÊN QUÂN MOBILE" [ref=e36]
+        - generic [ref=e37]:
+          - generic [ref=e38]: RANDOM ACC LIÊN QUÂN MOBILE
+          - generic [ref=e39]:
+            - generic [ref=e40]: 
+            - text: XEM NGAY
+      - generic [ref=e41] [cursor=pointer]:
+        - img "CÀY THUÊ LIÊN QUÂN" [ref=e42]
+        - generic [ref=e43]:
+          - generic [ref=e44]: CÀY THUÊ LIÊN QUÂN
+          - generic [ref=e45]:
+            - generic [ref=e46]: 
+            - text: XEM NGAY
+      - generic [ref=e47] [cursor=pointer]:
+        - img "oi" [ref=e48]
+        - generic [ref=e49]:
+          - generic [ref=e50]: oi
+          - generic [ref=e51]:
+            - generic [ref=e52]: 
+            - text: XEM NGAY
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - heading " ĐỐI TÁC THANH TOÁN" [level=2] [ref=e55]:
+        - generic [ref=e56]: 
+        - text: ĐỐI TÁC THANH TOÁN
+      - paragraph [ref=e57]: Phương thức thanh toán đa dạng và an toàn
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]: 
+        - text: Ngân hàng
+      - generic [ref=e61]:
+        - generic [ref=e62]: 
+        - text: Momo
+      - generic [ref=e63]:
+        - generic [ref=e64]: 
+        - text: ZaloPay
+      - generic [ref=e65]:
+        - generic [ref=e66]: 
+        - text: Thẻ cào
+      - generic [ref=e67]:
+        - generic [ref=e68]: 
+        - text: USDT
+  - contentinfo [ref=e69]:
+    - generic [ref=e70]:
+      - generic [ref=e71]:
+        - heading "ShopDonk.com" [level=3] [ref=e72]
+        - paragraph [ref=e73]: Shop bán acc game xém top đầu Việt Nam
+        - paragraph [ref=e74]: Hoạt động hơn 5 năm trong cộng đồng
+      - generic [ref=e75]:
+        - heading "Liên hệ" [level=3] [ref=e76]
+        - paragraph [ref=e77]:
+          - generic [ref=e78]: 
+          - text: "Hỗ trợ: 12h - 24h mỗi ngày"
+        - paragraph [ref=e79]:
+          - generic [ref=e80]: 
+          - text: "0384007828"
+        - paragraph [ref=e81]:
+          - generic [ref=e82]: 
+          - text: phancongdong1234@gmail.com
+      - generic [ref=e83]:
+        - heading "Hỗ trợ" [level=3] [ref=e84]
+        - paragraph [ref=e85]:
+          - link " FAQ - Câu hỏi thường gặp" [ref=e86] [cursor=pointer]:
+            - /url: faq.html
+            - generic [ref=e87]: 
+            - text: FAQ - Câu hỏi thường gặp
+        - paragraph [ref=e88]:
+          - link " Liên hệ hỗ trợ" [ref=e89] [cursor=pointer]:
+            - /url: contact.html
+            - generic [ref=e90]: 
+            - text: Liên hệ hỗ trợ
+        - paragraph [ref=e91]:
+          - link " Điều khoản & Chính sách" [ref=e92] [cursor=pointer]:
+            - /url: terms.html
+            - generic [ref=e93]: 
+            - text: Điều khoản & Chính sách
+      - generic [ref=e94]:
+        - heading "Theo dõi" [level=3] [ref=e95]
+        - generic [ref=e96]:
+          - link "" [ref=e97] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e98]: 
+          - link "" [ref=e99] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e100]: 
+          - link "" [ref=e101] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e102]: 
+    - paragraph [ref=e104]: © 2026 ShopDonk.vn. Bảo lưu mọi quyền.
+  - generic "Liên hệ hỗ trợ":
+    - generic: 

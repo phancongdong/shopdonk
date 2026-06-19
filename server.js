@@ -7,7 +7,7 @@ require('dotenv').config();
 const { connectDB } = require('./config/database');
 const { securityAuditMiddleware } = require('./middleware/securityAudit');
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin');
+const botAdminRoutes = require('./routes/bot-admin');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const depositRoutes = require('./routes/deposits');
@@ -177,7 +177,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 // SEO: Redirect .html URLs to clean URLs (only for navigation, not static assets)
 app.use((req, res, next) => {
-    if (req.path.endsWith('.html') && req.method === 'GET' && !req.path.includes('/admin/')) {
+    if (req.path.endsWith('.html') && req.method === 'GET' && !req.path.includes('/admin/') && !req.path.includes('/bot-admin/')) {
         let cleanPath = req.path.replace('.html', '');
         if (cleanPath === '/index') cleanPath = '/';
         const query = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
@@ -194,7 +194,7 @@ app.use('/api/orders', orderLimiter);
 app.use('/api/deposits', depositLimiter);
 app.use('/api/upload', uploadLimiter);
 app.use('/api/upload-url', uploadLimiter);
-app.use('/api/admin', adminActionLimiter);
+app.use('/api/bot-admin', adminActionLimiter);
 app.use('/api', apiLimiter);
 
 app.use('/api', (req, res, next) => {
@@ -202,7 +202,7 @@ app.use('/api', (req, res, next) => {
     next();
 });
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/bot-admin', botAdminRoutes);
 app.use('/api', productRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', depositRoutes);
@@ -211,7 +211,6 @@ app.use('/api', bannerRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', seoRoutes);
 app.use('/api', pageSeoRoutes);
-app.use('/api/admin', migrationRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -268,6 +267,18 @@ app.get('/contact', (req, res) => {
 
 app.get('/change-password', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'change-password.html'));
+});
+
+app.get('/bot-admin', (req, res) => {
+    res.redirect('/bot-admin/login.html');
+});
+
+app.get('/bot-admin/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'bot-admin', 'login.html'));
+});
+
+app.get('/bot-admin/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'bot-admin', 'dashboard.html'));
 });
 
 app.get('/product/:slug', (req, res) => {
