@@ -778,53 +778,20 @@
                     <div class="container" style="padding: 0;">
                         <div class="section-title" style="margin: 30px 0;">
                             <h2>${breadcrumbHtml}</h2>
-                            <p id="categoryDesc">${currentCat ? (currentCat.description || 'Danh sách tài khoản game chất lượng') : ''}</p>
                         </div>
-                        <div class="filter-section">
-                            <div class="filter-row">
-                                <div class="filter-group">
-                                    <input type="text" id="searchProduct" class="filter-input" placeholder="Tìm kiếm sản phẩm...">
-                                </div>
-                                <div class="filter-group">
-                                    <select id="priceFilter" class="filter-select">
-                                        <option value="">Tất cả giá</option>
-                                        <option value="0-100000">Dưới 100.000đ</option>
-                                        <option value="100000-500000">100.000đ - 500.000đ</option>
-                                        <option value="500000-1000000">500.000đ - 1.000.000đ</option>
-                                        <option value="1000000-5000000">1.000.000đ - 5.000.000đ</option>
-                                        <option value="5000000-999999999">Trên 5.000.000đ</option>
-                                    </select>
-                                </div>
-                                <div class="filter-group">
-                                    <select id="sortFilter" class="filter-select">
-                                        <option value="">Sắp xếp mặc định</option>
-                                        <option value="price-asc">Giá tăng dần</option>
-                                        <option value="price-desc">Giá giảm dần</option>
-                                        <option value="name-asc">Tên A-Z</option>
-                                        <option value="name-desc">Tên Z-A</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="productsGrid" class="games-grid">
-                            <p style="text-align: center; color: #94a3b8; padding: 50px;">Đang tải...</p>
+                        <div style="text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%); border-radius: 16px; margin: 20px 0;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📢</div>
+                            <h3 style="color: #f59e0b; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Thông Báo</h3>
+                            <p style="color: #e2e8f0; font-size: 18px; line-height: 1.8; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                                Theo NDCP shop sẽ ngừng hoạt động trên web và cần chuyển sang TELE vui lòng sử dụng dịch vụ tại 
+                                <a href="https://t.me/shopdonk_bot" target="_blank" style="color: #6366f1; font-weight: 600; text-decoration: underline;">https://t.me/shopdonk_bot</a>
+                            </p>
+                            <a href="https://t.me/shopdonk_bot" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 16px 40px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);">
+                                <i class="fab fa-telegram" style="margin-right: 8px;"></i> Đi đến Telegram
+                            </a>
                         </div>
                     </div>
                 `;
-                
-                document.getElementById('searchProduct').addEventListener('input', filterProducts);
-                document.getElementById('priceFilter').addEventListener('change', filterProducts);
-                document.getElementById('sortFilter').addEventListener('change', filterProducts);
-                
-                const res = await fetch(`${API_BASE}/products?category_slug=${slug}`);
-                const data = await res.json();
-                if (data.success) {
-                    allProducts = data.data.filter(p => !p.is_hidden);
-                    renderProducts(allProducts);
-                    if (typeof refreshGSAPAnimations === 'function') {
-                        setTimeout(refreshGSAPAnimations, 100);
-                    }
-                }
             } catch (e) {
                 console.error(e);
             }
@@ -834,7 +801,6 @@
         
         function renderSubCategories(children, parent) {
             const gamesSection = document.getElementById('gamesSection');
-            const timestamp = Date.now();
             
             gamesSection.innerHTML = `
                 <div class="container" style="padding: 0;">
@@ -844,28 +810,17 @@
                             <i class="fas fa-chevron-right" style="color: #64748b; font-size: 12px; margin: 0 15px;"></i>
                             ${parent.name.toUpperCase()}
                         </h2>
-                        <p>${parent.description || 'Chọn danh mục con bên dưới'}</p>
                     </div>
-                    <div class="categories-grid">
-                        ${children.map(c => {
-                            let imageUrl = 'https://placehold.co/400x200/6366f1/fff?text=' + encodeURIComponent(c.name || 'N/A');
-                            if (c.image && c.image.trim()) {
-                                if (c.image.startsWith('data:')) {
-                                    imageUrl = c.image;
-                                } else {
-                                    imageUrl = c.image + (c.image.includes('?') ? '&' : '?') + 't=' + timestamp;
-                                }
-                            }
-                            return `
-                            <div class="category-card" onclick="selectCategory('${c.slug}')">
-                                <img class="category-img" src="${imageUrl}" alt="${c.name}" onerror="this.src='https://placehold.co/400x200/6366f1/fff?text=${encodeURIComponent(c.name || 'N/A')}'">
-                                <div class="category-info">
-                                    <div class="category-name">${c.name}</div>
-                                    <div class="category-btn"><i class="fas fa-eye"></i> XEM NGAY</div>
-                                </div>
-                            </div>
-                            `;
-                        }).join('')}
+                    <div style="text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%); border-radius: 16px; margin: 20px 0;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📢</div>
+                        <h3 style="color: #f59e0b; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Thông Báo</h3>
+                        <p style="color: #e2e8f0; font-size: 18px; line-height: 1.8; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            Theo NDCP shop sẽ ngừng hoạt động trên web và cần chuyển sang TELE vui lòng sử dụng dịch vụ tại 
+                            <a href="https://t.me/shopdonk_bot" target="_blank" style="color: #6366f1; font-weight: 600; text-decoration: underline;">https://t.me/shopdonk_bot</a>
+                        </p>
+                        <a href="https://t.me/shopdonk_bot" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 16px 40px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);">
+                            <i class="fab fa-telegram" style="margin-right: 8px;"></i> Đi đến Telegram
+                        </a>
                     </div>
                 </div>
             `;
@@ -874,51 +829,6 @@
                 setTimeout(refreshGSAPAnimations, 100);
             }
         }
-        
-        // Filter products
-        function filterProducts() {
-            const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
-            const priceRange = document.getElementById('priceFilter').value;
-            const sortBy = document.getElementById('sortFilter').value;
-            
-            let filtered = [...allProducts];
-            
-            // Search filter
-            if (searchTerm) {
-                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm));
-            }
-            
-            // Price filter
-            if (priceRange) {
-                const [min, max] = priceRange.split('-').map(Number);
-                filtered = filtered.filter(p => p.price >= min && p.price <= max);
-            }
-            
-            // Sort
-            if (sortBy) {
-                const [field, order] = sortBy.split('-');
-                filtered.sort((a, b) => {
-                    let valA = a[field] || '';
-                    let valB = b[field] || '';
-                    if (field === 'name') {
-                        valA = valA.toLowerCase();
-                        valB = valB.toLowerCase();
-                    }
-                    if (order === 'asc') {
-                        return valA > valB ? 1 : -1;
-                    } else {
-                        return valA < valB ? 1 : -1;
-                    }
-                });
-            }
-            
-            renderProducts(filtered);
-        }
-        
-        // Add event listeners for filters
-        document.getElementById('searchProduct').addEventListener('input', filterProducts);
-        document.getElementById('priceFilter').addEventListener('change', filterProducts);
-        document.getElementById('sortFilter').addEventListener('change', filterProducts);
         
         function renderProducts(products) {
             const grid = document.getElementById('productsGrid') || document.getElementById('gamesGrid');
