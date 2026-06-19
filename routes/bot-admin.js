@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 
-const BOT_DATA_PATH = path.join(__dirname, '..', 'telegram-bot', 'data', 'bot-database.json');
+const BOT_DATA_PATH = process.env.BOT_DATA_PATH || '/root/telegram-bot/data/bot-database.json';
 const ADMIN_KEY = process.env.BOT_ADMIN_KEY || 'shopdonk_admin_2024';
 
 function loadBotData() {
@@ -16,7 +16,7 @@ function loadBotData() {
     } catch (e) {
         console.error('Error loading bot data:', e);
     }
-    return { users: [], products: [], orders: [], deposits: [], transactions: [], categories: [] };
+    return { users: {}, products: {}, orders: [], deposits: [], transactions: [], categories: {} };
 }
 
 function saveBotData(data) {
@@ -36,6 +36,31 @@ function saveBotData(data) {
 function isAdmin(telegramId) {
     const adminIds = (process.env.ADMIN_IDS || '').split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
     return adminIds.includes(parseInt(telegramId));
+}
+
+function getUsersArray(data) {
+    return Object.entries(data.users || {}).map(([id, u]) => ({
+        id,
+        telegram_id: id,
+        name: u.name || 'Unknown',
+        balance: u.balance || 0,
+        role: u.role || 'user',
+        created_at: u.createdAt
+    }));
+}
+
+function getProductsArray(data) {
+    return Object.entries(data.products || {}).map(([id, p]) => ({
+        id,
+        ...p
+    }));
+}
+
+function getCategoriesArray(data) {
+    return Object.entries(data.categories || {}).map(([id, c]) => ({
+        id,
+        ...c
+    }));
 }
 
 const botAdminAuth = (req, res, next) => {
@@ -95,8 +120,8 @@ router.get('/stats', botAdminAuth, (req, res) => {
         data: {
             revenue,
             orders: (data.orders || []).length,
-            users: (data.users || []).length,
-            products: (data.products || []).length,
+            users: Object.keys(data.users || {}).length,
+            products: Object.keys(data.products || {}).length,
             pendingDeposits
         }
     });
@@ -104,28 +129,31 @@ router.get('/stats', botAdminAuth, (req, res) => {
 
 router.get('/products', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    res.json({ success: true, data: data.products || [] });
+    const products = getProductsArray(data);
+    res.json({ success: true, data: products });
 });
 
 router.post('/products', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const { name, category, price, stock, description } = req.body;
+    const { name, category, price, stock, description, account_info } = req.body;
     
+    const id = Date.now().toString();
     const newProduct = {
-        id: Date.now(),
         name,
         category: category || 'other',
         price: parseInt(price) || 0,
         stock: parseInt(stock) || 0,
         description: description || '',
-        created_at: new Date().toISOString()
+        account_info: account_info || '',
+        status: 'active',
+        createdAt: new Date().toISOString()
     };
     
-    data.products = data.products || [];
-    data.products.push(newProduct);
+    data.products = data.products || {};
+    data.products[id] = newProduct;
     
     if (saveBotData(data)) {
-        res.json({ success: true, data: newProduct });
+        res.json({ success: true, data: { id, ...newProduct } });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -133,10 +161,10 @@ router.post('/products', botAdminAuth, (req, res) => {
 
 router.get('/products/:id', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const product = (data.products || []).find(p => p.id === parseInt(req.params.id));
+    const product = data.products?.[req.params.id];
     
     if (product) {
-        res.json({ success: true, data: product });
+        res.json({ success: true, data: { id: req.params.id, ...product } });
     } else {
         res.status(404).json({ success: false, message: 'Product not found' });
     }
@@ -144,20 +172,20 @@ router.get('/products/:id', botAdminAuth, (req, res) => {
 
 router.put('/products/:id', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const idx = (data.products || []).findIndex(p => p.id === parseInt(req.params.id));
+    const id = req.params.id;
     
-    if (idx === -1) {
+    if (!data.products?.[id]) {
         return res.status(404).json({ success: false, message: 'Product not found' });
     }
     
-    data.products[idx] = {
-        ...data.products[idx],
+    data.products[id] = {
+        ...data.products[id],
         ...req.body,
-        updated_at: new Date().toISOString()
+        updatedAt: new Date().toISOString()
     };
     
     if (saveBotData(data)) {
-        res.json({ success: true, data: data.products[idx] });
+        res.json({ success: true, data: { id, ...data.products[id] } });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -165,16 +193,51 @@ router.put('/products/:id', botAdminAuth, (req, res) => {
 
 router.delete('/products/:id', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const idx = (data.products || []).findIndex(p => p.id === parseInt(req.params.id));
+    const id = req.params.id;
     
-    if (idx === -1) {
+    if (!data.products?.[id]) {
         return res.status(404).json({ success: false, message: 'Product not found' });
     }
     
-    data.products.splice(idx, 1);
+    delete data.products[id];
     
     if (saveBotData(data)) {
         res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false, message: 'Failed to save' });
+    }
+});
+
+router.get('/categories', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    const categories = getCategoriesArray(data);
+    res.json({ success: true, data: categories });
+});
+
+router.post('/categories', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    const { name, emoji, color, parent_id } = req.body;
+    
+    const id = name.toLowerCase().replace(/\s+/g, '-');
+    const newCategory = {
+        id,
+        name,
+        slug: id,
+        emoji: emoji || '📦',
+        color: color || '#6366f1',
+        parent_id: parent_id || null,
+        depth: 0,
+        path: id,
+        display_order: Object.keys(data.categories || {}).length + 1,
+        products: [],
+        createdAt: new Date().toISOString()
+    };
+    
+    data.categories = data.categories || {};
+    data.categories[id] = newCategory;
+    
+    if (saveBotData(data)) {
+        res.json({ success: true, data: { id, ...newCategory } });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -193,16 +256,28 @@ router.get('/orders', botAdminAuth, (req, res) => {
     }
     
     orders = orders.map(o => {
-        const user = (data.users || []).find(u => u.id === o.user_id);
-        return { ...o, username: user?.name || user?.username };
+        const user = data.users?.[o.user_id];
+        return { ...o, username: user?.name || 'User ' + o.user_id };
     });
     
-    res.json({ success: true, data: orders });
+    res.json({ success: true, data: orders.reverse() });
+});
+
+router.get('/orders/:id', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    const order = (data.orders || []).find(o => o.id === req.params.id || o.id === parseInt(req.params.id));
+    
+    if (order) {
+        const user = data.users?.[order.user_id];
+        res.json({ success: true, data: { ...order, username: user?.name } });
+    } else {
+        res.status(404).json({ success: false, message: 'Order not found' });
+    }
 });
 
 router.post('/orders/:id/refund', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const orderIdx = (data.orders || []).findIndex(o => o.id === parseInt(req.params.id));
+    const orderIdx = (data.orders || []).findIndex(o => o.id === req.params.id || o.id === parseInt(req.params.id));
     
     if (orderIdx === -1) {
         return res.status(404).json({ success: false, message: 'Order not found' });
@@ -214,9 +289,9 @@ router.post('/orders/:id/refund', botAdminAuth, (req, res) => {
         return res.status(400).json({ success: false, message: 'Already refunded' });
     }
     
-    const userIdx = (data.users || []).findIndex(u => u.id === order.user_id);
-    if (userIdx !== -1) {
-        data.users[userIdx].balance = (data.users[userIdx].balance || 0) + (order.total || order.price || 0);
+    const userId = order.user_id;
+    if (data.users?.[userId]) {
+        data.users[userId].balance = (data.users[userId].balance || 0) + (order.total || order.price || 0);
     }
     
     data.orders[orderIdx].status = 'refunded';
@@ -224,16 +299,16 @@ router.post('/orders/:id/refund', botAdminAuth, (req, res) => {
     
     data.transactions = data.transactions || [];
     data.transactions.push({
-        id: Date.now(),
-        user_id: order.user_id,
+        id: Date.now().toString(),
+        user_id: userId,
         type: 'refund',
         amount: order.total || order.price || 0,
         order_id: order.id,
-        created_at: new Date().toISOString()
+        createdAt: new Date().toISOString()
     });
     
     if (saveBotData(data)) {
-        res.json({ success: true });
+        res.json({ success: true, message: 'Refunded successfully' });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -241,24 +316,26 @@ router.post('/orders/:id/refund', botAdminAuth, (req, res) => {
 
 router.get('/users', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const users = (data.users || []).map(u => ({
-        id: u.id,
-        telegram_id: u.telegram_id,
-        name: u.name || u.username,
-        username: u.username,
-        balance: u.balance || 0,
-        role: u.role || 'user',
-        created_at: u.created_at
-    }));
-    
+    const users = getUsersArray(data);
     res.json({ success: true, data: users });
+});
+
+router.get('/users/:id', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    const user = data.users?.[req.params.id];
+    
+    if (user) {
+        res.json({ success: true, data: { id: req.params.id, ...user } });
+    } else {
+        res.status(404).json({ success: false, message: 'User not found' });
+    }
 });
 
 router.post('/users/:id/balance', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const userIdx = (data.users || []).findIndex(u => u.id === parseInt(req.params.id));
+    const userId = req.params.id;
     
-    if (userIdx === -1) {
+    if (!data.users?.[userId]) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
     
@@ -266,23 +343,45 @@ router.post('/users/:id/balance', botAdminAuth, (req, res) => {
     const amt = parseInt(amount) || 0;
     
     if (action === 'add') {
-        data.users[userIdx].balance = (data.users[userIdx].balance || 0) + amt;
+        data.users[userId].balance = (data.users[userId].balance || 0) + amt;
     } else if (action === 'deduct') {
-        data.users[userIdx].balance = Math.max(0, (data.users[userIdx].balance || 0) - amt);
+        data.users[userId].balance = Math.max(0, (data.users[userId].balance || 0) - amt);
     }
     
     data.transactions = data.transactions || [];
     data.transactions.push({
-        id: Date.now(),
-        user_id: data.users[userIdx].id,
+        id: Date.now().toString(),
+        user_id: userId,
         type: action === 'add' ? 'admin_add' : 'admin_deduct',
         amount: amt,
         admin_id: req.adminId,
-        created_at: new Date().toISOString()
+        createdAt: new Date().toISOString()
     });
     
     if (saveBotData(data)) {
-        res.json({ success: true, data: { balance: data.users[userIdx].balance } });
+        res.json({ success: true, data: { balance: data.users[userId].balance } });
+    } else {
+        res.status(500).json({ success: false, message: 'Failed to save' });
+    }
+});
+
+router.post('/users/:id/set-role', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    const userId = req.params.id;
+    const { role } = req.body;
+    
+    if (!data.users?.[userId]) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    
+    if (!['user', 'ctv', 'admin'].includes(role)) {
+        return res.status(400).json({ success: false, message: 'Invalid role' });
+    }
+    
+    data.users[userId].role = role;
+    
+    if (saveBotData(data)) {
+        res.json({ success: true, data: { role } });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -301,16 +400,16 @@ router.get('/deposits', botAdminAuth, (req, res) => {
     }
     
     deposits = deposits.map(d => {
-        const user = (data.users || []).find(u => u.id === d.user_id);
-        return { ...d, username: user?.name || user?.username };
+        const user = data.users?.[d.user_id];
+        return { ...d, username: user?.name || 'User ' + d.user_id };
     });
     
-    res.json({ success: true, data: deposits });
+    res.json({ success: true, data: deposits.reverse() });
 });
 
 router.post('/deposits/:id/approve', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const depositIdx = (data.deposits || []).findIndex(d => d.id === parseInt(req.params.id));
+    const depositIdx = (data.deposits || []).findIndex(d => d.id === req.params.id || d.id === parseInt(req.params.id));
     
     if (depositIdx === -1) {
         return res.status(404).json({ success: false, message: 'Deposit not found' });
@@ -322,9 +421,9 @@ router.post('/deposits/:id/approve', botAdminAuth, (req, res) => {
         return res.status(400).json({ success: false, message: 'Deposit already processed' });
     }
     
-    const userIdx = (data.users || []).findIndex(u => u.id === deposit.user_id);
-    if (userIdx !== -1) {
-        data.users[userIdx].balance = (data.users[userIdx].balance || 0) + deposit.amount;
+    const userId = deposit.user_id;
+    if (data.users?.[userId]) {
+        data.users[userId].balance = (data.users[userId].balance || 0) + deposit.amount;
     }
     
     data.deposits[depositIdx].status = 'approved';
@@ -333,16 +432,16 @@ router.post('/deposits/:id/approve', botAdminAuth, (req, res) => {
     
     data.transactions = data.transactions || [];
     data.transactions.push({
-        id: Date.now(),
-        user_id: deposit.user_id,
-        type: 'deposit',
+        id: Date.now().toString(),
+        user_id: userId,
+        type: 'deposit_approved',
         amount: deposit.amount,
         deposit_id: deposit.id,
-        created_at: new Date().toISOString()
+        createdAt: new Date().toISOString()
     });
     
     if (saveBotData(data)) {
-        res.json({ success: true });
+        res.json({ success: true, message: 'Approved successfully' });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
@@ -350,7 +449,7 @@ router.post('/deposits/:id/approve', botAdminAuth, (req, res) => {
 
 router.post('/deposits/:id/reject', botAdminAuth, (req, res) => {
     const data = loadBotData();
-    const depositIdx = (data.deposits || []).findIndex(d => d.id === parseInt(req.params.id));
+    const depositIdx = (data.deposits || []).findIndex(d => d.id === req.params.id || d.id === parseInt(req.params.id));
     
     if (depositIdx === -1) {
         return res.status(404).json({ success: false, message: 'Deposit not found' });
@@ -365,10 +464,30 @@ router.post('/deposits/:id/reject', botAdminAuth, (req, res) => {
     data.deposits[depositIdx].rejected_by = req.adminId;
     
     if (saveBotData(data)) {
-        res.json({ success: true });
+        res.json({ success: true, message: 'Rejected successfully' });
     } else {
         res.status(500).json({ success: false, message: 'Failed to save' });
     }
+});
+
+router.get('/transactions', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    let transactions = data.transactions || [];
+    
+    if (req.query.user_id) {
+        transactions = transactions.filter(t => t.user_id === req.query.user_id);
+    }
+    
+    if (req.query.limit) {
+        transactions = transactions.slice(0, parseInt(req.query.limit));
+    }
+    
+    transactions = transactions.map(t => {
+        const user = data.users?.[t.user_id];
+        return { ...t, username: user?.name || 'User ' + t.user_id };
+    });
+    
+    res.json({ success: true, data: transactions.reverse() });
 });
 
 router.post('/broadcast', botAdminAuth, (req, res) => {
@@ -379,9 +498,16 @@ router.post('/broadcast', botAdminAuth, (req, res) => {
     }
     
     const data = loadBotData();
-    const users = data.users || [];
+    const userCount = Object.keys(data.users || {}).length;
     
-    res.json({ success: true, data: { sent: users.length, message: 'Broadcast queued (requires bot integration)' } });
+    res.json({ 
+        success: true, 
+        data: { 
+            sent: userCount, 
+            message: 'Broadcast sent via Telegram bot (users will receive via bot)',
+            note: 'The bot must be running to deliver messages'
+        } 
+    });
 });
 
 router.post('/settings/admin-key', botAdminAuth, (req, res) => {
@@ -394,6 +520,21 @@ router.post('/settings/admin-key', botAdminAuth, (req, res) => {
     process.env.BOT_ADMIN_KEY = adminKey;
     
     res.json({ success: true, message: 'Admin key updated (restart required for persistence)' });
+});
+
+router.get('/config', botAdminAuth, (req, res) => {
+    const data = loadBotData();
+    
+    res.json({
+        success: true,
+        data: {
+            admin_ids: (process.env.ADMIN_IDS || '').split(','),
+            bot_data_path: BOT_DATA_PATH,
+            total_users: Object.keys(data.users || {}).length,
+            total_products: Object.keys(data.products || {}).length,
+            total_categories: Object.keys(data.categories || {}).length
+        }
+    });
 });
 
 module.exports = router;

@@ -126,10 +126,10 @@ async function loadProducts() {
                         <td class="py-3 px-2">${p.name}</td>
                         <td class="py-3 px-2">${p.category || 'N/A'}</td>
                         <td class="py-3 px-2">${formatMoney(p.price)}</td>
-                        <td class="py-3 px-2"><span class="${p.stock > 0 ? 'text-green-400' : 'text-red-400'}">${p.stock}</span></td>
+                        <td class="py-3 px-2"><span class="${p.stock > 0 ? 'text-green-400' : 'text-red-400'}">${p.stock || 0}</span></td>
                         <td class="py-3 px-2">
-                            <button onclick="editProduct(${p.id})" class="text-blue-400 hover:text-blue-300 mr-2"><i class="fas fa-edit"></i></button>
-                            <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            <button onclick="editProduct('${p.id}')" class="text-blue-400 hover:text-blue-300 mr-2"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteProduct('${p.id}')" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `).join('')
@@ -231,7 +231,14 @@ function showAddProductModal() {
             </div>
             <div>
                 <label class="block text-gray-300 mb-2">Danh Mục</label>
-                <input type="text" id="productCategory" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
+                <select id="productCategory" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
+                    <option value="genshin">Genshin Impact</option>
+                    <option value="lol">League of Legends</option>
+                    <option value="valorant">Valorant</option>
+                    <option value="pubg">PUBG Mobile</option>
+                    <option value="freefire">Free Fire</option>
+                    <option value="other">Khác</option>
+                </select>
             </div>
             <div>
                 <label class="block text-gray-300 mb-2">Giá</label>
@@ -239,11 +246,11 @@ function showAddProductModal() {
             </div>
             <div>
                 <label class="block text-gray-300 mb-2">Tồn Kho</label>
-                <input type="number" id="productStock" value="0" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
+                <input type="number" id="productStock" value="1" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
             </div>
             <div>
-                <label class="block text-gray-300 mb-2">Mô Tả / Thông Tin Tài Khoản</label>
-                <textarea id="productDescription" rows="3" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white"></textarea>
+                <label class="block text-gray-300 mb-2">Thông Tin Tài Khoản (tài khoản/mật khẩu)</label>
+                <textarea id="productAccountInfo" rows="3" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Username:Password hoặc thông tin đăng nhập"></textarea>
             </div>
             <button type="submit" class="w-full py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">Thêm Mới</button>
         </form>
@@ -257,8 +264,8 @@ async function addProduct(e) {
         name: document.getElementById('productName').value,
         category: document.getElementById('productCategory').value,
         price: parseInt(document.getElementById('productPrice').value),
-        stock: parseInt(document.getElementById('productStock').value) || 0,
-        description: document.getElementById('productDescription').value
+        stock: parseInt(document.getElementById('productStock').value) || 1,
+        account_info: document.getElementById('productAccountInfo').value
     };
     
     const res = await apiRequest('/bot-admin/products', {
@@ -281,7 +288,7 @@ async function editProduct(id) {
         const p = res.data;
         document.getElementById('modalTitle').textContent = 'Sửa Sản Phẩm';
         document.getElementById('modalContent').innerHTML = `
-            <form onsubmit="updateProduct(event, ${id})" class="space-y-4">
+            <form onsubmit="updateProduct(event, '${id}')" class="space-y-4">
                 <div>
                     <label class="block text-gray-300 mb-2">Tên Sản Phẩm</label>
                     <input type="text" id="productName" value="${p.name || ''}" required class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
@@ -293,6 +300,10 @@ async function editProduct(id) {
                 <div>
                     <label class="block text-gray-300 mb-2">Tồn Kho</label>
                     <input type="number" id="productStock" value="${p.stock || 0}" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">
+                </div>
+                <div>
+                    <label class="block text-gray-300 mb-2">Thông Tin Tài Khoản</label>
+                    <textarea id="productAccountInfo" rows="3" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white">${p.account_info || ''}</textarea>
                 </div>
                 <button type="submit" class="w-full py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">Cập Nhật</button>
             </form>
@@ -306,7 +317,8 @@ async function updateProduct(e, id) {
     const data = {
         name: document.getElementById('productName').value,
         price: parseInt(document.getElementById('productPrice').value),
-        stock: parseInt(document.getElementById('productStock').value)
+        stock: parseInt(document.getElementById('productStock').value),
+        account_info: document.getElementById('productAccountInfo').value
     };
     
     const res = await apiRequest(`/bot-admin/products/${id}`, {
