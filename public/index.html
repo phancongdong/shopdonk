@@ -714,20 +714,23 @@
         
         loadSeoSettings();
         
+        // Check popup closed state immediately
+            const announcementPopup = document.getElementById('announcementPopup');
+            if (announcementPopup && localStorage.getItem('announcementClosed') === 'true') {
+                announcementPopup.style.display = 'none';
+            }
+        })();
+        
         document.addEventListener('DOMContentLoaded', async function() {
             // Announcement Popup
             const announcementPopup = document.getElementById('announcementPopup');
             const popupCloseBtn = document.getElementById('popupCloseBtn');
             
-            if (popupCloseBtn) {
+            if (popupCloseBtn && announcementPopup) {
                 popupCloseBtn.addEventListener('click', function() {
-                    announcementPopup.classList.add('hidden');
+                    announcementPopup.style.display = 'none';
                     localStorage.setItem('announcementClosed', 'true');
                 });
-            }
-            
-            if (localStorage.getItem('announcementClosed') === 'true') {
-                announcementPopup.classList.add('hidden');
             }
             
             const loading = document.getElementById('loadingOverlay');
