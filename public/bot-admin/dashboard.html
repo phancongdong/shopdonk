@@ -1535,6 +1535,527 @@
             100% { left: 100%; }
         }
 
+        .radar-chart-card {
+            grid-column: span 1;
+        }
+
+        .radar-chart-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 20px auto 0;
+        }
+
+        .radar-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .radar-bg {
+            fill: none;
+            stroke: rgba(79, 107, 255, 0.1);
+            stroke-width: 1;
+        }
+
+        .radar-axis {
+            stroke: rgba(79, 107, 255, 0.2);
+            stroke-width: 1;
+        }
+
+        .radar-area {
+            fill: rgba(79, 107, 255, 0.2);
+            stroke: var(--accent-primary);
+            stroke-width: 2;
+            stroke-linejoin: round;
+            opacity: 0;
+            animation: radarFadeIn 1s ease 0.5s forwards;
+        }
+
+        @keyframes radarFadeIn {
+            to { opacity: 1; }
+        }
+
+        .radar-point {
+            fill: var(--accent-primary);
+            stroke: var(--bg-card);
+            stroke-width: 2;
+            opacity: 0;
+            animation: radarPointPop 0.3s ease forwards;
+        }
+
+        @keyframes radarPointPop {
+            0% { opacity: 0; r: 0; }
+            70% { r: 8; }
+            100% { opacity: 1; r: 5; }
+        }
+
+        .radar-label {
+            fill: var(--text-tertiary);
+            font-size: 10px;
+            text-anchor: middle;
+        }
+
+        .polar-chart-card {
+            grid-column: span 1;
+        }
+
+        .polar-chart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto 0;
+        }
+
+        .polar-segment {
+            fill-opacity: 0.7;
+            stroke: var(--bg-card);
+            stroke-width: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .polar-segment:hover {
+            fill-opacity: 1;
+            transform: scale(1.05);
+            transform-origin: center;
+        }
+
+        .funnel-chart-card {
+            grid-column: span 1;
+        }
+
+        .funnel-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .funnel-step {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .funnel-bar {
+            height: 36px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .funnel-bar::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .funnel-bar.step-1 {
+            background: linear-gradient(135deg, #4F6BFF, #7B8CFF);
+        }
+
+        .funnel-bar.step-2 {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+        }
+
+        .funnel-bar.step-3 {
+            background: linear-gradient(135deg, #10D876, #34D876);
+        }
+
+        .funnel-bar.step-4 {
+            background: linear-gradient(135deg, #FFB020, #FBBF24);
+        }
+
+        .funnel-value {
+            position: absolute;
+            right: 16px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .funnel-label {
+            flex: 1;
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .bubble-chart-card {
+            grid-column: span 2;
+        }
+
+        .bubble-chart-container {
+            height: 280px;
+            position: relative;
+            margin-top: 20px;
+            border-left: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bubble-grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: bubblePop 0.6s ease forwards;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bubble:hover {
+            transform: scale(1.15);
+            z-index: 10;
+        }
+
+        @keyframes bubblePop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .bubble-label {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bubble:hover .bubble-label {
+            opacity: 1;
+        }
+
+        .waterfall-chart-card {
+            grid-column: span 1;
+        }
+
+        .waterfall-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            margin-top: 20px;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .waterfall-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .waterfall-bar {
+            width: 32px;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .waterfall-bar.positive {
+            background: linear-gradient(180deg, #10D876, #059669);
+        }
+
+        .waterfall-bar.negative {
+            background: linear-gradient(180deg, #FF5B6E, #DC2626);
+        }
+
+        .waterfall-bar.total {
+            background: linear-gradient(180deg, #4F6BFF, #7B8CFF);
+        }
+
+        .waterfall-connector {
+            position: absolute;
+            left: 50%;
+            width: calc(100% + 16px);
+            height: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .waterfall-value {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .waterfall-label {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .candlestick-chart-card {
+            grid-column: span 2;
+        }
+
+        .candlestick-container {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+
+        .candlestick {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .candle-wick {
+            width: 2px;
+            background: var(--text-tertiary);
+            border-radius: 1px;
+        }
+
+        .candle-body {
+            width: 100%;
+            max-width: 16px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .candle-body.bullish {
+            background: linear-gradient(180deg, #10D876, #059669);
+        }
+
+        .candle-body.bearish {
+            background: linear-gradient(180deg, #FF5B6E, #DC2626);
+        }
+
+        .candlestick:hover .candle-body {
+            transform: scaleX(1.2);
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .gauge-cluster-card {
+            grid-column: span 1;
+        }
+
+        .gauge-cluster {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mini-gauge {
+            text-align: center;
+        }
+
+        .mini-gauge svg {
+            width: 80px;
+            height: 80px;
+            transform: rotate(-90deg);
+        }
+
+        .mini-gauge-bg {
+            fill: none;
+            stroke: rgba(79, 107, 255, 0.1);
+            stroke-width: 8;
+        }
+
+        .mini-gauge-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 226;
+            stroke-dashoffset: 226;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mini-gauge-value {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .mini-gauge-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .treemap-card {
+            grid-column: span 2;
+        }
+
+        .treemap-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 80px);
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .treemap-cell {
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: treemapFadeIn 0.5s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .treemap-cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+        }
+
+        @keyframes treemapFadeIn {
+            to { opacity: 1; }
+        }
+
+        .treemap-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .treemap-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .treemap-label {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .scatter-plot-card {
+            grid-column: span 1;
+        }
+
+        .scatter-plot-container {
+            height: 200px;
+            position: relative;
+            margin-top: 20px;
+            border-left: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scatter-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            opacity: 0;
+            animation: scatterPop 0.4s ease forwards;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scatter-point:hover {
+            transform: scale(2);
+            box-shadow: 0 0 15px var(--accent-primary);
+        }
+
+        @keyframes scatterPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        .progress-bullet-card {
+            grid-column: span 1;
+        }
+
+        .bullet-chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .bullet-item {
+            position: relative;
+        }
+
+        .bullet-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .bullet-track {
+            height: 24px;
+            background: rgba(79, 107, 255, 0.1);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bullet-range {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            opacity: 0.3;
+            border-radius: 12px;
+        }
+
+        .bullet-bar {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 12px;
+            border-radius: 6px;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bullet-marker {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 32px;
+            background: var(--text-primary);
+            border-radius: 2px;
+        }
+
         .section-title {
             font-size: 18px;
             font-weight: 700;
@@ -2452,6 +2973,222 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="dashboard-card radar-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Performance Radar</h3>
+                            </div>
+                            <div class="radar-chart-container">
+                                <svg class="radar-chart" viewBox="0 0 220 220" id="radarChart">
+                                    <polygon class="radar-bg" points="110,20 190,75 170,165 50,165 30,75"/>
+                                    <polygon class="radar-bg" points="110,45 165,82 150,145 70,145 55,82"/>
+                                    <polygon class="radar-bg" points="110,70 140,90 130,125 90,125 80,90"/>
+                                    <line class="radar-axis" x1="110" y1="110" x2="110" y2="20"/>
+                                    <line class="radar-axis" x1="110" y1="110" x2="190" y2="75"/>
+                                    <line class="radar-axis" x1="110" y1="110" x2="170" y2="165"/>
+                                    <line class="radar-axis" x1="110" y1="110" x2="50" y2="165"/>
+                                    <line class="radar-axis" x1="110" y1="110" x2="30" y2="75"/>
+                                    <polygon class="radar-area" id="radarArea" points="110,35 175,78 155,155 65,150 45,80"/>
+                                    <circle class="radar-point" cx="110" cy="35" r="5" style="animation-delay: 0.6s;"/>
+                                    <circle class="radar-point" cx="175" cy="78" r="5" style="animation-delay: 0.7s;"/>
+                                    <circle class="radar-point" cx="155" cy="155" r="5" style="animation-delay: 0.8s;"/>
+                                    <circle class="radar-point" cx="65" cy="150" r="5" style="animation-delay: 0.9s;"/>
+                                    <circle class="radar-point" cx="45" cy="80" r="5" style="animation-delay: 1s;"/>
+                                    <text class="radar-label" x="110" y="12">Sales</text>
+                                    <text class="radar-label" x="200" y="75">Revenue</text>
+                                    <text class="radar-label" x="180" y="180">Growth</text>
+                                    <text class="radar-label" x="40" y="180">Users</text>
+                                    <text class="radar-label" x="15" y="75">Orders</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card funnel-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Sales Funnel</h3>
+                            </div>
+                            <div class="funnel-container" id="funnelChart">
+                                <div class="funnel-step">
+                                    <div class="funnel-bar step-1" style="width: 0%;" data-width="100%">
+                                        <span>Visitors</span>
+                                        <span class="funnel-value">12,450</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar step-2" style="width: 0%;" data-width="75%">
+                                        <span>Leads</span>
+                                        <span class="funnel-value">3,280</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar step-3" style="width: 0%;" data-width="50%">
+                                        <span>Prospects</span>
+                                        <span class="funnel-value">1,850</span>
+                                    </div>
+                                </div>
+                                <div class="funnel-step">
+                                    <div class="funnel-bar step-4" style="width: 0%;" data-width="30%">
+                                        <span>Customers</span>
+                                        <span class="funnel-value">892</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card bubble-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Market Segments</h3>
+                                <span class="card-badge">
+                                    <i class="fas fa-chart-bubble"></i>
+                                    Bubble Size = Revenue
+                                </span>
+                            </div>
+                            <div class="bubble-chart-container" id="bubbleChart">
+                                <div class="bubble-grid-line" style="top: 25%;"></div>
+                                <div class="bubble-grid-line" style="top: 50%;"></div>
+                                <div class="bubble-grid-line" style="top: 75%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card gauge-cluster-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">KPI Dashboard</h3>
+                            </div>
+                            <div class="gauge-cluster">
+                                <div class="mini-gauge">
+                                    <svg viewBox="0 0 80 80">
+                                        <circle class="mini-gauge-bg" cx="40" cy="40" r="36"/>
+                                        <circle class="mini-gauge-fill" cx="40" cy="40" r="36" stroke="#4F6BFF" data-percent="85" style="stroke-dashoffset: calc(226 - (226 * 85 / 100));"/>
+                                    </svg>
+                                    <div class="mini-gauge-value" style="color: #4F6BFF;">85%</div>
+                                    <div class="mini-gauge-label">Sales</div>
+                                </div>
+                                <div class="mini-gauge">
+                                    <svg viewBox="0 0 80 80">
+                                        <circle class="mini-gauge-bg" cx="40" cy="40" r="36"/>
+                                        <circle class="mini-gauge-fill" cx="40" cy="40" r="36" stroke="#10D876" data-percent="92" style="stroke-dashoffset: calc(226 - (226 * 92 / 100));"/>
+                                    </svg>
+                                    <div class="mini-gauge-value" style="color: #10D876;">92%</div>
+                                    <div class="mini-gauge-label">Revenue</div>
+                                </div>
+                                <div class="mini-gauge">
+                                    <svg viewBox="0 0 80 80">
+                                        <circle class="mini-gauge-bg" cx="40" cy="40" r="36"/>
+                                        <circle class="mini-gauge-fill" cx="40" cy="40" r="36" stroke="#8B5CF6" data-percent="78" style="stroke-dashoffset: calc(226 - (226 * 78 / 100));"/>
+                                    </svg>
+                                    <div class="mini-gauge-value" style="color: #8B5CF6;">78%</div>
+                                    <div class="mini-gauge-label">Growth</div>
+                                </div>
+                                <div class="mini-gauge">
+                                    <svg viewBox="0 0 80 80">
+                                        <circle class="mini-gauge-bg" cx="40" cy="40" r="36"/>
+                                        <circle class="mini-gauge-fill" cx="40" cy="40" r="36" stroke="#FFB020" data-percent="65" style="stroke-dashoffset: calc(226 - (226 * 65 / 100));"/>
+                                    </svg>
+                                    <div class="mini-gauge-value" style="color: #FFB020;">65%</div>
+                                    <div class="mini-gauge-label">Retention</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card waterfall-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Revenue Breakdown</h3>
+                            </div>
+                            <div class="waterfall-container" id="waterfallChart"></div>
+                        </div>
+
+                        <div class="dashboard-card candlestick-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Price Movement</h3>
+                                <span class="card-badge" style="background: rgba(16, 216, 118, 0.15); color: var(--success);">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +5.2%
+                                </span>
+                            </div>
+                            <div class="candlestick-container" id="candlestickChart"></div>
+                        </div>
+
+                        <div class="dashboard-card treemap-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Category Distribution</h3>
+                            </div>
+                            <div class="treemap-container" id="treemapChart"></div>
+                        </div>
+
+                        <div class="dashboard-card scatter-plot-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Price vs Volume</h3>
+                            </div>
+                            <div class="scatter-plot-container" id="scatterPlot"></div>
+                        </div>
+
+                        <div class="dashboard-card progress-bullet-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Goals Progress</h3>
+                            </div>
+                            <div class="bullet-chart-container">
+                                <div class="bullet-item">
+                                    <div class="bullet-label">
+                                        <span>Monthly Revenue</span>
+                                        <span style="color: var(--success);">$72K / $80K</span>
+                                    </div>
+                                    <div class="bullet-track">
+                                        <div class="bullet-range" style="width: 90%; background: rgba(79, 107, 255, 0.2);"></div>
+                                        <div class="bullet-bar" style="width: 0%; background: linear-gradient(90deg, #4F6BFF, #7B8CFF);" data-width="90%"></div>
+                                        <div class="bullet-marker" style="left: 80%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bullet-item">
+                                    <div class="bullet-label">
+                                        <span>New Users</span>
+                                        <span style="color: var(--success);">1,245 / 1,500</span>
+                                    </div>
+                                    <div class="bullet-track">
+                                        <div class="bullet-range" style="width: 83%; background: rgba(139, 92, 246, 0.2);"></div>
+                                        <div class="bullet-bar" style="width: 0%; background: linear-gradient(90deg, #8B5CF6, #A78BFA);" data-width="83%"></div>
+                                        <div class="bullet-marker" style="left: 75%;"></div>
+                                    </div>
+                                </div>
+                                <div class="bullet-item">
+                                    <div class="bullet-label">
+                                        <span>Order Target</span>
+                                        <span style="color: var(--warning);">892 / 1,200</span>
+                                    </div>
+                                    <div class="bullet-track">
+                                        <div class="bullet-range" style="width: 74%; background: rgba(255, 176, 32, 0.2);"></div>
+                                        <div class="bullet-bar" style="width: 0%; background: linear-gradient(90deg, #FFB020, #FBBF24);" data-width="74%"></div>
+                                        <div class="bullet-marker" style="left: 60%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card polar-chart-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Sales by Region</h3>
+                            </div>
+                            <div class="polar-chart-container">
+                                <svg class="polar-chart" viewBox="0 0 200 200" id="polarChart"></svg>
+                            </div>
+                            <div class="donut-legend" style="margin-top: 16px;">
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #4F6BFF;"></div>
+                                    <span>North 35%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #10D876;"></div>
+                                    <span>South 28%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #8B5CF6;"></div>
+                                    <span>East 22%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #FFB020;"></div>
+                                    <span>West 15%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -2836,6 +3573,226 @@
                     line.style.strokeDashoffset = '0';
                 }, 200);
             }
+        }
+
+        function createFunnel() {
+            const bars = document.querySelectorAll('.funnel-bar');
+            bars.forEach((bar, i) => {
+                setTimeout(() => {
+                    bar.style.width = bar.dataset.width;
+                }, 300 + i * 200);
+            });
+        }
+
+        function createBubbles() {
+            const container = document.getElementById('bubbleChart');
+            if (!container) return;
+
+            const bubbles = [
+                { x: 15, y: 30, size: 60, color: '#4F6BFF', label: 'Games', value: '$45K' },
+                { x: 35, y: 45, size: 45, color: '#10D876', label: 'Accounts', value: '$28K' },
+                { x: 55, y: 25, size: 35, color: '#8B5CF6', label: 'Services', value: '$18K' },
+                { x: 75, y: 55, size: 28, color: '#FFB020', label: 'Boost', value: '$12K' },
+                { x: 25, y: 65, size: 22, color: '#FF5B6E', label: 'Other', value: '$8K' },
+                { x: 65, y: 40, size: 18, color: '#06B6D4', label: 'Support', value: '$5K' },
+                { x: 85, y: 70, size: 15, color: '#EC4899', label: 'Tips', value: '$3K' }
+            ];
+
+            bubbles.forEach((b, i) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = b.x + '%';
+                bubble.style.top = b.y + '%';
+                bubble.style.width = b.size + 'px';
+                bubble.style.height = b.size + 'px';
+                bubble.style.background = b.color;
+                bubble.style.animationDelay = i * 0.15 + 's';
+                bubble.innerHTML = `<span class="bubble-label">${b.label}</span>`;
+                bubble.title = `${b.label}: ${b.value}`;
+                container.appendChild(bubble);
+            });
+        }
+
+        function createWaterfall() {
+            const container = document.getElementById('waterfallChart');
+            if (!container) return;
+
+            const items = [
+                { label: 'Start', value: 50, type: 'total' },
+                { label: 'Sales', value: 35, type: 'positive' },
+                { label: 'Returns', value: -10, type: 'negative' },
+                { label: 'Marketing', value: -8, type: 'negative' },
+                { label: 'Services', value: 25, type: 'positive' },
+                { label: 'End', value: 92, type: 'total' }
+            ];
+
+            let currentHeight = items[0].value;
+            const maxHeight = 150;
+
+            items.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'waterfall-item';
+
+                const barHeight = Math.abs(item.value) * 1.5;
+                const bar = document.createElement('div');
+                bar.className = 'waterfall-bar ' + item.type;
+                bar.style.height = '0px';
+                bar.dataset.height = barHeight + 'px';
+
+                if (item.type !== 'total') {
+                    const yOffset = currentHeight * 1.5;
+                    bar.style.position = 'absolute';
+                    bar.style.bottom = yOffset + 'px';
+                    currentHeight += item.value;
+                }
+
+                const valueEl = document.createElement('div');
+                valueEl.className = 'waterfall-value';
+                valueEl.style.color = item.type === 'negative' ? '#FF5B6E' : item.type === 'total' ? '#4F6BFF' : '#10D876';
+                valueEl.textContent = item.type === 'negative' ? '-' + Math.abs(item.value) : '+' + item.value;
+
+                const labelEl = document.createElement('div');
+                labelEl.className = 'waterfall-label';
+                labelEl.textContent = item.label;
+
+                div.appendChild(bar);
+                div.appendChild(valueEl);
+                div.appendChild(labelEl);
+                container.appendChild(div);
+
+                setTimeout(() => {
+                    bar.style.height = bar.dataset.height;
+                }, 500 + i * 150);
+            });
+        }
+
+        function createCandlestick() {
+            const container = document.getElementById('candlestickChart');
+            if (!container) return;
+
+            const candles = [];
+            let prevClose = 100;
+            for (let i = 0; i < 30; i++) {
+                const change = (Math.random() - 0.5) * 10;
+                const open = prevClose;
+                const close = open + change;
+                const high = Math.max(open, close) + Math.random() * 5;
+                const low = Math.min(open, close) - Math.random() * 5;
+                const range = high - low;
+                const bodySize = Math.abs(close - open);
+                const bodyPos = (Math.min(open, close) - low) / range * 100;
+                candles.push({ open, close, high, low, range, bodySize, bodyPos, bullish: close > open });
+                prevClose = close;
+            }
+
+            candles.forEach((c, i) => {
+                const candle = document.createElement('div');
+                candle.className = 'candlestick';
+
+                const wickHeight = c.range * 1.5;
+                const wick = document.createElement('div');
+                wick.className = 'candle-wick';
+                wick.style.height = wickHeight + 'px';
+
+                const bodyHeight = c.bodySize * 1.5 || 4;
+                const body = document.createElement('div');
+                body.className = 'candle-body ' + (c.bullish ? 'bullish' : 'bearish');
+                body.style.height = bodyHeight + 'px';
+                body.style.position = 'absolute';
+                body.style.bottom = c.bodyPos * 1.5 + 'px';
+
+                candle.appendChild(wick);
+                candle.appendChild(body);
+                container.appendChild(candle);
+            });
+        }
+
+        function createTreemap() {
+            const container = document.getElementById('treemapChart');
+            if (!container) return;
+
+            const cells = [
+                { label: 'Games', value: '$45K', percent: '45%', color: '#4F6BFF', size: 'span 2; span 2' },
+                { label: 'Accounts', value: '$28K', percent: '28%', color: '#10D876', size: 'span 2; span 1' },
+                { label: 'Services', value: '$18K', percent: '18%', color: '#8B5CF6', size: 'span 1; span 1' },
+                { label: 'Boost', value: '$12K', percent: '12%', color: '#FFB020', size: 'span 1; span 2' },
+                { label: 'Support', value: '$5K', percent: '5%', color: '#FF5B6E', size: 'span 1; span 1' },
+                { label: 'Other', value: '$2K', percent: '2%', color: '#06B6D4', size: 'span 1; span 1' }
+            ];
+
+            cells.forEach((cell, i) => {
+                const div = document.createElement('div');
+                div.className = 'treemap-cell';
+                div.style.background = cell.color;
+                div.style.grid = cell.size;
+                div.style.animationDelay = i * 0.1 + 's';
+                div.innerHTML = `
+                    <div class="treemap-value">${cell.percent}</div>
+                    <div class="treemap-label">${cell.label}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function createScatterPlot() {
+            const container = document.getElementById('scatterPlot');
+            if (!container) return;
+
+            for (let i = 0; i < 40; i++) {
+                const point = document.createElement('div');
+                point.className = 'scatter-point';
+                point.style.left = Math.random() * 90 + '%';
+                point.style.bottom = Math.random() * 90 + '%';
+                point.style.animationDelay = i * 0.05 + 's';
+                point.style.background = `rgba(79, 107, 255, ${0.3 + Math.random() * 0.7})`;
+                container.appendChild(point);
+            }
+        }
+
+        function createPolarChart() {
+            const container = document.getElementById('polarChart');
+            if (!container) return;
+
+            const segments = [
+                { percent: 35, color: '#4F6BFF', label: 'North' },
+                { percent: 28, color: '#10D876', label: 'South' },
+                { percent: 22, color: '#8B5CF6', label: 'East' },
+                { percent: 15, color: '#FFB020', label: 'West' }
+            ];
+
+            const cx = 100, cy = 100, r = 80;
+            let startAngle = 0;
+
+            segments.forEach((seg, i) => {
+                const angle = seg.percent * 3.6;
+                const endAngle = startAngle + angle;
+
+                const x1 = cx + r * Math.cos(startAngle * Math.PI / 180);
+                const y1 = cy + r * Math.sin(startAngle * Math.PI / 180);
+                const x2 = cx + r * Math.cos(endAngle * Math.PI / 180);
+                const y2 = cy + r * Math.sin(endAngle * Math.PI / 180);
+
+                const largeArc = angle > 180 ? 1 : 0;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('class', 'polar-segment');
+                path.setAttribute('d', `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`);
+                path.setAttribute('fill', seg.color);
+                path.style.opacity = '0';
+                path.style.animation = `radarFadeIn 0.5s ease ${0.2 + i * 0.15}s forwards`;
+
+                container.appendChild(path);
+                startAngle = endAngle;
+            });
+        }
+
+        function animateBulletBars() {
+            const bars = document.querySelectorAll('.bullet-bar');
+            bars.forEach((bar, i) => {
+                setTimeout(() => {
+                    bar.style.width = bar.dataset.width;
+                }, 600 + i * 200);
+            });
         }
 
         function createParticles() {
@@ -3263,6 +4220,38 @@
             setTimeout(() => {
                 animateChartLine();
             }, 200);
+
+            setTimeout(() => {
+                createFunnel();
+            }, 400);
+
+            setTimeout(() => {
+                createBubbles();
+            }, 500);
+
+            setTimeout(() => {
+                createWaterfall();
+            }, 700);
+
+            setTimeout(() => {
+                createCandlestick();
+            }, 850);
+
+            setTimeout(() => {
+                createTreemap();
+            }, 950);
+
+            setTimeout(() => {
+                createScatterPlot();
+            }, 1050);
+
+            setTimeout(() => {
+                createPolarChart();
+            }, 1100);
+
+            setTimeout(() => {
+                animateBulletBars();
+            }, 1150);
 
             loadDashboardData();
             loadTransactions();
