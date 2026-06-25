@@ -3,297 +3,2530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Admin - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>ShopDonk Admin - Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .sidebar-link {
+
+        :root {
+            --bg-primary: #070B17;
+            --bg-secondary: #0F1323;
+            --bg-tertiary: #111827;
+            --bg-card: #161B2F;
+            --accent-primary: #4F6BFF;
+            --accent-secondary: #7B8CFF;
+            --accent-glow: rgba(79, 107, 255, 0.5);
+            --success: #10D876;
+            --warning: #FFB020;
+            --danger: #FF5B6E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #C8D0E0;
+            --text-tertiary: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(22, 27, 47, 0.6);
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(79, 107, 255, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(123, 140, 255, 0.1), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sidebar-header {
+            padding: 28px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            box-shadow: 0 8px 24px rgba(79, 107, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(79, 107, 255, 0.4);
+        }
+
+        .avatar-status {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 16px;
+            height: 16px;
+            background: var(--success);
+            border: 3px solid var(--bg-secondary);
+            border-radius: 50%;
+        }
+
+        .user-info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .user-info p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .sidebar-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
             transition: all 0.3s ease;
         }
-        .sidebar-link:hover, .sidebar-link.active {
-            background: linear-gradient(135deg, #0088cc 0%, #00a0dc 100%);
+
+        .control-btn:hover {
+            background: rgba(79, 107, 255, 0.1);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(79, 107, 255, 0.2);
         }
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 16px;
+            overflow-y: auto;
         }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 0 3px 3px 0;
+            transition: height 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(79, 107, 255, 0.08);
+            color: var(--text-primary);
+            transform: translateX(6px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(79, 107, 255, 0.15), rgba(79, 107, 255, 0.05));
+            color: var(--text-primary);
+        }
+
+        .nav-item.active::before {
+            height: 24px;
+        }
+
+        .nav-item i {
+            width: 20px;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .nav-item.active i {
+            opacity: 1;
+            color: var(--accent-primary);
+        }
+
+        .nav-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 20px 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .pro-card {
+            background: linear-gradient(135deg, rgba(79, 107, 255, 0.2), rgba(123, 140, 255, 0.1));
+            border: 1px solid rgba(79, 107, 255, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pro-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: proShine 3s infinite;
+        }
+
+        @keyframes proShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .pro-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .pro-card p {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .pro-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pro-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79, 107, 255, 0.4);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-header {
+            position: sticky;
+            top: 0;
+            background: rgba(7, 11, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 32px;
+            z-index: 50;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-title p {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .date-selector:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .header-btn.primary:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 32px rgba(79, 107, 255, 0.4);
+        }
+
+        .dashboard-content {
+            padding: 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
         .stat-card {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2) 0%, rgba(0, 160, 220, 0.1) 100%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        ::-webkit-scrollbar {
-            width: 6px;
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(79, 107, 255, 0.15), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
-        ::-webkit-scrollbar-track {
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(79, 107, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(79, 107, 255, 0.1);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-icon.revenue {
+            background: linear-gradient(135deg, rgba(16, 216, 118, 0.2), rgba(16, 216, 118, 0.1));
+            color: var(--success);
+        }
+
+        .stat-icon.orders {
+            background: linear-gradient(135deg, rgba(79, 107, 255, 0.2), rgba(79, 107, 255, 0.1));
+            color: var(--accent-primary);
+        }
+
+        .stat-icon.users {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.1));
+            color: #8B5CF6;
+        }
+
+        .stat-icon.pending {
+            background: linear-gradient(135deg, rgba(255, 176, 32, 0.2), rgba(255, 176, 32, 0.1));
+            color: var(--warning);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-change.positive {
+            background: rgba(16, 216, 118, 0.15);
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            background: rgba(255, 91, 110, 0.15);
+            color: var(--danger);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .dashboard-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(79, 107, 255, 0.12), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .dashboard-card:hover::before {
+            opacity: 1;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(79, 107, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(79, 107, 255, 0.15);
+            color: var(--accent-primary);
+        }
+
+        .ai-insights-card {
+            grid-row: span 2;
+        }
+
+        .ai-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .ai-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(79, 107, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 107, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .ai-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: particleFloat 6s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            50% { transform: translate(var(--tx, 20px), var(--ty, -20px)) scale(1.5); opacity: 0.8; }
+        }
+
+        .ai-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(79, 107, 255, 0.3), transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: glowPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .ai-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(79, 107, 255, 0.4);
+        }
+
+        .ai-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ai-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .ai-metrics {
+            display: flex;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .ai-metric {
+            text-align: center;
+        }
+
+        .ai-metric-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 4px;
+        }
+
+        .ai-metric-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .balance-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .balance-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(16, 216, 118, 0.15);
+            color: var(--success);
+            margin-bottom: 24px;
+        }
+
+        .balance-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .balance-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .balance-badge i {
+            color: var(--accent-primary);
+        }
+
+        .chart-container {
+            height: 120px;
+            position: relative;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: url(#chartGradient);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 4px 12px rgba(79, 107, 255, 0.4));
+        }
+
+        .chart-area {
+            fill: url(#areaGradient);
+        }
+
+        .chart-dot {
+            fill: var(--accent-primary);
+            stroke: var(--bg-card);
+            stroke-width: 3;
+            transition: all 0.3s ease;
+        }
+
+        .chart-dot:hover {
+            r: 8;
+            filter: drop-shadow(0 4px 12px rgba(79, 107, 255, 0.6));
+        }
+
+        .earnings-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gauge-container {
+            width: 180px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: rgba(79, 107, 255, 0.1);
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke: url(#gaugeGradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transform: rotate(-180deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 4px 20px rgba(79, 107, 255, 0.6));
+        }
+
+        .gauge-fill.animated {
+            stroke-dashoffset: 119;
+        }
+
+        .gauge-text {
+            font-size: 32px;
+            font-weight: 800;
+            fill: var(--text-primary);
+        }
+
+        .earnings-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+
+        .earnings-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .earnings-stat {
+            text-align: center;
+        }
+
+        .earnings-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .earnings-stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .transactions-card {
+            grid-column: span 2;
+        }
+
+        .transactions-table {
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-row {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .table-row.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .table-row:hover {
+            background: rgba(79, 107, 255, 0.05);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .col-merchant {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .merchant-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .merchant-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .merchant-info p {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .col-card {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .col-date {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .col-amount {
+            flex: 1;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .amount-income {
+            color: var(--success);
+        }
+
+        .amount-expense {
+            color: var(--text-primary);
+        }
+
+        .analytics-card {
+            grid-column: span 1;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 160px;
+            padding-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .bar-container {
+            width: 100%;
+            max-width: 40px;
+            height: 120px;
+            background: rgba(79, 107, 255, 0.05);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            transition: height 1s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 -4px 20px rgba(79, 107, 255, 0.4);
+        }
+
+        .bar-container:hover .bar-fill {
+            box-shadow: 0 -8px 30px rgba(79, 107, 255, 0.6);
+        }
+
+        .bar-value {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+
+        .bar-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--accent-primary);
+        }
+
+        .products-section,
+        .orders-section {
+            margin-bottom: 32px;
+        }
+
+        .data-table {
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(79, 107, 255, 0.05);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.success {
+            background: rgba(16, 216, 118, 0.15);
+            color: var(--success);
+        }
+
+        .status-badge.warning {
+            background: rgba(255, 176, 32, 0.15);
+            color: var(--warning);
+        }
+
+        .status-badge.danger {
+            background: rgba(255, 91, 110, 0.15);
+            color: var(--danger);
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(79, 107, 255, 0.4);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .action-btn.secondary:hover {
             background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
         }
+
+        .action-btn.danger {
+            background: rgba(255, 91, 110, 0.15);
+            color: var(--danger);
+        }
+
+        .action-btn.danger:hover {
+            background: rgba(255, 91, 110, 0.25);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 91, 110, 0.15);
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(79, 107, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2000;
+        }
+
+        .toast.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .toast-icon.success {
+            background: rgba(16, 216, 118, 0.15);
+            color: var(--success);
+        }
+
+        .toast-icon.error {
+            background: rgba(255, 91, 110, 0.15);
+            color: var(--danger);
+        }
+
+        .toast-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .toast-content p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-insights-card {
+                grid-row: auto;
+            }
+
+            .transactions-card {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .main-header {
+                padding: 16px 20px;
+                padding-top: 80px;
+            }
+
+            .dashboard-content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-controls {
+                display: none;
+            }
+
+            .header-title h1 {
+                font-size: 20px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
         ::-webkit-scrollbar-thumb {
-            background: rgba(0, 136, 204, 0.5);
-            border-radius: 3px;
+            background: rgba(79, 107, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(79, 107, 255, 0.5);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
-<body class="flex">
-    <aside class="w-64 min-h-screen bg-black/30 border-r border-white/10 flex flex-col">
-        <div class="p-6 border-b border-white/10">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                    <i class="fab fa-telegram text-xl text-white"></i>
+<body>
+    <div class="app-container">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar-container">
+                        <div class="avatar">AD</div>
+                        <div class="avatar-status"></div>
+                    </div>
+                    <div class="user-info">
+                        <h3>Admin</h3>
+                        <p id="currentDate">Monday, March 24</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-white font-bold">Bot Admin</h1>
-                    <p class="text-gray-400 text-xs">Telegram Management</p>
-                </div>
-            </div>
-        </div>
-        
-        <nav class="flex-1 p-4">
-            <a href="#" onclick="showSection('dashboard')" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-white mb-2" data-section="dashboard">
-                <i class="fas fa-chart-line w-5"></i> Dashboard
-            </a>
-            <a href="#" onclick="showSection('products')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="products">
-                <i class="fas fa-box w-5"></i> Sản Phẩm
-            </a>
-            <a href="#" onclick="showSection('orders')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="orders">
-                <i class="fas fa-shopping-cart w-5"></i> Đơn Hàng
-            </a>
-            <a href="#" onclick="showSection('users')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="users">
-                <i class="fas fa-users w-5"></i> Người Dùng
-            </a>
-            <a href="#" onclick="showSection('deposits')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="deposits">
-                <i class="fas fa-money-bill-wave w-5"></i> Nạp Tiền
-            </a>
-            <a href="#" onclick="showSection('broadcast')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="broadcast">
-                <i class="fas fa-bullhorn w-5"></i> Gửi Thông Báo
-            </a>
-            <a href="#" onclick="showSection('settings')" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 mb-2" data-section="settings">
-                <i class="fas fa-cog w-5"></i> Cài Đặt
-            </a>
-        </nav>
-        
-        <div class="p-4 border-t border-white/10">
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition">
-                <i class="fas fa-sign-out-alt"></i> Đăng Xuất
-            </button>
-        </div>
-    </aside>
-    
-    <main class="flex-1 min-h-screen">
-        <header class="bg-black/20 border-b border-white/10 px-6 py-4 flex items-center justify-between">
-            <h2 id="pageTitle" class="text-xl font-bold text-white">Dashboard</h2>
-            <div class="flex items-center gap-4">
-                <span id="adminInfo" class="text-gray-400 text-sm"></span>
-                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                    <i class="fas fa-user text-blue-400"></i>
+                <div class="sidebar-controls">
+                    <button class="control-btn" title="Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="control-btn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
                 </div>
             </div>
-        </header>
-        
-        <div class="p-6">
-            <section id="section-dashboard" class="section">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div class="stat-card card rounded-xl p-5">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-400 text-sm">Tổng Doanh Thu</p>
-                                <p id="stat-revenue" class="text-2xl font-bold text-white mt-1">0đ</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center">
-                                <i class="fas fa-dollar-sign text-green-400"></i>
-                            </div>
-                        </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main Menu</div>
+                    <div class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
                     </div>
-                    <div class="stat-card card rounded-xl p-5">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-400 text-sm">Tổng Đơn Hàng</p>
-                                <p id="stat-orders" class="text-2xl font-bold text-white mt-1">0</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                <i class="fas fa-shopping-cart text-blue-400"></i>
-                            </div>
-                        </div>
+                    <div class="nav-item" data-section="products" onclick="showSection('products')">
+                        <i class="fas fa-box"></i>
+                        <span>Products</span>
+                        <span class="nav-badge" id="productsCount">0</span>
                     </div>
-                    <div class="stat-card card rounded-xl p-5">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-400 text-sm">Người Dùng</p>
-                                <p id="stat-users" class="text-2xl font-bold text-white mt-1">0</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                                <i class="fas fa-users text-purple-400"></i>
-                            </div>
-                        </div>
+                    <div class="nav-item" data-section="orders" onclick="showSection('orders')">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Orders</span>
+                        <span class="nav-badge" id="ordersCount">0</span>
                     </div>
-                    <div class="stat-card card rounded-xl p-5">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-400 text-sm">Chờ Duyệt</p>
-                                <p id="stat-pending" class="text-2xl font-bold text-white mt-1">0</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                                <i class="fas fa-clock text-yellow-400"></i>
-                            </div>
-                        </div>
+                    <div class="nav-item" data-section="users" onclick="showSection('users')">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </div>
+                    <div class="nav-item" data-section="deposits" onclick="showSection('deposits')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Deposits</span>
+                        <span class="nav-badge" id="pendingCount">0</span>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="card rounded-xl p-5">
-                        <h3 class="text-white font-semibold mb-4">Đơn Hàng Gần Đây</h3>
-                        <div id="recentOrders" class="space-y-3">
-                            <p class="text-gray-400 text-center py-4">Đang tải...</p>
-                        </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Tools</div>
+                    <div class="nav-item" data-section="broadcast" onclick="showSection('broadcast')">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Broadcast</span>
                     </div>
-                    <div class="card rounded-xl p-5">
-                        <h3 class="text-white font-semibold mb-4">Nạp Tiền Chờ Duyệt</h3>
-                        <div id="pendingDeposits" class="space-y-3">
-                            <p class="text-gray-400 text-center py-4">Đang tải...</p>
-                        </div>
+                    <div class="nav-item" data-section="settings" onclick="showSection('settings')">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
                     </div>
                 </div>
-            </section>
-            
-            <section id="section-products" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-white font-semibold">Danh Sách Sản Phẩm</h3>
-                        <button onclick="showAddProductModal()" class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
-                            <i class="fas fa-plus mr-2"></i> Thêm Mới
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="pro-card">
+                    <h4>ShopDonk Pro</h4>
+                    <p>Unlock premium features and analytics</p>
+                    <button class="pro-btn">Upgrade Now</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="header-title">
+                            <h1 id="pageTitle">Dashboard</h1>
+                            <p>Welcome back, Admin!</p>
+                        </div>
+                    </div>
+                    <div class="header-controls">
+                        <div class="date-selector">
+                            <i class="fas fa-calendar"></i>
+                            <span>This Month</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <button class="header-btn" onclick="refreshData()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Refresh</span>
                         </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-gray-400 border-b border-white/10">
-                                    <th class="pb-3 px-2">Tên</th>
-                                    <th class="pb-3 px-2">Danh Mục</th>
-                                    <th class="pb-3 px-2">Giá</th>
-                                    <th class="pb-3 px-2">Tồn Kho</th>
-                                    <th class="pb-3 px-2">Thao Tác</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productsTable" class="text-gray-300">
-                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="section-orders" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <h3 class="text-white font-semibold mb-4">Danh Sách Đơn Hàng</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-gray-400 border-b border-white/10">
-                                    <th class="pb-3 px-2">ID</th>
-                                    <th class="pb-3 px-2">Người Mua</th>
-                                    <th class="pb-3 px-2">Sản Phẩm</th>
-                                    <th class="pb-3 px-2">Tổng</th>
-                                    <th class="pb-3 px-2">Trạng Thái</th>
-                                    <th class="pb-3 px-2">Thao Tác</th>
-                                </tr>
-                            </thead>
-                            <tbody id="ordersTable" class="text-gray-300">
-                                <tr><td colspan="6" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="section-users" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <h3 class="text-white font-semibold mb-4">Danh Sách Người Dùng</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-gray-400 border-b border-white/10">
-                                    <th class="pb-3 px-2">Telegram ID</th>
-                                    <th class="pb-3 px-2">Tên</th>
-                                    <th class="pb-3 px-2">Số Dư</th>
-                                    <th class="pb-3 px-2">Vai Trò</th>
-                                    <th class="pb-3 px-2">Thao Tác</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usersTable" class="text-gray-300">
-                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="section-deposits" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <h3 class="text-white font-semibold mb-4">Yêu Cầu Nạp Tiền</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-gray-400 border-b border-white/10">
-                                    <th class="pb-3 px-2">User</th>
-                                    <th class="pb-3 px-2">Số Tiền</th>
-                                    <th class="pb-3 px-2">Phương Thức</th>
-                                    <th class="pb-3 px-2">Trạng Thái</th>
-                                    <th class="pb-3 px-2">Thao Tác</th>
-                                </tr>
-                            </thead>
-                            <tbody id="depositsTable" class="text-gray-300">
-                                <tr><td colspan="5" class="py-4 text-center text-gray-400">Đang tải...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="section-broadcast" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <h3 class="text-white font-semibold mb-4">Gửi Thông Báo Đến Tất Cả User</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-gray-300 mb-2">Nội Dung Thông Báo</label>
-                            <textarea id="broadcastMsg" rows="5" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" placeholder="Nhập nội dung thông báo..."></textarea>
-                        </div>
-                        <button onclick="sendBroadcast()" class="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
-                            <i class="fas fa-paper-plane mr-2"></i> Gửi Thông Báo
+                        <button class="header-btn primary" onclick="showAddProductModal()">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Product</span>
                         </button>
                     </div>
                 </div>
-            </section>
-            
-            <section id="section-settings" class="section hidden">
-                <div class="card rounded-xl p-5">
-                    <h3 class="text-white font-semibold mb-4">Cài Đặt Bot</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-gray-300 mb-2">Admin Key (đổi mật khẩu đăng nhập)</label>
-                            <input type="password" id="newAdminKey" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white" placeholder="Nhập Admin Key mới">
+            </header>
+
+            <div class="dashboard-content">
+                <section id="section-dashboard" class="section active">
+                    <div class="stats-grid">
+                        <div class="stat-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-value" id="stat-revenue">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12.5%</span>
+                            </div>
                         </div>
-                        <button onclick="updateAdminKey()" class="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">
-                            <i class="fas fa-save mr-2"></i> Cập Nhật
+                        <div class="stat-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="stat-icon orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-label">Total Orders</div>
+                            <div class="stat-value" id="stat-orders">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8.2%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="stat-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-label">Total Users</div>
+                            <div class="stat-value" id="stat-users">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+15.3%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-label">Pending</div>
+                            <div class="stat-value" id="stat-pending">0</div>
+                            <div class="stat-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-5.1%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card ai-insights-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="ai-background">
+                                <div class="ai-grid"></div>
+                                <div class="ai-particles" id="particles"></div>
+                                <div class="ai-glow"></div>
+                            </div>
+                            <div class="ai-content">
+                                <div class="ai-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h3 class="ai-title">AI Insights</h3>
+                                <p class="ai-desc">Your transaction volume has increased by <strong style="color: var(--accent-primary)">5%</strong> since last month. Continue monitoring for optimal performance.</p>
+                                <div class="ai-metrics">
+                                    <div class="ai-metric">
+                                        <div class="ai-metric-value">+5%</div>
+                                        <div class="ai-metric-label">Growth</div>
+                                    </div>
+                                    <div class="ai-metric">
+                                        <div class="ai-metric-value">98.5%</div>
+                                        <div class="ai-metric-label">Uptime</div>
+                                    </div>
+                                    <div class="ai-metric">
+                                        <div class="ai-metric-value">4.9</div>
+                                        <div class="ai-metric-label">Rating</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Balance Overview</h3>
+                                <span class="card-badge">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12%
+                                </span>
+                            </div>
+                            <div class="balance-content">
+                                <div class="balance-amount" id="balanceAmount">0</div>
+                                <div class="balance-change">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+$8,420 from last month</span>
+                                </div>
+                                <div class="balance-badges">
+                                    <div class="balance-badge">
+                                        <i class="fas fa-exchange-alt"></i>
+                                        <span id="transactionCount">0 Transactions</span>
+                                    </div>
+                                    <div class="balance-badge">
+                                        <i class="fas fa-layer-group"></i>
+                                        <span id="categoryCount">0 Categories</span>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#4F6BFF"/>
+                                                <stop offset="100%" stop-color="#7B8CFF"/>
+                                            </linearGradient>
+                                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stop-color="rgba(79, 107, 255, 0.3)"/>
+                                                <stop offset="100%" stop-color="rgba(79, 107, 255, 0)"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path class="chart-area" d="M0,120 L0,80 Q50,70 100,60 T200,50 T300,70 T400,40 L400,120 Z"/>
+                                        <path class="chart-line" d="M0,80 Q50,70 100,60 T200,50 T300,70 T400,40"/>
+                                        <circle class="chart-dot" cx="100" cy="60" r="5"/>
+                                        <circle class="chart-dot" cx="200" cy="50" r="5"/>
+                                        <circle class="chart-dot" cx="300" cy="70" r="5"/>
+                                        <circle class="chart-dot" cx="400" cy="40" r="5"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Earnings</h3>
+                            </div>
+                            <div class="earnings-content">
+                                <div class="gauge-container">
+                                    <svg width="180" height="100" viewBox="0 0 180 100">
+                                        <defs>
+                                            <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#4F6BFF"/>
+                                                <stop offset="100%" stop-color="#7B8CFF"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path class="gauge-bg" d="M20,90 A70,70 0 0,1 160,90"/>
+                                        <path class="gauge-fill" id="gaugeFill" d="M20,90 A70,70 0 0,1 160,90"/>
+                                        <text class="gauge-text" x="90" y="75" text-anchor="middle" id="gaugeText">0%</text>
+                                    </svg>
+                                </div>
+                                <p class="earnings-label">Goal Progress</p>
+                                <div class="earnings-stats">
+                                    <div class="earnings-stat">
+                                        <div class="earnings-stat-value">$18,420</div>
+                                        <div class="earnings-stat-label">Earned</div>
+                                    </div>
+                                    <div class="earnings-stat">
+                                        <div class="earnings-stat-value">$30,000</div>
+                                        <div class="earnings-stat-label">Goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card transactions-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Recent Transactions</h3>
+                                <button class="header-btn" onclick="showSection('orders')">
+                                    <span>View All</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                            <div class="transactions-table">
+                                <div class="table-header">
+                                    <div class="col-merchant">Merchant</div>
+                                    <div class="col-card">Card</div>
+                                    <div class="col-date">Date</div>
+                                    <div class="col-amount">Amount</div>
+                                </div>
+                                <div id="transactionsList"></div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card analytics-card" onmousemove="handleCardGlow(event, this)">
+                            <div class="card-header">
+                                <h3 class="card-title">Spending Analytics</h3>
+                            </div>
+                            <div class="bar-chart">
+                                <div class="bar-item">
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="height: 0%;" data-height="85%"></div>
+                                    </div>
+                                    <div class="bar-value">85%</div>
+                                    <div class="bar-label">Games</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="height: 0%;" data-height="65%"></div>
+                                    </div>
+                                    <div class="bar-value">65%</div>
+                                    <div class="bar-label">Accounts</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="height: 0%;" data-height="45%"></div>
+                                    </div>
+                                    <div class="bar-value">45%</div>
+                                    <div class="bar-label">Services</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="height: 0%;" data-height="30%"></div>
+                                    </div>
+                                    <div class="bar-value">30%</div>
+                                    <div class="bar-label">Other</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-products" class="section">
+                    <div class="products-section">
+                        <div class="section-title">
+                            <i class="fas fa-box"></i>
+                            <span>Products Management</span>
+                        </div>
+                        <div class="data-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-orders" class="section">
+                    <div class="orders-section">
+                        <div class="section-title">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Orders Management</span>
+                        </div>
+                        <div class="data-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Product</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-users" class="section">
+                    <div class="section-title">
+                        <i class="fas fa-users"></i>
+                        <span>Users Management</span>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Telegram ID</th>
+                                    <th>Name</th>
+                                    <th>Balance</th>
+                                    <th>Orders</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="section-deposits" class="section">
+                    <div class="section-title">
+                        <i class="fas fa-wallet"></i>
+                        <span>Deposit Requests</span>
+                    </div>
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="depositsTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="section-broadcast" class="section">
+                    <div class="section-title">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Broadcast Message</span>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="form-group">
+                            <label>Message Content</label>
+                            <textarea class="form-input" id="broadcastMessage" rows="6" placeholder="Enter your message to broadcast to all users..."></textarea>
+                        </div>
+                        <button class="action-btn primary" onclick="sendBroadcast()">
+                            <i class="fas fa-paper-plane"></i>
+                            Send to All Users
                         </button>
                     </div>
-                </div>
-            </section>
-        </div>
-    </main>
-    
-    <div id="modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-white/10">
-            <div class="flex items-center justify-between mb-4">
-                <h3 id="modalTitle" class="text-white font-semibold">Modal</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                </section>
+
+                <section id="section-settings" class="section">
+                    <div class="section-title">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="form-group">
+                            <label>New Admin Key</label>
+                            <input type="password" class="form-input" id="newAdminKey" placeholder="Enter new admin key...">
+                        </div>
+                        <button class="action-btn primary" onclick="updateAdminKey()">
+                            <i class="fas fa-save"></i>
+                            Update Admin Key
+                        </button>
+                    </div>
+                </section>
             </div>
-            <div id="modalContent"></div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Modal</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
         </div>
     </div>
-    
+
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toastIcon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-content">
+            <h4 id="toastTitle">Success</h4>
+            <p id="toastMessage">Operation completed successfully</p>
+        </div>
+    </div>
+
     <script src="js/dashboard.js"></script>
+    <script>
+        const API_BASE = window.location.origin + '/api/bot-admin';
+        
+        let authToken = localStorage.getItem('botAdminToken');
+        if (!authToken) {
+            window.location.href = '/bot-admin/login.html';
+        }
+
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString('en-US', options);
+        }
+
+        document.getElementById('currentDate').textContent = formatDate(new Date());
+
+        function handleCardGlow(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', x + '%');
+            card.style.setProperty('--mouse-y', y + '%');
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + section).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector('.nav-item[data-section="' + section + '"]').classList.add('active');
+            
+            const titles = {
+                dashboard: 'Dashboard',
+                products: 'Products',
+                orders: 'Orders',
+                users: 'Users',
+                deposits: 'Deposits',
+                broadcast: 'Broadcast',
+                settings: 'Settings'
+            };
+            document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
+            
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        async function loadDashboardData() {
+            try {
+                const res = await fetch(API_BASE + '/stats', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    animateValue('stat-revenue', 0, data.data.revenue || 0, 2000, true);
+                    animateValue('stat-orders', 0, data.data.orders || 0, 2000);
+                    animateValue('stat-users', 0, data.data.users || 0, 2000);
+                    animateValue('stat-pending', 0, data.data.pending || 0, 2000);
+                    
+                    document.getElementById('productsCount').textContent = data.data.products || 0;
+                    document.getElementById('ordersCount').textContent = data.data.orders || 0;
+                    document.getElementById('pendingCount').textContent = data.data.pending || 0;
+                    
+                    animateValue('balanceAmount', 0, data.data.revenue || 0, 2000, true);
+                    document.getElementById('transactionCount').textContent = (data.data.orders || 0) + ' Transactions';
+                    document.getElementById('categoryCount').textContent = (data.data.categories || 0) + ' Categories';
+                }
+            } catch (e) {
+                console.error('Load dashboard error:', e);
+            }
+        }
+
+        function animateValue(id, start, end, duration, isCurrency = false) {
+            const el = document.getElementById(id);
+            const range = end - start;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(start + range * easeProgress);
+                
+                el.textContent = isCurrency ? formatCurrency(current) : current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
+        function animateGauge() {
+            const gauge = document.getElementById('gaugeFill');
+            const text = document.getElementById('gaugeText');
+            let current = 0;
+            const target = 58;
+            const duration = 1500;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                current = Math.floor(target * easeProgress);
+                
+                text.textContent = current + '%';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            gauge.classList.add('animated');
+            requestAnimationFrame(update);
+        }
+
+        function animateBars() {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach((bar, i) => {
+                setTimeout(() => {
+                    bar.style.height = bar.dataset.height;
+                }, i * 150);
+            });
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.setProperty('--tx', (Math.random() * 40 - 20) + 'px');
+                particle.style.setProperty('--ty', (Math.random() * 40 - 20) + 'px');
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        function animateTableRows() {
+            const rows = document.querySelectorAll('.table-row');
+            rows.forEach((row, i) => {
+                setTimeout(() => {
+                    row.classList.add('visible');
+                }, i * 100);
+            });
+        }
+
+        async function loadTransactions() {
+            const container = document.getElementById('transactionsList');
+            const mockTransactions = [
+                { merchant: 'PlayStation', icon: 'fab fa-playstation', color: '#003791', card: '**** 4532', date: 'Mar 24', amount: -59.99, type: 'expense' },
+                { merchant: 'Netflix', icon: 'fas fa-film', color: '#E50914', card: '**** 8721', date: 'Mar 23', amount: -15.99, type: 'expense' },
+                { merchant: 'Airbnb', icon: 'fab fa-airbnb', color: '#FF5A5F', card: '**** 3567', date: 'Mar 22', amount: -245.00, type: 'expense' },
+                { merchant: 'Payment', icon: 'fas fa-arrow-down', color: '#10D876', card: '**** 9012', date: 'Mar 21', amount: 1250.00, type: 'income' },
+                { merchant: 'Apple', icon: 'fab fa-apple', color: '#A2AAAD', card: '**** 7654', date: 'Mar 20', amount: -9.99, type: 'expense' }
+            ];
+
+            container.innerHTML = mockTransactions.map(t => `
+                <div class="table-row">
+                    <div class="col-merchant">
+                        <div class="merchant-icon" style="background: ${t.color}20; color: ${t.color}">
+                            <i class="${t.icon}"></i>
+                        </div>
+                        <div class="merchant-info">
+                            <h4>${t.merchant}</h4>
+                            <p>${t.card}</p>
+                        </div>
+                    </div>
+                    <div class="col-card">${t.card}</div>
+                    <div class="col-date">${t.date}</div>
+                    <div class="col-amount ${t.type === 'income' ? 'amount-income' : 'amount-expense'}">
+                        ${t.type === 'income' ? '+' : ''}$${Math.abs(t.amount).toFixed(2)}
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(animateTableRows, 100);
+        }
+
+        async function loadProducts() {
+            try {
+                const res = await fetch(API_BASE + '/products', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                const tbody = document.getElementById('productsTableBody');
+                if (data.success && data.data.length > 0) {
+                    tbody.innerHTML = data.data.map(p => `
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.category_name || 'N/A'}</td>
+                            <td>${formatCurrency(p.price)}</td>
+                            <td>${p.stock || 0}</td>
+                            <td><span class="status-badge ${p.status === 'active' ? 'success' : 'warning'}">${p.status || 'active'}</span></td>
+                            <td>
+                                <button class="action-btn secondary" onclick="editProduct(${p.id})">Edit</button>
+                                <button class="action-btn danger" onclick="deleteProduct(${p.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-tertiary);">No products found</td></tr>';
+                }
+            } catch (e) {
+                console.error('Load products error:', e);
+            }
+        }
+
+        async function loadOrders() {
+            try {
+                const res = await fetch(API_BASE + '/orders', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                const tbody = document.getElementById('ordersTableBody');
+                if (data.success && data.data.length > 0) {
+                    tbody.innerHTML = data.data.map(o => `
+                        <tr>
+                            <td>#${o.id}</td>
+                            <td>${o.user_name || 'Unknown'}</td>
+                            <td>${o.product_name || 'N/A'}</td>
+                            <td>${formatCurrency(o.total)}</td>
+                            <td><span class="status-badge ${o.status === 'completed' ? 'success' : o.status === 'pending' ? 'warning' : 'danger'}">${o.status}</span></td>
+                            <td>${new Date(o.created_at).toLocaleDateString()}</td>
+                            <td>
+                                <button class="action-btn primary" onclick="viewOrder(${o.id})">View</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--text-tertiary);">No orders found</td></tr>';
+                }
+            } catch (e) {
+                console.error('Load orders error:', e);
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const res = await fetch(API_BASE + '/users', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                const tbody = document.getElementById('usersTableBody');
+                if (data.success && data.data.length > 0) {
+                    tbody.innerHTML = data.data.map(u => `
+                        <tr>
+                            <td>${u.telegram_id}</td>
+                            <td>${u.name || 'Unknown'}</td>
+                            <td>${formatCurrency(u.balance || 0)}</td>
+                            <td>${u.orders_count || 0}</td>
+                            <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                            <td>
+                                <button class="action-btn secondary" onclick="editUser(${u.id})">Edit</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-tertiary);">No users found</td></tr>';
+                }
+            } catch (e) {
+                console.error('Load users error:', e);
+            }
+        }
+
+        async function loadDeposits() {
+            try {
+                const res = await fetch(API_BASE + '/deposits', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                const tbody = document.getElementById('depositsTableBody');
+                if (data.success && data.data.length > 0) {
+                    tbody.innerHTML = data.data.map(d => `
+                        <tr>
+                            <td>${d.user_name || 'Unknown'}</td>
+                            <td>${formatCurrency(d.amount)}</td>
+                            <td>${d.method || 'N/A'}</td>
+                            <td><span class="status-badge ${d.status === 'approved' ? 'success' : d.status === 'pending' ? 'warning' : 'danger'}">${d.status}</span></td>
+                            <td>${new Date(d.created_at).toLocaleDateString()}</td>
+                            <td>
+                                ${d.status === 'pending' ? `
+                                    <button class="action-btn primary" onclick="approveDeposit(${d.id})">Approve</button>
+                                    <button class="action-btn danger" onclick="rejectDeposit(${d.id})">Reject</button>
+                                ` : '<span style="color: var(--text-tertiary);">-</span>'}
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-tertiary);">No deposits found</td></tr>';
+                }
+            } catch (e) {
+                console.error('Load deposits error:', e);
+            }
+        }
+
+        function showAddProductModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Product';
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" class="form-input" id="productName" placeholder="Enter product name">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-select" id="productCategory">
+                        <option value="">Select category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (VND)</label>
+                    <input type="number" class="form-input" id="productPrice" placeholder="Enter price">
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input type="number" class="form-input" id="productStock" placeholder="Enter stock quantity">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-input" id="productDesc" rows="3" placeholder="Enter product description"></textarea>
+                </div>
+            `;
+            document.getElementById('modalFooter').innerHTML = `
+                <button class="action-btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="action-btn primary" onclick="saveProduct()">Save Product</button>
+            `;
+            document.getElementById('modalOverlay').classList.add('active');
+            loadCategoriesForModal();
+        }
+
+        async function loadCategoriesForModal() {
+            try {
+                const res = await fetch(API_BASE + '/categories', {
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    const select = document.getElementById('productCategory');
+                    data.data.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c.id;
+                        opt.textContent = c.name;
+                        select.appendChild(opt);
+                    });
+                }
+            } catch (e) {
+                console.error('Load categories error:', e);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        async function saveProduct() {
+            const name = document.getElementById('productName').value;
+            const category_id = document.getElementById('productCategory').value;
+            const price = document.getElementById('productPrice').value;
+            const stock = document.getElementById('productStock').value;
+            const description = document.getElementById('productDesc').value;
+
+            if (!name || !price) {
+                showToast('error', 'Error', 'Please fill in all required fields');
+                return;
+            }
+
+            try {
+                const res = await fetch(API_BASE + '/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({ name, category_id, price, stock, description })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('success', 'Success', 'Product created successfully');
+                    closeModal();
+                    loadProducts();
+                    loadDashboardData();
+                } else {
+                    showToast('error', 'Error', data.message || 'Failed to create product');
+                }
+            } catch (e) {
+                showToast('error', 'Error', 'Failed to create product');
+            }
+        }
+
+        async function sendBroadcast() {
+            const message = document.getElementById('broadcastMessage').value;
+            if (!message) {
+                showToast('error', 'Error', 'Please enter a message');
+                return;
+            }
+
+            try {
+                const res = await fetch(API_BASE + '/broadcast', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('success', 'Success', 'Broadcast sent to ' + data.data.sent + ' users');
+                    document.getElementById('broadcastMessage').value = '';
+                } else {
+                    showToast('error', 'Error', data.message || 'Failed to send broadcast');
+                }
+            } catch (e) {
+                showToast('error', 'Error', 'Failed to send broadcast');
+            }
+        }
+
+        async function updateAdminKey() {
+            const key = document.getElementById('newAdminKey').value;
+            if (!key) {
+                showToast('error', 'Error', 'Please enter a new admin key');
+                return;
+            }
+
+            try {
+                const res = await fetch(API_BASE + '/settings/admin-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + authToken
+                    },
+                    body: JSON.stringify({ admin_key: key })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('success', 'Success', 'Admin key updated successfully');
+                    document.getElementById('newAdminKey').value = '';
+                } else {
+                    showToast('error', 'Error', data.message || 'Failed to update admin key');
+                }
+            } catch (e) {
+                showToast('error', 'Error', 'Failed to update admin key');
+            }
+        }
+
+        async function approveDeposit(id) {
+            try {
+                const res = await fetch(API_BASE + '/deposits/' + id + '/approve', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('success', 'Success', 'Deposit approved');
+                    loadDeposits();
+                    loadDashboardData();
+                } else {
+                    showToast('error', 'Error', data.message || 'Failed to approve deposit');
+                }
+            } catch (e) {
+                showToast('error', 'Error', 'Failed to approve deposit');
+            }
+        }
+
+        async function rejectDeposit(id) {
+            try {
+                const res = await fetch(API_BASE + '/deposits/' + id + '/reject', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + authToken }
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('success', 'Success', 'Deposit rejected');
+                    loadDeposits();
+                } else {
+                    showToast('error', 'Error', data.message || 'Failed to reject deposit');
+                }
+            } catch (e) {
+                showToast('error', 'Error', 'Failed to reject deposit');
+            }
+        }
+
+        function showToast(type, title, message) {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toastIcon');
+            const titleEl = document.getElementById('toastTitle');
+            const msgEl = document.getElementById('toastMessage');
+            
+            icon.className = 'toast-icon ' + type;
+            icon.innerHTML = type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>';
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            
+            toast.classList.add('visible');
+            
+            setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3000);
+        }
+
+        function refreshData() {
+            loadDashboardData();
+            loadProducts();
+            loadOrders();
+            loadUsers();
+            loadDeposits();
+            showToast('success', 'Refreshed', 'Data refreshed successfully');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            setTimeout(() => {
+                animateGauge();
+            }, 500);
+            
+            setTimeout(() => {
+                animateBars();
+            }, 800);
+
+            loadDashboardData();
+            loadTransactions();
+            loadProducts();
+            loadOrders();
+            loadUsers();
+            loadDeposits();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.sidebar') === null && window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        });
+    </script>
 </body>
 </html>
