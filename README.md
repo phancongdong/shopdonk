@@ -1,5 +1,8 @@
 # ShopGame - Shop bán tài khoản game uy tín
 
+> 💬 **Cộng đồng**: Trao đổi AI, Quant, Bot trade tại: https://t.me/donkquantlab
+
+
 Website bán tài khoản game giống như ShopAcc.me với đầy đủ tính năng backend và frontend.
 
 ## Tính năng
